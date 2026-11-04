@@ -50,11 +50,11 @@
     .quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
     .quick-grid button{font:inherit;font-size:12px;font-weight:bold;color:#ffffff;background:#1e3a8a;border:2px solid #93c5fd;border-radius:6px;padding:10px 4px;cursor:pointer;text-align:center;white-space:nowrap;box-shadow:0 2px 4px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;gap:4px}
     .quick-grid button:hover{border-color:var(--ac);background:#2563eb;color:#fef08a}
-    .side-action{font:inherit;font-size:11px;color:var(--tx);background:#24375c;border:1px solid #536b98;border-radius:6px;padding:9px 6px;cursor:pointer;text-align:left}
+    .side-action{font:inherit;font-size:11px;color:#ffffff;background:#24375c;border:1px solid #536b98;border-radius:6px;padding:9px 6px;cursor:pointer;text-align:left}
     .side-action:hover{border-color:var(--ac);background:#344a73}
     .quest{border:1px solid var(--bd);border-radius:7px;padding:9px;margin:7px 0;background:#0e172b}
-    .quest b{font-size:12px;display:block;margin-bottom:4px}
-    .quest small{font-size:10px;color:var(--muted);line-height:1.4}
+    .quest b{font-size:12px;display:block;margin-bottom:4px;color:#f1f5f9}
+    .quest small{font-size:11px;color:#cbd5e1;line-height:1.5}
     .quest .qtag{color:#fbbf24;font-size:10px}
     .world-note{font-size:11px;line-height:1.55;color:var(--muted)}
     .md{position:fixed;inset:0;background:#000a;display:flex;align-items:center;justify-content:center;z-index:9;padding:12px}
@@ -75,14 +75,14 @@
     /* [월드맵] 각 지역의 실제 땅 모양(타일맵)을 사각형 안에 투영 */
     #minimap-overlay{
       position:absolute;right:10px;bottom:10px;z-index:4;
-      width:clamp(150px,30%,250px);
+      width:clamp(150px,26%,210px);
       background:rgba(11,16,32,.92);border:2px solid #fbbf24;border-radius:8px;padding:6px;
-      box-shadow:0 4px 15px rgba(0,0,0,.6);pointer-events:auto;
+      box-shadow:0 4px 15px rgba(0,0,0,.6);opacity:0;pointer-events:none;transform:translateY(10px);transition:opacity .35s,transform .35s;
     }
     .minimap-title{font-size:11px;color:#fbbf24;text-align:center;margin-bottom:5px;font-weight:bold;border-bottom:1px solid #2c3a5e;padding-bottom:3px}
     .minimap-grid{
       display:grid;
-      grid-template-areas:". cert ." ". route1 ." "coast town sports";
+      grid-template-areas:". cert ." "airport route1 orchard" "coast town sports" ". rest .";
       grid-template-columns:repeat(3,1fr);gap:3px;
     }
     .minimap-node{
@@ -92,8 +92,8 @@
       background-color:#1b2540;background-size:100% 100%;background-repeat:no-repeat;
       image-rendering:pixelated;font-family:inherit;transition:transform .15s,border-color .15s;
     }
-    .minimap-node.cert{grid-area:cert}.minimap-node.route1{grid-area:route1}
-    .minimap-node.coast{grid-area:coast}.minimap-node.town{grid-area:town}.minimap-node.sports{grid-area:sports}
+    .minimap-node.rest{grid-area:rest}.minimap-node.airport{grid-area:airport}.minimap-node.cert{grid-area:cert}.minimap-node.route1{grid-area:route1}
+    .minimap-node.orchard{grid-area:orchard}.minimap-node.coast{grid-area:coast}.minimap-node.town{grid-area:town}.minimap-node.sports{grid-area:sports}
     .minimap-node .lb{
       position:absolute;left:2px;bottom:2px;max-width:calc(100% - 4px);
       font-size:8px;line-height:1.2;color:#fff;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
@@ -132,7 +132,41 @@
      .portfolio-list{grid-template-columns:1fr}
     }
     @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}#toast{transition:none}}
-  </style>
+  
+    #minimap-overlay.on{opacity:1;pointer-events:auto;transform:none}
+    #wx{position:absolute;left:8px;top:8px;z-index:4;background:rgba(11,16,32,.78);color:#fff;font-size:11px;padding:3px 9px;border-radius:12px;border:1px solid #52688f;pointer-events:none;white-space:nowrap}
+    .xb{font:inherit;font-size:12px;font-weight:bold;color:#fff;background:#1e3a8a;border:2px solid #93c5fd;border-radius:6px;padding:6px 10px;cursor:pointer;text-decoration:none;display:inline-block}
+    .xb:hover:not(:disabled){background:#2563eb}.xb.r{background:#b91c1c;border-color:#fca5a5}.xb:disabled{opacity:.35;cursor:default}
+    .xb.big{display:block;width:100%;text-align:left;padding:12px;font-size:13px}
+    .xcol{display:flex;flex-direction:column;gap:8px}
+    .xrow{display:flex;align-items:center;justify-content:space-between;gap:8px;border:1px solid var(--bd);padding:6px 8px;margin:6px 0;border-radius:6px;font-size:13px}
+    .rg{cursor:pointer}.rg path{transition:.15s}.rg:hover path,.rg.on path{stroke:#ec4899;stroke-width:3.4}
+    .avatar-card small{display:block}
+    .avatar-card small.lv{margin-top:5px;color:#fbbf24;font-weight:bold;letter-spacing:1px}
+    .xin{display:block;width:100%;box-sizing:border-box;font:inherit;font-size:13px;padding:7px 9px;border:1px solid var(--bd);border-radius:6px;background:transparent;color:inherit}
+    .xrow.pick{cursor:pointer}.xrow.pick:hover{border-color:#fbbf24}
+    .adm{font-size:11px;opacity:.85;margin:2px 0 8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}.adm .xb{padding:3px 8px;font-size:11px}
+    .qa{border:1px solid var(--bd);border-radius:6px;padding:8px;margin:8px 0;font-size:13px;line-height:1.5}
+    .qa .a{margin-top:6px;padding:6px 8px;background:#e8f1ff;border-left:3px solid #2563eb;color:#0f172a;white-space:pre-wrap;overflow-wrap:anywhere}
+    .qb{border:1px solid var(--bd);border-radius:8px;margin:7px 0;font-size:13px;overflow:hidden}
+    .qb[open]{border-color:#fbbf24}
+    .qb summary{display:flex;align-items:center;gap:8px;padding:9px 10px;cursor:pointer;list-style:none;min-height:24px}
+    .qb summary::-webkit-details-marker{display:none}
+    .qb summary:hover{background:#2563eb22}
+    .qn{flex:none;font-weight:bold;color:#fff;background:#1e3a8a;border-radius:5px;padding:2px 7px;font-size:12px}
+    .qt{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:bold}
+    .qs{flex:none;font-size:11px;opacity:.75}.qs.done{color:#16a34a;opacity:1;font-weight:bold}
+    .qbd{padding:2px 10px 10px;line-height:1.55}
+    .qq{white-space:pre-wrap;overflow-wrap:anywhere}
+    .qm{display:block;opacity:.7;font-size:11px;margin:3px 0 6px}
+    .qbtn{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+    .qchk{display:flex;align-items:center;gap:6px;font-size:12px;margin:7px 0;cursor:pointer}
+    .qform{border:1px solid var(--bd);border-radius:8px;padding:9px;margin:8px 0;font-size:13px}
+    .qform>summary{cursor:pointer;font-weight:bold}
+    .adimg{display:block;width:100%;max-height:60vh;object-fit:contain;margin:8px 0;border-radius:6px}
+    a.plsong{color:inherit;text-decoration:none;margin:5px 0}
+    @media(max-width:620px){#bn{top:38px!important}}
+</style>
 </head>
 <body>
 <div id="app">
@@ -142,7 +176,8 @@
   <div class="avatar-card">
     <div class="avatar-mark">🧑🏻‍💻</div>
     <strong>KANG BO-SUNG</strong>
-    <small>BS WORLD EXPLORER · Lv. 01</small>
+    <small>BS WORLD EXPLORER</small>
+    <small class="lv">Lv. 01</small>
   </div>
   <div class="stat-line"><span>탐험 진행도</span><b id="progressText">0 / 8 지역</b></div>
   <div class="meter"><span id="progressBar"></span></div>
@@ -151,21 +186,22 @@
   <div class="panel-title" style="margin-top:18px">QUICK ACCESS</div>
   <div class="quick-grid">
     <button onclick="showPortfolio()">👤 소개</button>
-    <button onclick="showCerts()">📜 자격·수상</button>
+    <button onclick="showOrder()">🍊 감귤농원</button>
     <button onclick="showBrain()">🧠 역량 지도</button>
-    <button onclick="showMap()">🗺 월드맵</button>
+    <button onclick="toggleMap()">🗺 월드맵</button>
     <button onclick="showGallery()">📸 갤러리</button>
     <button onclick="showQuestLog()">🎯 퀘스트</button>
   </div>
   <p class="world-note" style="margin-top:14px">키보드 방향키 또는 WASD로 이동하고, Z 키로 주민과 대화하세요. 모바일에서는 화면 아래 패드를 이용할 수 있습니다.</p>
 </aside>
 
-<div id="bar"><b>BS World | Interactive RPG Portfolio</b><button onclick="showMap()">🗺 지도</button><button onclick="showBrain()">🧠 뇌구조</button><button onclick="showCerts()">📜 증명서</button><button id="bg" onclick="togBgm()">🔊</button></div>
+<div id="bar"><b>BS World | Interactive RPG Portfolio</b><button onclick="toggleMap()">🗺 지도</button><button onclick="showBrain()">🧠 뇌구조</button><button id="bg" onclick="togBgm()">🔊</button></div>
 
 <div id="scr">
   <canvas id="c"></canvas>
   <div id="fade"></div>
   <div id="bn"></div>
+  <div id="wx"></div>
   
   <!-- 우측 하단 고정 미니맵 오버레이 -->
   <div id="minimap-overlay">
@@ -219,7 +255,84 @@ const $=s=>document.querySelector(s),TS=32,W=15,H=10,cv=$('#c'),g=cv.getContext(
 const FR='w'+'f'.repeat(W-2)+'w';
 const I=(a,b='wfKKffXffXffKfw')=>['w'.repeat(W),a,FR,FR,b,...Array(4).fill(FR),'wwwwwwwxwwwwwww'];
 /* 마라톤밸리 트랙 (러너들이 도는 순환 경로) */
-const TRACK=[...[2,3,4,5,6,7].map(x=>[x,3]),...[4,5,6].map(y=>[7,y]),...[7,6,5,4,3,2].map(x=>[x,7]),...[6,5,4].map(y=>[2,y])];
+const TRACK=[...[3,4,5,6,7,8,9,10].map(x=>[x,6]),[10,7],...[10,9,8,7,6,5,4,3].map(x=>[x,8]),[3,7]];
+
+/* ===== 제주 시간 · 날씨 ===== */
+const WX={kind:'clear',temp:null,ok:false},QS=new URLSearchParams(location.search);
+const RAIN=Array.from({length:90},()=>({x:Math.random()*520,y:Math.random()*320,v:9+Math.random()*6})),
+      SNOW=Array.from({length:60},()=>({x:Math.random()*480,y:Math.random()*320,v:1+Math.random()*1.5,p:Math.random()*6}));
+function jejuNow(){
+  const f=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Seoul',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(new Date());
+  const g=k=>+f.find(p=>p.type==k).value,hq=QS.get('hour');
+  return{h:hq!=null&&hq!==''?(+hq)%24:g('hour')%24,m:g('minute')};
+}
+const isNight=()=>{const{h}=jejuNow();return h>=19||h<6};
+const WET=()=>WX.kind=='rain'||WX.kind=='snow';
+function nightA(){const{h,m}=jejuNow(),t=h+m/60;if(t>=20||t<5)return .5;if(t>=19)return .5*(t-19);if(t<6)return .5*(6-t);return 0}
+function wxKind(c){if(c==null)return'clear';if(c>=95||(c>=51&&c<=67)||(c>=80&&c<=82))return'rain';if((c>=71&&c<=77)||c==85||c==86)return'snow';if(c==45||c==48)return'fog';if(c>=2)return'cloud';return'clear'}
+const WXL={clear:['☀','맑음'],cloud:['☁','구름 많음'],fog:['🌫','안개'],rain:['🌧','비'],snow:['❄','눈']};
+function wxText(){const l=WXL[WX.kind];return l[1]+(WX.temp!=null?' '+Math.round(WX.temp)+'°C':'')}
+function updateWxChip(){
+  const el=$('#wx');if(!el)return;const{h,m}=jejuNow(),l=WXL[WX.kind],ic=(isNight()&&WX.kind=='clear')?'🌙':l[0];
+  el.textContent='제주 '+String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+' · '+ic+' '+l[1]+' · 🌡 '+(WX.temp!=null?Math.round(WX.temp)+'°C':'--°C');
+}
+function setWx(kind,temp,ok){const old=WX.kind;WX.kind=kind;WX.temp=temp;WX.ok=!!ok;updateWxChip();if(old!==kind)onWxChange()}
+async function loadWeather(){
+  const q=QS.get('weather');if(q&&WXL[q]){setWx(q,null,true);return}
+  try{
+    const r=await fetch('https://api.open-meteo.com/v1/forecast?latitude=33.2541&longitude=126.5601&current=temperature_2m,weather_code,precipitation&timezone=Asia%2FSeoul',{signal:AbortSignal.timeout(8000)});
+    if(!r.ok)throw new Error('open-meteo '+r.status);
+    const c=(await r.json()).current;let k=wxKind(c.weather_code);
+    if(c.precipitation>0.1&&k!='snow')k='rain';
+    setWx(k,c.temperature_2m,true);
+  }catch(e){
+    console.warn('날씨 1차 실패',e);
+    try{   // 예비 날씨 서버
+      const r=await fetch('https://wttr.in/Jeju?format=j1',{signal:AbortSignal.timeout(8000)});
+      if(!r.ok)throw new Error('wttr '+r.status);
+      const c=(await r.json()).current_condition[0],w=+c.weatherCode;
+      const k=w==113?'clear':[116,119,122].includes(w)?'cloud':[143,248,260].includes(w)?'fog':[179,227,230,323,326,329,332,335,338,368,371,392,395].includes(w)?'snow':'rain';
+      setWx(k,+c.temp_C,true);
+    }catch(e2){console.warn('날씨 2차 실패',e2);setWx(WX.kind,WX.temp,false);setTimeout(loadWeather,60000)}   // 둘 다 실패하면 1분 뒤 다시 시도
+  }
+}
+function onWxChange(){if(map&&map.o&&!busy&&!dlg&&!modal)buildNpcs()}
+function weatherFX(t){
+  if(!map||!map.o)return;
+  const w=W*TS,h=H*TS,na=nightA();
+  if(na>0){g.fillStyle='rgba(8,16,52,'+na+')';g.fillRect(0,0,w,h)}
+  const k=WX.kind;
+  if(k=='rain'){
+    g.fillStyle='rgba(20,30,55,.38)';g.fillRect(0,0,w,h);
+    g.strokeStyle='rgba(200,220,255,.65)';g.lineWidth=1;g.beginPath();
+    RAIN.forEach(d=>{d.y+=d.v;d.x-=d.v*.25;if(d.y>h){d.y=-10;d.x=Math.random()*(w+40)}if(d.x<0)d.x+=w;g.moveTo(d.x,d.y);g.lineTo(d.x+3,d.y-9)});g.stroke();
+  }else if(k=='snow'){
+    g.fillStyle='rgba(30,41,59,.12)';g.fillRect(0,0,w,h);g.fillStyle='rgba(255,255,255,.9)';
+    SNOW.forEach(d=>{d.y+=d.v;d.x+=Math.sin(t/600+d.p)*.6;if(d.y>h){d.y=-4;d.x=Math.random()*w}g.fillRect(d.x,d.y,2,2)});
+  }else if(k=='fog'){g.fillStyle='rgba(235,240,245,.28)';g.fillRect(0,0,w,h)}
+  else if(k=='cloud'){g.fillStyle='rgba(30,41,59,.10)';g.fillRect(0,0,w,h)}
+}
+
+const AGL=['C','w','w','L','w','w','A'],AGR=['A','w','w','C','w','w','L'];
+const AGM=['w'.repeat(W),'wwCwwAwwwAwwCww',...[2,3,4,5,6,7,8].map(y=>{const i=y-2,mid=y==3?'k'.repeat(W-2):y==4?'fXfffffffffXf':y==6?'ffZfffffffZff':'f'.repeat(W-2);return AGL[i]+mid+AGR[i]}),'wwwwwwwxwwwwwww'];
+
+/* 해녀 할망 (제주 사투리) */
+const hnS=()=>{
+  if(WET())return['비가 오난 바당이 거칠어부난 오늘은 구경만 허주게.','보성이 할망이우다. 집에 강 감귤차나 마십서. ☕'];
+  if(isNight())return['밤이우다게~ 어두우난 바당 가까이 가지 맙서.','보성이 할망이우다. 혼저 들어강 쉬어사주.'];
+  return['혼저옵서예~ 보성이 할망이우다. 🌊','옛날엔 나도 이 바당에서 물질 허멍 살았주게.'];
+};
+const hnS2=()=>{
+  if(WET())return['날이 궂으난 바당엔 들지 말아사 헌다게.','보성이 외할망이우다. 조심히 다녀갑서예.'];
+  if(isNight())return['이 밤에 어디 감수광? 보성이 외할망이우다.','바당은 낮에 와사 곱닥허주게.'];
+  return['보성이 외할망이우다. 잘 왔수다게~ 🐚','나도 옛날엔 테왁 하나 들엉 바당에 들었주.'];
+};
+const hnCh=()=>({
+  '해녀 이야기':['제주바당은 우리 해녀들 삶터였주게.','숨 참앙 들어가민 바당 속이 또 다른 세상이주.','올라왕 내쉬는 숨비소리, 그게 해녀 소리라.'],
+  '지금 제주 날씨':['제주는 지금 '+wxText()+'이우다게.',WET()?'이런 날엔 바당에 들어가민 안 된다게.':'바당도 잔잔허고 좋은 날이우다.'],
+  '감귤 이야기':['물질허고 나왕 먹는 감귤 한 쪽이 최고우다게. 🍊','1번 도로 오른쪽 과수원에 가민 귤 맛 볼 수 이서마씸.']
+});
+const UMB=[['비가 와부난 우산 써사 헌다게~ ☔','이런 날엔 따끈한 감귤차가 딱이우다.'],['비 오는 날 바당은 구경만 허는 거라게.','미끄러우난 조심히 다녀갑서예!'],['아이고, 우산 뒤집어질 뻔 했쥬.','바람이 막 불어부난…']];
 
 const M={
 town:{n:'태초마을',o:1,bgm:'town',m:[
@@ -227,14 +340,14 @@ town:{n:'태초마을',o:1,bgm:'town',m:[
   'T..F...=...F..T',
   'T.RRR..=.m..F.T',
   'T.HDH..=..F...T',
-  'T.===..=...m.TT',
+  'T.===..=#..m.TT',
   '===============',
-  'T.F...m.....F.T',
-  'T...m...m.F...T',
-  'TT.F........TTT',
-  'TTTTTTTTTTTTTTT'
-],d:{'3,3':['house',7,8]},e:{u:['route1',7,9],l:['coast',14,5],r:['sports',0,5]},p:[
-  {x:10,y:6,c:'#4aa3ff',h:'#6b3e26',n:'마을 소년',s:['어서 와! 여기가 BS World의 태초마을이야.','북쪽 1번 도로 끝엔 자격 시티, 동쪽엔 마라톤 밸리, 서쪽엔 나눔 해변이 있어.','위쪽 🧠 뇌구조 메뉴를 열면 어디든 순간이동할 수 있대!']},
+  'T.F...m=....F.T',
+  'T...m..=m.F...T',
+  'TT.F...=....TTT',
+  'TTTTTTT=TTTTTTT'
+],d:{'3,3':['house',7,8]},e:{u:['route1',7,9],l:['coast',14,5],r:['sports',0,5],d:['rest',7,0]},umb:[[3,5,'#ef4444'],[11,5,'#3b82f6']],p:[
+  {x:10,y:6,c:'#4aa3ff',h:'#6b3e26',n:'마을 소년',s:['어서 와! 여기가 BS World의 태초마을이야.','북쪽 1번 도로 끝엔 자격 시티, 동쪽엔 마라톤 밸리, 서쪽엔 나눔 해변, 남쪽엔 쉼의 숲이 있어.','위쪽 🧠 뇌구조 메뉴를 열면 어디든 순간이동할 수 있대!']},
   {x:5,y:7,c:'#ff8fb1',h:'#222',w:1,n:'꽃집 누나',s:['꽃향기 맡고 가렴. 🌸','달리기 전엔 스트레칭 필수야!']}
 ]},
 
@@ -242,14 +355,14 @@ route1:{n:'1번 도로',o:1,bgm:'route',m:[
   'TTTTTTT=TTTTTTT',
   'TT.F...=...F.TT',
   'T..TT..=..TT..T',
-  'T.F....=.....FT',
-  'TT.....=....TTT',
-  'T..F...=..F...T',
-  'T.TT...=...TT.T',
+  'T.F....=.ac..FT',
+  'TT.....=.gh.TTT',
+  'T..F...========',
+  'T.TT.b.=.b.TT.T',
   'TT.....=.F...TT',
   'T..F...=.....TT',
   'TTTTTTT=TTTTTTT'],
-        e:{u:['cert',7,9], d:['town',7,0]},
+        e:{u:['cert',7,9], d:['town',7,0], r:['orchard',0,5]},umb:[[5,8,'#f59e0b']],
         p:[
 {x:4,y:3,c:'#8a6d4b',h:'#999',n:'등산객',s:['자격증 공부는 마라톤이래. 페이스 조절이 전부지!','북쪽 시티엔 시험을 줄줄이 통과한 사람이 있다던데… 🤔']},
 {x:10,y:5,c:'#ef4444',h:'#222',w:1,n:'꼬마 트레이너',s:['나는 1번 도로의 달리기 선수!','동쪽 마라톤 밸리까지 경주할래?']},
@@ -267,57 +380,119 @@ cert:{n:'학술·자격 검정 시티',o:1,bgm:'knowledge',m:[
    'TT.F...=.....TT',
    'TTTTTTT=TTTTTTT'],
       d:{'3,3':['agency',7,8], '9,3':['mensa',7,8]},
-      e:{d:['route1',7,0]},
+      e:{d:['route1',7,0]},umb:[[10,5,'#a855f7']],
       p:[
 {x:5,y:6,c:'#3b82f6',h:'#222',n:'시티 안내원',s:['여기는 학술·자격 검정 시티.','파란 지붕은 국가 자격 검정원, 보라색 지붕은 멘사 지능 연구소야.']}]},
 
-sports:{n:'체육 & 마라톤 밸리', o:1,bgm:'sports', m:[
+sports:{n:'체육 & 마라톤 밸리', o:1,bgm:'sports',land:[7,5], m:[
            'TTTTTTTTTTTTTTT',
            'TT....F..GGG.TT',
            'T.....F..HDH..T',
-           'T.tttttt.===..T',
-           'T.t....t..=...T',
-           '==t....t===...T',
-           'T.t....t.....FT',
-           'T.tttttt.....TT',
-           'TT..F.......TTT',
+           'T....F...===..T',
+           'T.F.......=...T',
+           '===========...T',
+           'T..tttttttt..FT',
+           'T..t......t...T',
+           'TT.tttttttt.TTT',
            'TTTTTTTTTTTTTTT'],
-        d:{'10,2':['gym',7,8]}, e:{l:['town',14,5]},
+        d:{'10,2':['gym',7,8]}, e:{l:['town',14,5]},umb:[[12,7,'#ef4444']],
         p:[
 {x:3,y:3,ti:1,run:1,c:'#22c55e',h:'#222',n:'트랙 러너',s:['하나, 둘! 하나, 둘!','특전사 출신 코치님이 체육관에 계셔.']},
 {x:7,y:5,ti:7,run:1,c:'#ef4444',h:'#6b3e26',n:'마라토너',s:['헉헉… 하프코스는 21km래!','페이스 조절이 제일 중요해.']},
 {x:5,y:7,ti:13,run:1,c:'#f59e0b',h:'#222',n:'조깅 크루',s:['트랙 한 바퀴 더!','감귤마라톤 10km도 같이 뛸래? 🍊']}]},
 
 coast:{n:'제주 바닷가',o:1,bgm:'beach',m:[
-  '~~3~2ss.TTTTTTT',
-  '~1~~~ss...RRR.T',
-  '4~~~~ss...HDH.T',
-  '~~2~sss...===.T',
-  '~~~3ss...====.T',
-  '~1~sss..=======',
+  '~~3~2~~=TTTTTTT',
+  '~1~~~ss=..RRR.T',
+  '4~~~~ss=..HDH.T',
+  '~~2~sss=..===.T',
+  '~~~3ss.=.====.T',
+  '~1~sss.========',
   '~~~~ss.F.....FT',
   '~~~1~ss.......T',
   '~2~~3~ss..F.TTT',
-  '~~4~~~~sTTTTTTT'],d:{'11,2':['vc',7,8]},e:{r:['town',0,5]},p:[
-{x:5,y:4,c:'#e879f9',h:'#222',w:1,n:'해변 산책러',s:['파도 소리를 들으면 마음이 차분해져. 🌊','센터에 가면 헌혈왕 이야기를 들을 수 있어!']}]},
+  '~~4~~~~sTTTTTTT'],d:{'11,2':['vc',7,8]},e:{r:['town',0,5],u:['airport',7,9]},p:[
+{x:5,y:4,c:'#e879f9',h:'#222',w:1,n:'해변 산책러',s:['파도 소리를 들으면 마음이 차분해져. 🌊','센터에 가면 헌혈왕 이야기를 들을 수 있어!']},
+{x:4,y:6,c:'#1f2937',h:'#d1d5db',tw:1,n:'해녀 할망 (보성 할머니)',s:hnS,ch:hnCh},
+{x:6,y:8,c:'#334155',h:'#e5e7eb',tw:1,n:'해녀 할망 (보성 외할머니)',s:hnS2,ch:hnCh}],umb:[[9,6,'#3b82f6']]},
 
-house:{n:'보성의 집',par:'town',bgm:'indoor',m:I('wwwPwwwwKKwwwww','wfKKffXffXffKfw'),d:{'7,9':['town',3,4]},p:[
+airport:{n:'제주 공항',o:1,bgm:'route',plane:[2,3],m:[
+  'TTTTTTTTTTTTTTT',
+  'rrrrrrrrrrrrrrr',
+  'yyyyyyyyyyyyyyy',
+  'uueeeuuuuuuuuuu',
+  'uueeeuuuuuuuuuu',
+  'nnnnnnnnn...S..',
+  'jjjjDjjjj......',
+  'Ti..=....F....T',
+  'T...========.FT',
+  'TTTTTTT=TTTTTTT'],d:{'4,6':['terminal',7,8]},e:{d:['coast',7,0]},umb:[[2,8,'#0ea5e9']],p:[
+{x:7,y:4,c:'#ea580c',h:'#222',n:'항공 정비사',s:['기체 점검 이상 없음! ✈','비행기를 타고 싶으면 터미널 안 탑승 수속 카운터로 가 봐.']},
+{x:12,y:7,c:'#a78bfa',h:'#6b3e26',w:1,n:'여행객',s:['제주에 내리자마자 귤 냄새가 나는 것 같아요. 🍊','남쪽 길로 내려가면 바로 바다예요!']}]},
+
+rest:{n:'쉼의 숲',o:1,bgm:'indoor',m:[
+  'TTTTTTT=TTTTTTT',
+  'T.F....=...F.TT',
+  'T.WWW..=..~~~.T',
+  'T.HDH..=.F~~~FT',
+  'T.======b.~~~.T',
+  'T...F..=..b...T',
+  'TFb....=....F.T',
+  'T..m...=.F..b.T',
+  'TT.F...=...F.TT',
+  'TTTTTTTTTTTTTTT'],d:{'3,3':['library',7,8]},e:{u:['town',7,9]},umb:[[5,6,'#14b8a6']],p:[
+{x:9,y:5,c:'#14b8a6',h:'#d1d5db',n:'숲지기',s:['잘 왔수다. 여긴 잠시 쉬어 가는 곳이우다. 🌿','초록 지붕 음악 서재에 들어강 노래 한 곡 들어봅서.']},
+{x:5,y:7,c:'#c4b5fd',h:'#3f2a1c',w:1,n:'산책하는 사람',s:['아무것도 안 해도 되는 시간이 제일 좋네요.','연못 앞 벤치도 좋아요.']}]},
+
+library:{n:'보성의 음악 서재',par:'rest',bgm:'indoor',m:['w'.repeat(W),'wwzwzwzwzwzwzww',FR,FR,'wppffXfffXffppw',FR,'wfKKfffffffKKfw',FR,FR,'wwwwwwwxwwwwwww'],d:{'7,9':['rest',3,4]},p:[
+{x:7,y:3,c:'#0f766e',h:'#1b1b26',n:'서재 지기',s:['어서 오세요. 주인장이 고른 노래가 벽에 걸려 있어요. 🎵','액자를 누르면 곡 목록을 볼 수 있어요.'],ch:{'🎵 플레이리스트 보기':()=>plHome(),'듣는 방법':['곡을 누르면 YouTube Music이 새 창으로 열려요.','그때 게임 음악은 자동으로 꺼져요.']}},
+{x:11,y:7,c:'#fda4af',h:'#222',w:1,n:'음악 듣는 손님',s:['이 서재에 오면 시간이 천천히 가는 것 같아요.']}]},
+
+orchard:{n:'감귤 과수원',o:1,bgm:'route',land:[7,5],m:[
+  'TTTTTTTTTTTTTTT',
+  'T.F........VVVT',
+  'T..dodododovvvT',
+  'T..ddddddddvvvT',
+  'T..dodododo...T',
+  '===========...T',
+  'T..dodododo...T',
+  'T..dddddddd...T',
+  'T..dodododo..TT',
+  'TTTTTTTTTTTTTTT'],e:{l:['route1',14,5]},p:[
+{x:5,y:3,c:'#16a34a',h:'#6b7280',w:1,n:'감귤 농부 삼춘',s:['제주 감귤이 맛좋수다게~ 🍊','혼저 옵서예. 한 입 먹어봅서게!'],ch:{'감귤 이야기':['귤은 껍질 얇고 단내 확 나는 게 잘 익은 거우다.','겨울엔 비닐하우스에서 하우스감귤도 키우주.'],'농사 이야기':['허리가 아파도 열매 보민 힘이 나는 거라게.','비 오는 날은 하우스 안에서 가지 정리허곡 허여.']}},
+{x:9,y:7,c:'#f59e0b',h:'#d1d5db',w:1,n:'귤 따는 할망',s:['오늘 귤은 당도가 막 좋쿠다게~','저 안쪽 나무 밑에서 쉬엉 갑서예.']},
+{x:3,y:7,c:'#0ea5e9',h:'#222',w:1,n:'농부 청년',s:['귤 따는 철이 되민 눈코 뜰 새 없쥬.','보성이네 감귤농원 귤이 제일 맛좋수다게! 🍊']},
+{x:7,y:3,c:'#854d0e',h:'#d1d5db',n:'보성 할아버지',s:['어서 옵서. 보성이 할아버지우다.','우리 감귤밭 구경허영 갑서게. 🍊'],ch:{'감귤 농사':['감귤은 사람 발소리 듣고 큰다고 허주.','부지런히 밭에 나와사 귤도 달아지는 거라.'],'보성이 이야기':['보성이 왔걸랑 귤 많이 먹으라고 곧아줍서.']}},
+{x:6,y:7,c:'#166534',h:'#e5e7eb',n:'보성 외할아버지',s:['보성이 외할아버지우다. 잘 왔수다게.','여기 귤 한번 맛봅서. 달주게? 🍊'],ch:{'감귤 농사':['바람 막아주는 돌담이 제주 귤밭의 보물이주.','겨울 되민 노랗게 익은 밭이 그렇게 곱닥허여.'],'보성이 이야기':['보성이 잘 지내는지, 만나걸랑 안부 전해줍서.']}}]},
+
+house:{n:'보성의 집',par:'town',bgm:'indoor',m:(()=>{const r=I('wqwPwqwwKKwqwqw','wfKKffXffXffKfw');r[6]=r[6].slice(0,7)+'OO'+r[6].slice(9);return r})(),
+memo:{'1,1':{s:'INFJ',c:'#fde047',l:['🧩 MBTI','INFJ']},'5,1':{s:'💙',c:'#93c5fd',l:['💙 좋아하는 색깔','파란색!']},'11,1':{s:'🐶',c:'#f9a8d4',l:['🐶 좋아하는 동물','강아지!']},'13,1':{s:'🎵',c:'#86efac',l:['🎵 즐겨듣는 노래','아직 메모를 쓰는 중이에요. 곧 채워 넣을게요!']}},
+d:{'7,9':['town',3,4]},p:[
 {x:6,y:4,c:'#7dd3fc',h:'#1b1b26',n:'거울 속의 나',s:['안녕, 나는 강보성.','BS World에 오신 것을 환영해! IT, 전기공학 및 실무 역량을 지속 발전시키는 중이야.'],ch:{'지금까지의 길':['🧠 멘사 IQ 156 · 💻 정보처리기사 · 🏃 하프마라톤 3회 · 🩸 헌혈 167회'],'다음 모험':['다음 챕터는 함께할 새로운 퀘스트야.','벽의 액자도 꼭 눌러봐. 📸']}},
-{x:11,y:6,c:'#f59e0b',h:'#f59e0b',w:1,n:'고양이',s:['야옹~ 🐱','(주인이 코딩하는 동안 키보드 옆을 지키는 중이다냥.)']}]},
+{x:11,y:6,c:'#f59e0b',h:'#f59e0b',w:1,n:'고양이',s:['야옹~ 🐱','(주인이 코딩하는 동안 키보드 옆을 지키는 중이다냥.)']},
+{x:4,y:5,c:'#475569',h:'#374151',n:'보성 아버지',s:['어서 와요. 보성이 아버지입니다.','우리 보성이 집에 온 걸 환영합니다. 편히 둘러봐요.']},
+{x:4,y:7,c:'#db2777',h:'#3f2a1c',n:'보성 어머니',s:['어머, 손님이 왔네! 보성이 엄마예요.','밥은 먹었어요? 귤이라도 하나 먹고 가요. 🍊']},
+{x:11,y:4,c:'#22c55e',h:'#1b1b26',n:'보성 동생',s:['안녕하세요! 저는 보성이 동생이에요.','가운데 테이블에서 우리 보성이한테 질문 남길 수 있어요. 😄']}]},
 
 gym:{n:'런 라이프 체육관',par:'sports',bgm:'sports',m:I('wNwMwJwwwJwMwNw','wfKKffXffXffKfw'),d:{'7,9':['sports',10,3]},sh:['🏅 마라톤 메달 진열대','2013 · 2016 · 2016 하프코스 완주 / 2019 감귤마라톤 10km'],p:[
 {x:7,y:5,c:'#16a34a',h:'#222',n:'메인 러닝 코치',s:['어서 와! 여기는 런 라이프 체육관.','마라톤 하프코스를 3번 완주한 러너의 기록실이지.'],ch:{'하프코스 3회':['2013 제2회 6.25 상기 및 정전 60주년 기념 국민대통합 마라톤 대회 하프 01:58:21.05','2016 제9회 아름다운제주국제마라톤대회 하프 2:27:11.23','2016 제21회 제주국제관광마라톤축제 하프 02:54:26.14'],'감귤마라톤 & 볼링':['2019 제주감귤국제마라톤 10km 01:22:38.32 🍊','2011 제30회 제주특별자치도볼링협회장기 전도볼링대회 대학부 남자 2인조전 3위 🎳']}},
 {x:3,y:6,c:'#60a5fa',h:'#222',w:1,n:'서브 러너',s:['후… 후… 아 안녕!','기록은 숫자지만 완주는 이야기야. 파이팅!']}]},
 
-agency:{n:'국가 자격 검정원',par:'cert',bgm:'knowledge',m:I('wCwLwAwwwAwLwCw'),d:{'7,9':['cert',3,4]},sh:['🏆 수상 전시','2016 지역기업 청년 희망이음 프로젝트 경진대회 대상 (산업통상자원부 장관상)','2017 같은 대회 금상 (산업통상자원부 장관상)'],p:[
-{x:7,y:5,c:'#2563eb',h:'#333',n:'총괄 수석관',s:['어서 오게. 국가 자격 검정원이야.','무엇이 궁금한가?'],ch:{'자격증':['📜 정보처리기사 · 컴퓨터활용능력 1급 · 워드프로세서','📊 사회조사분석사 2급 · 한국사능력검정시험 2급','🔤 TOEIC 최고 775점'],'공모전·수상':['🏆 2016 지역기업 청년 희망이음 프로젝트 경진대회 대상 (산업통상자원부 장관상)','🥇 2017 같은 대회 금상 (산업통상자원부 장관상)']}},
-{x:11,y:6,c:'#94a3b8',h:'#222',w:1,n:'시험 준비생',s:['으아… 정처기 실기 공부 중이에요.','저분 기록 보면 희망이 생겨요!']}]},
+terminal:{n:'제주 공항 터미널',par:'airport',bgm:'indoor',m:['w'.repeat(W),'wwlwwlwwwlwwlww',FR,'w'+'k'.repeat(W-2)+'w',FR,FR,'wfKKffffffffKKw',FR,FR,'wwwwwwwxwwwwwww'],d:{'7,9':['airport',4,7]},p:[
+{x:7,y:2,c:'#0369a1',h:'#222',n:'탑승 수속 직원',s:['BS 에어입니다. 어디로 가시겠어요? ✈'],ch:{'✈ 비행기 타기':()=>showFlight(),'공항 안내':['벽의 출발 안내판을 눌러도 탑승할 수 있어요.','BS World 안 어디든 바로 날아갑니다.']}},
+{x:3,y:5,c:'#f472b6',h:'#222',w:1,n:'출장 가는 직장인',s:['비행기 타기 전 감귤 주스 한 잔이 국룰이죠.']},
+{x:11,y:7,c:'#94a3b8',h:'#d1d5db',n:'마중 나온 삼춘',s:['보성이 오는 날인가 해서 기다렴수다게.']}]},
+
+agency:{n:'국가 자격 검정원',par:'cert',bgm:'knowledge',m:AGM,d:{'7,9':['cert',3,4]},p:[
+{x:7,y:2,c:'#2563eb',h:'#333',n:'접수 데스크',s:['어서 오세요. 국가 자격 검정원입니다.','시험 접수는 안쪽 컴퓨터에서 하실 수 있어요.'],ch:{'자격증':['📜 정보처리기사 · 컴퓨터활용능력 1급 · 워드프로세서','📊 사회조사분석사 2급 · 한국사능력검정시험 2급','🔤 TOEIC 최고 775점'],'공모전·수상':['🏆 2016 지역기업 청년 희망이음 프로젝트 경진대회 대상 (산업통상자원부 장관상)','🥇 2017 같은 대회 금상 (산업통상자원부 장관상)'],'접수 방법':['컴퓨터 앞에서 Z 키를 누르면 접수 화면이 열려요.','Q-Net, TOEIC, 한국사능력검정시험 접수 페이지로 바로 갈 수 있고, 접수내역도 확인할 수 있어요.'],'벽의 증명서':['좌우 벽의 액자를 눌러 보세요.','증명서 목록을 자세히 볼 수 있어요.']}},
+{x:4,y:2,c:'#0ea5e9',h:'#1b1b26',n:'접수 도우미',s:['컴퓨터에서 시험 접수를 하실 수 있어요.','Q-Net이랑 TOEIC, 둘 다 가능해요!']},
+{x:9,y:6,c:'#94a3b8',h:'#222',w:1,n:'시험 준비생',s:['으아… 정처기 실기 공부 중이에요.','저분 기록 보면 희망이 생겨요!']}]},
 
 mensa:{n:'멘사 지능 연구소',par:'cert',bgm:'knowledge',m:I('wBwEwCwIwCwEwBw'),d:{'7,9':['cert',9,4]},sh:['🧠 멘사 전시','IQ 156 · Percentile 99% · 상위 1% 준회원'],p:[
 {x:7,y:4,c:'#7c3aed',h:'#eee',n:'멘사 연구소장',s:['멘사 지능 연구소에 온 걸 환영합니다.','테스트 결과: IQ 156, Percentile 99%. 상위 1% 준회원입니다.']}]},
 
-vc:{n:'나눔 & 기여 커뮤니티 센터',par:'coast',bgm:'beach',m:I('wUwVwCwwwCwVwUw'),d:{'7,9':['coast',11,3]},sh:['🩸 헌혈 유공 진열대','대한적십자사 헌혈유공장 은장 · 헌혈 167회'],p:[
-{x:7,y:5,c:'#dc2626',h:'#444',n:'커뮤니티 이사장',s:['어서 오세요. 나눔 & 기여 커뮤니티 센터입니다.'],ch:{'헌혈':['🩸 헌혈 167회 달성!','적십자 헌혈유공장 은장 포장증을 받았습니다.']}},
+vc:{n:'나눔 & 기여 커뮤니티 센터',par:'coast',bgm:'beach',m:I('wUwVwCwwwCwVwUw'),d:{'7,9':['coast',11,3]},sh:['🩸 헌혈 유공 진열대','대한적십자사 헌혈유공장 은장 · 헌혈 167회','🤝 봉사활동 · 상상 Volunteer 활동'],p:[
+{x:7,y:5,c:'#dc2626',h:'#444',n:'커뮤니티 이사장',s:['어서 오세요. 나눔 & 기여 커뮤니티 센터입니다.'],ch:{'헌혈':['🩸 헌혈 167회 달성!','적십자 헌혈유공장 은장 포장증을 받았습니다.'],'봉사활동':['🤝 상상 Volunteer 활동에 참여했습니다.','작은 나눔이 모이면 큰 기록이 돼요.']}},
 {x:4,y:6,c:'#fb923c',h:'#222',w:1,n:'봉사원',s:['오늘도 봉사 활동 중! 😊','작은 나눔이 모이면 큰 기록이 돼요.']}]}
 };
 Object.values(M).forEach(z=>z.m=z.m.map(r=>r.padEnd(W,'T').slice(0,W)));
@@ -332,13 +507,16 @@ function tile(c,k,x,y,t){
   const gr=()=>{f('#6cc04a',0,0,32,32);f('#5aaa3c',(r*5)%24+2,(r*3)%20+4,3,3);f('#7fd35a',(r*9)%22+4,(r*7)%24+2,2,2)},
         wl=()=>{f('#5b4636',0,0,32,32);f('#7a5f49',0,0,32,6)},
         fl=()=>{f('#c9a36b',0,0,32,32);f('#b78f55',0,0,32,1);f('#b78f55',0,0,1,32)},
-        RC={R:'#d64541',Q:'#3b6fd6',G:'#2f9e5f',Y:'#7e57c2'},
+        RC={R:'#d64541',Q:'#3b6fd6',G:'#2f9e5f',Y:'#7e57c2',W:'#0f766e'},
         sea=()=>{f('#38bdf8',0,0,32,32);f('#0284c7',0,0,32,16);const wo=Math.sin((t/180)+x+y)*4;f('#ffffffa0',2,8+wo,14,2);f('#ffffff80',16,20-wo,12,2)},
         ci=(cx,cy,rad,col)=>{c.fillStyle=col;for(let j=-rad;j<=rad;j++){const w=Math.round(Math.sqrt(rad*rad-j*j+rad*.3));c.fillRect(X+cx-w,Y+cy+j,2*w,1)}},
         FP=[['#f472b6','#fde047'],['#ffffff','#f59e0b'],['#facc15','#b45309'],['#a78bfa','#fff7ae'],['#60a5fa','#fde047'],['#fb923c','#fef3c7']],
         stem=(sx,sy,h)=>{f('#2f8f3a',sx,sy,2,h);f('#4ade80',sx+2,sy+(h>>1),4,2);f('#4ade80',sx-4,sy+h-3,4,2)},
         fl4=(ax,ay,u,pc,cc)=>{f(pc,ax+u,ay,u,u);f(pc,ax+u,ay+2*u,u,u);f(pc,ax,ay+u,u,u);f(pc,ax+2*u,ay+u,u,u);f(cc,ax+u,ay+u,u,u)},
         tul=(ax,ay,col,hi)=>{f(col,ax+1,ay,2,4);f(col,ax+6,ay,2,4);f(col,ax+3,ay+1,3,3);f(col,ax+1,ay+3,7,5);f(col,ax+2,ay+8,5,1);f(hi,ax+2,ay+4,2,3)},
+        soil=()=>{f('#8b5a2b',0,0,32,32);f('#7a4a22',0,6,32,3);f('#7a4a22',0,18,32,3);f('#a06a36',(r*5)%24+2,(r*7)%24+2,3,2);f('#6b3f1d',(r*9)%24+2,(r*3)%24+10,2,2)},
+        citrus=()=>{f('#5c4028',14,20,4,12);f('#705035',15,20,1,12);ci(16,13,12,'#1e7a31');ci(16,12,10,'#2eb84d');f('#76e053',9,5,8,3);
+          [[9,12],[18,7],[21,15],[13,17],[17,12]].forEach(([p,q])=>{f('#ea580c',p,q,5,5);f('#fb923c',p+1,q+1,3,3);f('#fde68a',p+1,q+1,1,1)})},
         DG={1:'010110010010111',2:'111001111100111',5:'111100111001111',6:'111100111101111'},
         dg=(str,x0,y0,u,col)=>{[...str].forEach((ch,n)=>{[...DG[ch]].forEach((v,i)=>{if(v==='1')f(col,x0+n*4*u+(i%3)*u,y0+((i/3)|0)*u,u,u)})})};
   if(RC[k]){f(RC[k],0,0,32,32);f('#0003',0,10,32,3);f('#0003',0,22,32,3);f('#fff4',0,0,32,4);return}
@@ -352,13 +530,17 @@ function tile(c,k,x,y,t){
       stem(ax+4,ay+9,10);
       if(ft<6)fl4(ax,ay,3,FP[ft][0],FP[ft][1]); else tul(ax,ay,(x+y)%2?'#e11d48':'#facc15',(x+y)%2?'#fb7185':'#fef08a');
       break}
-    case 'm': { // 감귤나무
-      gr(); f('#5c4028',14,20,4,12); f('#705035',15,20,1,12);
-      ci(16,13,12,'#1e7a31'); ci(16,12,10,'#2eb84d'); f('#76e053',9,5,8,3);
-      [[9,12],[18,7],[21,15],[13,17],[17,12]].forEach(([p,q])=>{f('#ea580c',p,q,5,5);f('#fb923c',p+1,q+1,3,3);f('#fde68a',p+1,q+1,1,1)});
-      break}
+    case 'm': gr(); citrus(); break;
+    case 'o': soil(); citrus(); break;
+    case 'd': soil(); break;
+    case 'V': f('#cfe8ff',0,0,32,32); f('#9fb8d6',0,0,32,3); [0,10,21,30].forEach(q=>f('#9fb8d6',q,0,2,32)); f('#ffffffa0',0,5,32,6); f('#b6d3f0',0,26,32,6); break;
+    case 'v': f('#e8f4ff',0,0,32,32); [0,10,21,30].forEach(q=>f('#9fb8d6',q,0,2,32)); f('#4ade80',4,16,6,12); f('#22c55e',14,12,6,16); f('#4ade80',23,18,6,10); f('#ffffff80',2,2,28,4); f('#6b7280',0,28,32,4); break;
+    case 'k': fl(); f('#f3ead2',0,4,32,14); f('#d6c9a5',0,16,32,2); f('#3b5bdb',0,18,32,14); f('#5b7cf0',0,18,32,2); f('#2b44a8',0,30,32,2); break;
+    case 'Z': fl(); f('#8a6d4b',3,16,26,14); f('#6b4a2e',3,28,26,2); f('#374151',8,2,16,14); f('#60a5fa',10,4,12,9);
+      f('#ffffff',11,6,6,1); f('#ffffff',11,8,9,1); f('#ffffff',11,10,4,1); if((t/400|0)%2)f('#ffffff',16,10,2,1);
+      f('#6b7280',14,16,4,2); f('#d1d5db',9,20,14,5); f('#9ca3af',11,22,2,1); f('#9ca3af',15,22,2,1); f('#9ca3af',19,22,2,1); break;
     case '1': { // 해녀 + 테왁
-      sea(); const b=Math.round(Math.sin(t/350+x*2+y)*2);
+      sea(); if(WET())break; const b=Math.round(Math.sin(t/350+x*2+y)*2);
       f('#ffffff90',3,25+b,12,1); f('#ffffff70',17,25+b,10,1); f('#ffffffb0',13,20+b,10,1);
       ci(23,18+b,5,'#f97316'); f('#fdba74',20,15+b,3,2); f('#c2410c',20,22+b,6,1);
       f('#a16207',20,23+b,6,4); f('#ca8a04',21,24+b,1,3); f('#ca8a04',24,24+b,1,3);
@@ -366,15 +548,16 @@ function tile(c,k,x,y,t){
       f('#7dd3fc',7,16+b,6,2); f('#111',6,16+b,1,2);
       f('#111827',5,20+b,9,4); f('#38bdf8cc',4,22+b,12,3); break}
     case '2': { // 고깃배
-      sea(); const b=Math.round(Math.sin(t/420+x+y*2)*1.5);
+      sea(); if(WET())break; const b=Math.round(Math.sin(t/420+x+y*2)*1.5);
       f('#ffffffa0',3,26+b,26,1);
       f('#7c2d12',4,19+b,24,4); f('#92400e',6,23+b,20,2); f('#d6a35c',4,18+b,24,1);
       f('#5b4636',15,5+b,2,14);
       f('#ffffff',17,6+b,2,12); f('#ffffff',19,8+b,2,10); f('#ffffff',21,11+b,2,7); f('#ffffff',23,14+b,2,4);
       f('#ef4444',10,5+b,5,3); break}
-    case '3': { // 물고기
-      sea(); const d1=Math.round(Math.sin(t/500+x*3+y)*3),d2=-d1;
-      f('#fb923c',9+d1,12,10,6); f('#fdba74',11+d1,16,6,1); f('#f97316',6+d1,11,3,3); f('#f97316',6+d1,16,3,3); f('#f97316',8+d1,13,1,3); f('#111',16+d1,14,1,1);
+    case '3': { // 물고기 (비 오면 적게)
+      sea(); const d1=Math.round(Math.sin(t/500+x*3+y)*3),d2=-d1,wt=WET();
+      if(wt&&(x+y)%2)break;
+      if(!wt){f('#fb923c',9+d1,12,10,6); f('#fdba74',11+d1,16,6,1); f('#f97316',6+d1,11,3,3); f('#f97316',6+d1,16,3,3); f('#f97316',8+d1,13,1,3); f('#111',16+d1,14,1,1)}
       f('#60a5fa',14+d2,22,8,4); f('#bfdbfe',16+d2,23,4,1); f('#3b82f6',22+d2,21,2,3); f('#3b82f6',22+d2,25,2,3); f('#111',15+d2,23,1,1);
       f('#ffffffb0',5,8,2,2); f('#ffffffb0',25,15,1,1); break}
     case '4': { // 부표
@@ -382,13 +565,46 @@ function tile(c,k,x,y,t){
       f('#ffffffa0',6,27+b,20,1);
       f('#374151',15,7+b,2,8); f('#fde047',13,4+b,6,3);
       ci(16,20+b,6,'#ef4444'); f('#ffffff',10,19+b,12,2); f('#fecaca',12,16+b,2,2); break}
-    case 't': f('#c8693f',0,0,32,32); f('#e5d5c0',0,0,32,2); break;
+    case 't': { const nt=(a,b)=>at(x+a,y+b)=='t',L='#f8fafc',B='#c8693f',U=nt(0,-1),D=nt(0,1),Le=nt(-1,0),Ri=nt(1,0);
+      if((U||D)&&(Le||Ri)){ // 모서리: 안쪽 꼭짓점을 중심으로 둥글게
+        gr(); const cx=Ri?32:0,cy=D?32:0;
+        for(let j=0;j<32;j++)for(let i=0;i<32;i++){const r=Math.hypot(i+.5-cx,j+.5-cy);
+          if(r<32)f((r>=1&&r<4)||(r>=28&&r<31)?L:B,i,j,1,1)}
+        break}
+      f(B,0,0,32,32);
+      if(!U)f(L,0,1,32,3); if(!D)f(L,0,28,32,3); if(!Le)f(L,1,0,3,32); if(!Ri)f(L,28,0,3,32); break}
     case 'H': f('#fef3c7',0,0,32,32); f('#b45309',0,28,32,4); f('#38bdf8',9,8,14,12); f('#fff',9,8,14,2); break;
     case 'D': fl(); f('#78350f',4,6,24,20); f('#b45309',6,8,20,14); f('#fde68a',10,11,6,6); break;
     case 'X': fl(); f('#9ca3af',10,18,12,10); f('#15803d',8,6,16,14); f('#22c55e',10,8,12,10); f('#f43f5e',14,6,4,4); break;
     case 'f': fl(); break; case 'w': wl(); f('#46352a',0,28,32,4); break;
     case 'K': fl(); f('#7a4a2a',2,6,28,22); f('#a8693f',2,6,28,6); break;
     case 'P': wl(); f('#e0b840',6,2,20,26); f('#cfd8e8',9,5,14,20); spr(c,X+10,Y+7,1,{l:false,p:'#f2c9a0'}); break;
+    case 'a': gr(); f('#1f2937',2,20,30,5); f('#374151',2,6,30,15); f('#4b5563',2,6,30,5); f('#6b7280',2,6,30,2); for(let i=0;i<5;i++)f('#2d3748',4+i*6,12,1,9); f('#374151',0,14,4,9); break;
+    case 'c': gr(); f('#1f2937',0,20,30,5); f('#374151',0,6,30,15); f('#4b5563',0,6,30,5); f('#6b7280',0,6,30,2); for(let i=0;i<5;i++)f('#2d3748',2+i*6,12,1,9); f('#374151',28,14,4,9); break;
+    case 'g': gr(); f('#b08968',2,16,30,14); f('#8f6b4a',2,28,30,2); f('#00000030',2,0,30,4); f('#9b2c2c',5,0,5,24); f('#c0392b',5,0,2,24); f('#7a4a22',2,14,30,3); break;
+    case 'h': gr(); f('#b08968',0,16,30,14); f('#8f6b4a',0,28,30,2); f('#00000030',0,0,30,4); f('#9b2c2c',22,0,5,24); f('#c0392b',22,0,2,24); f('#7a4a22',0,14,30,3); break;
+    case 'b': gr(); f('#a06a36',4,8,24,5); f('#8a5a2b',4,15,24,6); f('#c08850',4,15,24,2); f('#5c4028',6,21,3,7); f('#5c4028',23,21,3,7); f('#00000025',4,28,24,2); break;
+    case 'r': f('#374151',0,0,32,32); f('#e5e7eb',0,2,32,2); if(x%2==0)f('#f8fafc',4,29,22,3); break;
+    case 'y': f('#374151',0,0,32,32); f('#e5e7eb',0,28,32,2); if(x%2==0)f('#f8fafc',4,0,22,3); break;
+    case 'u': case 'e': f('#9ca3af',0,0,32,32); f('#8b95a3',0,0,32,1); f('#8b95a3',0,0,1,32); if(y==3)f('#facc15',0,29,32,2); break;
+    case 'n': f('#2563eb',0,0,32,32); f('#60a5fa',0,0,32,5); f('#1d4ed8',0,27,32,5); if(x%2)f('#3b82f6',0,8,32,3); if(x==4){c.fillStyle='#fff';c.font='bold 18px sans-serif';c.textAlign='center';c.fillText('✈',X+16,Y+22);c.textAlign='start'} break;
+    case 'j': f('#e2e8f0',0,0,32,32); f('#38bdf8',3,4,26,20); f('#bae6fd',3,4,26,4); f('#94a3b8',15,4,2,20); f('#64748b',0,28,32,4); break;
+    case 'S': gr(); f('#cbd5e1',12,12,8,20); f('#94a3b8',12,12,2,20); f('#475569',6,2,20,10); f('#7dd3fc',8,4,16,6); f('#ef4444',15,0,2,2); break;
+    case 'i': gr(); f('#5c4028',14,16,4,16); f('#1d4ed8',4,4,24,14); c.fillStyle='#fff'; c.font='bold 12px sans-serif'; c.textAlign='center'; c.fillText('✈',X+16,Y+15); c.textAlign='start'; break;
+    case 'l': wl(); f('#111827',3,4,26,22); f('#374151',3,4,26,2); f('#fbbf24',5,9,14,2); f('#fbbf24',5,14,18,2); f('#fbbf24',5,19,10,2); if((t/500|0)%2)f('#4ade80',23,9,3,2); break;
+    case '#': gr(); f('#5c4028',5,20,4,12); f('#5c4028',23,20,4,12); f('#7a4a22',2,3,28,20); f('#a06a36',2,3,28,3); f('#fff7ed',7,8,10,13); f('#f97316',9,10,6,6); f('#16a34a',12,9,2,2); f('#fde68a',20,9,7,8); f('#ef4444',11,7,2,2); f('#ef4444',23,8,2,2); break;
+    case 'p': fl(); f('#5c3d24',2,1,28,30); [[3,'#ef4444'],[8,'#3b82f6'],[13,'#22c55e'],[18,'#f59e0b'],[23,'#a78bfa']].forEach(([a,b],i)=>{f(b,a+1,4,4,10);f(b,27-a-3,18,4,10)}); f('#3f2a1c',2,15,28,2); break;
+    case 'z': { wl(); const pl=PLS[PL_SLOT.indexOf(x)]; f('#3f2a1c',3,2,26,26);
+      if(pl){f('#0f766e',5,4,22,22); c.fillStyle='#fff'; c.textAlign='center'; c.font='bold 10px sans-serif'; c.fillText(+pl.ym.slice(5)+'월',X+16,Y+14); c.font='9px sans-serif'; c.fillText('🎵'+pl.songs.length,X+16,Y+24); c.textAlign='start'}
+      else f('#6b5a48',5,4,22,22); break}
+    case 'q': { wl(); const m=(map.memo||{})[x+','+y]||{};
+      f('#00000030',7,7,20,20); f(m.c||'#fde047',6,5,20,20); f('#ffffff66',6,5,20,3); f('#ef4444',15,4,3,3);
+      c.fillStyle='#374151'; c.font='bold '+((m.s||'').length>2?8:13)+'px sans-serif'; c.textAlign='center'; c.fillText(m.s||'',X+16,Y+21); c.textAlign='start'; break}
+    case 'O': { fl(); const Lf=map.m[y][x-1]=='O',Rt=map.m[y][x+1]=='O',a0=Lf?0:3,a1=Rt?32:29;
+      f('#6b4a2e',a0,22,a1-a0,6); f('#8a6d4b',a0,10,a1-a0,14); f('#a8693f',a0,10,a1-a0,2);
+      if(!Lf){f('#ffffff',7,12,15,9); f('#d1d5db',14,12,2,9); f('#9ca3af',9,14,4,1); f('#9ca3af',9,17,4,1); f('#9ca3af',18,14,3,1); f('#9ca3af',18,17,3,1)}
+      else{f('#fde047',6,15,9,2); f('#ef4444',4,15,2,2); f('#fbbf24',10,1,14,9); c.fillStyle='#7c2d12'; c.font='bold 8px sans-serif'; c.fillText('Q&A',X+11,Y+9)}
+      break}
     case 'x': // 실내 출입구 매트
       fl(); f('#3f2a1c',0,0,3,32); f('#3f2a1c',29,0,3,32); f('#b91c1c',4,0,24,32); f('#7f1d1d',4,0,24,2);
       f('#fca5a5',6,4,20,2); f('#fca5a5',6,28,20,2);
@@ -488,7 +704,7 @@ function sfx(k){
 function togBgm(){bgm=!bgm;$('#bg').textContent=bgm?'🔊':'🔇';bgm?music():clearInterval(mt)}
 
 let cur=null,map=null,px=7,py=5,dir=0,mv=null,steps=0,busy=true,modal=false,dlg=null,tw=null,npcs=[],held=null,bumpT=0;
-const DV=[[0,1],[0,-1],[-1,0],[1,0]],EK=['d','u','l','r'],WALK='.F=stDfx';
+const DV=[[0,1],[0,-1],[-1,0],[1,0]],EK=['d','u','l','r'],WALK='.F=stDfxdu';
 const at=(x,y)=>map.m[y]&&map.m[y][x];
 
 function free(x,y){
@@ -497,16 +713,38 @@ function free(x,y){
   return !(x==px&&y==py);
 }
 
+function buildNpcs(){
+  const rain=WX.kind=='rain';
+  npcs=map.p.filter(o=>!(rain&&o.run)).map(o=>{const n={...o,hx:o.x,hy:o.y,dir:0};if(n.run&&TRACK[n.ti]){n.x=TRACK[n.ti][0];n.y=TRACK[n.ti][1]}return n});
+  if(rain&&map.o&&map.umb)map.umb.forEach(([x,y,c],i)=>npcs.push({x,y,hx:x,hy:y,dir:0,c:'#6b7280',h:'#222',w:1,um:c,n:'우산 쓴 주민',s:UMB[i%UMB.length]}));
+}
+
+/* 도착한 자리가 나무·NPC에 갇혀 있으면 가장 가까운 열린 자리로 옮김 */
+function roomAt(x,y,blocked){
+  const seen=new Set([x+','+y]),q=[[x,y]];
+  while(q.length&&seen.size<12){const[a,b]=q.pop();DV.forEach(([dx,dy])=>{const n=a+dx,o=b+dy,k=n+','+o;
+    if(n<0||o<0||n>=W||o>=H||seen.has(k)||!WALK.includes(at(n,o))||blocked.has(k))return;seen.add(k);q.push([n,o])})}
+  return seen.size;
+}
+function unstick(){
+  const blocked=new Set(npcs.filter(n=>!n.w&&!n.run).map(n=>n.x+','+n.y));
+  const ok=(x,y)=>WALK.includes(at(x,y))&&!blocked.has(x+','+y)&&roomAt(x,y,blocked)>=12;
+  if(ok(px,py))return;
+  for(let r=1;r<W+H;r++)for(let y=0;y<H;y++)for(let x=0;x<W;x++)
+    if(Math.abs(x-px)+Math.abs(y-py)==r&&!(map.d&&map.d[x+','+y])&&ok(x,y)){px=x;py=y;return}
+}
 function warp(id,x,y,d){
   busy=true;sfx('w');$('#fade').style.opacity=1;
   setTimeout(()=>{
     const from=cur;cur=id;map=M[id];visited.add(id);
+    if(x==7&&y==8&&map.land)[x,y]=map.land;   // 지도·비행으로 올 때 내리는 자리
     updateHUD();px=x;py=y;dir=d;mv=null;
-    npcs=map.p.map(o=>{const n={...o,hx:o.x,hy:o.y,dir:0};if(n.run&&TRACK[n.ti]){n.x=TRACK[n.ti][0];n.y=TRACK[n.ti][1]}return n});
+    buildNpcs();unstick();
+    if(id=='library')plLoad();
     music();
     $('#fade').style.opacity=0;
     setTimeout(()=>{
-      busy=false;banner(map.n);
+      busy=false;banner(map.n);flashMiniMap();
     },300);
   },380);
 }
@@ -517,9 +755,9 @@ function zone(){return !map?null:(map.o?cur:map.par)}
 /* [월드맵] 각 지역의 실제 타일맵을 작은 캔버스로 그려 사각형 안에 투영 */
 const MM_COL={T:'#1e7a31','.':'#6cc04a',F:'#6cc04a','=':'#f3db98','~':'#38bdf8',s:'#fde047',
   R:'#d64541',Q:'#3b6fd6',G:'#2f9e5f',Y:'#7e57c2',H:'#fef3c7',D:'#78350f',t:'#c8693f',
-  m:'#1e7a31','1':'#38bdf8','2':'#38bdf8','3':'#38bdf8','4':'#38bdf8'};
+  W:'#0f766e','#':'#7a4a22',r:'#374151',y:'#374151',u:'#9ca3af',e:'#f8fafc',n:'#2563eb',j:'#bae6fd',S:'#475569',d:'#8b5a2b',o:'#8b5a2b',V:'#bfdbfe',v:'#dbeafe',m:'#1e7a31','1':'#38bdf8','2':'#38bdf8','3':'#38bdf8','4':'#38bdf8'};
 const MM_FL=['#f472b6','#ffffff','#facc15','#a78bfa','#60a5fa','#fb923c','#e11d48'];
-const MM_NODES=[['cert','학술','학술시티'],['route1','1번','1번도로'],['coast','해변','제주해변'],['town','마을','태초마을'],['sports','마라톤','마라톤밸리']];
+const MM_NODES=[['rest','쉼터','쉼의 숲'],['airport','공항','제주 공항'],['orchard','과수원','감귤 과수원'],['cert','학술','학술시티'],['route1','1번','1번도로'],['coast','해변','제주해변'],['town','마을','태초마을'],['sports','마라톤','마라톤밸리']];
 const mmEls={};let mmDot=null,mmLast=null;
 
 function mmShape(id){
@@ -528,8 +766,8 @@ function mmShape(id){
   M[id].m.forEach((row,j)=>{for(let i=0;i<W;i++){
     const k=row[i]||'T',X=i*P,Y=j*P;
     d(MM_COL[k]||'#6cc04a',X,Y,P,P);
-    if(k==='T'||k==='m')d('#2eb84d',X+1,Y,P-2,P-3);
-    if(k==='m'){d('#fb923c',X+2,Y+2,2,2);d('#fb923c',X+5,Y+4,2,2)}
+    if(k==='T'||k==='m'||k==='o')d('#2eb84d',X+1,Y,P-2,P-3);
+    if(k==='m'||k==='o'){d('#fb923c',X+2,Y+2,2,2);d('#fb923c',X+5,Y+4,2,2)}
     else if(k==='F')d(MM_FL[(i*3+j*5+(i>>1))%7],X+3,Y+3,2,2);
     else if(k==='~'&&(i+j)%3===0)d('#ffffff90',X+1,Y+3,4,1);
     else if(k==='t')d('#e5d5c0',X,Y,P,1);
@@ -549,7 +787,7 @@ function buildMiniMap(){
     b.type='button';b.className='minimap-node '+id;b.title=full;
     b.style.backgroundImage='url('+mmShape(id)+')';
     b.innerHTML='<span class="lb">'+label+'</span>';
-    b.addEventListener('click',()=>{if(busy||modal)return;warp(id,7,8,1)});
+    b.addEventListener('click',()=>{if(busy||modal)return;mmPin=false;mmFlash=false;syncMiniMap();warp(id,7,8,1)});
     box.appendChild(b);mmEls[id]=b;
   });
   mmDot=document.createElement('i');mmDot.id='mm-dot';
@@ -557,7 +795,6 @@ function buildMiniMap(){
 
 /* 현재 지역 강조 (DOM을 다시 만들지 않고 클래스만 토글) */
 function updateMiniMapOverlay(){
-  const ov=$('#minimap-overlay');if(ov)ov.style.display=(map&&map.o)?'':'none';   // 건물 안에서는 월드맵 숨김
   const z=zone();if(z===mmLast)return;mmLast=z;
   Object.keys(mmEls).forEach(k=>mmEls[k].classList.toggle('me',k===z));
 }
@@ -575,16 +812,21 @@ function updateMiniDot(){
   mmDot.style.left=((x+.5)/W*100)+'%';mmDot.style.top=((y+.5)/H*100)+'%';
 }
 
-function showMap(){
+let mmPin=false,mmFlash=false,mmTimer=null;
+function syncMiniMap(){const ov=$('#minimap-overlay');if(ov)ov.classList.toggle('on',mmPin||mmFlash)}
+function flashMiniMap(){if(!map||!map.o){mmFlash=false;syncMiniMap();return}mmFlash=true;syncMiniMap();clearTimeout(mmTimer);mmTimer=setTimeout(()=>{mmFlash=false;syncMiniMap()},3600)}
+function toggleMap(){
   if(busy)return;
-  toast('우측 하단 미니맵에서 지역을 클릭해 이동하세요!');
+  if(mmPin||mmFlash){mmPin=false;mmFlash=false;clearTimeout(mmTimer)}else{mmPin=true;toast('가고 싶은 지역을 눌러 이동하세요!')}
+  syncMiniMap();
 }
+function showMap(){toggleMap()}
 
 function say(n,l,ch){dlg={n,l:l.slice(),i:0,ch,s:'t',sel:0,keys:ch?Object.keys(ch).concat('그만 듣기'):0};$('#dl').style.display='block';$('#dn').textContent=n;typ(l[0])}
 function typ(s){clearInterval(tw);let k=0;$('#dt').textContent='';tw=setInterval(()=>{k++;$('#dt').textContent=s.slice(0,k);if(k%3==0)sfx('t');if(k>=s.length){clearInterval(tw);tw=null}},26)}
 function menu(){dlg.s='m';clearInterval(tw);tw=null;$('#dt').innerHTML=dlg.keys.map((l,i)=>`<div class="ch${i==dlg.sel?' on':''}" data-i="${i}">▶ ${l}</div>`).join('')}
 function endDlg(){clearInterval(tw);tw=null;dlg=null;$('#dl').style.display='none'}
-function pick(i){const k=dlg.keys[i];if(k=='그만 듣기')return endDlg();const v=dlg.ch[k];if(v=='cert'){endDlg();return showCerts()}dlg.l=v;dlg.i=0;dlg.s='t';typ(v[0])}
+function pick(i){const k=dlg.keys[i];if(k=='그만 듣기')return endDlg();const v=dlg.ch[k];if(typeof v=='function'){endDlg();return v()}dlg.l=v;dlg.i=0;dlg.s='t';typ(v[0])}
 function advance(){if(tw){clearInterval(tw);tw=null;$('#dt').textContent=dlg.l[dlg.i];return}if(dlg.s=='m')return pick(dlg.sel);if(dlg.i<dlg.l.length-1){dlg.i++;typ(dlg.l[dlg.i])}else if(dlg.ch)menu();else endDlg()}
 
 $('#dt').addEventListener('click',e=>{if(dlg&&dlg.s=='m'&&e.target.dataset.i!=null){dlg.sel=+e.target.dataset.i;e.stopPropagation();pick(dlg.sel)}});
@@ -595,11 +837,30 @@ function act(){
   if(dlg)return advance();
   const[dx,dy]=DV[dir],x=px+dx,y=py+dy,n=npcs.find(o=>o.x==x&&o.y==y);
   sfx('s');
-  if(n){n.dir=[1,0,3,2][dir];return say(n.n,n.s,n.ch)}
+  if(n){n.dir=[1,0,3,2][dir];return say(n.n,typeof n.s=='function'?n.s():n.s,typeof n.ch=='function'?n.ch():n.ch)}
   const k=at(x,y);
-  if(k=='P')showGallery();
-  else if(map.sh&&'MJNUVBEIA'.includes(k))say('전시대',map.sh);
-  else if('CLA'.includes(k))showCerts();
+  if(k=='k'){ // 카운터 너머 직원과 대화
+    const bn=npcs.find(o=>o.x==x+dx&&o.y==y+dy)||npcs.filter(o=>o.y==y+dy&&Math.abs(o.x-x)<=3).sort((p,q)=>Math.abs(p.x-x)-Math.abs(q.x-x))[0];
+    if(bn)return say(bn.n,bn.s,bn.ch);
+  }
+  else if(k=='Z')openExam();
+  else if(k=='l')showFlight();
+  else if(k=='#')showBoard();
+  else if(k=='z')plWall(x);
+  else if(k=='p')say('책장',['음악 책과 오래된 앨범이 가지런히 꽂혀 있다. 📚']);
+  else if(k=='e')say('BS 에어 여객기',['승객을 기다리는 여객기다. ✈','터미널 카운터에서 수속하면 탈 수 있다.']);
+  else if(k=='r'||k=='y')say('활주로',['⚠ 활주로 출입 금지!','이착륙하는 비행기를 여기서 구경하자.']);
+  else if(k=='S')say('관제탑',['관제탑이 활주로를 지켜보고 있다.']);
+  else if(k=='i')say('표지판',['✈ 제주 공항 터미널','남쪽 길: 제주 바닷가']);
+  else if(k=='P')showGallery();
+  else if(k=='N'&&CTS[cur])showCerts(cur);
+  else if(map.sh&&'MJNUVBEI'.includes(k))say('전시대',map.sh);
+  else if('CLA'.includes(k))showCerts(cur);
+  else if(k=='O')showQA();
+  else if(k=='q'){const mm=(map.memo||{})[x+','+y];if(mm)say('메모',mm.l)}
+  else if('acgh'.includes(k))say('정자',['시원한 바람이 드는 정자다.','잠깐 앉아서 쉬어가기 좋아 보인다. 🍃'])
+  else if(k=='b')say('벤치',['나무 벤치다. 잠시 앉아서 쉬어갈까?','…','다시 힘이 나는 것 같다!'])
+  else if(k=='m'||k=='o')citrusAsk();
 }
 
 function cancel(){if(modal)closeM();else if(dlg)endDlg()}
@@ -610,46 +871,336 @@ function closeM(){$('#md').hidden=true;modal=false}
 const V=[{n:'단정한 댄디컷',bg:'#cfd8e8',c:'#ece4d0',p:'#f2c9a0'},{n:'헤드폰 룩',bg:'#2b3552',c:'#7a8599',p:'#e04f4f'},{n:'포근한 룩',bg:'#f5e1c8',c:'#c98f6b',p:'#f2c9a0'}];
 function showGallery(){openM('<h3>📸 AI 도트 초상화 갤러리</h3><div class="gl">'+V.map((v,i)=>`<figure><canvas id="pc${i}" width="132" height="140"></canvas><figcaption>${v.n}</figcaption></figure>`).join('')+'</div>');V.forEach((v,i)=>{const c=$('#pc'+i).getContext('2d');c.fillStyle=v.bg;c.fillRect(0,0,132,140);spr(c,0,8,11,{...v,l:false})})}
 
-const CT=[['🧠','멘사 (Mensa International)','IQ 156 · Percentile 99% · 준회원'],['💻','정보처리기사',''],['💻','컴퓨터활용능력 1급',''],['💻','워드프로세서',''],['📊','사회조사분석사 2급',''],['📜','한국사능력검정시험 2급',''],['🔤','TOEIC 최고 775점',''],['🏆','2016 지역기업 청년 희망이음 프로젝트 경진대회 대상','산업통상자원부 장관상'],['🥇','2017 같은 대회 금상','산업통상자원부 장관상'],['🏃','2019 제주감귤국제마라톤 10km 기록증','01:22:38.32'],['🩸','헌혈유공장 은장','헌혈 167회 · 대한적십자사']];
-function showCerts(){if(busy)return;openM('<h3>📜 증명서 & 뱃지 전시</h3><p style="font-size:12px;opacity:.8">🔒 개인정보는 가림(마스킹) 처리됩니다.</p>'+CT.map(c=>`<div class="cd"><b>${c[0]} ${c[1]}</b>${c[2]?`<small>${c[2]}</small>`:''}<div class="mk">생년월일 <span class="bl">0000.00.00</span> · 문서번호 <span class="bl">XXXX-0000</span></div></div>`).join(''))}
+const CTS={
+ agency:{t:'📜 자격 · 수상 전시',it:[['💻','정보처리기사','',1],['💻','컴퓨터활용능력 1급','',1],['💻','워드프로세서','',1],['📊','사회조사분석사 2급','',1],['📜','한국사능력검정시험 2급','',1],['🔤','TOEIC 최고 775점','',1],['🏆','2016 지역기업 청년 희망이음 프로젝트 경진대회 대상','산업통상자원부 장관상',1],['🥇','2017 같은 대회 금상','산업통상자원부 장관상',1]]},
+ mensa:{t:'🧠 멘사 인증',it:[['🧠','멘사 (Mensa International)','IQ 156 · Percentile 99% · 준회원',1]]},
+ vc:{t:'🩸 나눔 & 기여 기록',it:[['🩸','헌혈유공장 은장','헌혈 167회 · 대한적십자사',1],['🤝','봉사활동','상상 Volunteer 활동',0]]},
+ gym:{t:'🏃 마라톤 기록',it:[['🏃','2019 제주감귤국제마라톤 10km','01:22:38.32',0],['🏅','2016 제21회 제주국제관광마라톤축제 하프','02:54:26.14',0],['🏅','2016 제9회 아름다운제주국제마라톤대회 하프','2:27:11.23',0],['🏅','2013 제2회 6.25 상기 및 정전 60주년 기념 국민대통합 마라톤 대회 하프','01:58:21.05',0]]}
+};
+function showCerts(kind){
+  if(busy)return;const d=CTS[kind||cur];if(!d){toast('이 건물에서 볼 수 있는 전시물이 없어요.');return}
+  const mk='<div class="mk">생년월일 <span class="bl">0000.00.00</span> · 문서번호 <span class="bl">XXXX-0000</span></div>';
+  openM('<h3>'+d.t+'</h3>'+(d.it.some(c=>c[3])?'<p style="font-size:12px;opacity:.8">🔒 개인정보는 가림(마스킹) 처리됩니다.</p>':'')+d.it.map(c=>`<div class="cd"><b>${c[0]} ${c[1]}</b>${c[2]?`<small>${c[2]}</small>`:''}${c[3]?mk:''}</div>`).join(''));
+}
+
+/* ===== 저장소: Supabase (설정은 supabase_setup.sql) ===== */
+const DBCFG={url:'https://lruuztbarxihtflizlef.supabase.co',key:'sb_publishable_Mm9sf1l-qmcyxNMs5SM0XA_SPaBWy_B'};
+const esc=v=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const DB={
+  tok:null,
+  admin(){return !!DB.tok},
+  async req(path,o={},retried){
+    const headers={apikey:DBCFG.key,'Content-Type':'application/json',...(o.h||{})};
+    if(DB.tok)headers.Authorization='Bearer '+DB.tok;   // 로그인 전에는 apikey만 보냄
+    const r=await fetch(DBCFG.url+'/rest/v1/'+path,{method:o.method||'GET',body:o.body,headers});
+    if(r.status==401&&DB.tok&&!retried){DB.logout();return DB.req(path,o,true)}   // 로그인 만료 시 방문자로 재시도
+    if(!r.ok){const e=new Error(await r.text());e.status=r.status;throw e}
+    const t=await r.text();return t?JSON.parse(t):null;
+  },
+  rpc(fn,args){return DB.req('rpc/'+fn,{method:'POST',body:JSON.stringify(args||{})})},
+  async login(email,pw){
+    const r=await fetch(DBCFG.url+'/auth/v1/token?grant_type=password',{method:'POST',headers:{apikey:DBCFG.key,'Content-Type':'application/json'},body:JSON.stringify({email,password:pw})});
+    const j=await r.json();if(!r.ok||!j.access_token)throw new Error('이메일 또는 비밀번호를 확인해 주세요');
+    DB.tok=j.access_token;
+    if(!await DB.rpc('is_admin')){DB.logout();throw new Error('운영자 권한이 없는 계정이에요')}
+    try{sessionStorage.setItem('bsw_tok',DB.tok)}catch(e){}
+  },
+  logout(){DB.tok=null;try{sessionStorage.removeItem('bsw_tok')}catch(e){}},
+  async regList(){const o={};(await DB.req('exam_reg?select=*')).forEach(r=>o[r.key]=r);return o},
+  regSet(key,exam,part,date){
+    const rec={key,exam,part,exam_date:date,receipt:'BS-'+String(Date.now()).slice(-6),created_at:new Date().toISOString()};
+    return DB.req('exam_reg?on_conflict=key',{method:'POST',body:JSON.stringify(rec),h:{Prefer:'resolution=merge-duplicates,return=minimal'}});
+  },
+  plList(){return DB.req('playlist?select=*&order=ym.desc')},
+  plAdd(rec){return DB.req('playlist',{method:'POST',body:JSON.stringify(rec),h:{Prefer:'return=minimal'}})},
+  plSet(id,rec){return DB.req('playlist?id=eq.'+id,{method:'PATCH',body:JSON.stringify(rec),h:{Prefer:'return=minimal'}})},
+  plDel(id){return DB.req('playlist?id=eq.'+id,{method:'DELETE',h:{Prefer:'return=minimal'}})},
+  regDel(key){return DB.req('exam_reg?key=eq.'+encodeURIComponent(key),{method:'DELETE',h:{Prefer:'return=minimal'}})}
+};
+try{DB.tok=sessionStorage.getItem('bsw_tok')}catch(e){}
+const dbErr=e=>e&&e.status==404||/PGRST20|42P01|42883/.test(e&&e.message||'')?'DB 설정이 아직 안 끝났어요. (supabase_setup.sql 실행 필요)':e&&e.status?'요청을 처리하지 못했어요. 로그인이 만료됐을 수 있어요.':'DB 서버에 연결하지 못했어요. 잠시 후 다시 시도해 주세요.';
+
+const fmtT=t=>{try{return new Date(t).toLocaleString('ko-KR',{timeZone:'Asia/Seoul',hour12:false})}catch(e){return t||''}};
+const fmtD=d=>{try{return new Date(d+'T00:00:00').toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric',weekday:'short'})}catch(e){return d}};
+const BACKS={ex:()=>exHome(),qa:()=>showQA(),pl:()=>plHome()};
+function adm(k){
+  return DB.tok?`<div class="adm">🔑 운영자 모드 <button class="xb" onclick="DB.logout();BACKS.${k}()">로그아웃</button></div>`
+               :`<div class="adm">👀 보기 전용 <button class="xb" onclick="showLogin('${k}')">🔑 운영자 로그인</button></div>`;
+}
+function showLogin(k){
+  openM(`<h3>🔑 운영자 로그인</h3><p style="font-size:12px;opacity:.8;margin-bottom:8px">운영자 계정으로 로그인하면 접수 기록과 Q&A 답변을 관리할 수 있어요.</p>
+  <input id="lgE" class="xin" type="email" placeholder="이메일" autocomplete="username">
+  <input id="lgP" class="xin" type="password" placeholder="비밀번호" autocomplete="current-password" style="margin-top:6px" onkeydown="if(event.key=='Enter')doLogin('${k}')">
+  <div style="margin-top:10px"><button class="xb" onclick="doLogin('${k}')">로그인</button> <button class="xb r" onclick="BACKS.${k}()">취소</button></div>`);
+}
+async function doLogin(k){try{await DB.login($('#lgE').value.trim(),$('#lgP').value);toast('운영자 모드로 전환했어요.');BACKS[k]()}catch(e){toast('로그인 실패: '+(e.message&&e.message.length<40?e.message:'확인해 주세요'))}}
+
+/* ===== 시험 접수 시스템 (컴퓨터) ===== */
+const EXI={ele:{n:'전기기사',g:'q',p:['w','p']},fire:{n:'소방설비기사',g:'q',p:['w','p']},sec:{n:'정보보안기사',g:'c',p:['w','p']},toeic:{n:'TOEIC',g:'t',p:['t']},hist:{n:'한국사능력검정시험',g:'k',p:['t']}};
+const PL={w:'필기',p:'실기',t:'응시'};
+const EXL={q:['🏛 Q-Net 국가기술자격','https://www.q-net.or.kr/man001.do?gSite=Q&gIntro=Y','Q-Net 접수 페이지 열기'],
+  c:['🛰 한국통신전파진흥원 국가기술자격검정','https://www.cq.or.kr/main.do','CQ(한국통신전파진흥원) 접수 페이지 열기'],
+  t:['🔤 TOEIC','https://exam.toeic.co.kr/receipt/receiptStep1.php','TOEIC 접수 페이지 열기'],
+  k:['📜 한국사능력검정시험','https://www.historyexam.go.kr/','한능검 접수 페이지 열기']};
+let REG={};
+const exNote='<p style="font-size:11px;opacity:.7;margin-top:10px">※ 여기 기록은 이 게임의 접수내역이에요. 실제 접수는 공식 사이트에서 진행하세요.</p>';
+const exBack=(fn,l)=>`<div style="margin-top:10px"><button class="xb" onclick="${fn}">◀ ${l||'뒤로'}</button></div>`;
+async function openExam(){try{REG=await DB.regList()}catch(e){REG={};toast(dbErr(e))}exHome()}
+function exHome(){
+  const n=Object.keys(REG).length;
+  openM(`<h3>🖥 자격 시험 접수 시스템</h3>${adm('ex')}<div class="xcol">`+
+    [['q','1. Q-Net 국가기술자격'],['c','2. 한국통신전파진흥원 국가기술자격검정'],['t','3. TOEIC'],['k','4. 한국사능력검정시험']].map(([g,l])=>`<button class="xb big" onclick="exGroup('${g}')">${l}</button>`).join('')+
+    `<button class="xb big" onclick="exHist()">5. 접수내역 (${n}건)</button></div>`);
+}
+function exGroup(g){
+  const L=EXL[g];
+  openM(`<h3>${L[0]}</h3>${adm('ex')}<div style="margin:8px 0"><a class="xb" href="${L[1].replace(/&/g,'&amp;')}" target="_blank" rel="noopener">🔗 ${L[2]}</a></div>`+
+    Object.entries(EXI).filter(([id,e])=>e.g==g).map(([id,e])=>`<div class="xrow pick" onclick="exExam('${id}')"><div><b>${e.n}</b><small style="display:block;opacity:.75">${e.p.map(p=>PL[p]+(REG[id+':'+p]?' ✅':' —')).join(' · ')}</small></div><span>▶</span></div>`).join('')+
+    exBack('exHome()','처음으로')+exNote);
+}
+function exExam(id){
+  const e=EXI[id],ad=DB.admin();
+  openM(`<h3>${e.n}</h3>${adm('ex')}`+e.p.map(p=>{const r=REG[id+':'+p];return `<div class="xrow"><div><b>${e.p.length>1?PL[p]+' 시험':'시험 접수'}</b><small style="display:block;opacity:.75">${r?'✅ '+fmtD(r.exam_date)+' 접수':'미접수'}</small></div><div><button class="xb" ${r||!ad?'disabled':''} onclick="exDate('${id}','${p}')">접수</button> <button class="xb r" ${r&&ad?'':'disabled'} onclick="exCancel('${id}','${p}')">접수취소</button></div></div>`}).join('')+
+    (ad?'':'<p style="font-size:11px;opacity:.75">접수와 취소는 운영자만 할 수 있어요.</p>')+exBack(`exGroup('${e.g}')`,'목록으로')+exNote);
+}
+function exDate(id,p){
+  const e=EXI[id],today=new Date().toISOString().slice(0,10);
+  openM(`<h3>📅 ${e.n} ${e.p.length>1?PL[p]:''} 접수</h3><p style="font-size:12px;opacity:.85;margin:6px 0">시험 날짜를 선택하세요.</p><input id="exd" class="xin" type="date" min="${today}"><div style="margin-top:10px"><button class="xb" onclick="exSave('${id}','${p}')">접수 확정</button> <button class="xb r" onclick="exExam('${id}')">취소</button></div>`);
+}
+async function exSave(id,p){
+  const d=$('#exd').value;if(!d)return toast('시험 날짜를 선택해 주세요.');
+  if(!DB.admin())return toast('운영자만 접수할 수 있어요.');
+  try{const e=EXI[id];await DB.regSet(id+':'+p,e.n,PL[p],d);REG=await DB.regList();toast('접수가 완료되었습니다!');exExam(id)}catch(err){toast(dbErr(err))}
+}
+async function exCancel(id,p){
+  if(!DB.admin())return toast('운영자만 취소할 수 있어요.');
+  try{await DB.regDel(id+':'+p);REG=await DB.regList();toast('접수가 취소되었습니다.');exExam(id)}catch(err){toast(dbErr(err))}
+}
+function exHist(){
+  const ks=Object.values(REG).sort((a,b)=>String(a.exam_date).localeCompare(String(b.exam_date)));
+  openM('<h3>📋 접수내역</h3>'+adm('ex')+(ks.length?ks.map(r=>`<div class="cd"><b>${esc(r.exam)}${r.part&&r.part!='응시'?' · '+esc(r.part):''}</b><small>시험일 ${fmtD(r.exam_date)} · 접수번호 ${esc(r.receipt)}<br>접수일시 ${fmtT(r.created_at)}</small></div>`).join(''):'<div class="cd">접수 내역이 없습니다.</div>')+exBack('exHome()','처음으로')+exNote);
+}
+
+/* ===== Q&A (집 가운데 테이블) ===== */
+const QA={list:[],open:{},exp:new Set(),err:''};   // open: 비밀번호로 연 글 {id:{item,pw}} (창을 닫기 전 화면용, 저장 안 함)
+const QERR={bad_pw:'비밀번호가 맞지 않아요.',locked:'비밀번호를 5번 틀려 10분 동안 잠겼어요.',not_found:'이미 삭제된 글이에요.',bad_q:'질문은 1~300자로 입력해 주세요.',bad_new_pw:'비밀번호는 4~32자로 입력해 주세요.',rate:'지금 질문이 너무 많아요. 잠시 후 다시 남겨 주세요.',forbidden:'운영자만 할 수 있어요.'};
+const qItem=it=>(QA.open[it.id]&&QA.open[it.id].item)||it;
+async function showQA(){
+  openM('<h3>💬 Q&A</h3><p style="font-size:12px;opacity:.8">불러오는 중…</p>');
+  QA.err='';
+  try{QA.list=await DB.rpc('qa_list')}catch(e){QA.list=[];QA.err=dbErr(e)}
+  qaRender();
+}
+function qaForm(){
+  return `<details class="qform"${QA.list.length?'':' open'}><summary>✏ 질문 남기기</summary>
+  <input id="qn" class="xin" maxlength="20" placeholder="이름 (선택)" style="margin-top:8px">
+  <textarea id="qq" class="xin" rows="3" maxlength="300" placeholder="궁금한 점을 남겨 주세요 (300자 이내)" style="margin-top:6px"></textarea>
+  <input id="qp" class="xin" type="password" maxlength="32" placeholder="비밀번호 (4자 이상, 수정·삭제할 때 필요)" autocomplete="new-password" style="margin-top:6px">
+  <label class="qchk"><input id="qs" type="checkbox"> 🔒 비밀글 (글쓴이와 운영자만 볼 수 있어요)</label>
+  <button class="xb" onclick="qaAsk()">질문 남기기</button></details>`;
+}
+function qaBody(it,ad){
+  if(it.locked)return `<p style="font-size:12px;opacity:.85">🔒 비밀글이에요. 글쓴이는 비밀번호를 입력하면 볼 수 있어요.</p>
+    <input id="qop${it.id}" class="xin" type="password" maxlength="32" placeholder="비밀번호" autocomplete="off" onkeydown="if(event.key=='Enter')qaUnlock(${it.id})">
+    <div class="qbtn"><button class="xb" onclick="qaUnlock(${it.id})">열기</button></div>`;
+  return `<div class="qq">${esc(it.q)}</div><small class="qm">${it.is_secret?'🔒 비밀글 · ':''}${esc(it.name||'익명')} · ${fmtT(it.created_at)}${it.updated_at?' (수정됨)':''}</small>`+
+    (it.a?`<div class="a"><b>A.</b> ${esc(it.a)}</div>`:'<div style="opacity:.7">⏳ 답변을 기다리는 중</div>')+
+    (ad?`<textarea id="qaa${it.id}" class="xin" rows="2" maxlength="2000" placeholder="답변 작성" style="margin-top:8px">${esc(it.a||'')}</textarea>`:'')+
+    `<div class="qbtn">${ad?`<button class="xb" onclick="qaSave(${it.id})">${it.a?'답변 수정':'답변 달기'}</button>`:`<button class="xb" onclick="qaEdit(${it.id})">수정</button>`}<button class="xb r" onclick="qaDel(${it.id})">삭제</button></div>`;
+}
+function qaRender(){
+  const ad=DB.admin();
+  openM(`<h3>💬 보성에게 궁금한 점</h3>${adm('qa')}${qaForm()}`+
+    (QA.err?`<div class="cd">${esc(QA.err)}</div>`:QA.list.length?QA.list.map((raw,i)=>{const it=qItem(raw);
+      return `<details class="qb"${QA.exp.has(it.id)?' open':''} ontoggle="qaTog(${it.id},this.open)"><summary><span class="qn">Q${i+1}</span><span class="qt">${it.locked?'🔒 비밀글입니다':(it.is_secret?'🔒 ':'')+esc(it.q)}</span><span class="qs${it.has_a?' done':''}">${it.has_a?'답변 완료':'대기 중'}</span></summary><div class="qbd">${qaBody(it,ad)}</div></details>`}).join('')
+    :'<div class="cd">아직 질문이 없어요. 첫 질문을 남겨 보세요!</div>'));
+}
+function qaTog(id,o){o?QA.exp.add(id):QA.exp.delete(id)}
+async function qaAsk(){
+  const q=$('#qq').value.trim(),name=$('#qn').value.trim(),pw=$('#qp').value,sec=$('#qs').checked;
+  if(!q)return toast('질문 내용을 입력해 주세요.');
+  if(pw.length<4)return toast('비밀번호를 4자 이상 입력해 주세요.');
+  try{const r=await DB.rpc('qa_ask',{p_name:name,p_q:q,p_secret:sec,p_pw:pw});
+    if(!r.ok)return toast(QERR[r.err]||'질문을 등록하지 못했어요.');
+    QA.exp.add(r.id);if(sec)QA.open[r.id]={pw,item:null};
+    toast('질문이 등록되었어요!');
+    if(sec){const o=await DB.rpc('qa_open',{p_id:r.id,p_pw:pw});if(o.ok)QA.open[r.id].item=o.item;else delete QA.open[r.id]}
+    showQA();
+  }catch(e){toast(dbErr(e))}
+}
+async function qaUnlock(id){
+  const pw=$('#qop'+id).value;if(!pw)return toast('비밀번호를 입력해 주세요.');
+  try{const r=await DB.rpc('qa_open',{p_id:id,p_pw:pw});
+    if(!r.ok)return toast(QERR[r.err]||'열지 못했어요.');
+    QA.open[id]={item:r.item,pw};QA.exp.add(id);qaRender();
+  }catch(e){toast(dbErr(e))}
+}
+function qaEdit(id){
+  const raw=QA.list.find(x=>x.id==id);if(!raw)return;const it=qItem(raw),pw=(QA.open[id]||{}).pw||'';
+  openM(`<h3>✏ 질문 수정</h3><input id="qen" class="xin" maxlength="20" placeholder="이름 (선택)" value="${esc(it.name)}">
+  <textarea id="qeq" class="xin" rows="4" maxlength="300" style="margin-top:6px">${esc(it.q)}</textarea>
+  <input id="qep" class="xin" type="password" maxlength="32" placeholder="질문할 때 정한 비밀번호" autocomplete="off" value="${esc(pw)}" style="margin-top:6px">
+  <label class="qchk"><input id="qes" type="checkbox"${it.is_secret?' checked':''}> 🔒 비밀글</label>
+  <div class="qbtn"><button class="xb" onclick="qaEditSave(${id})">저장</button><button class="xb r" onclick="qaRender()">취소</button></div>`);
+}
+async function qaEditSave(id){
+  const pw=$('#qep').value;if(!pw)return toast('비밀번호를 입력해 주세요.');
+  const q=$('#qeq').value.trim();if(!q)return toast('질문 내용을 입력해 주세요.');
+  try{const r=await DB.rpc('qa_edit',{p_id:id,p_pw:pw,p_name:$('#qen').value.trim(),p_q:q,p_secret:$('#qes').checked});
+    if(!r.ok)return toast(QERR[r.err]||'수정하지 못했어요.');
+    QA.open[id]={item:r.item,pw};QA.exp.add(id);toast('수정했어요.');showQA();
+  }catch(e){toast(dbErr(e))}
+}
+function qaDel(id){
+  const ad=DB.admin(),pw=(QA.open[id]||{}).pw||'';
+  openM(`<h3>🗑 질문 삭제</h3><p style="font-size:13px;margin-bottom:8px">이 질문과 답변을 삭제할까요? 되돌릴 수 없어요.</p>`+
+    (ad?'':`<input id="qdp" class="xin" type="password" maxlength="32" placeholder="질문할 때 정한 비밀번호" autocomplete="off" value="${esc(pw)}">`)+
+    `<div class="qbtn"><button class="xb r" onclick="qaDelGo(${id})">삭제</button><button class="xb" onclick="qaRender()">취소</button></div>`);
+}
+async function qaDelGo(id){
+  const el=$('#qdp'),pw=el?el.value:null;if(el&&!pw)return toast('비밀번호를 입력해 주세요.');
+  try{const r=await DB.rpc('qa_delete',{p_id:id,p_pw:pw});
+    if(!r.ok)return toast(QERR[r.err]||'삭제하지 못했어요.');
+    delete QA.open[id];QA.exp.delete(id);toast('삭제했어요.');showQA();
+  }catch(e){toast(dbErr(e))}
+}
+async function qaSave(id){
+  if(!DB.admin())return toast('운영자만 답변할 수 있어요.');
+  const t=$('#qaa'+id).value.trim();if(!t)return toast('답변을 입력해 주세요.');
+  try{const r=await DB.rpc('qa_answer',{p_id:id,p_a:t});
+    if(!r.ok){if(r.err=='forbidden')DB.logout();return toast(QERR[r.err]||'저장하지 못했어요.')}
+    toast('답변을 저장했어요.');showQA();
+  }catch(e){toast(dbErr(e))}
+}
+
+/* ===== 음악 서재: 플레이리스트 ===== */
+const PL_SLOT=[2,4,6,8,10,12],PL_MAX=30;
+let PLS=[],PLERR='';
+async function plLoad(){try{PLS=await DB.plList();PLERR=''}catch(e){PLERR=dbErr(e)}}
+const plUrl=u=>/^https:\/\/[^\s"'<>]+$/.test(u||'')?u:'';
+const plSongUrl=s=>plUrl(s.u)||'https://music.youtube.com/search?q='+encodeURIComponent([s.a,s.t].filter(Boolean).join(' '));
+const plYm=ym=>ym.slice(0,4)+'년 '+(+ym.slice(5))+'월';
+function plMute(){if(bgm)togBgm()}   // 노래를 들으러 나가면 게임 음악을 끔
+function plWall(x){
+  const p=PLS[PL_SLOT.indexOf(x)];
+  if(p)return plShow(p.id);
+  if(DB.admin())return plEdit(0);
+  say('액자',['아직 비어 있는 액자다. 다음 달 노래가 걸릴 자리 같다.']);
+}
+async function plHome(){
+  openM('<h3>🎵 플레이리스트</h3><p style="font-size:12px;opacity:.8">불러오는 중…</p>');
+  await plLoad();
+  openM(`<h3>🎵 주인장 추천 플레이리스트</h3>${adm('pl')}`+
+    (PLERR?`<div class="cd">${esc(PLERR)}</div>`:PLS.length?PLS.map(p=>`<div class="xrow pick" onclick="plShow(${p.id})"><div><b>${esc(p.title)}</b><small style="display:block;opacity:.75">${plYm(p.ym)} · ${p.songs.length}곡</small></div><span>▶</span></div>`).join(''):'<div class="cd">아직 걸린 플레이리스트가 없어요.</div>')+
+    (DB.admin()?'<div class="qbtn"><button class="xb" onclick="plEdit(0)">＋ 새 플레이리스트</button></div>':''));
+}
+function plShow(id){
+  const p=PLS.find(x=>x.id==id);if(!p)return plHome();
+  const u=plUrl(p.url);
+  openM(`<h3>🎵 ${esc(p.title)}</h3><p style="font-size:12px;opacity:.8;margin-bottom:6px">${plYm(p.ym)} · ${p.songs.length}곡 · 곡을 누르면 YouTube Music이 열려요.</p>`+
+    (u?`<div style="margin:8px 0"><a class="xb" href="${esc(u)}" target="_blank" rel="noopener" onclick="plMute()">▶ 전체 듣기</a></div>`:'')+
+    (p.songs.length?p.songs.map((s,i)=>`<a class="xrow pick plsong" href="${esc(plSongUrl(s))}" target="_blank" rel="noopener" onclick="plMute()"><span class="qn">${i+1}</span><span class="qt" style="font-weight:normal"><b>${esc(s.t)}</b>${s.a?' · '+esc(s.a):''}</span><span>▶</span></a>`).join(''):'<div class="cd">주인장이 곡을 고르는 중이에요. 🎧</div>')+
+    `<div class="qbtn"><button class="xb" onclick="plHome()">◀ 목록으로</button>${DB.admin()?`<button class="xb" onclick="plEdit(${p.id})">수정</button><button class="xb r" onclick="plDelAsk(${p.id})">삭제</button>`:''}</div>`);
+}
+function plEdit(id){
+  if(!DB.admin())return toast('운영자만 할 수 있어요.');
+  const p=PLS.find(x=>x.id==id),now=jejuYm();
+  const lines=p?p.songs.map(s=>(s.a?s.a+' - ':'')+s.t+(s.u?' | '+s.u:'')).join('\n'):'';
+  openM(`<h3>🎵 ${p?'플레이리스트 수정':'새 플레이리스트'}</h3>
+  <input id="ply" class="xin" type="month" value="${esc(p?p.ym:now)}">
+  <input id="plt" class="xin" maxlength="60" placeholder="제목" value="${esc(p?p.title:plYm(now)+' 주인장 추천 플레이리스트')}" style="margin-top:6px">
+  <input id="plu" class="xin" type="url" placeholder="YouTube Music 재생목록 공유 링크 (선택)" value="${esc(p&&p.url||'')}" style="margin-top:6px">
+  <textarea id="pls" class="xin" rows="10" placeholder="한 줄에 한 곡, 최대 30곡&#10;가수 - 곡명&#10;가수 - 곡명 | 곡 링크(선택)" style="margin-top:6px">${esc(lines)}</textarea>
+  <div class="qbtn"><button class="xb" onclick="plSave(${p?p.id:0})">저장</button><button class="xb r" onclick="${p?`plShow(${p.id})`:'plHome()'}">취소</button></div>`);
+}
+function jejuYm(){return new Date(Date.now()+9*36e5).toISOString().slice(0,7)}
+function plParse(txt){
+  return txt.split('\n').map(l=>l.trim()).filter(Boolean).map(l=>{
+    let u='';const b=l.lastIndexOf('|');if(b>=0){u=l.slice(b+1).trim();l=l.slice(0,b).trim()}
+    const d=l.indexOf(' - ');
+    return{a:d>=0?l.slice(0,d).trim():'',t:(d>=0?l.slice(d+3):l).trim(),u:plUrl(u)};
+  }).filter(s=>s.t);
+}
+async function plSave(id){
+  const ym=$('#ply').value,title=$('#plt').value.trim(),url=$('#plu').value.trim(),songs=plParse($('#pls').value);
+  if(!ym)return toast('연도와 월을 골라 주세요.');
+  if(!title)return toast('제목을 입력해 주세요.');
+  if(url&&!plUrl(url))return toast('링크는 https:// 로 시작해야 해요.');
+  if(songs.length>PL_MAX)return toast('한 플레이리스트는 '+PL_MAX+'곡까지예요. 지금 '+songs.length+'곡이에요.');
+  const rec={ym,title,url:url||null,songs};
+  try{
+    if(id)await DB.plSet(id,rec);else await DB.plAdd(rec);
+    await plLoad();toast('저장했어요.');
+    const p=PLS.find(x=>x.ym==ym);p?plShow(p.id):plHome();
+  }catch(e){toast(/duplicate|23505/.test(e.message)?'그 달의 플레이리스트가 이미 있어요.':dbErr(e))}
+}
+function plDelAsk(id){
+  openM(`<h3>🗑 플레이리스트 삭제</h3><p style="font-size:13px">이 플레이리스트를 벽에서 내릴까요? 되돌릴 수 없어요.</p><div class="qbtn"><button class="xb r" onclick="plDelGo(${id})">삭제</button><button class="xb" onclick="plShow(${id})">취소</button></div>`);
+}
+async function plDelGo(id){try{await DB.plDel(id);toast('삭제했어요.');plHome()}catch(e){toast(dbErr(e))}}
+
+/* ===== 마을 게시판: 광고지 파일을 index.html과 같은 곳에 올리고 여기에 적으면 됩니다 ===== */
+const ADS=[{img:'ad-citrus.jpg',title:'🍊 보성이네 감귤농원',link:'https://jeju-citrus.vercel.app/',btn:'🛒 주문 사이트 열기'}];
+function showBoard(){
+  openM('<h3>📌 마을 게시판</h3>'+ADS.map(a=>`<div class="qform"><b>${esc(a.title)}</b>
+    <img class="adimg" src="${esc(a.img)}" alt="${esc(a.title)} 광고지" onerror="this.outerHTML='<div class=&quot;cd&quot;>광고지를 준비하고 있어요.</div>'">
+    ${a.link?`<a class="xb" href="${esc(a.link)}" target="_blank" rel="noopener">${esc(a.btn||'자세히 보기')}</a>`:''}</div>`).join(''));
+}
+
+/* ===== 감귤 주문 ===== */
+const ORDER_URL='https://jeju-citrus.vercel.app/';
+function citrusAsk(){
+  say('감귤나무',['감귤이 맛있게 잘 열렸네! 🍊','맛있는 귤을 사 먹을 수 있는 곳이 있다던데…','주문해볼래?'],{
+    'YES! 주문할래':()=>showOrder(),
+    '맛만 볼래':['냠냠… 새콤달콤! 🍊','주문해보고 싶으면 다시 말을 걸어줘!'],
+    'NO, 괜찮아':['그래, 생각나면 언제든 다시 와. 🍊']});
+}
+function showOrder(){
+  if(busy)return;
+  openM(`<h3>🍊 보성이네 감귤농원</h3><p style="font-size:13px;line-height:1.7;margin:8px 0">제주 감귤 주문은 아래 사이트에서 하실 수 있어요.</p><div class="cd" style="word-break:break-all">${ORDER_URL}</div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><a class="xb" href="${ORDER_URL}" target="_blank" rel="noopener">🛒 주문 사이트 열기</a><button class="xb" onclick="copyOrder()">📋 주소 복사</button></div>`);
+}
+function copyOrder(){try{navigator.clipboard.writeText(ORDER_URL).then(()=>toast('주소를 복사했어요!'),()=>toast(ORDER_URL))}catch(e){toast(ORDER_URL)}}
 
 const BR=[
-  ['대뇌피질', 'IQ·상위 1%', 'mensa', '🧠 지능의 방. 멘사 IQ 156 준회원.', 90, 60],
-  ['전두엽', '논리·IT', 'agency', '💻 컴퓨터 및 데이터 전문 자격 증명 공간.', 210, 55],
-  ['해마', '기억·기록', 'house', '🏠 추억과 기록이 보관된 메인 하우스.', 150, 110],
-  ['소뇌', '운동·균형', 'gym', '🏃 마라톤 및 스포츠 기록 공간.', 80, 155],
-  ['변연계', '감정·나눔', 'vc', '🩸 헌혈 및 사회적 기여 공간.', 220, 150]
+  ['대뇌피질','IQ · 상위 1%','mensa','🧠 지능의 방. 멘사 IQ 156 준회원.',232,70,48,30,'#ede9fe'],
+  ['전두엽','논리 · IT','agency','💻 자격 · 수상 기록이 있는 국가 자격 검정원.',150,100,36,50,'#dbeafe'],
+  ['해마','기억 · 기록','house','🏠 추억과 기록이 보관된 메인 하우스.',216,124,34,24,'#fef3c7'],
+  ['변연계','감정 · 나눔','vc','🩸 헌혈과 봉사활동의 나눔 센터.',288,120,26,44,'#fee2e2'],
+  ['측두엽','미각 · 고향','orchard','🍊 제주 감귤이 자라는 과수원.',188,172,46,20,'#ffedd5'],
+  ['소뇌','운동 · 균형','gym','🏃 마라톤 기록이 있는 체육관.',268,186,32,16,'#dcfce7']
 ];
-
+function blob(cx,cy,rx,ry,sd){
+  const n=20,p=[];for(let i=0;i<n;i++){const a=i/n*Math.PI*2,j=1+.07*Math.sin(a*3+sd)+.04*Math.sin(a*5+sd*2);p.push([cx+Math.cos(a)*rx*j,cy+Math.sin(a)*ry*j])}
+  const m=(a,b)=>[(a[0]+b[0])/2,(a[1]+b[1])/2],f=v=>v.map(q=>q.toFixed(1)).join(' ');
+  let d='M'+f(m(p[n-1],p[0]));for(let i=0;i<n;i++)d+=' Q'+f(p[i])+' '+f(m(p[i],p[(i+1)%n]));return d+'Z';
+}
 function showBrain(){
   if(busy)return;
-  openM(`<h3>🧠 역량 지도 (Brain Map)</h3>
-  <p style="font-size:12px;margin-bottom:8px">생각 주머니를 눌러보세요.</p>
-  <svg class="bsv" viewBox="0 0 300 200">
-    <path d="M50,140 Q40,80 80,45 Q120,20 180,30 Q240,40 260,80 Q280,120 250,160 Q210,185 160,185 Q100,185 50,140 Z" fill="none" stroke="#1f2937" stroke-width="2.5" stroke-dasharray="4,3"/>
-    <path d="M50,140 Q45,170 80,180 Q110,188 130,170" fill="none" stroke="#1f2937" stroke-width="2.5"/>
-    <text x="65" y="165" font-size="10" fill="#6b7280">BS Brain</text>
-    ${BR.map((b,i)=>`
-      <g onclick="brainPick(${i})" style="cursor:pointer">
-        <ellipse cx="${b[4]}" cy="${b[5]}" rx="32" ry="22" fill="#fff" stroke="#ec4899" stroke-width="2.5"/>
-        <text x="${b[4]}" y="${b[5]-3}" font-size="11" fill="#111" text-anchor="middle">${b[0]}</text>
-        <text x="${b[4]}" y="${b[5]+9}" font-size="8" fill="#db2777" text-anchor="middle">${b[1]}</text>
-      </g>
-    `).join('')}
+  openM(`<h3>🧠 나의 뇌구조</h3>
+  <p style="font-size:12px;margin-bottom:8px">영역을 눌러 그 공간으로 이동해 보세요.</p>
+  <svg viewBox="75 15 270 265" style="width:100%;max-width:330px;display:block;margin:0 auto;background:#fff;border-radius:10px">
+    <path d="M130 272 L132 242 Q126 236 118 234 L112 226 Q104 224 106 216 Q103 210 104 205 L100 197 Q86 192 90 186 Q98 176 97 166 Q99 156 103 148 C95 100 120 52 180 36 C240 20 305 48 322 110 C335 160 318 200 290 226 L282 272" fill="#fff" stroke="#374151" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M246 206 q-16 8 -9 24 q7 10 17 -2" fill="none" stroke="#374151" stroke-width="2.5"/>
+    <path d="M104 160 q6 -5 13 0" fill="none" stroke="#374151" stroke-width="2.5"/>
+    ${BR.map((b,i)=>`<g class="rg" id="rg${i}" onclick="brainPick(${i})"><path d="${blob(b[4],b[5],b[6],b[7],i*1.7)}" fill="${b[8]}" stroke="#374151" stroke-width="2"/>
+      <text x="${b[4]}" y="${b[5]-1}" font-size="12" font-weight="bold" fill="#111" text-anchor="middle">${b[0]}</text>
+      <text x="${b[4]}" y="${b[5]+11}" font-size="8.5" fill="#be185d" text-anchor="middle">${b[1]}</text></g>`).join('')}
   </svg>
   <div id="bi" style="margin-top:8px;min-height:50px"></div>`);
 }
-
-function brainPick(i){const b=BR[i];$('#bi').innerHTML=`<div class="cd">${b[3]}</div><button class="go" style="font-size:13px;padding:5px 12px" onclick="closeM();warp('${b[2]}',7,8,1)">이 장소로 이동</button>`}
+function brainPick(i){const b=BR[i];document.querySelectorAll('.rg').forEach((e,k)=>e.classList.toggle('on',k==i));$('#bi').innerHTML=`<div class="cd">${b[3]}</div><button class="go" style="font-size:13px;padding:5px 12px" onclick="closeM();warp('${b[2]}',7,8,1)">이 장소로 이동</button>`}
 
 const visited = new Set();
-const REGION_NAMES = {town:'태초마을',route1:'1번 도로',cert:'학술·자격 검정 시티',sports:'체육 & 마라톤 밸리',coast:'제주 바닷가',house:'보성의 집',gym:'런 라이프 체육관',agency:'국가 자격 검정원',mensa:'멘사 지능 연구소',vc:'나눔 & 기여 커뮤니티 센터'};
+const REGION_NAMES = {town:'태초마을',route1:'1번 도로',cert:'학술·자격 검정 시티',sports:'체육 & 마라톤 밸리',orchard:'감귤 과수원',coast:'제주 바닷가',house:'보성의 집',gym:'런 라이프 체육관',agency:'국가 자격 검정원',mensa:'멘사 지능 연구소',vc:'나눔 & 기여 커뮤니티 센터',airport:'제주 공항',terminal:'제주 공항 터미널',rest:'쉼의 숲',library:'보성의 음악 서재'};
 const REGION_DESC = {
  town:'BS World의 모험이 시작되는 태초마을입니다.',
  route1:'자격 시티로 통하는 도로입니다.',
  cert:'전문성과 지적 도전을 상징하는 지식의 도시입니다.',
  sports:'체육관과 마라톤 트랙이 펼쳐져 있습니다.',
- coast:'트로피컬 해변의 시원한 파도 소리가 울려 퍼집니다.'
+ coast:'트로피컬 해변의 시원한 파도 소리가 울려 퍼집니다.',
+ orchard:'제주 감귤이 자라는 과수원입니다. 🍊',
+ rest:'잠시 쉬어 가는 숲입니다. 음악 서재에서 주인장의 플레이리스트를 만나 보세요. 🌿',
+ airport:'해변 북쪽의 공항입니다. 터미널에서 비행기를 탈 수 있어요. ✈'
 };
 
 function toast(msg){const el=$('#toast');if(!el)return;el.textContent=msg;el.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>el.classList.remove('show'),1800)}
@@ -675,7 +1226,8 @@ function showPortfolio(){
  openM(`<h3>👤 KANG BO-SUNG · PORTFOLIO</h3>
  <p style="font-size:12px;line-height:1.7;opacity:.85;margin-bottom:12px">BS World에 담긴 경험과 도전을 한눈에 살펴볼 수 있습니다.</p>
  <div class="portfolio-list">
- <button class="portfolio-item" onclick="showCerts()"><b>📜 자격증 · 수상 · 교육</b><small>전문성 및 학습 기록</small></button>
+ <button class="portfolio-item" onclick="closeM();warp('agency',7,8,1)"><b>📜 자격증 · 수상 · 교육</b><small>국가 자격 검정원에서 확인</small></button>
+ <button class="portfolio-item" onclick="closeM();warp('mensa',7,8,1)"><b>🧠 멘사 · 지능</b><small>멘사 지능 연구소</small></button>
  <button class="portfolio-item" onclick="closeM();warp('gym',7,8,1)"><b>🏃 스포츠 · 도전</b><small>하프마라톤 완주 및 기록</small></button>
  <button class="portfolio-item" onclick="closeM();warp('vc',7,8,1)"><b>🩸 나눔 · 사회 기여</b><small>헌혈 167회 달성 기록</small></button>
  <button class="portfolio-item" onclick="closeM();warp('house',7,8,1)"><b>🏠 보성의 공간</b><small>자기소개 및 스토리</small></button>
@@ -695,6 +1247,8 @@ function press(d){if(dlg&&dlg.s=='m'){dlg.sel=(dlg.sel+(d==1?-1:d==0?1:0)+dlg.ke
 const KM={ArrowDown:0,s:0,ArrowUp:1,w:1,ArrowLeft:2,a:2,ArrowRight:3,d:3};
 
 addEventListener('keydown',e=>{
+  if(e.target&&/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName))return;   // 입력 중에는 게임 키 무시
+  if(modal){if(['x','X','Escape'].includes(e.key))cancel();return}   // 창이 열려 있으면 버튼·접기 박스·스크롤이 기본 동작하도록 둠
   const st = $('#st');
   const isStarted = st && st.style.display === 'none';
 
@@ -724,15 +1278,49 @@ addEventListener('keyup',e=>{const k=KM[e.key];if(k!=null&&held===k)held=null});
 document.querySelectorAll('.dp button').forEach(b=>{const d=+b.dataset.d;b.addEventListener('pointerdown',e=>{e.preventDefault();press(d)});['pointerup','pointerleave','pointercancel'].forEach(t=>b.addEventListener(t,()=>{if(held===d)held=null}))});
 $('#bA').addEventListener('pointerdown',e=>{e.preventDefault();act()});$('#bB').addEventListener('pointerdown',e=>{e.preventDefault();cancel()});
 
+/* ===== 공항: 비행기 ===== */
+function drawPlane(x,y,s){const f=(c,a,b,w,h)=>{g.fillStyle=c;g.fillRect(x+a*s,y+b*s,w*s,h*s)};
+  f('#1d4ed8',1,1,6,8);f('#f8fafc',3,8,38,9);f('#f8fafc',41,10,4,6);f('#cbd5e1',3,15,40,2);f('#1e293b',41,10,3,3);
+  for(let i=0;i<8;i++)f('#38bdf8',11+i*3.4,10,2,2);f('#2563eb',3,13,38,1);f('#1e3a8a',17,14,14,3);f('#1e3a8a',12,17,12,2);f('#64748b',22,19,6,3);
+}
+function planeSky(t){
+  if(cur!='airport')return;
+  const C=15000,p=(t%C)/C;if(p>.45)return;
+  const q=p/.45,x=-110+q*(cv.width+160),y=(q<.55?TS+6:TS+6-Math.pow((q-.55)/.45,2)*70);
+  drawPlane(x,y,2);
+}
+let FLY=null;
+const FLIGHTS=[['town','태초마을','BS101'],['cert','학술·자격 검정 시티','BS202'],['sports','체육 & 마라톤 밸리','BS303'],['orchard','감귤 과수원','BS404'],['coast','제주 바닷가','BS505']];
+function showFlight(){
+  openM('<h3>✈ BS 에어 출발 안내</h3><p style="font-size:12px;opacity:.8;margin-bottom:6px">갈 곳을 고르면 바로 출발해요.</p><div class="xcol">'+
+    FLIGHTS.map(([id,n,c])=>`<button class="xb big" onclick="flyTo('${id}')">${c} · ${n} 행</button>`).join('')+'</div>');
+}
+function flyTo(id){closeM();busy=true;FLY={to:id,a:null};sfx('w')}
+function drawFlight(t){
+  if(FLY.a==null)FLY.a=t;
+  const p=(t-FLY.a)/1900;
+  g.fillStyle='#7dd3fc';g.fillRect(0,0,cv.width,cv.height);
+  g.fillStyle='#fff';for(let i=0;i<7;i++){const x=(cv.width+80)-((t/4+i*97)%(cv.width+160)),y=30+i*41;g.fillRect(x,y,70,12);g.fillRect(x+14,y-9,36,10)}
+  drawPlane(cv.width/2-92,cv.height/2-50+Math.sin(t/260)*5,4);
+  if(p>=1){const id=FLY.to;FLY=null;warp(id,7,8,1)}
+}
+
 function draw(t){
   for(let y=0;y<H;y++)for(let x=0;x<W;x++)tile(g,map.m[y][x],x,y,t);
   let ux=px,uy=py;
   if(mv){const p=Math.min(1,(t-mv.a)/160);ux=mv.fx+(mv.tx-mv.fx)*p;uy=mv.fy+(mv.ty-mv.fy)*p}
   const E=npcs.map(n=>{let nx=n.x,ny=n.y;
     if(n.mv){const p=Math.min(1,(t-n.mv.a)/RUN_MS);nx=n.mv.fx+(n.mv.tx-n.mv.fx)*p;ny=n.mv.fy+(n.mv.ty-n.mv.fy)*p}
-    return{y:ny,f:()=>spr(g,nx*TS+4,ny*TS+2,2,{d:n.dir,h:n.h,p:n.h,c:n.c,w:(t/(n.run?110:350)|0)%2})}});
+    return{y:ny,f:()=>{
+      spr(g,nx*TS+4,ny*TS+2,2,{d:n.dir,h:n.h,p:n.h,c:n.c,w:(t/(n.run?110:350)|0)%2});
+      if(n.tw){g.fillStyle='#f97316';g.beginPath();g.arc(nx*TS+27,ny*TS+24,5,0,7);g.fill();g.fillStyle='#fdba74';g.fillRect(nx*TS+24,ny*TS+21,2,2)}
+      if(n.um){const ux=nx*TS+16,uy=ny*TS+3;g.fillStyle=n.um;g.beginPath();g.ellipse(ux,uy,15,9,0,Math.PI,0);g.fill();g.fillStyle='#0003';g.fillRect(ux-15,uy-1,30,2);g.fillStyle='#4b5563';g.fillRect(ux+11,uy,2,13)}
+    }}});
   E.push({y:uy,f:()=>{g.fillStyle='#0003';g.fillRect(ux*TS+6,uy*TS+28,20,4);spr(g,ux*TS+4,uy*TS+2,2,{d:dir,w:mv&&steps%2})}});
+  if(map.plane)drawPlane(map.plane[0]*TS,map.plane[1]*TS,2.1);
   E.sort((a,b)=>a.y-b.y).forEach(e=>e.f());
+  planeSky(t);
+  weatherFX(t);
 }
 
 const RUN_MS=230;
@@ -763,6 +1351,7 @@ function loop(t){
     px=mv.tx;py=mv.ty;mv=null;steps++;updateHUD();
     const d=map.d&&map.d[px+','+py];if(d)warp(d[0],d[1],d[2],map.o?1:0);
   }
+  if(FLY)return drawFlight(t);
   runnersStep(t);
   draw(t);
   updateMiniDot();
@@ -787,6 +1376,8 @@ function startGame(){
 
 buildMiniMap();
 updateHUD();
+updateWxChip();loadWeather();
+setInterval(updateWxChip,20000);setInterval(loadWeather,600000);
 requestAnimationFrame(loop);
 </script>
 </body>
