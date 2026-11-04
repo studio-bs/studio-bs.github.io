@@ -468,9 +468,9 @@ const SONG_XY={airport:[9,8],coast:[9,3],route2:[7,3],town:[11,7],sports:[12,4],
 const SONG={at:null,miss:0,last:-1};
 function songRoll(id){if(!SONG_XY[id]){return}const on=SONG.miss>=2||Math.random()<.4;SONG.at=on?id:null;SONG.miss=on?0:SONG.miss+1}
 const SONG_GUEST=[['어, 처음 보는 얼굴인데요? 보성이 손님인가 봐요? 😄','저는 보성이 친구예요.'],['보성이가 이 세상 제법 잘 만들었죠? 구경 잘하고 가요.'],['스벅은 역시 아이스 아메리카노죠. 날이 어떻든 포기 못 해요. 🥤'],['라젠카 세이브 어스 알아요? 넥스트 노래요.','이건 제대로 불러야 돼요. 🎤'],['농구 좋아해요? 패스 하나 잘 들어가면 그날 기분이 달라져요. 🏀']];
-function songFriend(){if(isOwner()||!FRIEND)return null;if(!FRIEND.met){FRIEND.met=1;return FRIEND.greet}const L=FRIEND.lines||[];return L.length?[L[Math.random()*L.length|0]]:null}
-function songTalk(){const fr=songFriend();if(fr)return fr;const P=SONG_PLACE[cur]||[],L=!isOwner()?SONG_GUEST:Math.random()<.6&&P.length?P:SONG_BASE;let i=Math.random()*L.length|0;if(L[i][0]==SONG.last)i=(i+1)%L.length;SONG.last=L[i][0];return L[i]}
-const SONG_CH=()=>!isOwner()?({'🥤 좋아하는 것':['스벅 아이스 아메리카노요. 겨울에도 얼죽아예요.'],'🎤 좋아하는 노래':['라젠카 세이브 어스요. 신해철 목소리는 진짜… 말해 뭐 해요.'],'🤝 보성이랑은':['친구예요. 같이 노래 부르고 농구하던 사이요. 😄']}):({'🥤 아아 이야기':['스벅 아이스 아메리카노, 이건 진리야.','겨울에도 예외 없어. 얼죽아지.'],'🎤 노래 이야기':['제일 좋아하는 노래? 라젠카 세이브 어스지.','신해철 목소리는 진짜… 말해 뭐 해.'],'🏀 농구 이야기':['농구는 혼자 못 해. 그래서 더 재밌는 거야.','패스 하나 잘 들어가면 그날 기분이 달라져.'],'📈 주식 이야기':['한화에어로스페이스, 내가 오른다 했지?','그렇다고 다 따라 사진 마. 공부하고 사는 거야.']});
+function songFriend(){if(isOwner()||!FRIEND)return null;if(!FRIEND.met){FRIEND.met=1;return FRIEND.greet}const L=FRIEND.lines||[];return L.length&&Math.random()<.6?[L[Math.random()*L.length|0]]:null}
+function songTalk(){const fr=songFriend();if(fr)return fr;const P=SONG_PLACE[cur]||[],L=!isOwner()&&!FRIEND?SONG_GUEST:Math.random()<.6&&P.length?P:SONG_BASE;let i=Math.random()*L.length|0;if(L[i][0]==SONG.last)i=(i+1)%L.length;SONG.last=L[i][0];return L[i]}
+const SONG_CH=()=>!isOwner()&&!FRIEND?({'🥤 좋아하는 것':['스벅 아이스 아메리카노요. 겨울에도 얼죽아예요.'],'🎤 좋아하는 노래':['라젠카 세이브 어스요. 신해철 목소리는 진짜… 말해 뭐 해요.'],'🤝 보성이랑은':['친구예요. 같이 노래 부르고 농구하던 사이요. 😄']}):({'🥤 아아 이야기':['스벅 아이스 아메리카노, 이건 진리야.','겨울에도 예외 없어. 얼죽아지.'],'🎤 노래 이야기':['제일 좋아하는 노래? 라젠카 세이브 어스지.','신해철 목소리는 진짜… 말해 뭐 해.'],'🏀 농구 이야기':['농구는 혼자 못 해. 그래서 더 재밌는 거야.','패스 하나 잘 들어가면 그날 기분이 달라져.'],'📈 주식 이야기':['한화에어로스페이스, 내가 오른다 했지?','그렇다고 다 따라 사진 마. 공부하고 사는 거야.']});
 function songNpc(id){const[x,y]=SONG_XY[id];return{x,y,c:'#1e3a8a',h:'#201a1a',p:'#201a1a',gl:'#6b4a2e',cup:1,stay:1,n:'송',when:()=>SONG.at==id,s:songTalk,ch:SONG_CH}}
 
 /* 해녀 할망 (제주 사투리) */
