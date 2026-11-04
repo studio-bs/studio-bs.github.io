@@ -1726,6 +1726,27 @@ let REG={};
 const exNote='<p style="font-size:11px;opacity:.7;margin-top:10px">※ 여기 기록은 이 게임의 접수내역이에요. 실제 접수는 공식 사이트에서 진행하세요.</p>';
 const exBack=(fn,l)=>`<div style="margin-top:10px"><button class="xb" onclick="${fn}">◀ ${l||'뒤로'}</button></div>`;
 async function openExam(){try{REG=await DB.regList()}catch(e){REG={};toast(dbErr(e))}exHome()}
+/* 다음 시험 일정. 공개된 일정을 적어 둔 표라서, 새 일정이 나오면 여기에 한 줄씩 더하면 됩니다. (2026-11-05 기준 확인) */
+const EX_SCHED={
+  hist:{off:'https://www.historyexam.go.kr/',list:[
+    {no:'제81회 (심화)',d:'2026-11-28',steps:[['정기 접수','2026-11-03','2026-11-10'],['취소좌석 접수','2026-11-11','2026-11-13']],res:'2026-12-11'}]},
+  toeic:{off:'https://exam.toeic.co.kr/',list:[
+    {no:'제582회',d:'2026-11-08',steps:[['추가 접수','2026-10-28','2026-11-05']],res:'2026-11-17'},
+    {no:'제583회',d:'2026-11-15',steps:[['추가 접수','2026-11-04','2026-11-12']],res:'2026-11-24'},
+    {no:'제584회',d:'2026-11-29',steps:[['정기 접수','2026-10-12','2026-11-16'],['추가 접수','2026-11-18','2026-11-26']],res:'2026-12-08'},
+    {no:'제585회',d:'2026-12-13',steps:[['정기 접수','2026-10-26','2026-11-30'],['추가 접수','2026-12-02','2026-12-10']],res:'2026-12-22'},
+    {no:'제586회',d:'2026-12-27',steps:[['정기 접수','2026-11-09','2026-12-14'],['추가 접수','2026-12-16','2026-12-23']],res:'2027-01-06'},
+    {no:'2027년 첫 시험',d:'2027-01-16',steps:[['접수','2026-11-30','']],res:'2027-01-26'}]}};
+const exToday=()=>new Date(Date.now()+9*36e5).toISOString().slice(0,10);
+const exDays=(a,b)=>Math.round((Date.parse(b)-Date.parse(a))/864e5);
+const exMD=d=>{const D=new Date(d+'T00:00:00Z');return (D.getUTCMonth()+1)+'월 '+D.getUTCDate()+'일('+'일월화수목금토'[D.getUTCDay()]+')'};
+function exNextHtml(id){
+  const X=EX_SCHED[id];if(!X)return'';const t=exToday(),L=X.list.filter(e=>e.d>=t),link=`<a href="${X.off}" target="_blank" rel="noopener">공식 사이트</a>`;
+  if(!L.length)return `<div class="cd" style="margin:8px 0"><b>📅 다음 시험</b><br>아직 다음 일정이 등록되지 않았어요. ${link}에서 확인해 주세요.</div>`;
+  const e=L[0],n=exDays(t,e.d),now=e.steps.find(s=>t>=s[1]&&(!s[2]||t<=s[2])),nx=e.steps.find(s=>t<s[1]);
+  const reg=now?(now[2]?`${now[0]} 중 · ${exMD(now[2])}까지`:`${now[0]} 중 · 마감일은 공식 사이트 확인`):nx?`${nx[0]} ${exMD(nx[1])}부터`:'접수 기간이 끝났어요';
+  return `<div class="cd" style="margin:8px 0"><b>📅 다음 시험은 ${exMD(e.d)}입니다.</b> <b style="color:#dc2626">${n?n+'일 남았습니다':'오늘이에요!'}</b><br><small>${esc(e.no)} · ${reg} · 결과 발표 ${exMD(e.res)}</small>${L.length>1?`<br><small style="opacity:.8">그다음: ${L.slice(1,3).map(q=>exMD(q.d)).join(', ')}</small>`:''}<br><small style="opacity:.7">시행처 사정으로 바뀔 수 있어요. 접수 전 ${link}에서 확인해 주세요.</small></div>`;
+}
 function exHome(){
   const n=Object.keys(REG).length;
   openM(`<h3>🖥 자격 시험 접수 시스템</h3>${adm('ex')}<div class="xcol">`+
@@ -1740,7 +1761,7 @@ function exGroup(g){
 }
 function exExam(id){
   const e=EXI[id],ad=DB.admin();
-  openM(`<h3>${e.n}</h3>${adm('ex')}`+e.p.map(p=>{const r=REG[id+':'+p];return `<div class="xrow"><div><b>${e.p.length>1?PL[p]+' 시험':'시험 접수'}</b><small style="display:block;opacity:.75">${r?'✅ '+fmtD(r.exam_date)+' 접수':'미접수'}</small></div><div><button class="xb" ${r||!ad?'disabled':''} onclick="exDate('${id}','${p}')">접수</button> <button class="xb r" ${r&&ad?'':'disabled'} onclick="exCancel('${id}','${p}')">접수취소</button></div></div>`}).join('')+
+  openM(`<h3>${e.n}</h3>${adm('ex')}${exNextHtml(id)}`+e.p.map(p=>{const r=REG[id+':'+p];return `<div class="xrow"><div><b>${e.p.length>1?PL[p]+' 시험':'시험 접수'}</b><small style="display:block;opacity:.75">${r?'✅ '+fmtD(r.exam_date)+' 접수':'미접수'}</small></div><div><button class="xb" ${r||!ad?'disabled':''} onclick="exDate('${id}','${p}')">접수</button> <button class="xb r" ${r&&ad?'':'disabled'} onclick="exCancel('${id}','${p}')">접수취소</button></div></div>`}).join('')+
     (ad?'':'<p style="font-size:11px;opacity:.75">접수와 취소는 운영자만 할 수 있어요.</p>')+exBack(`exGroup('${e.g}')`,'목록으로')+exNote);
 }
 function exDate(id,p){
