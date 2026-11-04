@@ -201,6 +201,26 @@
       body.bgm-on #ctl{align-items:flex-start}
       body.bgm-on .dp{grid-template:repeat(3,36px)/repeat(3,36px);padding:4px}
     }
+    #mobPanel{display:none}
+    @media(max-width:620px){
+      #mobPanel{display:flex;flex-direction:column;flex:1;min-height:0;order:3;background:var(--pn);border:2px solid var(--bd);border-radius:8px;overflow:hidden}
+      #bar{order:1}#scr{order:2}#ctl{order:4;flex:none;height:146px;min-height:0;padding:2px 12px}
+      .dp{grid-template:repeat(3,38px)/repeat(3,38px);padding:6px}
+      .mtabs{display:flex;flex:none;border-bottom:1px solid var(--bd)}
+      .mtabs button{flex:1;font:inherit;font-size:12px;padding:7px 0;background:transparent;color:inherit;border:0;cursor:pointer;opacity:.6}
+      .mtabs button.on{opacity:1;font-weight:bold;box-shadow:inset 0 -3px #fbbf24}
+      #mobBody{flex:1;min-height:0;overflow:auto;padding:8px;touch-action:pan-y}
+      .mt{display:none}.mt.on{display:block}
+      #mobPanel #leftPanel,#mobPanel #rightPanel{display:block;border:0;padding:0;background:transparent;overflow:visible}
+      #mobPanel #minimap-overlay{position:static;width:100%;max-width:300px;margin:0 auto;opacity:1;pointer-events:auto;transform:none;padding:0;background:transparent;border:0;box-shadow:none}
+      #mobPanel .minimap-title{display:none}
+      #mobPanel .minimap-node .lb{font-size:9px}
+      #toast{bottom:156px}
+      #ytDock.mini{bottom:150px}#bgmBar{bottom:150px}
+      body.bgm-on #ctl{align-items:center}
+      body.bgm-on .dp{grid-template:repeat(3,38px)/repeat(3,38px);padding:6px}
+      body.modal-on #ctl{height:132px}
+    }
     .kcur{outline:3px solid #fbbf24!important;outline-offset:1px}
     #kc{position:fixed;z-index:12;font-size:20px;line-height:1;pointer-events:none;display:none;filter:drop-shadow(0 1px 1px #0008)}
     @media(max-width:900px){
@@ -266,6 +286,10 @@
   </div>
 </div>
 
+<div id="mobPanel" hidden>
+  <div class="mtabs"><button data-t="map" onclick="mobTab('map')">🗺 지도</button><button data-t="me" onclick="mobTab('me')">👤 프로필</button><button data-t="log" onclick="mobTab('log')">🎯 모험</button></div>
+  <div id="mobBody"><div class="mt" data-t="map"></div><div class="mt" data-t="me"></div><div class="mt" data-t="log"></div></div>
+</div>
 <div id="ctl">
   <div class="dp"><span></span><button data-d="1">▲</button><span></span><button data-d="2">◀</button><span></span><button data-d="3">▶</button><span></span><button data-d="0">▼</button><span></span></div>
   <div class="ab">
@@ -671,7 +695,7 @@ function tile(c,k,x,y,t){
     case '%': gr(); f('#3f3f46',0,6,32,22); [[0,7,10,9,'#57534e'],[11,6,11,10,'#44403c'],[23,8,9,8,'#52525b'],[2,17,12,10,'#44403c'],[15,17,9,10,'#57534e'],[25,17,7,10,'#44403c']].forEach(([a,b,w,q,c])=>f(c,a,b,w,q)); f('#78716c',3,8,4,2); f('#71717a',26,10,3,2); f('#00000030',0,28,32,2); break;
     case '#': gr(); f('#5c4028',5,20,4,12); f('#5c4028',23,20,4,12); f('#7a4a22',2,3,28,20); f('#a06a36',2,3,28,3); f('#fff7ed',7,8,10,13); f('#f97316',9,10,6,6); f('#16a34a',12,9,2,2); f('#fde68a',20,9,7,8); f('#ef4444',11,7,2,2); f('#ef4444',23,8,2,2); break;
     case 'p': fl(); f('#5c3d24',2,1,28,30); [[3,'#ef4444'],[8,'#3b82f6'],[13,'#22c55e'],[18,'#f59e0b'],[23,'#a78bfa']].forEach(([a,b],i)=>{f(b,a+1,4,4,10);f(b,27-a-3,18,4,10)}); f('#3f2a1c',2,15,28,2); break;
-    case 'z': { wl(); const pl=PLS[PL_SLOT.indexOf(x)]; f('#3f2a1c',3,2,26,26);
+    case 'z': { wl(); const pl=plWall_()[PL_SLOT.indexOf(x)]; f('#3f2a1c',3,2,26,26);
       if(pl){f('#0f766e',5,4,22,22); c.fillStyle='#fff'; c.textAlign='center'; c.font='bold 10px sans-serif'; c.fillText(+pl.ym.slice(5)+'월',X+16,Y+14); c.font='9px sans-serif'; c.fillText('🎵'+plList(pl).length,X+16,Y+24); c.textAlign='start'}
       else f('#6b5a48',5,4,22,22); break}
     case 'q': { wl(); const m=(map.memo||{})[x+','+y]||{};
@@ -748,7 +772,7 @@ const BGM_TRACKS = {
 };
 
 function tone(n,d,ty,v,t0){
-  if(!AC)return;
+  if(!AC||AC.state!='running')return;   // 멈춘 동안 음이 쌓였다가 한꺼번에 터지지 않게 함
   const o=AC.createOscillator(),gn=AC.createGain(),t=AC.currentTime+(t0||0);
   o.type=ty;o.frequency.value=261.63*2**(n/12);
   gn.gain.setValueAtTime(v,t);
@@ -778,6 +802,15 @@ function sfx(k){
   else tone(12,.06,'square',.04);
 }
 
+/* 모바일 브라우저·인앱 브라우저는 소리가 멈춘 채 시작될 수 있어서, 터치할 때마다 깨움 */
+function acUnlock(){
+  try{
+    if(!AC)AC=new(window.AudioContext||window.webkitAudioContext)();
+    if(AC.state!='running'){const p=AC.resume();if(p&&p.catch)p.catch(()=>{});
+      const b=AC.createBuffer(1,1,22050),s=AC.createBufferSource();s.buffer=b;s.connect(AC.destination);s.start(0)}
+  }catch(e){}
+}
+['pointerup','touchend','click','keydown'].forEach(t=>addEventListener(t,()=>{if(AC&&AC.state!='running')acUnlock()},{capture:true,passive:true}));
 function togBgm(){bgm=!bgm;$('#bg').textContent=bgm?'🔊':'🔇';bgm&&!sunoOn?music():clearInterval(mt);npUpdate()}
 /* 위쪽 재생 이름 */
 let npExt='',npLast=null;
@@ -786,7 +819,7 @@ function npUpdate(){const el=document.getElementById('npt');if(!el)return;
   const key=map?(map.bgm||'town'):'town',tx=sunoOn&&npExt?'♪ '+npExt:bgm?'♪ '+BGM_NAMES[key]:'🔇 음악 꺼짐';
   if(tx!==npLast){npLast=tx;el.textContent=tx}}
 /* 탭을 떠나 있는 동안에만 게임 음악을 쉼 (소리 설정은 그대로) */
-document.addEventListener('visibilitychange',()=>{document.hidden?clearInterval(mt):(!sunoOn&&music())});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)clearInterval(mt);else{if(AC&&AC.state!='running')acUnlock();if(!sunoOn)music()}});
 
 let cur=null,map=null,px=7,py=5,dir=0,mv=null,steps=0,busy=true,modal=false,dlg=null,tw=null,npcs=[],held=null,bumpT=0;
 const DV=[[0,1],[0,-1],[-1,0],[1,0]],EK=['d','u','l','r'],WALK='.F=stDfxdu';
@@ -901,8 +934,20 @@ function updateMiniDot(){
 
 let mmPin=false,mmFlash=false,mmTimer=null;
 function syncMiniMap(){const ov=$('#minimap-overlay');if(ov)ov.classList.toggle('on',mmPin||mmFlash)}
+/* 모바일: 아래쪽 패널에 지도·프로필·모험 일지 */
+const mobMq=matchMedia('(max-width:620px)'),mobOn=()=>mobMq.matches;
+function mobTab(t){document.querySelectorAll('#mobPanel [data-t]').forEach(e=>e.classList.toggle('on',e.dataset.t==t));const b=$('#mobBody');if(b)b.scrollTop=0}
+function mobLayout(){
+  const P=$('#mobPanel'),L=$('#leftPanel'),R=$('#rightPanel'),O=$('#minimap-overlay'),A=$('#app'),S=$('#scr');
+  if(!P)return;
+  if(mobOn()){P.hidden=false;
+    P.querySelector('.mt[data-t=map]').append(O);P.querySelector('.mt[data-t=me]').append(L);P.querySelector('.mt[data-t=log]').append(R);
+    if(!P.querySelector('.mt.on'))mobTab('map');
+  }else{P.hidden=true;S.append(O);A.prepend(L);A.append(R)}
+}
 function flashMiniMap(){if(!map||!map.o){mmFlash=false;syncMiniMap();return}mmFlash=true;syncMiniMap();clearTimeout(mmTimer);mmTimer=setTimeout(()=>{mmFlash=false;syncMiniMap()},3600)}
 function toggleMap(){
+  if(mobOn()){mobTab('map');return}
   if(busy)return;
   if(mmPin||mmFlash){mmPin=false;mmFlash=false;clearTimeout(mmTimer)}else{mmPin=true;toast('가고 싶은 지역을 눌러 이동하세요!')}
   syncMiniMap();
@@ -1204,8 +1249,9 @@ async function plLoad(){try{PLS=await DB.plList();PLERR='';PLS.forEach(p=>plSync
 const plUrl=u=>/^https:\/\/[^\s"'<>]+$/.test(u||'')?u:'';
 const plSongUrl=s=>plUrl(s.u)||'https://music.youtube.com/search?q='+encodeURIComponent([s.a,s.t].filter(Boolean).join(' '));
 const plYm=ym=>ym.slice(0,4)+'년 '+(+ym.slice(5))+'월';
+const plWall_=()=>PLS.slice(0,PL_SLOT.length).reverse();   // 최근 6개를 왼쪽부터 오래된 달 순서로
 function plWall(x){
-  const p=PLS[PL_SLOT.indexOf(x)];
+  const p=plWall_()[PL_SLOT.indexOf(x)];
   if(p)return plShow(p.id);
   if(DB.admin())return plEdit(0);
   say('액자',['아직 비어 있는 액자다. 다음 달 노래가 걸릴 자리 같다.']);
@@ -1741,13 +1787,14 @@ setInterval(()=>{
 },1100);
 
 function startGame(){
-  try{AC=new(window.AudioContext||window.webkitAudioContext)()}catch(e){}
+  acUnlock();
   $('#st').style.display='none';busy=false;
   warp('town',7,5,0);
   toast('BS World에 오신 것을 환영합니다!');
 }
 
 npUpdate();
+mobLayout();mobMq.addEventListener('change',mobLayout);
 buildMiniMap();
 updateHUD();
 updateWxChip();loadWeather();
