@@ -74,9 +74,9 @@
     .cd{border:1px solid var(--bd);padding:6px 8px;margin:6px 0;font-size:13px;line-height:1.5}.cd small{display:block;opacity:.75}
     .bl{filter:blur(4.5px);display:inline-block}.mk{font-size:11px;opacity:.8}
     .portfolio-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-    .portfolio-item{border:1px solid var(--bd);background:#0e172b;border-radius:7px;padding:10px;text-align:left;color:var(--tx);font:inherit;cursor:pointer}
-    .portfolio-item b{display:block;color:var(--ac);font-size:12px;margin-bottom:4px}
-    .portfolio-item small{font-size:10px;line-height:1.4;color:var(--muted)}
+    .portfolio-item{border:1px solid var(--bd);background:#0e172b;border-radius:7px;padding:10px;text-align:left;color:#fff;font:inherit;cursor:pointer}
+    .portfolio-item b{display:block;color:#fde68a;font-size:13px;margin-bottom:4px}
+    .portfolio-item small{font-size:11px;line-height:1.4;color:#fff}
     #toast{position:fixed;z-index:20;left:50%;bottom:18px;transform:translateX(-50%);background:#10192e;color:#fff;border:2px solid #fbbf24;padding:9px 14px;border-radius:7px;font-size:12px;opacity:0;pointer-events:none;transition:opacity .2s}
     #toast.show{opacity:1}
     
@@ -90,7 +90,7 @@
     .minimap-title{font-size:11px;color:#fbbf24;text-align:center;margin-bottom:5px;font-weight:bold;border-bottom:1px solid #2c3a5e;padding-bottom:3px}
     .minimap-grid{
       display:grid;
-      grid-template-areas:". . cert ." "airport airfield route1 orchard" "coast route2 town sports" ". studio rest .";
+      grid-template-areas:". . cert ." "airport airfield route1 orchard" "coast route2 town sports" "beach studio rest .";
       grid-template-columns:repeat(4,1fr);gap:3px;
     }
     .minimap-node{
@@ -100,7 +100,7 @@
       background-color:#1b2540;background-size:100% 100%;background-repeat:no-repeat;
       image-rendering:pixelated;font-family:inherit;transition:transform .15s,border-color .15s;
     }
-    .minimap-node.studio{grid-area:studio}.minimap-node.airfield{grid-area:airfield}.minimap-node.route2{grid-area:route2}.minimap-node.rest{grid-area:rest}.minimap-node.airport{grid-area:airport}.minimap-node.cert{grid-area:cert}.minimap-node.route1{grid-area:route1}
+    .minimap-node.beach{grid-area:beach}.minimap-node.studio{grid-area:studio}.minimap-node.airfield{grid-area:airfield}.minimap-node.route2{grid-area:route2}.minimap-node.rest{grid-area:rest}.minimap-node.airport{grid-area:airport}.minimap-node.cert{grid-area:cert}.minimap-node.route1{grid-area:route1}
     .minimap-node.orchard{grid-area:orchard}.minimap-node.coast{grid-area:coast}.minimap-node.town{grid-area:town}.minimap-node.sports{grid-area:sports}
     .minimap-node .lb{
       position:absolute;left:2px;bottom:2px;max-width:calc(100% - 4px);
@@ -126,7 +126,7 @@
     }
     @media(max-width:620px){
      body{overflow:auto}
-     #app{height:100dvh;min-height:560px;display:flex;flex-direction:column;gap:5px;padding:5px}
+     #app{height:var(--vh,100dvh);min-height:0;display:flex;flex-direction:column;gap:5px;padding:5px}
      #bar{flex:none;gap:4px;padding:5px;flex-wrap:wrap}
      #bar b{width:100%;flex:1 0 100%}
      #bar button{font-size:10px;padding:4px 6px}
@@ -169,6 +169,7 @@
     .qm{display:block;opacity:.7;font-size:11px;margin:3px 0 6px}
     .qbtn{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
     .qbtn[hidden]{display:none}
+    .xb[hidden],#bgmBar button[hidden]{display:none}
     .qchk{display:flex;align-items:center;gap:6px;font-size:12px;margin:7px 0;cursor:pointer}
     .qform{border:1px solid var(--bd);border-radius:8px;padding:9px;margin:8px 0;font-size:13px}
     .qform>summary{cursor:pointer;font-weight:bold}
@@ -222,7 +223,13 @@
       #mobPanel .minimap-title{display:none}
       #mobPanel .minimap-node .lb{font-size:9px}
       #toast{bottom:156px}
-      #ytDock.mini{bottom:150px}#bgmBar{bottom:150px}
+      body.bgm-on #mobBody{padding-bottom:76px}
+      body.bgm-small #ytDock.mini{width:112px;height:63px;left:9px;right:auto;border-radius:6px;z-index:8}
+      body.bgm-small #bgmBar{left:6px;right:6px;width:auto;padding:4px 6px 4px 120px;min-height:71px;z-index:7;border-radius:8px}
+      body.bgm-small #bgmBar .bb{flex-wrap:nowrap}
+      body.bgm-small #bgmBar button{flex:1;padding:5px 0}
+      body.bgm-small #bgmName{white-space:nowrap;max-height:none}
+      html,body{overflow:hidden}
       body.bgm-on #ctl{align-items:center}
       body.bgm-on .dp{grid-template:repeat(3,38px)/repeat(3,38px);padding:6px}
       body.modal-on #ctl{height:132px}
@@ -231,6 +238,7 @@
     #vc{flex:none;font-size:11px;color:#14223d;margin-right:6px;white-space:nowrap}#vc[hidden]{display:none}#vc i{font-style:normal;font-weight:bold;color:#b45309}
     .brk{display:none}
     @media(max-width:620px){#bar b{width:auto;flex:1 1 0}.brk{display:block;flex:0 0 100%;height:0}#vc{margin-right:2px;font-size:10px}}
+    .xb.kko{background:#fee500;color:#191600;border-color:#b8a600}.xb.kko:hover:not(:disabled){background:#ffeb3b}
     .kcur{outline:3px solid #fbbf24!important;outline-offset:1px}
     #kc{position:fixed;z-index:12;font-size:20px;line-height:1;pointer-events:none;display:none;filter:drop-shadow(0 1px 1px #0008)}
     @media(max-width:900px){
@@ -321,7 +329,7 @@
 
 <div id="lb" onclick="if(event.target.tagName=='IMG')lbZoom();else lbClose()"><div class="fit"><img id="lbi" alt=""></div></div><button id="lbx" onclick="lbClose()" aria-label="닫기">✕</button>
 <div id="ytDock"></div>
-<div id="bgmBar" hidden><div id="bgmName"></div><div class="bb"><button id="bgmP" onclick="bgmToggle()" title="재생/일시정지 (M)">⏯</button><button onclick="bgmNext()" title="다음 곡 (N)">⏭</button><button onclick="bgmList()" title="목록">📃</button><button onclick="bgmOff()" title="끄기">✕</button></div></div>
+<div id="bgmBar" hidden><div id="bgmName"></div><div class="bb"><button id="bgmP" onclick="bgmToggle()" title="재생/일시정지 (M)">⏯</button><button onclick="bgmNext()" title="다음 곡 (N)">⏭</button><button onclick="bgmList()" title="목록">📃</button><button id="bgmMin" onclick="bgmMinTog()" title="작게/크게">⬇</button><button onclick="bgmOff()" title="끄기">✕</button></div></div>
 <div id="kc">👉</div>
 <div class="md" id="md" hidden>
   <div class="mb"><button class="x" onclick="closeM()">✕</button><div id="mc"></div></div>
@@ -344,6 +352,7 @@ function jejuNow(){
   const g=k=>+f.find(p=>p.type==k).value,hq=QS.get('hour');
   return{h:hq!=null&&hq!==''?(+hq)%24:g('hour')%24,m:g('minute')};
 }
+const seasonNow=()=>{const m=+QS.get('month')||new Date(Date.now()+9*36e5).getUTCMonth()+1;return m==12||m<=2?'winter':m<=5?'spring':m<=8?'summer':'autumn'};
 const isNight=()=>{const{h}=jejuNow();return h>=19||h<6};
 /* 가족 일정: 11~1월, 날씨 좋을 때 아버지는 낮에, 어머니는 퇴근 후 가끔 과수원에 나감
    미리 보기: 주소 뒤에 ?hour=14&month=12 또는 ?hour=18&month=12&mom=1 */
@@ -404,6 +413,26 @@ const AGM=['w'.repeat(W),'wwCwwAwwwAwwCww',...[2,3,4,5,6,7,8].map(y=>{const i=y-
 const MNL=['w','w','C','w','B','w','E'],MNR=['w','w','E','w','I','w','C'];
 const MNM=['w'.repeat(W),'wwBwwEwwwEwwBww',...[2,3,4,5,6,7,8].map(y=>{const i=y-2,mid=y==3?'k'.repeat(W-2):y==4?'fXfffffffffXf':y==6?'ffKKfffffKKff':'f'.repeat(W-2);return MNL[i]+mid+MNR[i]}),'wwwwwwwxwwwwwww'];
 
+/* 송: 지도마다 무작위로 나타나는 친구 */
+const SONG_BASE=[['왔어? 😄','아아 한 잔 할래? 스벅은 역시 아이스 아메리카노지. 🥤'],['라젠카 세이브 어스 알지? 넥스트 노래.','이건 제대로 불러야 돼. 🎤'],['노래방 가자. 마지막 곡은 라젠카로 정해 놨어.'],['농구 한 판 하자. 3점은 내가 넣을게. 🏀'],['한화에어로스페이스, 내가 오른다 했지? 📈','봐, 내 말 맞잖아. 😎'],['보성이 이 세상 제법 잘 만들었네. 인정.'],['날이 어떻든 아아는 포기 못 하지. 🥤']];
+const SONG_PLACE={
+  airport:[['비행기 타기 전엔 공항 스벅 아아가 국룰이지. ✈'],['저기 뜨는 비행기 좀 봐. 볼 때마다 좋다.'],['한화에어로스페이스가 왜 궁금한지 알겠지? 저 엔진 소리 들어 봐. 📈']],
+  coast:[['바다 앞에서 아아 한 잔이면 더 바랄 게 없지. 🌊'],['여기서 라젠카 부르면 파도랑 잘 어울릴 것 같지 않냐? 🎤']],
+  route2:[['돌담 따라 걷다 보니 생각이 정리되네.'],['이 길은 걸을수록 좋아. 천천히 가자.']],
+  town:[['왔어? 동네 한 바퀴 돌자.'],['게시판 봤어? 저 귤 진짜 맛있대. 🍊']],
+  sports:[['골대 있네? 공 어디 있어. 한 판 하자. 🏀'],['운동 끝나고 마시는 아아. 이게 완벽한 코스지.'],['트랙 말고 농구 코트 없냐고 보성이한테 말 좀 해 줘. 😄']],
+  route1:[['귤 향 좋다. 걷기만 해도 기분 좋아지네. 🍊'],['귤나무 보니까 올해 작황이 궁금하네. 이것도 투자처럼 봐야 돼. 📈']],
+  cert:[['공부하다 막히면 나한테 물어봐. 같이 보자. 📚'],['시험은 차근차근 하면 돼. 넌 할 수 있어.']],
+  rest:[['음악 서재 가 봤어? 플레이리스트 잘 골랐더라. 🎧'],['조용해서 좋다. 여기선 라젠카 말고 잔잔한 걸로 부를게. 🎤']],
+  studio:[['전시 잘 봤어. 다음엔 나도 사진 한 장 찍어 줘. 📷'],['만든 걸 보면 그 사람이 보이더라. 보성이답네.']]
+};
+const SONG_XY={airport:[9,8],coast:[9,3],route2:[7,3],town:[11,7],sports:[12,4],route1:[2,5],cert:[11,6],rest:[5,6],studio:[9,5]};
+const SONG={at:null,miss:0,last:-1};
+function songRoll(id){if(!SONG_XY[id]){return}const on=SONG.miss>=2||Math.random()<.4;SONG.at=on?id:null;SONG.miss=on?0:SONG.miss+1}
+function songTalk(){const P=SONG_PLACE[cur]||[],L=Math.random()<.6&&P.length?P:SONG_BASE;let i=Math.random()*L.length|0;if(L[i][0]==SONG.last)i=(i+1)%L.length;SONG.last=L[i][0];return L[i]}
+const SONG_CH=()=>({'🥤 아아 이야기':['스벅 아이스 아메리카노, 이건 진리야.','겨울에도 예외 없어. 얼죽아지.'],'🎤 노래 이야기':['제일 좋아하는 노래? 라젠카 세이브 어스지.','신해철 목소리는 진짜… 말해 뭐 해.'],'🏀 농구 이야기':['농구는 혼자 못 해. 그래서 더 재밌는 거야.','패스 하나 잘 들어가면 그날 기분이 달라져.'],'📈 주식 이야기':['한화에어로스페이스, 내가 오른다 했지?','그렇다고 다 따라 사진 마. 공부하고 사는 거야.']});
+function songNpc(id){const[x,y]=SONG_XY[id];return{x,y,c:'#1e3a8a',h:'#201a1a',p:'#201a1a',gl:'#6b4a2e',cup:1,stay:1,n:'송',when:()=>SONG.at==id,s:songTalk,ch:SONG_CH}}
+
 /* 해녀 할망 (제주 사투리) */
 const hnS=()=>{
   if(WET())return['비가 오난 바당이 거칠어부난 오늘은 구경만 허주게.','보성이 할망이우다. 집에 강 감귤차나 마십서. ☕'];
@@ -434,7 +463,8 @@ town:{n:'태초마을',o:1,bgm:'town',m:[
   'T...m..=m.F...T',
   'TT.F...=....TTT',
   'TTTTTTT=TTTTTTT'
-],d:{'3,3':['house',7,8]},e:{u:['route1',7,9],l:['route2',14,5],r:['sports',0,5],d:['rest',7,0]},umb:[[3,5,'#ef4444'],[11,5,'#3b82f6']],p:[
+],sign:{'3,3':'보성의 집'},d:{'3,3':['house',7,8]},e:{u:['route1',7,9],l:['route2',14,5],r:['sports',0,5],d:['rest',7,0]},umb:[[3,5,'#ef4444'],[11,5,'#3b82f6']],p:[
+  {x:9,y:8,c:'#111827',h:'#1b1b26',stay:1,n:'창끼 (a.k.a 노진구)',s:['전설의힘을 알고있나?','ㅋ']},
   {x:10,y:6,c:'#4aa3ff',h:'#6b3e26',n:'마을 소년',s:['어서 와! 여기가 BS World의 태초마을이야.','북쪽 귤향 올레 끝엔 자격 시티, 동쪽엔 운동 센터, 서쪽엔 나눔 해변, 남쪽엔 쉼의 숲이 있어.','위쪽 🧠 뇌구조 메뉴를 열면 어디든 순간이동할 수 있대!']},
   {x:12,y:7,c:'#312e81',h:'#fde047',n:'별지기',when:()=>{const{h}=jejuNow();return h>=23||h<1},s:['이 시간에 깨어 있네요. ✨','자정 무렵에만 여기 나와요. 비밀이에요.'],eg:'star'},
   {x:5,y:7,c:'#ff8fb1',h:'#222',w:1,n:'꽃집 누나',s:['꽃향기 맡고 가렴. 🌸','달리기 전엔 스트레칭 필수야!']}
@@ -468,7 +498,7 @@ cert:{n:'학술·자격 검정 시티',o:1,bgm:'knowledge',m:[
    'T..=======....T',
    'TT.F...=.....TT',
    'TTTTTTT=TTTTTTT'],
-      d:{'3,3':['agency',7,8], '9,3':['mensa',7,8]},
+      sign:{'3,3':'자격 검정원','9,3':'멘사 연구소'},d:{'3,3':['agency',7,8], '9,3':['mensa',7,8]},
       e:{d:['route1',7,0]},umb:[[10,5,'#a855f7']],
       p:[
 {x:5,y:6,c:'#3b82f6',h:'#222',n:'시티 안내원',s:['여기는 학술·자격 검정 시티.','파란 지붕은 국가 자격 검정원, 보라색 지붕은 멘사 지능 연구소야.']}]},
@@ -477,14 +507,14 @@ sports:{n:'운동 센터', o:1,bgm:'sports',land:[7,5], m:[
            'TTTTTTTTTTTTTTT',
            'TT.@@@...GGG.TT',
            'T..HDH.F.HDH..T',
-           'T...=.F..===..T',
-           'T.F.=.....=...T',
+           'T...=.F..===.ΩT',
+           'T.F.=.[]|.=...T',
            '===========...T',
            'T..tttttttt..FT',
            'T..t......t...T',
            'TT.tttttttt.TTT',
            'TTTTTTTTTTTTTTT'],
-        d:{'10,2':['gym',7,8],'4,2':['fit',7,8]}, e:{l:['town',14,5]},umb:[[12,7,'#ef4444']],
+        sign:{'10,2':'런 체육관','4,2':'운동 기록실'},d:{'10,2':['gym',7,8],'4,2':['fit',7,8]}, e:{l:['town',14,5]},umb:[[12,7,'#ef4444']],
         p:[
 {x:3,y:3,ti:1,run:1,c:'#22c55e',h:'#222',n:'트랙 러너',s:['하나, 둘! 하나, 둘!','특전사 출신 코치님이 체육관에 계셔.']},
 {x:7,y:5,ti:7,run:1,c:'#ef4444',h:'#6b3e26',n:'마라토너',s:['헉헉… 하프코스는 21km래!','페이스 조절이 제일 중요해.']},
@@ -500,7 +530,8 @@ coast:{n:'제주 바닷가',o:1,bgm:'beach',m:[
   '~~~~ss.F.....FT',
   '~~~1~ss.......T',
   '~2~~3~ss..F.TTT',
-  '~~4~~~~sTTTTTTT'],d:{'11,2':['vc',7,8]},e:{r:['route2',0,5],u:['airport',7,9,1]},p:[
+  '~~4~~~~sTTTTTTT'],sign:{'11,2':'나눔 센터'},d:{'11,2':['vc',7,8]},e:{r:['route2',0,5],u:['airport',7,9,1],d:['beach',7,0,1]},p:[
+{x:10,y:7,c:'#475569',h:'#d1d5db',n:'셋동네 삼춘',s:['쾅 소리 나난 "아이고, 베락 털어졈신가?" 했주게.','이 셋동네 사름들, 밝도록 줌 혼줌 못 잤수다!']},
 {x:5,y:4,c:'#e879f9',h:'#222',w:1,n:'해변 산책러',s:['파도 소리를 들으면 마음이 차분해져. 🌊','센터에 가면 헌혈왕 이야기를 들을 수 있어!']},
 {x:4,y:6,c:'#1f2937',h:'#d1d5db',tw:1,n:'해녀 할망 (보성 할머니)',s:hnS,ch:hnCh},
 {x:6,y:8,c:'#334155',h:'#e5e7eb',tw:1,n:'해녀 할망 (보성 외할머니)',s:hnS2,ch:hnCh}],umb:[[9,6,'#3b82f6']]},
@@ -515,7 +546,7 @@ airport:{n:'제주 공항',o:1,bgm:'route',plane:[7,3],m:[
   '~2~ss..jjjDjjj.',
   '~~~~ss.====....',
   '~~~3ss.=F..iS.T',
-  '~~3~2ss=TTTTTTT'],d:{'10,6':['terminal',7,8]},e:{d:['coast',7,0,1],r:['airfield',0,0,2]},umb:[[6,7,'#0ea5e9']],p:[
+  '~~3~2ss=TTTTTTT'],sign:{'10,6':'터미널'},d:{'10,6':['terminal',7,8]},e:{d:['coast',7,0,1],r:['airfield',0,0,2]},umb:[[6,7,'#0ea5e9']],p:[
 {x:11,y:4,c:'#ea580c',h:'#222',n:'항공 정비사',s:['기체 점검 이상 없음! ✈','비행기를 타고 싶으면 터미널 안 탑승 수속 카운터로 가 봐.']},
 {x:10,y:8,c:'#a78bfa',h:'#6b3e26',w:1,n:'여행객',s:['제주에 내리자마자 귤 냄새가 나는 것 같아요. 🍊','공항 바로 옆이 바다라니, 너무 좋아요!']}]},
 
@@ -529,7 +560,8 @@ studio:{n:'창작 마을',o:1,bgm:'indoor',land:[7,4],m:[
   'T..m.....b...FT',
   'TF....m.F.....T',
   'T..F.......m.TT',
-  'TTTTTTTTTTTTTTT'],d:{'3,2':['projects',7,8],'9,2':['photo',7,8]},e:{u:['route2',6,9],r:['rest',0,4]},umb:[[11,6,'#a855f7']],p:[
+  'TTTTTTTTTTTTTTT'],sign:{'3,2':'프로젝트','9,2':'사진관'},d:{'3,2':['projects',7,8],'9,2':['photo',7,8]},e:{u:['route2',6,9],r:['rest',0,4],l:['beach',14,4]},umb:[[11,6,'#a855f7']],p:[
+{x:12,y:7,c:'#fbbf24',h:'#3f2a1c',w:1,dog:'#d6a35c',n:'강아지와 스케치 나온 사람',s:['제 강아지가 모델이에요. 가만히는 안 있지만요. 🐕']},
 {x:7,y:6,c:'#6366f1',h:'#222',n:'동네 사진가',s:['파란 지붕은 프로젝트 전시관, 보라 지붕은 사진관이에요.']},
 {x:4,y:7,c:'#f59e0b',h:'#6b3e26',w:1,n:'스케치하는 학생',s:['돌담을 그리고 있어요.']}]},
 
@@ -539,22 +571,24 @@ projects:{n:'프로젝트 전시관',par:'studio',bgm:'knowledge',m:['w'.repeat(
 photo:{n:'보성 사진관',par:'studio',bgm:'indoor',m:['w'.repeat(W),'w)w)w)w)w)w)w)w',FR,FR,FR,'wfKKfffffffKKfw',FR,FR,FR,'wwwwwwwxwwwwwww'],d:{'7,9':['studio',9,3]},p:[
 {x:7,y:3,c:'#a855f7',h:'#3f2a1c',n:'사진관 주인',s:['주인장이 찍은 사진들을 걸어 두었어요. 📷'],ch:{'🖼 사진 보기':()=>showPhotos()}}]},
 
-airfield:{n:'제주 공항 활주로',o:1,bgm:'route',plane:[10,3],land:[7,7],m:[
+airfield:{n:'제주 공항 활주로',o:1,bgm:'route',plane:[9,3],land:[7,7],m:[
   'TTTTTTTTTTTTTTT',
-  'rrrrrrrrrrrrrrr',
-  'yyyyyyyyyyyyyyy',
-  'uuuuuuuuuueeeuu',
-  'uuuuuuuuuueeeuu',
-  '...+++..+++...T',
-  '...,,,..,,,...T',
-  '..............T',
-  'T.F...i....F.TT',
+  'rrrrrrrrrrrrTTT',
+  'yyyyyyyyyyyyTTT',
+  'uuuuuuuuueeeuTT',
+  'uuuuuuuuueeeuTT',
+  '...+++..+++..TT',
+  '...,,,..,,,..TT',
+  '.............TT',
+  'T.F...i....FTTT',
   'TTTTTTTTTTTTTTT'],e:{l:['airport',14,0,2]},umb:[[12,7,'#0ea5e9']],p:[
 {x:7,y:4,c:'#ea580c',h:'#222',w:1,n:'유도 요원',s:['오라이~ 오라이~ ✈']},
 {x:5,y:7,c:'#64748b',h:'#d1d5db',n:'격납고 정비 삼춘',s:['격납고 안은 출입 금지우다게.']}]},
 
-fit:{n:'맨몸 운동 기록실',par:'sports',bgm:'sports',m:['w'.repeat(W),'wNwJwwwwwwJwNww',FR,'wf{{fff}}ff{{fw',FR,'wff}}fffff}}ffw',FR,FR,FR,'wwwwwwwxwwwwwww'],d:{'7,9':['sports',4,3]},sh:['💪 맨몸 운동 기록실','철봉이나 매트를 누르면 기록을 볼 수 있어요.'],p:[
+fit:{n:'맨몸 운동 기록실',par:'sports',bgm:'sports',m:['w'.repeat(W),'wNwJwwwwwwJwNww',FR,'wf{{fff}}fffffw',FR,'wff}}fff````ffw','wfffffff````ffw','wfffffff````ffw',FR,'wwwwwwwxwwwwwww'],d:{'7,9':['sports',4,3]},sh:['💪 맨몸 운동 기록실','철봉이나 매트를 누르면 기록을 볼 수 있어요.'],p:[
 {x:7,y:4,c:'#ea580c',h:'#111',n:'기록실 트레이너',s:['팔굽혀펴기랑 철봉 기록은 전부 여기 남습니다.'],ch:{'📈 기록 보기':()=>showFit()}},
+{x:8,y:6,c:'#ef4444',h:'#222',n:'배드민턴 치는 회원',s:['스매시! 🏸','네트 앞에서는 양보 없습니다.']},
+{x:11,y:6,c:'#3b82f6',h:'#6b3e26',n:'배드민턴 치는 친구',s:['방금 그거 아웃이었어요. 분명히요.']},
 {x:3,y:7,c:'#10b981',h:'#222',w:1,n:'철봉 매달린 회원',s:['하나만 더… 하나만 더…']}]},
 
 cave:{n:'??? 동굴',par:'rest',bgm:'knowledge',m:[
@@ -570,6 +604,23 @@ cave:{n:'??? 동굴',par:'rest',bgm:'knowledge',m:[
   '_______________'],d:{'0,5':['rest',13,5]},p:[
 {x:7,y:3,c:'#334155',h:'#94a3b8',n:'동굴 지기',s:['어찌 여길 찾아왔수과? 제주 땅 밑엔 용암동굴이 많주게.','저 안쪽 상자는 열어봐도 됩니다.']}]},
 
+beach:{n:'하얀 백사장',o:1,bgm:'beach',land:[7,8],m:[
+  '~~4~~~~sTTTTTTT',
+  '~~~~~ssss.F.TTT',
+  '~3~~sss?ss...TT',
+  '~~~sss;ss?;..FT',
+  '~~~ssssss.=====',
+  '~1~ss?;sss..F.T',
+  '~~~~sssss?;...T',
+  '~~3~~ssssss.F.T',
+  '~~~~~~~ssss.TTT',
+  '~~2~~~~~~TTTTTT'],e:{u:['coast',7,9,1],r:['studio',0,4]},umb:[[11,5,'#ef4444']],p:[
+{x:6,y:4,c:'#f472b6',h:'#6b3e26',n:'모래성 쌓는 아이',s:['이 모래성은 파도가 와도 안 무너질 거예요!']},
+{x:8,y:7,c:'#38bdf8',h:'#222',w:1,n:'비치볼 하는 사람',s:['받아라~!']},
+{x:10,y:6,c:'#fde047',h:'#3f2a1c',sit:1,n:'일광욕하는 사람',s:['맨도롱 또똣허니 잠 오쿠다… 😎']},
+{x:4,y:3,c:'#0ea5e9',h:'#111',n:'서퍼',s:['파도 좋은 날은 일이고 뭐고 없어요. 🏄']},
+{x:8,y:2,c:'#a3e635',h:'#6b3e26',w:1,dog:'#d6a35c',n:'강아지 산책하는 주민',s:['우리 강아지는 모래만 보면 뛰어요. 🐕']}]},
+
 route2:{n:'바당 올레',o:1,bgm:'route',land:[7,5],m:[
   'TTTTTTTTTTTTTTT',
   'TT.F....F...FTT',
@@ -582,20 +633,22 @@ route2:{n:'바당 올레',o:1,bgm:'route',land:[7,5],m:[
   'T..m..=...m...T',
   'TTTTTT=TTTTTTTT'],e:{l:['coast',14,5],r:['town',0,5],d:['studio',6,0]},umb:[[2,3,'#0ea5e9']],p:[
 {x:5,y:3,c:'#0d9488',h:'#6b3e26',n:'올레꾼',s:['돌담 따라 걷는 이 길이 바당 올레라마씸. 🌊','서쪽으로 가민 해변, 동쪽으로 가민 태초마을이우다.']},
+{x:2,y:8,c:'#a3e635',h:'#3f2a1c',w:1,dog:'#92400e',n:'강아지 데리고 걷는 사람',s:['우리 강아지가 돌담 냄새를 다 맡아야 움직여요. 🐕']},
 {x:10,y:7,c:'#fb7185',h:'#222',w:1,n:'사진 찍는 여행자',s:['돌담이랑 귤나무가 같이 나오게 찍고 있어요. 📷']}]},
 
 rest:{n:'쉼의 숲',o:1,bgm:'indoor',m:[
   'TTTTTTT=TTTTTTT',
-  'T.F....=...F.TT',
-  'T.WWW..=..~~~.T',
-  'T.HDH..=.F~~~FT',
+  'T$$$$$.=...F.TT',
+  'T$$$$$.=..~~~.T',
+  'T¢¢D¢¢.=.F~~~FT',
   '========b.~~~.T',
-  'T...F..=..b...!',
-  'TFb....=....F.T',
-  'T..m...=.F..b.T',
-  'TT.F...=...F.TT',
-  'TTTTTTTTTTTTTTT'],d:{'3,3':['library',7,8]},e:{u:['town',7,9],l:['studio',14,4],r:['cave',1,5]},umb:[[5,6,'#14b8a6']],p:[
+  'T...F.....b...!',
+  'TFb......>>>F.T',
+  'T..m....F<D<..T',
+  'TT.F.....===.TT',
+  'TTTTTTTTTTTTTTT'],opera:[1,1,5,2],sign:{'3,3':'음악 서재','10,7':'오락실'},d:{'3,3':['library',7,8],'10,7':['arcade',7,8]},e:{u:['town',7,9],l:['studio',14,4],r:['cave',1,5]},umb:[[5,6,'#14b8a6']],p:[
 {x:9,y:5,c:'#14b8a6',h:'#d1d5db',n:'숲지기',s:['잘 왔수다. 여긴 잠시 쉬어 가는 곳이우다. 🌿','초록 지붕 음악 서재에 들어강 노래 한 곡 들어봅서.'],ch:{'이 숲의 소문':['동쪽 끝 나무 하나가 바람도 없는데 흔들린댄 허여.','나도 가 보진 않았주게.']}},
+{x:12,y:5,c:'#fdba74',h:'#222',w:1,dog:'#f8fafc',n:'강아지 산책 삼춘',s:['이 녀석 산책 안 시켜 주민 집을 뒤집어 놔마씸. 🐕']},
 {x:5,y:7,c:'#c4b5fd',h:'#3f2a1c',w:1,n:'산책하는 사람',s:['아무것도 안 해도 되는 시간이 제일 좋네요.','연못 앞 벤치도 좋아요.']}]},
 
 library:{n:'보성의 음악 서재',par:'rest',bgm:'indoor',m:['w'.repeat(W),'wwzwzwzwzwzwzww',FR,FR,'wppffXfffXffppw',FR,'wfKKfffffffKKfw',FR,FR,'wwwwwwwxwwwwwww'],d:{'7,9':['rest',3,4]},p:[
@@ -622,15 +675,25 @@ orchard:{n:'감귤 과수원',o:1,bgm:'route',land:[7,5],m:[
 {x:10,y:7,c:'#db2777',h:'#3f2a1c',lh:1,w:1,n:'보성 어머니',when:momFarm,s:['퇴근하고 일손 좀 도우러 왔어요. 🍊','병원 일 끝나고 맡는 귤 냄새가 참 좋아요.']},
 {x:6,y:7,c:'#166534',h:'#e5e7eb',n:'보성 외할아버지',s:['보성이 외할아버지우다. 잘 왔수다게.','여기 귤 한번 맛봅서. 달주게? 🍊'],ch:{'감귤 농사':['바람 막아주는 돌담이 제주 귤밭의 보물이주.','겨울 되민 노랗게 익은 밭이 그렇게 곱닥허여.'],'보성이 이야기':['보성이 잘 지내는지, 만나걸랑 안부 전해줍서.']}}]},
 
-house:{n:'보성의 집',par:'town',bgm:'indoor',m:(()=>{const r=I('wqwPwqwwKKwqwqw','wfKKffXffXffKfw');r[6]=r[6].slice(0,7)+'OO'+r[6].slice(9);return r})(),
+house:{n:'보성의 집',par:'town',bgm:'indoor',m:[
+  'wwwwwwwwwwwwwww',
+  'wqwPwqwwKKwqwqw',
+  'wffffffwffffffw',
+  'wßßψKKfwþðððffw',
+  'wffffffwffffffw',
+  'wwwøwfwwwwfwwww',
+  'wfffffffffffffw',
+  'wfæææffOOfffffw',
+  'wfffffffffffffw',
+  'wwwwwwwxwwwwwww'],
 memo:{'1,1':{s:'INFJ',c:'#fde047',l:['🧩 MBTI','INFJ']},'5,1':{s:'💙',c:'#93c5fd',l:['💙 좋아하는 색깔','파란색!']},'11,1':{s:'🐶',c:'#f9a8d4',l:['🐶 좋아하는 동물','강아지!']},'13,1':{s:'🎵',c:'#86efac',l:['🎵 즐겨듣는 노래','쉼의 숲 음악 서재 벽에 달마다 걸어 두고 있어요!']}},
 d:{'7,9':['town',3,4]},p:[
-{x:6,y:5,c:'#7dd3fc',h:'#1b1b26',n:'거울 속의 나',s:['안녕, 나는 강보성.','BS World에 오신 것을 환영해! IT, 전기공학 및 실무 역량을 지속 발전시키는 중이야.'],ch:{'지금까지의 길':['🧠 멘사 IQ 156 · 💻 정보처리기사 · 🏃 하프마라톤 3회 · 🩸 헌혈 167회'],'다음 모험':['다음 챕터는 함께할 새로운 퀘스트야.','벽의 액자도 꼭 눌러봐. 📸']}},
-{x:11,y:6,c:'#f59e0b',h:'#f59e0b',w:1,n:'고양이',s:['야옹~ 🐱','(주인이 코딩하는 동안 키보드 옆을 지키는 중이다냥.)']},
-{x:4,y:5,c:'#475569',h:'#374151',n:'보성 아버지',when:()=>!dadFarm(),s:['어서 와요. 보성이 아버지입니다.','KT에서 은퇴하고 지금은 농사를 짓고 있어요. 편히 둘러봐요.']},
-{x:4,y:7,c:'#db2777',h:'#3f2a1c',lh:1,n:'보성 어머니',when:()=>!momFarm(),s:['어머, 손님이 왔네! 보성이 엄마예요.','간호사로 일하고 있어요. 밥은 먹었어요? 귤이라도 하나 먹고 가요. 🍊']},
-{x:9,y:7,c:'#fef3c7',h:'#92400e',w:1,n:'강아지',when:()=>S.eggs.cat,s:['멍멍! 🐶','(고양이가 부른 친구인 것 같다.)']},
-{x:11,y:4,c:'#f9a8d4',h:'#1b1b26',lh:1,n:'보성 여동생',s:['안녕하세요! 저는 보성이 여동생이에요.','가운데 테이블에 질문을 남기면 답을 받을 수 있어요. 😄']}]},
+{x:1,y:4,c:'#7dd3fc',h:'#1b1b26',n:'거울 속의 나',s:['안녕, 나는 강보성.','BS World에 오신 것을 환영해!'],ch:{'지금까지의 길':['🧠 멘사 IQ 156 · 💻 정보처리기사 · 🏃 하프마라톤 3회 · 🩸 헌혈 167회'],'다음 모험':['다음 챕터는 함께할 새로운 퀘스트야.','벽의 액자도 꼭 눌러봐. 📸']}},
+{x:12,y:6,c:'#f59e0b',h:'#f59e0b',w:1,n:'고양이',s:['야옹~ 🐱','(주인이 코딩하는 동안 키보드 옆을 지키는 중이다냥.)']},
+{x:2,y:7,c:'#475569',h:'#374151',sit:1,fd:1,n:'보성 아버지',when:()=>!dadFarm(),s:['어서 와요. 보성이 아버지입니다.','KT에서 은퇴하고 지금은 농사를 짓고 있어요. 편히 둘러봐요.']},
+{x:4,y:7,c:'#db2777',h:'#3f2a1c',lh:1,sit:1,fd:1,n:'보성 어머니',when:()=>!momFarm(),s:['어머, 손님이 왔네! 보성이 엄마예요.','간호사로 일하고 있어요. 밥은 먹었어요? 귤이라도 하나 먹고 가요. 🍊']},
+{x:9,y:6,c:'#fef3c7',h:'#92400e',w:1,n:'강아지',when:()=>S.eggs.cat,s:['멍멍! 🐶','(고양이가 부른 친구인 것 같다.)']},
+{x:11,y:8,c:'#f9a8d4',h:'#1b1b26',lh:1,n:'보성 여동생',s:['안녕하세요! 저는 보성이 여동생이에요.','가운데 테이블에 질문을 남기면 답을 받을 수 있어요. 😄']}]},
 
 gym:{n:'런 라이프 체육관',par:'sports',bgm:'sports',m:I('wNwMwJwwwJwMwNw','wfKKffXffXffKfw'),d:{'7,9':['sports',10,3]},sh:['🏅 마라톤 메달 진열대','2013 · 2016 · 2016 하프코스 완주 / 2019 감귤마라톤 10km'],p:[
 {x:7,y:5,c:'#16a34a',h:'#222',n:'메인 러닝 코치',s:['어서 와! 여기는 런 라이프 체육관.','마라톤 하프코스를 3번 완주한 러너의 기록실이지.'],ch:{'하프코스 3회':['2013 제2회 6.25 상기 및 정전 60주년 기념 국민대통합 마라톤 대회 하프 01:58:21.05','2016 제9회 아름다운제주국제마라톤대회 하프 2:27:11.23','2016 제21회 제주국제관광마라톤축제 하프 02:54:26.14'],'감귤마라톤 & 볼링':['2019 제주감귤국제마라톤 10km 01:22:38.32 🍊','2011 제30회 제주특별자치도볼링협회장기 전도볼링대회 대학부 남자 2인조전 3위 🎳']}},
@@ -641,23 +704,29 @@ terminal:{n:'제주 공항 터미널',par:'airport',bgm:'indoor',m:['w'.repeat(W
 {x:3,y:5,c:'#f472b6',h:'#222',w:1,n:'출장 가는 직장인',s:['비행기 타기 전 감귤 주스 한 잔이 국룰이죠.']},
 {x:11,y:7,c:'#94a3b8',h:'#d1d5db',n:'마중 나온 삼춘',s:['보성이 오는 날인가 해서 기다렴수다게.']}]},
 
+arcade:{n:'쉼터 오락실',par:'rest',bgm:'town',m:['w'.repeat(W),'wwwwwwwwwwwwwww',FR,'wf¤¤f¤¤f¤¤f¤¤fw',FR,FR,'wfKKfffffffKKfw',FR,FR,'wwwwwwwxwwwwwww'],d:{'7,9':['rest',10,8]},p:[
+{x:7,y:5,c:'#a855f7',h:'#111',n:'오락실 사장',s:['주인장이 테트리스를 좋아해서 전부 테트리스만 넣었수다.','기계 앞에서 눌러 봅서. 순위도 남습니다.'],ch:{'🎮 테트리스 하기':()=>showTetris()}},
+{x:3,y:5,c:'#22d3ee',h:'#222',w:1,n:'동전 든 학생',s:['라인 넉 줄 한 번에 지우면 그날은 럭키비키죠.']}]},
+
 agency:{n:'국가 자격 검정원',par:'cert',bgm:'knowledge',m:AGM,d:{'7,9':['cert',3,4]},p:[
-{x:7,y:2,c:'#2563eb',h:'#333',n:'접수 데스크',s:['어서 오세요. 국가 자격 검정원입니다.','시험 접수는 안쪽 컴퓨터에서 하실 수 있어요.'],ch:{'자격증':['📜 정보처리기사 · 컴퓨터활용능력 1급 · 워드프로세서','📊 사회조사분석사 2급 · 한국사능력검정시험 2급','🔤 TOEIC 최고 775점'],'공모전·수상':['🏆 2016 지역기업 청년 희망이음 프로젝트 경진대회 대상 (산업통상자원부 장관상)','🥇 2017 같은 대회 금상 (산업통상자원부 장관상)'],'접수 방법':['컴퓨터 앞에서 Z 키를 누르면 접수 화면이 열려요.','Q-Net, TOEIC, 한국사능력검정시험 접수 페이지로 바로 갈 수 있고, 접수내역도 확인할 수 있어요.'],'벽의 증명서':['좌우 벽의 액자를 눌러 보세요.','증명서 목록을 자세히 볼 수 있어요.']}},
+{x:7,y:2,c:'#2563eb',h:'#333',n:'접수 데스크',s:['어서 오세요. 국가 자격 검정원입니다.','시험 접수는 안쪽 컴퓨터에서 하실 수 있어요.'],ch:{'자격증':['📜 정보처리기사 · 컴퓨터활용능력 1급 · 워드프로세서','📊 사회조사분석사 2급 · 한국사능력검정시험 2급','🥋 태권도 1품 · 2품','🔤 TOEIC 최고 775점'],'공모전·수상':['🏆 2016 지역기업 청년 희망이음 프로젝트 경진대회 대상 (산업통상자원부 장관상)','🥇 2017 같은 대회 금상 (산업통상자원부 장관상)'],'접수 방법':['컴퓨터 앞에서 Z 키를 누르면 접수 화면이 열려요.','Q-Net, TOEIC, 한국사능력검정시험 접수 페이지로 바로 갈 수 있고, 접수내역도 확인할 수 있어요.'],'벽의 증명서':['좌우 벽의 액자를 눌러 보세요.','증명서 목록을 자세히 볼 수 있어요.']}},
 {x:4,y:2,c:'#0ea5e9',h:'#1b1b26',n:'접수 도우미',s:['컴퓨터에서 시험 접수를 하실 수 있어요.','Q-Net이랑 TOEIC, 둘 다 가능해요!']},
 {x:9,y:6,c:'#94a3b8',h:'#222',w:1,n:'시험 준비생',s:['으아… 정처기 실기 공부 중이에요.','저분 기록 보면 희망이 생겨요!']}]},
 
 mensa:{n:'멘사 지능 연구소',par:'cert',bgm:'knowledge',m:MNM,d:{'7,9':['cert',9,4]},sh:['🧠 멘사 전시','IQ 156 · Percentile 99% · 상위 1% 준회원'],p:[
-{x:7,y:2,c:'#7c3aed',h:'#eee',n:'멘사 연구소장',s:['멘사 지능 연구소에 온 걸 환영합니다.','이곳 주인의 테스트 결과는 IQ 156, Percentile 99%. 상위 1% 준회원입니다.','당신도 IQ 테스트 한번 진행해 보겠습니까?'],ch:{'🧠 IQ 테스트 해 보기':()=>showIq(),'연구소 둘러보기':['좌우 벽의 전시물을 눌러 보세요.','주인장의 멘사 기록을 볼 수 있습니다.']}}]},
+{x:7,y:2,c:'#7c3aed',h:'#eee',n:'멘사 연구소장',s:['멘사 지능 연구소에 온 걸 환영합니다.','BS World의 운영자, 강보성 멘산님의 테스트 결과는 IQ 156, 상위 1%입니다.','당신도 IQ 테스트 한번 진행해 보겠습니까?'],ch:{'🧠 IQ 테스트 해 보기':()=>showIq(),'연구소 둘러보기':['좌우 벽의 전시물을 눌러 보세요.','주인장의 멘사 기록을 볼 수 있습니다.']}}]},
 
 vc:{n:'나눔 & 기여 커뮤니티 센터',par:'coast',bgm:'beach',m:I('wUw^wCwwwCw^wUw'),d:{'7,9':['coast',11,3]},sh:['🩸 헌혈 유공 진열대','대한적십자사 헌혈유공장 은장 · 헌혈 167회','🤝 봉사활동 · 상상 Volunteer 활동'],p:[
 {x:7,y:5,c:'#dc2626',h:'#444',n:'커뮤니티 이사장',s:['어서 오세요. 나눔 & 기여 커뮤니티 센터입니다.'],ch:{'헌혈':['🩸 헌혈 167회 달성!','적십자 헌혈유공장 은장 포장증을 받았습니다.'],'봉사활동':['🤝 상상 Volunteer 활동에 참여했습니다.','작은 나눔이 모이면 큰 기록이 돼요.']}},
 {x:4,y:6,c:'#fb923c',h:'#222',w:1,n:'봉사원',s:['오늘도 봉사 활동 중! 😊','작은 나눔이 모이면 큰 기록이 돼요.']}]}
 };
 Object.values(M).forEach(z=>z.m=z.m.map(r=>r.padEnd(W,'T').slice(0,W)));
+Object.keys(SONG_XY).forEach(id=>M[id].p.push(songNpc(id)));
 
 const PG=['...HHHHHH...','..HHHHHHHH..','.HHHHHHHHHH.','.HHSSSSSSHH.','.HSSSSSSSSH.','.PSEESSEESP.','.PSSSSSSSSP.','..SSSMMSSS..','...SSSSSS...','..CCCCCCCC..','.CCCCCCCCCC.','.CCCCCCCCCC.'];
 function spr(c,x,y,s,o={}){const d=o.d||0,col={H:o.h||'#1b1b26',S:'#f2c9a0',E:'#111',P:o.p||'#8a94a8',M:'#b5655a',C:o.c||'#ece4d0'};
 PG.forEach((r,j)=>[...r].forEach((k,i)=>{if(k=='.')return;if(d==1&&j>2&&j<9&&'SEM'.includes(k))k='H';if(d==2&&k=='E'&&i>5)k='S';if(d==3&&k=='E'&&i<6)k='S';c.fillStyle=col[k];c.fillRect(x+i*s,y+j*s,s,s)}));
+if(o.gl&&d!=1){c.fillStyle=o.gl;const L=d==3?[]:[[2,4],[3,4],[4,4],[5,4],[2,5],[5,5],[2,6],[5,6],[2,7],[3,7],[4,7],[5,7]],R=d==2?[]:[[6,4],[7,4],[8,4],[9,4],[6,5],[9,5],[6,6],[9,6],[6,7],[7,7],[8,7],[9,7]];[...L,...R].forEach(([a,b])=>c.fillRect(x+a*s,y+b*s,s,s));}
 if(o.lh){c.fillStyle=col.H;[[0,4],[0,5],[0,6],[0,7],[0,8],[1,7],[1,8],[11,4],[11,5],[11,6],[11,7],[11,8],[10,7],[10,8]].forEach(([a,b])=>c.fillRect(x+a*s,y+b*s,s,s))}
 if(o.l!==false){c.fillStyle='#34495e';c.fillRect(x+3*s,y+12*s,2*s,o.w?s:2*s);c.fillRect(x+7*s,y+12*s,2*s,o.w?2*s:s)}}
 
@@ -679,8 +748,15 @@ function tile(c,k,x,y,t){
         DG={1:'010110010010111',2:'111001111100111',5:'111100111001111',6:'111100111101111'},
         dg=(str,x0,y0,u,col)=>{[...str].forEach((ch,n)=>{[...DG[ch]].forEach((v,i)=>{if(v==='1')f(col,x0+n*4*u+(i%3)*u,y0+((i/3)|0)*u,u,u)})})};
   if(RC[k]){f(RC[k],0,0,32,32);f('#0003',0,10,32,3);f('#0003',0,22,32,3);f('#fff4',0,0,32,4);return}
+  const tree=sw=>{gr();const v=(x*5+y*3)%3,s=seasonNow();
+    if(v==0){f('#5c4028',14,22,4,10);f('#14532d',4+sw,16,24,8);f('#166534',7+sw,8,18,9);f('#15803d',11+sw,1,10,8);return}   // 소나무
+    f('#5c4028',13,18,6,14);f('#705035',14,18,2,14);
+    if(s=='winter'){f('#5c4028',8+sw,8,3,12);f('#5c4028',21+sw,6,3,14);f('#5c4028',12+sw,2,3,17);f('#6b5138',4+sw,6,6,2);f('#6b5138',22+sw,4,6,2);return}   // 앙상한 가지
+    const P={spring:v==1?['#f9a8d4','#fbcfe8','#fff1f2']:['#4ade80','#86efac','#bbf7d0'],summer:v==1?['#1e7a31','#2eb84d','#76e053']:['#15803d','#22c55e','#4ade80'],autumn:v==1?['#c2410c','#ea580c','#fdba74']:['#a16207','#eab308','#fde047']}[s];
+    f(P[0],2+sw,2,28,18);f(P[1],4+sw,0,24,14);f(P[2],8+sw,2,10,6);
+    if(s=='autumn'&&(x+y)%2){f(P[1],6,28,3,2);f(P[0],22,29,3,2)}};
   switch(k){
-    case 'T': gr(); f('#5c4028',13,18,6,14); f('#705035',14,18,2,14); f('#1e7a31',2,2,28,18); f('#2eb84d',4,0,24,14); f('#76e053',8,2,10,6); break;
+    case 'T': tree(0); break;
     case '=': f('#f3db98',0,0,32,32); f('#e0c279',(r*6)%24+3,(r*4)%24+3,5,3); break;
     case '~': sea(); break;
     case 's': f('#fde047',0,0,32,32); f('#facc15',r*5+2,r*4+3,4,3); if(r===2){f('#fb7185',18,12,3,3);f('#ffffff',19,13,1,1);} break;
@@ -743,8 +819,8 @@ function tile(c,k,x,y,t){
     case 'g': gr(); f('#b08968',2,16,30,14); f('#8f6b4a',2,28,30,2); f('#00000030',2,0,30,4); f('#9b2c2c',5,0,5,24); f('#c0392b',5,0,2,24); f('#7a4a22',2,14,30,3); break;
     case 'h': gr(); f('#b08968',0,16,30,14); f('#8f6b4a',0,28,30,2); f('#00000030',0,0,30,4); f('#9b2c2c',22,0,5,24); f('#c0392b',22,0,2,24); f('#7a4a22',0,14,30,3); break;
     case 'b': gr(); f('#a06a36',4,8,24,5); f('#8a5a2b',4,15,24,6); f('#c08850',4,15,24,2); f('#5c4028',6,21,3,7); f('#5c4028',23,21,3,7); f('#00000025',4,28,24,2); break;
-    case 'r': f('#374151',0,0,32,32); f('#e5e7eb',0,2,32,2); if(x%2==0)f('#f8fafc',4,29,22,3); break;
-    case 'y': f('#374151',0,0,32,32); f('#e5e7eb',0,28,32,2); if(x%2==0)f('#f8fafc',4,0,22,3); break;
+    case 'r': f('#374151',0,0,32,32); f('#e5e7eb',0,2,32,2); if(x%2==0)f('#f8fafc',4,29,22,3); if(at(x+1,y)=='T'){f('#f8fafc',26,4,4,28);[6,12,18,24].forEach(q=>f('#f8fafc',6,q+2,14,3))} break;
+    case 'y': f('#374151',0,0,32,32); f('#e5e7eb',0,28,32,2); if(x%2==0)f('#f8fafc',4,0,22,3); if(at(x+1,y)=='T'){f('#f8fafc',26,0,4,28);[0,6,12,18].forEach(q=>f('#f8fafc',6,q+2,14,3))} break;
     case 'u': case 'e': f('#9ca3af',0,0,32,32); f('#8b95a3',0,0,32,1); f('#8b95a3',0,0,1,32); if(y==3)f('#facc15',0,29,32,2); break;
     case 'n': f('#2563eb',0,0,32,32); f('#60a5fa',0,0,32,5); f('#1d4ed8',0,27,32,5); if(x%2)f('#3b82f6',0,8,32,3); if(x==4){c.fillStyle='#fff';c.font='bold 18px sans-serif';c.textAlign='center';c.fillText('✈',X+16,Y+22);c.textAlign='start'} break;
     case 'j': f('#e2e8f0',0,0,32,32); f('#38bdf8',3,4,26,20); f('#bae6fd',3,4,26,4); f('#94a3b8',15,4,2,20); f('#64748b',0,28,32,4); break;
@@ -762,12 +838,30 @@ function tile(c,k,x,y,t){
     case '}': fl(); f('#1d4ed8',2,8,28,18); f('#3b82f6',2,8,28,3); f('#1e3a8a',2,23,28,3); break;
     case '+': f('#94a3b8',0,0,32,32); f('#cbd5e1',0,0,32,6); [8,16,24].forEach(a=>f('#64748b',a,0,2,32)); break;
     case ',': f('#475569',0,0,32,32); f('#1e293b',3,6,26,26); f('#334155',3,12,26,2); f('#334155',3,20,26,2); break;
-    case '!': { gr(); const sw=Math.round(Math.sin(t/260)*2); f('#5c4028',13,18,6,14); f('#705035',14,18,2,14); f('#1e7a31',2+sw,2,28,18); f('#2eb84d',4+sw,0,24,14); f('#76e053',8+sw,2,10,6); break}
+    case '!': tree(Math.round(Math.sin(t/260)*2)); break;
     case '_': f('#1c1917',0,0,32,32); f('#292524',(r*5)%20,(r*7)%20,12,9); f('#44403c',(r*3)%22+2,(r*5)%24+2,5,3); break;
     case ':': f('#3f3a36',0,0,32,32); f('#47423d',(r*5)%22,(r*3)%24,6,4); f('#2f2b28',(r*7)%24,(r*9)%26,4,3); break;
     case '*': f('#3f3a36',0,0,32,32); if(S.eggs.cave){f('#78350f',4,14,24,14);f('#fde047',7,16,18,5);f('#92400e',4,6,24,8)}else{f('#78350f',4,10,24,18);f('#b45309',4,10,24,5);f('#fbbf24',14,14,4,6)} break;
     case '(': wl(); f('#1e3a8a',4,3,24,24); f('#fff',7,6,18,12); f('#3b82f6',9,8,6,2); f('#fbbf24',9,12,12,2); f('#fff',7,21,18,3); break;
     case ')': { wl(); f('#3f2a1c',3,3,26,24); f('#e5e7eb',5,5,22,20); const im=PHOTO_IMGS[(x-1)/2]; if(im&&im.complete&&im.naturalWidth)c.drawImage(im,X+6,Y+6,20,18); else f('#9ca3af',8,9,16,11); break}
+    case '[': gr(); f('#64748b',5,6,3,24); f('#64748b',24,6,3,24); f('#e5e7eb',5,6,22,3); f('#00000025',4,29,24,2); break;
+    case ']': { gr(); f('#b45309',3,3,3,27); f('#b45309',26,3,3,27); f('#92400e',3,3,26,3); const sw=SIT&&SIT.x==x&&SIT.y==y?Math.sin(t/330)*6:Math.sin(t/900)*1; f('#6b7280',11+sw/2,6,1,16); f('#6b7280',20+sw/2,6,1,16); f('#7c2d12',10+sw,21,12,3); break}
+    case '|': { gr(); const on=SIT&&SIT.x==x&&SIT.y==y,a=on?Math.sin(t/420)*5:2; f('#475569',14,20,4,9); c.save();c.translate(X+16,Y+20);c.rotate(a*.045);c.fillStyle='#ef4444';c.fillRect(-14,-2,28,4);c.fillStyle='#1f2937';c.fillRect(-13,-6,2,4);c.fillRect(11,-6,2,4);c.restore(); break}
+    case '?': { f('#fde047',0,0,32,32); const col=['#ef4444','#3b82f6','#22c55e'][(x+y)%3]; f('#78716c',15,10,2,20); c.fillStyle=col;c.beginPath();c.ellipse(X+16,Y+12,14,9,0,Math.PI,0);c.fill();f('#ffffff80',9,5,4,7);f('#ffffff80',20,5,4,7);f('#00000018',6,26,20,3); break}
+    case ';': f('#fde047',0,0,32,32); f(['#ec4899','#14b8a6','#f97316'][(x+y)%3],5,6,22,20); f('#ffffff90',5,12,22,3); f('#ffffff90',5,19,22,3); break;
+    case '$': gr(); f('#94a3b8',0,26,32,6); break;
+    case '¢': f('#e2e8f0',0,0,32,32); f('#94a3b8',0,0,32,3); [4,14,24].forEach(a=>{f('#f8fafc',a,3,5,27);f('#cbd5e1',a+4,3,1,27)}); f('#7c8aa0',0,29,32,3); break;
+    case '>': f('#4c1d95',0,0,32,32); f('#7c3aed',0,0,32,6); f((((t/300|0)+x)%2)?'#f472b6':'#22d3ee',2,14,28,4); f('#312e81',0,26,32,6); break;
+    case '<': f('#312e81',0,0,32,32); f('#22d3ee',8,8,16,12); f('#0e7490',10,10,12,8); f('#111827',0,28,32,4); break;
+    case '¤': fl(); f('#1e1b4b',5,2,22,28); f('#4c1d95',5,2,22,6); f('#0f172a',8,9,16,11); [[10,11,'#ef4444'],[14,14,'#22d3ee'],[18,11,'#fde047'],[12,16,'#4ade80']].forEach(([a,b,q])=>f(q,a,b,4,3)); f('#374151',7,23,18,5); f('#ef4444',10,24,3,3); f('#fbbf24',19,24,3,3); break;
+    case '`': { f('#15803d',0,0,32,32); const q=(a,b)=>at(x+a,y+b)=='`'; if(!q(0,-1))f('#fff',0,0,32,2); if(!q(0,1))f('#fff',0,30,32,2); if(!q(-1,0))f('#fff',0,0,2,32); if(!q(1,0))f('#fff',30,0,2,32); if(x==10){f('#e5e7eb',29,2,2,28);for(let i=4;i<28;i+=4)f('#6b7280',29,i,2,1)} break}
+    case 'ß': fl(); f('#7a4a2a',2,3,28,26); f('#fff7ed',4,5,24,9); f('#60a5fa',4,14,24,13); break;
+    case 'þ': fl(); f('#cbd5e1',5,2,22,28); f('#94a3b8',5,13,22,2); f('#475569',8,6,2,5); f('#475569',8,17,2,6); break;
+    case 'ð': fl(); f('#a8a29e',1,8,30,20); f('#e7e5e4',1,8,30,4); f('#78716c',8,14,12,8); f('#475569',23,11,3,3); break;
+    case 'ø': { wl(); f('#111827',4,6,24,18); const fk=['#60a5fa','#93c5fd','#a78bfa','#34d399'][(t/700|0)%4]; f(fk,6,8,20,14); f('#ffffff50',8,10,8,3); f('#374151',13,24,6,3); break}
+    case 'æ': fl(); f('#b91c1c',0,8,32,20); f('#ef4444',0,18,32,10); f('#7f1d1d',0,8,32,3); if(at(x-1,y)!='æ')f('#7f1d1d',0,8,4,20); if(at(x+1,y)!='æ')f('#7f1d1d',28,8,4,20); break;
+    case 'Ω': gr(); f('#6b7280',15,10,3,20); f('#f8fafc',8,2,18,12); f('#ef4444',13,6,8,5); f('#f8fafc',14,7,6,3); f('#f97316',12,14,10,2); f('#ffffff90',13,16,2,5); f('#ffffff90',19,16,2,5); break;
+    case 'ψ': fl(); f('#374151',14,22,4,8); f('#6b7280',10,28,12,2); f('#1f2937',7,4,18,19); f('#fee500',9,6,14,14); c.font='10px sans-serif'; c.textAlign='center'; c.fillText('💬',X+16,Y+17); c.textAlign='start'; break;
     case 'q': { wl(); const m=(map.memo||{})[x+','+y]||{};
       f('#00000030',7,7,20,20); f(m.c||'#fde047',6,5,20,20); f('#ffffff66',6,5,20,3); f('#ef4444',15,4,3,3);
       c.fillStyle='#374151'; c.font='bold '+((m.s||'').length>2?8:13)+'px sans-serif'; c.textAlign='center'; c.fillText(m.s||'',X+16,Y+21); c.textAlign='start'; break}
@@ -892,7 +986,7 @@ function npUpdate(){const el=document.getElementById('npt');if(!el)return;
 document.addEventListener('visibilitychange',()=>{if(document.hidden)clearInterval(mt);else{if(AC&&AC.state!='running')acUnlock();if(!sunoOn)music()}});
 
 let cur=null,map=null,px=7,py=5,dir=0,mv=null,steps=0,busy=true,modal=false,dlg=null,tw=null,npcs=[],held=null,bumpT=0;
-const DV=[[0,1],[0,-1],[-1,0],[1,0]],EK=['d','u','l','r'],WALK='.F=stDfxdu!:';
+const DV=[[0,1],[0,-1],[-1,0],[1,0]],EK=['d','u','l','r'],WALK='.F=stDfxdu!:`';
 const at=(x,y)=>map.m[y]&&map.m[y][x];
 
 function free(x,y){
@@ -905,8 +999,9 @@ const UMC=['#3b82f6','#ef4444','#f59e0b','#10b981','#a855f7','#ec4899','#0ea5e9'
 function drawUmb(nx,ny,col){const ux=nx*TS+16,uy=ny*TS+3;g.fillStyle=col;g.beginPath();g.ellipse(ux,uy,15,9,0,Math.PI,0);g.fill();g.fillStyle='#0003';g.fillRect(ux-15,uy-1,30,2);g.fillStyle='#4b5563';g.fillRect(ux+11,uy,2,13)}
 function buildNpcs(){
   const rain=WX.kind=='rain';
-  npcs=map.p.filter(o=>!(rain&&o.run)&&(!o.when||o.when())).map((o,i)=>{const n={...o,hx:o.x,hy:o.y,dir:0};if(rain&&map.o)n.um=UMC[i%UMC.length];if(n.run&&TRACK[n.ti]){n.x=TRACK[n.ti][0];n.y=TRACK[n.ti][1]}return n});
-  if(rain&&map.o&&map.umb)map.umb.forEach(([x,y,c],i)=>npcs.push({x,y,hx:x,hy:y,dir:0,c:'#6b7280',h:'#222',w:1,um:c,n:'우산 쓴 주민',s:UMB[i%UMB.length]}));
+  const away=map.o&&(isNight()||WET());   // 밤이나 궂은 날엔 몇 명만 남고 귀가
+  npcs=map.p.filter((o,i)=>!(rain&&o.run)&&(!o.when||o.when())&&(!away||o.stay||FAMILY.includes(o.n)||o.eg||i%3==0)).map((o,i)=>{const n={...o,hx:o.x,hy:o.y,dir:o.fd||0};if(rain&&map.o)n.um=UMC[i%UMC.length];if(n.run&&TRACK[n.ti]){n.x=TRACK[n.ti][0];n.y=TRACK[n.ti][1]}return n});
+  if(rain&&map.o&&map.umb&&!isNight())map.umb.forEach(([x,y,c],i)=>npcs.push({x,y,hx:x,hy:y,dir:0,c:'#6b7280',h:'#222',w:1,um:c,n:'우산 쓴 주민',s:UMB[i%UMB.length]}));
 }
 
 /* 도착한 자리가 나무·NPC에 갇혀 있으면 가장 가까운 열린 자리로 옮김 */
@@ -923,13 +1018,18 @@ function unstick(){
   for(let r=1;r<W+H;r++)for(let y=0;y<H;y++)for(let x=0;x<W;x++)
     if(Math.abs(x-px)+Math.abs(y-py)==r&&!(map.d&&map.d[x+','+y])&&ok(x,y)){px=x;py=y;return}
 }
+/* 벤치·정자·놀이기구에 앉기 */
+let SIT=null;
+function sitDown(x,y,k,msg){SIT={x,y,k,fx:px,fy:py,n:0,up:0,at:performance.now()};px=x;py=y;dir=k=='bar'?1:0;mv=null;held=null;toast(msg)}
+function sitUp(){if(!SIT)return;const b=SIT.k=='bar'&&SIT.n?SIT.n:0;px=SIT.fx;py=SIT.fy;SIT=null;held=null;if(b)toast('턱걸이 '+b+'회 수고했어요! 💪')}
+function sitFx(t){if(!SIT||SIT.k!='bench')return;const p=((t-SIT.at)/1600)%1;g.globalAlpha=1-p;g.font='14px sans-serif';g.fillText('💤',SIT.x*TS+20,SIT.y*TS+6-p*16);g.globalAlpha=1}
 function warp(id,x,y,d){
-  busy=true;sfx('w');$('#fade').style.opacity=1;
+  SIT=null;busy=true;sfx('w');$('#fade').style.opacity=1;
   setTimeout(()=>{
     const from=cur;cur=id;map=M[id];visited.add(id);
     if(x==7&&y==8&&map.land)[x,y]=map.land;   // 지도·비행으로 올 때 내리는 자리
     updateHUD();px=x;py=y;dir=d;mv=null;
-    buildNpcs();unstick();
+    songRoll(id);buildNpcs();unstick();
     if(id=='library')plLoad();
     music();
     $('#fade').style.opacity=0;
@@ -943,11 +1043,11 @@ function banner(t){const b=$('#bn');b.textContent=t;b.style.opacity=1;setTimeout
 function zone(){return !map?null:(map.o?cur:map.par)}
 
 /* [월드맵] 각 지역의 실제 타일맵을 작은 캔버스로 그려 사각형 안에 투영 */
-const MM_COL={T:'#1e7a31','.':'#6cc04a',F:'#6cc04a','=':'#f3db98','~':'#38bdf8',s:'#fde047',
+const MM_COL={'Ω':'#6cc04a','?':'#fde047',';':'#fde047','$':'#e2e8f0','¢':'#f8fafc','>':'#7c3aed','<':'#312e81',T:'#1e7a31','.':'#6cc04a',F:'#6cc04a','=':'#f3db98','~':'#38bdf8',s:'#fde047',
   R:'#d64541',Q:'#3b6fd6',G:'#2f9e5f',Y:'#7e57c2',H:'#fef3c7',D:'#78350f',t:'#c8693f',
-  W:'#0f766e','@':'#ea580c','+':'#94a3b8',',':'#475569','#':'#7a4a22','%':'#44403c','&':'#2563eb',r:'#374151',y:'#374151',u:'#9ca3af',e:'#f8fafc',n:'#2563eb',j:'#bae6fd',S:'#475569',d:'#8b5a2b',o:'#8b5a2b',V:'#bfdbfe',v:'#dbeafe',m:'#1e7a31','1':'#38bdf8','2':'#38bdf8','3':'#38bdf8','4':'#38bdf8'};
+  W:'#0f766e','@':'#ea580c','+':'#94a3b8',',':'#475569','#':'#7a4a22','[':'#6cc04a',']':'#6cc04a','|':'#6cc04a','%':'#44403c','&':'#2563eb',r:'#374151',y:'#374151',u:'#9ca3af',e:'#f8fafc',n:'#2563eb',j:'#bae6fd',S:'#475569',d:'#8b5a2b',o:'#8b5a2b',V:'#bfdbfe',v:'#dbeafe',m:'#1e7a31','1':'#38bdf8','2':'#38bdf8','3':'#38bdf8','4':'#38bdf8'};
 const MM_FL=['#f472b6','#ffffff','#facc15','#a78bfa','#60a5fa','#fb923c','#e11d48'];
-const MM_NODES=[['studio','창작','창작 마을'],['airfield','활주로','제주 공항 활주로'],['route2','바당','바당 올레'],['rest','쉼터','쉼의 숲'],['airport','공항','제주 공항'],['orchard','과수원','감귤 과수원'],['cert','학술','학술시티'],['route1','귤향','귤향 올레'],['coast','해변','제주해변'],['town','마을','태초마을'],['sports','운동','운동 센터']];
+const MM_NODES=[['beach','백사장','하얀 백사장'],['studio','창작','창작 마을'],['airfield','활주로','제주 공항 활주로'],['route2','바당','바당 올레'],['rest','쉼터','쉼의 숲'],['airport','공항','제주 공항'],['orchard','과수원','감귤 과수원'],['cert','학술','학술시티'],['route1','귤향','귤향 올레'],['coast','해변','제주해변'],['town','마을','태초마을'],['sports','운동','운동 센터']];
 const mmEls={};let mmDot=null,mmLast=null;
 
 function mmShape(id){
@@ -1007,7 +1107,10 @@ function syncMiniMap(){const ov=$('#minimap-overlay');if(ov)ov.classList.toggle(
 /* 모바일: 아래쪽 패널에 지도·프로필·모험 일지 */
 const mobMq=matchMedia('(max-width:620px)'),mobOn=()=>mobMq.matches;
 function mobTab(t){document.querySelectorAll('#mobPanel [data-t]').forEach(e=>e.classList.toggle('on',e.dataset.t==t));const b=$('#mobBody');if(b)b.scrollTop=0}
+function mobVh(){document.documentElement.style.setProperty('--vh',innerHeight+'px');if(typeof bgmPlace=='function')bgmPlace()}
+addEventListener('resize',mobVh);
 function mobLayout(){
+  mobVh();
   const P=$('#mobPanel'),L=$('#leftPanel'),R=$('#rightPanel'),O=$('#minimap-overlay'),A=$('#app'),S=$('#scr');
   if(!P)return;
   if(mobOn()){P.hidden=false;
@@ -1035,8 +1138,10 @@ $('#dt').addEventListener('click',e=>{if(dlg&&dlg.s=='m'&&e.target.dataset.i!=nu
 $('#dl').addEventListener('click',()=>dlg&&advance());
 
 function act(){
+  if(modal&&TET.run)return tetRot();
   if(modal&&lbOn())return lbZoom();
   if(modal)return kcAct();
+  if(SIT){if(SIT.k=='bar'){SIT.n++;SIT.up=performance.now();sfx('s');banner('💪 턱걸이 '+SIT.n+'회');return}return sitUp()}
   if(busy)return;
   if(dlg)return advance();
   const[dx,dy]=DV[dir],x=px+dx,y=py+dy,n=npcs.find(o=>o.x==x&&o.y==y);
@@ -1049,6 +1154,16 @@ function act(){
   }
   else if(k=='Z')openExam();
   else if(k=='l')showFlight();
+  else if(k=='¤')showTetris();
+  else if(k=='ψ')showKakao();
+  else if(k=='Ω')say('농구 골대',['그물이 살짝 흔들린다. 🏀','누가 방금까지 슛 연습을 한 모양이다.']);
+  else if(k=='?')say('파라솔',['그늘이 시원한 파라솔이다. 🏖']);
+  else if(k==';')say('돗자리',['누가 맡아 둔 자리인가 보다.']);
+  else if(k=='ø')say('TV',['부모님이 즐겨 보는 드라마가 나온다.']);
+  else if(k=='æ')say('소파',['부모님 자리다. 푹신해 보인다.']);
+  else if(k=='ß')say('침대',['이불이 잘 개어져 있다. 아마도.']);
+  else if(k=='þ')say('냉장고',['귤이 가득 들어 있다. 🍊']);
+  else if(k=='ð')say('부엌',['맛있는 냄새가 남아 있다.']);
   else if(k=='{'||k=='}')showFit();
   else if(k=='(')showProjects();
   else if(k==')')showPhotos();
@@ -1069,15 +1184,19 @@ function act(){
   else if('CLA'.includes(k))showCerts(cur);
   else if(k=='O')showQA();
   else if(k=='q'){const mm=(map.memo||{})[x+','+y];if(mm)say('메모',mm.l)}
-  else if('acgh'.includes(k))say('정자',['시원한 바람이 드는 정자다.','잠깐 앉아서 쉬어가기 좋아 보인다. 🍃'])
-  else if(k=='b')say('벤치',['나무 벤치다. 잠시 앉아서 쉬어갈까?','…','다시 힘이 나는 것 같다!'])
+  else if('gh'.includes(k))sitDown(x,y,'bench','🍃 정자에 앉아 바람을 맞는다.');
+  else if('ac'.includes(k))say('정자',['시원한 그늘이 드는 정자다. 아래쪽 마루에 앉을 수 있다.']);
+  else if(k=='b')sitDown(x,y,'bench','🪑 벤치에 앉아 숨을 고른다.');
+  else if(k==']')sitDown(x,y,'swing','그네를 탄다. 슝~');
+  else if(k=='|')sitDown(x,y,'seesaw','시소를 탄다. 혼자서도 어떻게든 된다.');
+  else if(k=='['){sitDown(x,y,'bar','철봉에 매달렸다. A(Z)를 누를 때마다 턱걸이! B(X)로 내려오기');}
   else if(k=='m'||k=='o')citrusAsk();
 }
 
-function cancel(){if(lbOn())lbClose();else if(modal)closeM();else if(dlg)endDlg()}
+function cancel(){if(SIT&&!modal&&!dlg)return sitUp();if(lbOn())lbClose();else if(modal)closeM();else if(dlg)endDlg()}
 
-function openM(h){sunoStop();$('#mc').innerHTML=h;$('#md').hidden=false;modal=true;document.body.classList.add('modal-on');$('.mb').scrollTop=0;kcSel(null);if(KC.on)kcMove(1);dockPos()}
-function closeM(){sunoStop();$('#md').hidden=true;modal=false;document.body.classList.remove('modal-on');kcSel(null);dockPos();bgmUi()}
+function openM(h){tetStop();sunoStop();$('#mc').innerHTML=h;$('#md').hidden=false;modal=true;document.body.classList.add('modal-on');$('.mb').scrollTop=0;kcSel(null);if(KC.on)kcMove(1);dockPos()}
+function closeM(){tetStop();sunoStop();$('#md').hidden=true;modal=false;document.body.classList.remove('modal-on');kcSel(null);dockPos();bgmUi()}
 /* 창 안 커서: 방향키·패드로 고르고 Z·Enter·A로 누름 */
 const KC={on:false,el:null};
 const kcItems=()=>[...$('#mc').querySelectorAll('a[href],button:not(:disabled),summary,input,textarea,select,audio,[onclick]')].filter(e=>e.getClientRects().length&&!e.hidden);
@@ -1097,6 +1216,7 @@ function lbClose(){$('#lb').classList.remove('on','big');document.body.classList
 function lbZoom(ev){const l=$('#lb');l.classList.toggle('big');l.scrollLeft=(l.scrollWidth-l.clientWidth)/2;l.scrollTop=0}
 function lbScroll(d){$('#lb').scrollBy({left:d==2?-90:d==3?90:0,top:d==1?-90:d==0?90:0})}
 function kcKey(e){
+  if(TET.run&&tetKey(e))return;
   if(lbOn()){const k=e.key,d=KM[k];e.preventDefault();if(['x','X','Escape'].includes(k))lbClose();else if(d!=null)lbScroll(d);else if(['z','Z','Enter',' '].includes(k))lbZoom();return}
   const t=e.target,tag=t&&t.tagName,k=e.key,typing=tag=='TEXTAREA'||tag=='SELECT'||(tag=='INPUT'&&t.type!='checkbox');
   if(typing){
@@ -1112,11 +1232,39 @@ function kcKey(e){
   if(['z','Z','Enter',' '].includes(k)){e.preventDefault();kcAct()}
 }
 
-const V=[{n:'단정한 댄디컷',bg:'#cfd8e8',c:'#ece4d0',p:'#f2c9a0'},{n:'헤드폰 룩',bg:'#2b3552',c:'#7a8599',p:'#e04f4f'},{n:'포근한 룩',bg:'#f5e1c8',c:'#c98f6b',p:'#f2c9a0'}];
-function showGallery(){openM('<h3>📸 AI 도트 초상화 갤러리</h3><div class="gl">'+V.map((v,i)=>`<figure><canvas id="pc${i}" width="132" height="140"></canvas><figcaption>${v.n}</figcaption></figure>`).join('')+'</div>');V.forEach((v,i)=>{const c=$('#pc'+i).getContext('2d');c.fillStyle=v.bg;c.fillRect(0,0,132,140);spr(c,0,8,11,{...v,l:false})})}
+const V=[{n:'겨울 점퍼 룩',bg:['#cfe0f2','#b8cfe8'],o:'#5d6250',o2:'#474b3d',in:'#2b2b2b',k:'j'},{n:'여름 흰 티 룩',bg:['#ffe7b8','#fbd38d'],o:'#f8fafc',o2:'#d6dce4',in:'#f8fafc',k:'t'},{n:'결혼식 정장 룩',bg:['#e7dcef','#d3c2e2'],o:'#2c2f3a',o2:'#1d1f27',in:'#a9c4e6',k:'s'}];
+function drawPortrait(ctx,v){
+  const W2=66,H2=70,cv2=document.createElement('canvas');cv2.width=W2;cv2.height=H2;const c=cv2.getContext('2d');
+  const R=(col,x,y,w,h)=>{c.fillStyle=col;c.fillRect(x,y,w,h)};
+  const O=(col,cx,cy,rx,ry)=>{c.fillStyle=col;for(let y=-ry;y<=ry;y++){const w=Math.round(rx*Math.sqrt(1-(y*y)/(ry*ry)));c.fillRect(cx-w,cy+y,w*2,1)}};
+  R(v.bg[0],0,0,W2,H2);for(let y=0;y<H2;y+=4)for(let x=(y%8?2:0);x<W2;x+=4)R(v.bg[1],x,y,1,1);
+  const SK='#f0c49c',SK2='#dfa97e',SK3='#fbdcbd',HR='#17151c',HR2='#2c2a38',HR3='#47465c';
+  // 몸
+  O(v.o,33,70,27,17);R(v.o,6,62,54,8);O(v.o2,8,68,5,8);O(v.o2,58,68,5,8);
+  R(SK2,27,46,12,9);R(SK,28,46,10,8);
+  if(v.k=='j'){R(v.in,26,55,14,15);R(v.o2,23,52,6,8);R(v.o2,37,52,6,8);R('#b08d57',32,56,2,14)}
+  if(v.k=='t'){O(v.o2,33,55,8,3);O(SK2,33,53,6,3);R(v.o2,10,64,1,6);R(v.o2,55,64,1,6)}
+  if(v.k=='s'){R(v.in,26,54,14,16);R('#39415f',31,55,4,3);R('#39415f',30,58,6,12);[0,1,2,3].forEach(i=>R('#c8d2e4',30,59+i*3,6,1));R(v.o2,20,54,8,16);R(v.o2,38,54,8,16)}
+  // 귀
+  O(SK,13,31,3,5);O(SK2,13,32,2,3);O(SK,53,31,3,5);O(SK2,53,32,2,3);
+  // 얼굴 (둥근 얼굴)
+  O(SK,33,29,20,22);O(SK3,29,23,11,11);R(SK2,14,41,2,2);R(SK2,50,41,2,2);O(SK2,33,50,10,1);
+  // 머리: 앞머리를 내린 짧은 검은 머리
+  O(HR,33,15,22,14);R(HR,11,14,44,8);R(HR,11,14,4,14);R(HR,51,14,4,14);
+  for(let x=14;x<52;x+=3)R(HR,x,20,3,3+((x*7)%3));
+  R(SK,14,27,2,1);R(HR2,18,6,28,3);R(HR2,14,10,10,3);R(HR3,20,6,12,1);R(HR3,16,10,5,1);R(HR2,38,11,10,2);
+  // 눈썹
+  R('#1b1820',19,26,10,2);R('#1b1820',37,26,10,2);
+  // 눈 (가늘고 또렷한 눈)
+  R('#201c24',19,31,10,1);R('#201c24',37,31,10,1);R('#fff',20,32,8,2);R('#fff',38,32,8,2);R('#2b1d14',23,32,3,2);R('#2b1d14',41,32,3,2);R('#fff',24,32,1,1);R('#fff',42,32,1,1);R(SK2,20,35,7,1);R(SK2,39,35,7,1);
+  // 코, 볼, 입
+  R(SK2,34,33,1,7);R(SK2,30,40,7,1);R(SK3,31,37,3,2);O('#f3b193',20,40,3,1);O('#f3b193',46,40,3,1);R('#a85a4f',28,45,10,1);R('#c9786a',30,46,6,1);R(SK2,29,48,8,1);
+  ctx.imageSmoothingEnabled=false;ctx.drawImage(cv2,0,0,132,140);
+}
+function showGallery(){openM('<h3>📸 AI 도트 초상화 갤러리</h3><div class="gl">'+V.map((v,i)=>`<figure><canvas id="pc${i}" width="132" height="140"></canvas><figcaption>${v.n}</figcaption></figure>`).join('')+'</div>');V.forEach((v,i)=>drawPortrait($('#pc'+i).getContext('2d'),v))}
 
 const CTS={
- agency:{t:'📜 자격 · 수상 전시',it:[['💻','정보처리기사','',1],['💻','컴퓨터활용능력 1급','',1],['💻','워드프로세서','',1],['📊','사회조사분석사 2급','',1],['📜','한국사능력검정시험 2급','',1],['🔤','TOEIC 최고 775점','',1],['🏆','2016 지역기업 청년 희망이음 프로젝트 경진대회 대상','산업통상자원부 장관상',1],['🥇','2017 같은 대회 금상','산업통상자원부 장관상',1]]},
+ agency:{t:'📜 자격 · 수상 전시',it:[['💻','정보처리기사','',1],['💻','컴퓨터활용능력 1급','',1],['💻','워드프로세서','',1],['📊','사회조사분석사 2급','',1],['📜','한국사능력검정시험 2급','',1],['🥋','태권도 1품 · 2품','',1],['🔤','TOEIC 최고 775점','',1],['🏆','2016 지역기업 청년 희망이음 프로젝트 경진대회 대상','산업통상자원부 장관상',1],['🥇','2017 같은 대회 금상','산업통상자원부 장관상',1]]},
  mensa:{t:'🧠 멘사 인증',it:[['🧠','멘사 (Mensa International)','IQ 156 · Percentile 99% · 준회원',1]]},
  vc:{t:'🩸 나눔 & 기여 기록',it:[['🩸','헌혈유공장 은장','헌혈 167회 · 대한적십자사',1],['🤝','봉사활동','상상 Volunteer 활동',0]]},
  gym:{t:'🏃 마라톤 기록',it:[['🏃','2019 제주감귤국제마라톤 10km','01:22:38.32',0],['🏅','2016 제21회 제주국제관광마라톤축제 하프','02:54:26.14',0],['🏅','2016 제9회 아름다운제주국제마라톤대회 하프','2:27:11.23',0],['🏅','2013 제2회 6.25 상기 및 정전 60주년 기념 국민대통합 마라톤 대회 하프','01:58:21.05',0]]}
@@ -1437,7 +1585,7 @@ function dockPos(){
     return;
   }
   d.style.cssText='';
-  if(PV.bg){d.className='mini';d.style.display='block'}
+  if(PV.bg){d.className='mini';d.style.display='block';bgmPlace()}
   else{d.className='';d.style.cssText='display:block;left:-9999px;top:0;width:200px;height:200px'}
 }
 /* BGM으로 계속 듣기: 창을 닫아도 작은 플레이어로 이어서 재생 */
@@ -1449,20 +1597,30 @@ function plBg(id){
   closeM();toast('BGM으로 계속 재생해요. 🎧');bgmUi();
 }
 function sunoBgm(){
-  if(!SUNO_TRACKS.some(t=>t.suno))return;
+  if(!SUNO_TRACKS.length)return;
   sunoAll=true;if(!sunoRep)sunoRep=1;
-  if(!sunoOpen())sunoPlay(0);else sunoArm();
-  if(!sunoOpen())return;   // 작은 창이 막힌 경우 안내를 보여 줌
+  if(!sunoOpen()&&!sunoFileOn())sunoPlay(0);else sunoArm();
+  if(!sunoOpen()&&!sunoFileOn())return;   // 창이 막혔거나 휴대폰 안내가 나온 경우
   SB.on=true;closeM();try{window.focus()}catch(e){}toast('BGM으로 계속 재생해요. 🎧');bgmUi();
 }
 const SB={on:false};
+let bgmSmall=null;
 function bgmUi(){
   const bar=$('#bgmBar');if(!bar)return;
-  const yt=PV.p&&PV.bg,su=SB.on&&sunoOpen(),on=yt||su;
+  const yt=PV.p&&PV.bg,fl=SB.on&&sunoFileOn(),su=(SB.on&&sunoOpen())||fl,on=yt||su;
   bar.hidden=!on;document.body.classList.toggle('bgm-on',!!on);
-  if(on){$('#bgmName').textContent='♪ '+(npExt||'');$('#bgmP').hidden=!yt}
+  if(bgmSmall===null)bgmSmall=mobOn();
+  const sm=on&&yt&&bgmSmall;document.body.classList.toggle('bgm-small',!!sm);
+  if(on){$('#bgmName').textContent='♪ '+(npExt||'');$('#bgmP').hidden=!(yt||fl);$('#bgmMin').hidden=!yt;$('#bgmMin').textContent=bgmSmall?'⬆':'⬇'}
+  bgmPlace();
 }
-function bgmToggle(){plToggle()}
+function bgmMinTog(){bgmSmall=!bgmSmall;bgmUi();dockPos()}
+function bgmPlace(){
+  const bar=$('#bgmBar'),d=$('#ytDock'),c=$('#ctl');if(!bar||!c)return;
+  if(mobOn()&&!modal){const b=Math.max(4,innerHeight-c.getBoundingClientRect().top+4)+'px';bar.style.bottom=b;if(d.classList.contains('mini'))d.style.bottom=b}
+  else{bar.style.bottom='';if(d.classList.contains('mini'))d.style.bottom=''}
+}
+function bgmToggle(){if(PV.p)return plToggle();if(sunoFileOn())FA.paused?FA.play().catch(()=>{}):FA.pause()}
 function bgmNext(){if(PV.p)plNext(true);else if(sunoOpen())sunoSkip();bgmUi()}
 function bgmList(){if(PV.p&&PV.bg)plShow(PV.p.id);else showSuno()}
 function bgmOff(){if(PV.p){PV.bg=false;plStop()}if(sunoOpen()||SB.on)sunoClose();SB.on=false;bgmUi();dockPos()}
@@ -1559,13 +1717,19 @@ const REP_L=['끔','전체','한 곡'];
 let sunoI=-1,sunoWin=null,sunoTm=null,sunoEnd=null,sunoAll=false,sunoRep=0,sunoAt=0;
 const sunoId=u=>((u||'').match(/suno\.com\/(?:song|embed)\/([0-9a-fA-F-]{36})/)||[])[1]||'';
 const sunoFileOn=()=>{const t=SUNO_TRACKS[sunoI];return !!(t&&t.file)};
+const FA=new Audio();FA.preload='none';
+FA.addEventListener('play',()=>{extOn(sunoTitle());bgmUi()});
+FA.addEventListener('pause',()=>{if(sunoFileOn()&&!FA.ended)extOff()});
+FA.addEventListener('ended',()=>{sunoAdvance();if(FA.paused)extOff()});
+FA.addEventListener('error',()=>{if(FA.getAttribute('src'))sunoErr()});
+FA.addEventListener('timeupdate',()=>{const s=$('#sunoSeek');if(s&&FA.duration)s.value=FA.currentTime/FA.duration*1000});
 const sunoOpen=()=>!!(sunoWin&&!sunoWin.closed);
 function extOn(title){sunoOn=true;npExt=title;clearInterval(mt);npUpdate()}
 function extOff(){sunoOn=false;npExt='';music()}
 function sunoStop(){
-  const a=$('#sunoA');if(a)a.pause();
+  if(!SB.on&&sunoFileOn())FA.pause();
   if(!PV.bg)plStop();else dockPos();
-  if(PV.p||sunoOpen())return;   // Suno 창이 열려 있으면 노래가 계속되므로 게임 음악은 계속 쉼
+  if(PV.p||sunoOpen()||(SB.on&&sunoFileOn()))return;   // Suno 창이 열려 있으면 노래가 계속되므로 게임 음악은 계속 쉼
   if(sunoOn)extOff();
 }
 function sunoWatch(){clearInterval(sunoTm);sunoTm=setInterval(()=>{if(sunoOpen())return;clearInterval(sunoTm);clearTimeout(sunoEnd);sunoWin=null;sunoAll=false;sunoI=-1;SB.on=false;extOff();sunoMark();bgmUi()},1000)}
@@ -1587,14 +1751,15 @@ function sunoMark(){
   if(n)n.textContent=t?'♪ '+t.title:'곡을 골라 주세요';
   if(r)r.textContent='🔁 반복: '+REP_L[sunoRep];
   if(x)x.hidden=!t;
+  const sk=$('#sunoSeek'),pp=$('#sunoPP');if(sk)sk.hidden=!(t&&t.file);if(pp)pp.hidden=!(t&&t.file);
 }
 function showSuno(){
   if(!sunoOpen())sunoI=-1;
   openM('<h3>🎧 보성의 노래</h3><p style="font-size:12px;opacity:.8;margin-bottom:8px">주인장이 Suno AI로 만든 노래예요. 노래는 작은 창에서 나와요.</p>'+
     (SUNO_TRACKS.length?`<div id="sunoNow" style="font-weight:bold;font-size:13px;margin-bottom:6px"></div>
-    <audio id="sunoA" controls preload="none" hidden style="width:100%" onplay="extOn(sunoTitle())" onpause="if(sunoFileOn())extOff()" onended="sunoAdvance()" onerror="sunoErr()"></audio>
+    <input id="sunoSeek" type="range" min="0" max="1000" value="0" hidden style="width:100%" oninput="if(FA.duration)FA.currentTime=this.value/1000*FA.duration">
     <div class="qbtn" style="margin-bottom:6px"><button class="xb" onclick="sunoPlayAll()">▶ 전체 듣기</button><button class="xb" id="sunoRepB" onclick="sunoRepTog()"></button><button class="xb" onclick="sunoBgm()">🎧 BGM으로 계속 듣기</button></div>
-    <div class="qbtn" id="sunoCtl" style="margin-bottom:6px" hidden><button class="xb" onclick="sunoSkip()">⏭ 다음 곡</button><button class="xb r" onclick="sunoClose()">⏹ 끄기</button></div>
+    <div class="qbtn" id="sunoCtl" style="margin-bottom:6px" hidden><button class="xb" id="sunoPP" hidden onclick="bgmToggle()">⏯ 재생/일시정지</button><button class="xb" onclick="sunoSkip()">⏭ 다음 곡</button><button class="xb r" onclick="sunoClose()">⏹ 끄기</button></div>
     <div id="sunoL" style="margin:6px 0"></div><div id="sunoE" class="qerr" hidden></div>`+
     SUNO_TRACKS.map((t,i)=>`<div class="xrow pick sunot" onclick="sunoPick(${i})"><span class="qn">${i+1}</span><span class="qt" style="font-weight:normal"><b>${esc(t.title)}</b>${t.note?' · '+esc(t.note):''}</span><span>▶</span></div>`).join('')
     :'<div class="cd">주인장이 노래를 준비하고 있어요. 🎶</div>'));
@@ -1605,31 +1770,42 @@ function sunoPick(i){sunoAll=false;sunoPlay(i)}
 function sunoPlayAll(){if(!SUNO_TRACKS.length)return;sunoAll=true;sunoPlay(0)}
 function sunoSkip(){if(!SUNO_TRACKS.length)return;sunoPlay((sunoI+1)%SUNO_TRACKS.length)}
 function sunoRepTog(){sunoRep=(sunoRep+1)%3;sunoMark();sunoArm()}
-function sunoClose(){clearTimeout(sunoEnd);sunoAll=false;sunoI=-1;const a=$('#sunoA');if(a){a.pause();a.hidden=true}if(sunoOpen())try{sunoWin.close()}catch(e){}sunoWin=null;SB.on=false;clearInterval(sunoTm);if(!PV.p)extOff();sunoMark();bgmUi()}
+function sunoClose(){clearTimeout(sunoEnd);const wasF=sunoFileOn();sunoAll=false;if(wasF)FA.pause();sunoI=-1;if(sunoOpen())try{sunoWin.close()}catch(e){}sunoWin=null;SB.on=false;clearInterval(sunoTm);if(!PV.p)extOff();sunoMark();bgmUi()}
+const inApp=/KAKAOTALK|NAVER\(|FBAN|FBAV|Instagram|Line\//i.test(navigator.userAgent);
+const isPhone=()=>matchMedia('(pointer:coarse)').matches;
 function sunoPlay(i){
-  const a=$('#sunoA'),t=SUNO_TRACKS[i];if(!t)return;
+  const t=SUNO_TRACKS[i];if(!t)return;
   sunoI=i;const E=$('#sunoE'),L=$('#sunoL');if(E)E.hidden=true;if(L)L.innerHTML='';sunoMark();
   if(t.suno){
     if(PV.p){PV.bg=false;plStop()}
-    if(a){a.pause();a.hidden=true}
+    FA.pause();
     const id=sunoId(t.suno),link=/^https:\/\/[^\s"'<>]+$/.test(t.suno)?t.suno:'';
     if(!id){if(E){E.textContent='이 링크로는 바로 재생할 수 없어요. suno.com/song/… 주소가 필요해요.';E.hidden=false}if(L&&link)L.innerHTML=`<a class="xb" href="${esc(link)}" target="_blank" rel="noopener">Suno에서 열기</a>`;return}
-    // Suno 플레이어는 다른 사이트 안에 띄우면 빈 화면이 되므로 작은 창으로 엶
+    // Suno 플레이어는 다른 사이트 안에 띄우면 빈 화면이 되므로 별도 창으로 엶
     const url='https://suno.com/embed/'+id+'?autoplay=1';
+    if(isPhone()&&!sunoOpen()&&L&&!L.dataset.ok){
+      // 휴대폰에서는 작은 창이 화면 전체를 덮으므로 먼저 안내
+      L.innerHTML=`<p style="font-size:12px;margin-bottom:6px">${inApp?'이 앱 안에서는 Suno 창이 화면을 덮고, 닫으면 음악도 꺼져요. 크롬이나 삼성 인터넷으로 사이트를 열면 탭을 옮겨 들을 수 있어요.':'Suno 창이 새 탭으로 열려요. 게임 탭으로 돌아와도 음악은 그 탭에서 계속 나와요.'}</p><a class="xb" href="${esc(url)}" target="bsw_suno" rel="opener" onclick="return sunoTab(this.href)">🎧 Suno로 듣기</a>`;
+      return;
+    }
     if(sunoOpen())sunoWin.location.href=url;
     else sunoWin=window.open(url,'bsw_suno','popup,width=560,height=340');
-    if(sunoOpen()){
-      sunoAt=Date.now();extOn(sunoTitle());sunoWatch();sunoArm();bgmUi();
-      if(L)L.innerHTML='<p style="font-size:11px;opacity:.75;margin-bottom:6px">소리가 안 나면 작은 창의 재생 버튼을 눌러 주세요. 창을 닫으면 게임 음악이 다시 나와요.</p>';
-    }else if(E){
-      E.textContent='브라우저가 작은 창을 막았어요. 아래 버튼으로 열어 주세요.';E.hidden=false;
-      L.innerHTML=`<a class="xb" href="${esc(url)}" target="_blank" rel="noopener">🎧 플레이어 열기</a>`;
-    }
+    sunoAfter(url);
     return;
   }
-  if(!a)return;
   if(sunoOpen())try{sunoWin.close()}catch(e){}
-  a.hidden=false;a.src=t.file;a.play().catch(()=>{});
+  FA.src=t.file;FA.play().catch(()=>{});bgmUi();
+}
+function sunoTab(url){sunoWin=window.open(url,'bsw_suno');if(sunoWin){SB.on=true;sunoAfter(url);return false}return true}
+function sunoAfter(url){
+  const E=$('#sunoE'),L=$('#sunoL');
+  if(sunoOpen()){
+    sunoAt=Date.now();extOn(sunoTitle());sunoWatch();sunoArm();bgmUi();
+    if(L)L.innerHTML='<p style="font-size:11px;opacity:.75;margin-bottom:6px">소리가 안 나면 Suno 창의 재생 버튼을 눌러 주세요. 창을 닫으면 게임 음악이 다시 나와요.</p>';
+  }else if(E){
+    E.textContent='브라우저가 창을 막았어요. 아래 버튼으로 열어 주세요.';E.hidden=false;
+    L.innerHTML=`<a class="xb" href="${esc(url)}" target="_blank" rel="noopener">🎧 플레이어 열기</a>`;
+  }
 }
 function sunoErr(){const t=SUNO_TRACKS[sunoI];if(!t||!t.file)return;extOff();const e=$('#sunoE');e.textContent='음원을 찾지 못했어요: '+t.file;e.hidden=false}
 
@@ -1652,9 +1828,13 @@ const PROJECTS=[
   {t:'🎮 BS World',d:'걷고 말 걸고 길을 잃어도 괜찮은, 강보성의 16비트 세계. 지금 당신이 서 있는 바로 이곳입니다.',u:'https://studio-bs.github.io/',b:'지금 여기예요'},
   {t:'🍊 보성이네 감귤농원',d:'바람과 햇살이 키운 제주 서귀포 귤을 농장에서 바로 보내는 주문 사이트.',u:'https://jeju-citrus.vercel.app/',b:'사이트 열기'}
 ];
+const KAKAO_URL='https://open.kakao.com/o/sYJawzVi';
+function showKakao(){
+  openM(`<h3>💬 보성에게 연락하기</h3><div class="cd">연락처를 모르시면 카카오톡 오픈채팅으로 말을 걸어 주세요.</div><div class="adbtn" style="margin-top:10px"><a class="xb kko" href="${KAKAO_URL}" target="_blank" rel="noopener">💬 카카오톡 오픈채팅 열기</a></div>`);
+}
 function showProjects(){
   openM('<h3>🗂 프로젝트 전시관</h3>'+PROJECTS.map(p=>`<div class="qform"><b>${esc(p.t)}</b><p style="font-size:12px;line-height:1.6;margin:6px 0 8px">${esc(p.d)}</p><a class="xb" href="${esc(p.u)}" target="_blank" rel="noopener">${esc(p.b)}</a></div>`).join('')+
-  `<div class="qform"><b>✉ 연락처</b><p style="font-size:13px;margin:6px 0 8px">${esc(CONTACT_MAIL)}</p><a class="xb" href="mailto:${esc(CONTACT_MAIL)}">메일 보내기</a></div>`);
+  `<div class="qform"><b>✉ 연락처</b><p style="font-size:13px;margin:6px 0 8px">${esc(CONTACT_MAIL)}</p><a class="xb" href="mailto:${esc(CONTACT_MAIL)}">메일 보내기</a> <a class="xb kko" href="${KAKAO_URL}" target="_blank" rel="noopener">💬 카카오톡 오픈채팅</a></div>`);
 }
 
 /* ===== 보성 사진관: 사진을 photos 폴더에 올리고 아래에 한 줄씩 적으면 됩니다 =====
@@ -1699,6 +1879,8 @@ const QUESTS=[
   {t:'🍊 귤밭 일손',d:'감귤 과수원에 가기',ok:()=>visited.has('orchard')},
   {t:'✈ 하늘 길',d:'공항 터미널과 활주로 둘러보기',ok:()=>visited.has('terminal')&&visited.has('airfield')},
   {t:'🎧 쉼표 하나',d:'쉼의 숲 음악 서재 들어가기',ok:()=>visited.has('library')},
+  {t:'🏖 백사장',d:'하얀 백사장에 가기',ok:()=>visited.has('beach')},
+  {t:'🎮 오락실',d:'테트리스 한 판 하기',ok:()=>S.met.tetris},
   {t:'🎨 창작 마을',d:'프로젝트 전시관과 사진관 둘러보기',ok:()=>visited.has('projects')&&visited.has('photo')},
   {t:'👨‍👩‍👧 우리 가족',d:'가족 7명에게 모두 인사하기',ok:()=>FAMILY.every(n=>S.met[n])},
   {t:'🥚 숨은 이야기',d:'이스터 에그 '+EGG_N+'개 모두 찾기',ok:()=>Object.keys(S.eggs).length>=EGG_N}
@@ -1747,7 +1929,8 @@ setInterval(qAlert,120000);
 
 /* ===== 마을 NPC 대사 ===== */
 const TALK={
- '마을 소년':[['어서 와! 여기가 BS World의 태초마을이야.','북쪽엔 귤향 올레, 동쪽엔 운동 센터, 서쪽엔 바당 올레, 남쪽엔 쉼의 숲이 있어.'],['동네 사람들!! 여기 새 손님 왔어요!!'],['어른들이 그러는데 숲에 이상한 나무가 있대.','나는 무서워서 못 가봤어. 진짜야.']],
+ '마을 소년':[['어서 와! 여기가 BS World의 태초마을이야.','북쪽엔 귤향 올레, 동쪽엔 운동 센터, 서쪽엔 바당 올레, 남쪽엔 쉼의 숲이 있어.'],['like station 동네사람들!! 새 손님 왔어요!!'],['어른들이 그러는데 숲에 이상한 나무가 있대.','나는 무서워서 못 가봤어. 진짜야.']],
+ '창끼 (a.k.a 노진구)':[['전설의힘을 알고있나?','ㅋ'],['불새출격'],['hi 대돕 건방지게 대돕을안하노 ㅋ'],['대돕이새기야']],
  '꽃집 누나':[['꽃향기 맡고 가렴. 🌸','달리기 전엔 스트레칭 필수야!'],['어머, 오늘 럭키비키잖아? 꽃이 활짝 폈어.'],['제주 꽃은 바람을 이겨서 더 예쁜 거야.']],
  '등산객':[['자격증 공부는 마라톤이래. 페이스 조절이 전부지!'],['한라산 백록담 봤냐고요? 올라갔는데 구름만 봤습니다.','그것도 추억이죠, 뭐.'],['무릎이 먼저 포기하는 나이가 왔습니다.']],
  '꼬마 트레이너':[['나는 귤향 올레의 달리기 선수!','눈이 마주쳤으니 달리기 승부다!'],['어쩔티비~ 나 방금 신기록 세웠거든!'],['엄마가 해 지기 전에 들어오랬어. 그래서 지금 뛰는 거야.']],
@@ -1757,8 +1940,8 @@ const TALK={
  '마라토너':[['헉헉… 하프코스는 21km래!'],['중꺾마! 중요한 건 꺾이지 않는 마라톤!'],['30km 지나면 인생이 보인다던데, 저는 편의점이 보였어요.']],
  '조깅 크루':[['트랙 한 바퀴 더!','감귤마라톤 10km도 같이 뛸래? 🍊'],['우리 크루 규칙: 뛰고 나서 치킨은 무효가 아니다.'],['가보자고~!']],
  '해변 산책러':[['파도 소리를 들으면 마음이 차분해져. 🌊'],['이 바다 사진은 필터가 필요 없어요. 진짜로요.'],['윤슬 보며 멍때리기 대회 있으면 제가 1등 해요.']],
- '감귤 농부 삼춘':[['제주 감귤이 맛좋수다게~ 🍊','혼저 옵서예. 한 입 먹어봅서게!'],['귤 하나 까봅서. 안 달믄 내가 책임지쿠다.'],['육지 사람들은 귤을 사 먹는댄 허난 신기허여게.']],
- '귤 따는 할망':[['오늘 귤은 당도가 막 좋쿠다게~'],['아이고 허리야. 그래도 귤 보민 웃음 나주게.'],['밥 먹언? 안 먹었걸랑 귤이라도 먹엉 갑서.']],
+ '감귤 농부 삼춘':[['제주 감귤이 맛좋수다게~ 🍊','혼저 옵서예. 한 입 먹어봅서게!'],['귤 하나 까봅서. 안 달믄 내가 책임지쿠다.'],['뭐랭하맨? 혼저 와서 귤 땁서!'],['무사 영 늦었수과? 귤은 안 기다려 줍니다게.'],['육지 사람들은 귤을 사 먹는댄 허난 신기허여게.']],
+ '귤 따는 할망':[['오늘 귤은 당도가 막 좋쿠다게~'],['아이고 허리야. 그래도 귤 보민 웃음 나주게.'],['밥 먹언? 안 먹었걸랑 귤이라도 먹엉 갑서.'],['국은 맨도롱 또똣할 때 먹어사 맛 나는 거여.']],
  '농부 청년':[['귤 따는 철이 되민 눈코 뜰 새 없쥬.'],['퇴근이요? 귤나무한테 물어보세요.'],['저 T라서요, 귤 맛은 당도계로 말합니다.']],
  '메인 러닝 코치':null,
  '서브 러너':[['후… 후… 아 안녕!','기록은 숫자지만 완주는 이야기야. 파이팅!'],['오늘 운동 안 한 사람? 저요. 그래서 지금 합니다.']],
@@ -1772,7 +1955,7 @@ const TALK={
  '마중 나온 삼춘':[['보성이 오는 날인가 해서 기다렴수다게.'],['게난 오늘이 아닌가?']],
  '음악 듣는 손님':[['이 서재에 오면 시간이 천천히 가는 것 같아요.'],['이 노래 뭐예요? 아, 벽에 적혀 있네요.']],
  '산책하는 사람':[['아무것도 안 해도 되는 시간이 제일 좋네요.'],['연못 앞 벤치 명당이에요. 제가 맡아 뒀어요.']],
- '올레꾼':[['돌담 따라 걷는 이 길이 바당 올레라마씸. 🌊','서쪽으로 가민 해변, 동쪽으로 가민 태초마을이우다.'],['남쪽 샛길로 가민 창작 마을이 나와마씸.'],['올레는 집으로 가는 좁은 길이란 뜻이우다.']],
+ '올레꾼':[['돌담 따라 걷는 이 길이 바당 올레라마씸. 🌊','서쪽으로 가민 해변, 동쪽으로 가민 태초마을이우다.'],['남쪽 샛길로 가민 창작 마을이 나와마씸.'],['올레는 집으로 가는 좁은 길이란 뜻이우다.'],['무신거 헴수과? 그냥 걸어봅서.']],
  '사진 찍는 여행자':[['돌담이랑 귤나무가 같이 나오게 찍고 있어요. 📷'],['인생샷 건지기 전엔 못 갑니다.']],
  '기록실 트레이너':null,
  '철봉 매달린 회원':[['하나만 더… 하나만 더…'],['내려오는 법을 잊어버렸습니다.']],
@@ -1781,6 +1964,79 @@ const TALK={
 };
 const pickTalk=p=>{let last=-1;return()=>{let i=Math.random()*p.length|0;if(p.length>1&&i==last)i=(i+1)%p.length;last=i;return p[i]}};
 Object.values(M).forEach(z=>(z.p||[]).forEach(n=>{if(TALK[n.n])n.s=pickTalk(TALK[n.n])}));
+
+/* ===== 오락실: 테트리스 ===== */
+const TET={run:false,tm:null,b:null,p:null,nx:null,score:0,lines:0,lvl:1,over:false};
+const TW=10,TH=20,TC=15,TP=[[[1,1,1,1]],[[1,1],[1,1]],[[0,1,0],[1,1,1]],[[0,1,1],[1,1,0]],[[1,1,0],[0,1,1]],[[1,0,0],[1,1,1]],[[0,0,1],[1,1,1]]],TCOL=['#22d3ee','#fde047','#a855f7','#4ade80','#ef4444','#60a5fa','#fb923c'];
+function tetNew(){const i=Math.random()*7|0;return{i,s:TP[i].map(r=>r.slice()),x:0,y:0}}
+function tetFits(s,x,y){return s.every((r,j)=>r.every((v,i)=>!v||(x+i>=0&&x+i<TW&&y+j<TH&&(y+j<0||!TET.b[y+j][x+i]))))}
+function tetSpawn(){const n=TET.nx||tetNew();TET.nx=tetNew();n.x=(TW-n.s[0].length)>>1;n.y=0;TET.p=n;if(!tetFits(n.s,n.x,n.y))tetOver()}
+function tetLock(){const p=TET.p;p.s.forEach((r,j)=>r.forEach((v,i)=>{if(v&&p.y+j>=0)TET.b[p.y+j][p.x+i]=p.i+1}));
+  let n=0;for(let y=TH-1;y>=0;y--)if(TET.b[y].every(Boolean)){TET.b.splice(y,1);TET.b.unshift(Array(TW).fill(0));n++;y++}
+  if(n){TET.score+=[0,100,300,500,800][n]*TET.lvl;TET.lines+=n;TET.lvl=1+(TET.lines/10|0);sfx('w')}
+  tetSpawn()}
+function tetDraw(){
+  const c=$('#tc');if(!c)return;const x=c.getContext('2d');x.fillStyle='#0b1020';x.fillRect(0,0,c.width,c.height);
+  const cell=(i,j,k)=>{x.fillStyle=TCOL[k];x.fillRect(i*TC,j*TC,TC-1,TC-1);x.fillStyle='#ffffff40';x.fillRect(i*TC,j*TC,TC-1,3)};
+  x.fillStyle='#ffffff08';for(let i=1;i<TW;i++)x.fillRect(i*TC,0,1,TH*TC);
+  TET.b.forEach((r,j)=>r.forEach((v,i)=>v&&cell(i,j,v-1)));
+  const p=TET.p;if(p&&TET.run)p.s.forEach((r,j)=>r.forEach((v,i)=>v&&cell(p.x+i,p.y+j,p.i)));
+  const n=$('#tn');if(n&&TET.nx){const y=n.getContext('2d');y.fillStyle='#0b1020';y.fillRect(0,0,n.width,n.height);TET.nx.s.forEach((r,j)=>r.forEach((v,i)=>{if(v){y.fillStyle=TCOL[TET.nx.i];y.fillRect(4+i*13,6+j*13,12,12)}}))}
+  $('#ts').textContent=TET.score.toLocaleString('ko-KR');$('#tl').textContent=TET.lines;$('#tv').textContent=TET.lvl;
+}
+function tetTick(){if(!TET.run)return;const p=TET.p;if(tetFits(p.s,p.x,p.y+1))p.y++;else tetLock();tetDraw();if(TET.run)TET.tm=setTimeout(tetTick,Math.max(90,620-(TET.lvl-1)*55))}
+function tetStart(){
+  TET.b=Array.from({length:TH},()=>Array(TW).fill(0));TET.score=0;TET.lines=0;TET.lvl=1;TET.over=false;TET.nx=null;TET.run=true;
+  const o=$('#tOver');if(o)o.hidden=true;const B=$('#tStart');if(B)B.textContent='↻ 다시 시작';
+  KC.on=false;kcSel(null);if(document.activeElement)document.activeElement.blur();
+  S.met.tetris=1;saveGame();updateHUD();
+  tetSpawn();tetDraw();clearTimeout(TET.tm);TET.tm=setTimeout(tetTick,620);
+  const c=$('#tc');if(c)c.scrollIntoView({block:'nearest'});
+}
+function tetStop(){TET.run=false;clearTimeout(TET.tm)}
+function tetOver(){
+  tetStop();TET.over=true;sfx('b');const o=$('#tOver');if(o){o.hidden=false;const n=$('#tName');try{n.value=localStorage.getItem('bsw_tname')||''}catch(e){}}
+  const r=$('#tRes');if(r)r.textContent='게임 오버! '+TET.score.toLocaleString('ko-KR')+'점';
+  const v=$('#tSave');if(v)v.hidden=TET.score<1;
+}
+function tetMv(dx){if(tetFits(TET.p.s,TET.p.x+dx,TET.p.y)){TET.p.x+=dx;tetDraw()}}
+function tetRot(){const p=TET.p,s=p.s[0].map((_,i)=>p.s.map(r=>r[i]).reverse());for(const k of[0,-1,1,-2,2])if(tetFits(s,p.x+k,p.y)){p.s=s;p.x+=k;break}tetDraw()}
+function tetDown(){if(tetFits(TET.p.s,TET.p.x,TET.p.y+1)){TET.p.y++;TET.score++;tetDraw()}}
+function tetDrop(){while(tetFits(TET.p.s,TET.p.x,TET.p.y+1)){TET.p.y++;TET.score+=2}clearTimeout(TET.tm);tetLock();tetDraw();if(TET.run)TET.tm=setTimeout(tetTick,500)}
+function tetPad(d){if(d==2)tetMv(-1);else if(d==3)tetMv(1);else if(d==0)tetDown();else tetDrop()}
+function tetKey(e){
+  const k=e.key;
+  if(k=='ArrowLeft'||k=='a')tetMv(-1);else if(k=='ArrowRight'||k=='d')tetMv(1);else if(k=='ArrowDown'||k=='s')tetDown();
+  else if(k=='ArrowUp'||k=='w'||k=='z'||k=='Z')tetRot();else if(k==' ')tetDrop();
+  else return false;
+  e.preventDefault();return true;
+}
+async function tetRank(){
+  const el=$('#tRank');if(!el)return;
+  try{const L=await DB.rpc('tetris_top');el.innerHTML=L.length?L.map((r,i)=>`<div class="xrow" style="margin:2px 0;padding:3px 8px"><span>${i+1}. ${esc(r.name)}</span><b>${Number(r.score).toLocaleString('ko-KR')}</b></div>`).join(''):'<small style="opacity:.7">아직 기록이 없어요. 1등 해 보세요!</small>'}
+  catch(e){el.innerHTML=`<small style="opacity:.7">${esc(dbErr(e))}</small>`}
+}
+async function tetSave(){
+  const n=$('#tName').value.trim();
+  try{const r=await DB.rpc('tetris_add',{p_name:n,p_score:TET.score,p_lines:TET.lines});
+    if(!r.ok)return toast(r.err=='rate'?'지금 기록이 너무 많아요. 잠시 후 다시 해 주세요.':'저장할 수 없는 기록이에요.');
+    try{localStorage.setItem('bsw_tname',n)}catch(e){}
+    $('#tSave').hidden=true;toast('순위에 등록했어요! 🏆');tetRank();
+  }catch(e){toast(dbErr(e))}
+}
+function showTetris(){
+  openM(`<h3>🎮 테트리스</h3>
+  <div style="display:flex;gap:10px;justify-content:center">
+    <canvas id="tc" width="${TW*TC}" height="${TH*TC}" style="border:2px solid #fbbf24;border-radius:4px;flex:none"></canvas>
+    <div style="font-size:12px;min-width:92px"><b>다음</b><br><canvas id="tn" width="64" height="44" style="border:1px solid var(--bd);margin:3px 0 8px"></canvas><br>
+    점수 <b id="ts">0</b><br>줄 <b id="tl">0</b><br>레벨 <b id="tv">1</b>
+    <p style="font-size:10px;opacity:.8;margin-top:8px;line-height:1.5">←→ 이동<br>↑ / Z·A 회전<br>↓ 천천히<br>Space·패드▲ 한번에<br>X·B 나가기</p></div>
+  </div>
+  <div class="qbtn" style="justify-content:center"><button class="xb" id="tStart" onclick="tetStart()">▶ 시작</button></div>
+  <div id="tOver" hidden style="margin-top:8px;text-align:center"><b id="tRes"></b><div id="tSave" style="margin-top:6px"><input id="tName" class="xin" maxlength="12" placeholder="순위에 남길 이름"><div class="qbtn" style="justify-content:center"><button class="xb" onclick="tetSave()">🏆 순위 등록</button></div></div></div>
+  <div class="qform" style="margin-top:8px"><b>🏆 순위 TOP 10</b><div id="tRank" style="margin-top:4px"><small>불러오는 중…</small></div></div>`);
+  TET.b=Array.from({length:TH},()=>Array(TW).fill(0));TET.score=0;TET.lines=0;TET.lvl=1;TET.nx=null;tetDraw();tetRank();
+}
 
 /* ===== 마을 게시판: 광고지 파일을 index.html과 같은 곳에 올리고 여기에 적으면 됩니다 ===== */
 const ADS=[{img:'ad-citrus.jpg',title:'🍊 보성이네 감귤농원',link:'https://jeju-citrus.vercel.app/',btn:'🛒 주문 사이트 열기'}];
@@ -1834,7 +2090,7 @@ function showBrain(){
 function brainPick(i){const b=BR[i];document.querySelectorAll('.rg').forEach((e,k)=>e.classList.toggle('on',k==i));$('#bi').innerHTML=`<div class="cd">${b[3]}</div><button class="go" style="font-size:13px;padding:5px 12px" onclick="closeM();warp('${b[2]}',7,8,1)">이 장소로 이동</button>`}
 
 const visited = new Set();
-const REGION_NAMES = {studio:'창작 마을',projects:'프로젝트 전시관',photo:'보성 사진관',airfield:'제주 공항 활주로',fit:'맨몸 운동 기록실',town:'태초마을',route1:'귤향 올레',cert:'학술·자격 검정 시티',sports:'운동 센터',orchard:'감귤 과수원',coast:'제주 바닷가',house:'보성의 집',gym:'런 라이프 체육관',agency:'국가 자격 검정원',mensa:'멘사 지능 연구소',vc:'나눔 & 기여 커뮤니티 센터',route2:'바당 올레',airport:'제주 공항',terminal:'제주 공항 터미널',rest:'쉼의 숲',library:'보성의 음악 서재'};
+const REGION_NAMES = {beach:'하얀 백사장',arcade:'쉼터 오락실',studio:'창작 마을',projects:'프로젝트 전시관',photo:'보성 사진관',airfield:'제주 공항 활주로',fit:'맨몸 운동 기록실',town:'태초마을',route1:'귤향 올레',cert:'학술·자격 검정 시티',sports:'운동 센터',orchard:'감귤 과수원',coast:'제주 바닷가',house:'보성의 집',gym:'런 라이프 체육관',agency:'국가 자격 검정원',mensa:'멘사 지능 연구소',vc:'나눔 & 기여 커뮤니티 센터',route2:'바당 올레',airport:'제주 공항',terminal:'제주 공항 터미널',rest:'쉼의 숲',library:'보성의 음악 서재'};
 const REGION_DESC = {
  town:'BS World의 모험이 시작되는 태초마을입니다.',
  route1:'자격 시티로 통하는 도로입니다.',
@@ -1844,6 +2100,7 @@ const REGION_DESC = {
  orchard:'제주 감귤이 자라는 과수원입니다. 🍊',
  studio:'사진관과 프로젝트 전시관이 있는 작은 마을입니다. 🎨',
  airfield:'활주로가 길게 뻗어 있습니다. 비행기가 이륙하는 모습을 볼 수 있어요. ✈',
+ beach:'해변을 즐기는 사람들로 붐비는 백사장입니다. 🏖',
  route2:'돌담 따라 해변과 마을을 잇는 길입니다. 🌊',
  rest:'잠시 쉬어 가는 숲입니다. 음악 서재에서 주인장의 플레이리스트를 만나 보세요. 🌿',
  airport:'해변 북쪽의 공항입니다. 터미널에서 비행기를 탈 수 있어요. ✈'
@@ -1887,7 +2144,7 @@ function showQuestLog(){
     <div class="qbtn"><button class="xb r" onclick="saveReset()">진행 기록 지우기</button></div>`);
 }
 
-function press(d){if(modal&&lbOn())return lbScroll(d);if(modal)return kcMove(d==1||d==2?-1:1);if(dlg&&dlg.s=='m'){dlg.sel=(dlg.sel+(d==1?-1:d==0?1:0)+dlg.keys.length)%dlg.keys.length;menu()}else held=d}
+function press(d){if(modal&&TET.run)return tetPad(d);if(modal&&lbOn())return lbScroll(d);if(modal)return kcMove(d==1||d==2?-1:1);if(dlg&&dlg.s=='m'){dlg.sel=(dlg.sel+(d==1?-1:d==0?1:0)+dlg.keys.length)%dlg.keys.length;menu()}else held=d}
 const KM={ArrowDown:0,s:0,ArrowUp:1,w:1,ArrowLeft:2,a:2,ArrowRight:3,d:3};
 
 addEventListener('keydown',e=>{
@@ -1953,6 +2210,11 @@ function drawFlight(t){
   if(p>=1){const id=FLY.to;FLY=null;warp(id,7,8,1)}
 }
 
+function drawOpera([x0,y0,w,h]){const X=x0*TS,Y=y0*TS,W2=w*TS,H2=h*TS;
+  const sail=(cx,bw,ht,fc)=>{g.fillStyle=fc;g.beginPath();g.moveTo(cx-bw/2,Y+H2);g.quadraticCurveTo(cx-bw/2+4,Y+H2-ht,cx+bw/2,Y+H2-ht-6);g.quadraticCurveTo(cx+bw/2-6,Y+H2-ht/3,cx+bw/2,Y+H2);g.closePath();g.fill();g.strokeStyle='#94a3b8';g.lineWidth=1;g.stroke()};
+  sail(X+W2*.2,48,34,'#e2e8f0');sail(X+W2*.5,70,50,'#f8fafc');sail(X+W2*.78,56,40,'#f1f5f9');
+  g.fillStyle='#fbbf24';g.font='12px sans-serif';g.textAlign='center';g.fillText('♪',X+W2*.5,Y+H2-14);g.textAlign='start'}
+function drawDog(nx,ny,col,t,d){const x=nx*TS+(d==2?28:-2),y=ny*TS+22,b=(t/160|0)%2;g.fillStyle=col;g.fillRect(x,y,12,6);g.fillRect(x+(d==2?-3:9),y-4,6,6);g.fillStyle='#0008';g.fillRect(x+1,y+6,2,2+b);g.fillRect(x+9,y+6,2,3-b);g.fillRect(x+(d==2?-2:13),y-2,1,1)}
 function draw(t){
   for(let y=0;y<H;y++)for(let x=0;x<W;x++)tile(g,map.m[y][x],x,y,t);
   let ux=px,uy=py;
@@ -1960,14 +2222,21 @@ function draw(t){
   const E=npcs.map(n=>{let nx=n.x,ny=n.y;
     if(n.mv){const p=Math.min(1,(t-n.mv.a)/RUN_MS);nx=n.mv.fx+(n.mv.tx-n.mv.fx)*p;ny=n.mv.fy+(n.mv.ty-n.mv.fy)*p}
     return{y:ny,f:()=>{
-      spr(g,nx*TS+4,ny*TS+2,2,{d:n.dir,h:n.h,p:n.h,c:n.c,lh:n.lh,w:(t/(n.run?110:350)|0)%2});
+      spr(g,nx*TS+4,ny*TS+2+(n.sit?6:0),2,{d:n.dir,h:n.h,p:n.h,c:n.c,lh:n.lh,gl:n.gl,l:!n.sit,w:(t/(n.run?110:350)|0)%2});
+      if(n.dog)drawDog(nx,ny,n.dog,t,n.dir);
+      if(n.cup&&n.dir!=1){const cx=nx*TS+(n.dir==2?1:24),cy=ny*TS+15;g.fillStyle='#16a34a';g.fillRect(cx+4,cy-5,1,6);g.fillStyle='#f8fafc';g.fillRect(cx,cy,8,2);g.fillStyle='#e2e8f0cc';g.fillRect(cx,cy+2,8,10);g.fillStyle='#3f2212';g.fillRect(cx+1,cy+4,6,8);g.fillStyle='#ffffffb0';g.fillRect(cx+2,cy+5,2,2);g.fillRect(cx+5,cy+7,1,2)}
+      if(n.n=='배드민턴 치는 회원'){const pr=(t%1400)/1400,q=pr<.5?pr*2:2-pr*2;g.fillStyle='#fff';g.fillRect((8.8+q*2.2)*TS,(6.3-Math.sin(q*Math.PI)*.8)*TS,4,4)}
       if(n.tw){g.fillStyle='#f97316';g.beginPath();g.arc(nx*TS+27,ny*TS+24,5,0,7);g.fill();g.fillStyle='#fdba74';g.fillRect(nx*TS+24,ny*TS+21,2,2)}
       if(n.um)drawUmb(nx,ny,n.um);
     }}});
-  E.push({y:uy,f:()=>{g.fillStyle='#0003';g.fillRect(ux*TS+6,uy*TS+28,20,4);spr(g,ux*TS+4,uy*TS+2,2,{d:dir,w:mv&&steps%2,c:S.end?'#fb923c':undefined});if(WX.kind=='rain'&&map.o)drawUmb(ux,uy,'#2563eb')}});
+  E.push({y:uy,f:()=>{g.fillStyle='#0003';g.fillRect(ux*TS+6,uy*TS+28,20,4);const sb=SIT?(SIT.k=='bench'?{y:6,l:false}:SIT.k=='swing'?{y:-1+Math.abs(Math.sin(t/330))*-3,x:Math.sin(t/330)*6,l:false}:SIT.k=='seesaw'?{y:Math.sin(t/420)*5-5,x:-10,l:false}:{y:(t-SIT.up<240?-1:9),l:true}):{y:0,l:true};
+      spr(g,ux*TS+4+(sb.x||0),uy*TS+2+sb.y,2,{d:dir,w:mv&&steps%2,l:sb.l,c:S.end?'#fb923c':undefined});if(WX.kind=='rain'&&map.o)drawUmb(ux,uy,'#2563eb')}});
+  if(map.opera)drawOpera(map.opera);
+  if(map.sign){g.font='bold 10px sans-serif';g.textAlign='center';for(const k in map.sign){const[a,b]=k.split(',').map(Number),t2=map.sign[k],w2=g.measureText(t2).width+10,cx=a*TS+16,cy=b*TS-6;g.fillStyle='#3f2a1c';g.fillRect(cx-w2/2-1,cy-8,w2+2,15);g.fillStyle='#a06a36';g.fillRect(cx-w2/2,cy-7,w2,13);g.fillStyle='#fff';g.fillText(t2,cx,cy+3)}g.textAlign='start'}
   if(map.plane)drawPlane(map.plane[0]*TS,map.plane[1]*TS,2.1);
   E.sort((a,b)=>a.y-b.y).forEach(e=>e.f());
   planeSky(t);
+  sitFx(t);
   weatherFX(t);
   orangeFX(t);
 }
@@ -1990,6 +2259,7 @@ function runnersStep(t){
 function loop(t){
   requestAnimationFrame(loop);   // 먼저 예약해서, 이후 오류가 나도 루프가 죽지 않게 함
   if(!map)return;
+  if(SIT&&held!=null&&!dlg&&!modal){sitUp()}
   if(!busy&&!dlg&&!modal&&!mv&&held!=null){
     dir=held;const[dx,dy]=DV[dir],nx=px+dx,ny=py+dy;
     if(nx<0||ny<0||nx>=W||ny>=H){const e=map.e&&map.e[EK[dir]];if(e)warp(e[0],e[3]==1?px:e[1],e[3]==2?py:e[2],dir)}
