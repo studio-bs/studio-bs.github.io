@@ -288,10 +288,11 @@
 <aside id="leftPanel" aria-label="캐릭터 정보">
   <div class="panel-title">PLAYER PROFILE</div>
   <div class="avatar-card">
-    <div class="avatar-mark">🧑🏻‍💻</div>
-    <strong>KANG BO-SUNG</strong>
-    <small>BS WORLD EXPLORER</small>
+    <div class="avatar-mark" id="idMark">🧳</div>
+    <strong id="idName">GUEST</strong>
+    <small id="idSub">BS WORLD 여행자</small>
     <small class="lv" id="lvText">Lv. 01</small>
+    <div id="idBtns" style="display:flex;gap:4px;justify-content:center;margin-top:8px"></div>
   </div>
   <div class="stat-line"><span>탐험 진행도</span><b id="progressText">0 / 8 지역</b></div>
   <div class="meter"><span id="progressBar"></span></div>
@@ -830,7 +831,7 @@ sangdo:{n:'상도',o:1,bgm:'route',land:[7,5],m:[
   'TTTTTTTTTTTTTTT'],sign:{'7,4':'상도역'},ex:{'4,0':['jangseung',7,9],'10,0':['soongsil',7,9]},p:[
 {x:6,y:7,c:'#f472b6',h:'#222',w:1,n:'상도동 주민',s:['왼쪽 길은 장승배기, 오른쪽 길은 숭실대입구로 올라가요.']}]},
 
-home:{n:'보성의 아지트',par:'noryangjin',bgm:'indoor',cozy:'#2563eb',m:['w'.repeat(W),'w'.repeat(W),'wßßfππfþðfwㅮㅭfw','wfffffffffwfffw','wfffffffffwwfww',FR,'wæææfffffffㅲㅲfw',FR,FR,'wwwwwwwxwwwwwww'],sign:{'11,6':'내 가판대','12,2':'화장실'},d:{'7,9':['noryangjin',11,13]},p:[]},
+home:{n:'보성의 아지트',par:'noryangjin',bgm:'indoor',cozy:'#2563eb',m:['w'.repeat(W),'w'.repeat(W),'wßßfππfþðfwㅮㅭfw','wfffffffffwfffw','wfffffffffwwfww',FR,'wffffffffffㅲㅲfw',FR,FR,'wwwwwwwxwwwwwww'],sign:{'11,6':'내 가판대','12,2':'화장실'},d:{'7,9':['noryangjin',11,13]},p:[]},
 
 route2:{n:'바당 올레',o:1,bgm:'route',land:[7,5],m:[
   'TTTTTTTTTTTTTTT',
@@ -975,6 +976,27 @@ Object.entries(M).forEach(([id,z])=>(z.p||[]).forEach(n=>{
   if(n.n=='보성 할아버지')Object.assign(n,{h:'#27272a',p:'#27272a',gl:'#9ca3af',c:id=='gpHome'?'#1e2a4a':'#6b5b3e',lk:id=='gpHome'?{hair:'slick',hl:'#52525b',cl:'suit',sh:'#bfdbfe',tie:'#2563eb',leg:'#1e2a4a'}:{hair:'slick',hl:'#52525b',cl:'collar',sh:'#e7e5e4',leg:'#44403c'}});
   if(n.n=='해녀 할망 (보성 할머니)')Object.assign(n,{h:'#1c1917',p:'#f2c9a0',lk:id=='gpHome'?{hair:'perm',cl:'hanbok',sh:'#fff',tie:'#7c3aed',skirt:'#f5f0dc',sit:1}:{hair:'perm',cl:'collar',sh:'#374151',leg:'#111827'},c:id=='gpHome'?'#9ca3af':'#1f2937'});
 }));
+/* 주인장(운영자 로그인)과 게스트 */
+const isOwner=()=>!!DB.tok;
+const G_LOOKS=[{i:'🧳',n:'여행자',c:'#0ea5e9',h:'#3f2a1c',lk:{hair:'short',cl:'puffer',sh:'#e0f2fe',leg:'#1e3a8a'}},{i:'🎒',n:'대학생',c:'#f472b6',h:'#1c1917',lk:{hair:'bob',cl:'collar',sh:'#fff',leg:'#334155'}},{i:'🏃',n:'러너',c:'#22c55e',h:'#27272a',lk:{hair:'bang',cl:'collar',sh:'#dcfce7',leg:'#111827'}},{i:'🧑‍🎨',n:'예술가',c:'#a855f7',h:'#92400e',lk:{hair:'perm',cl:'plaid',leg:'#44403c'}},{i:'💼',n:'직장인',c:'#1f2937',h:'#111827',lk:{hair:'slick',cl:'suit',sh:'#e2e8f0',tie:'#b91c1c',leg:'#1f2937'}}];
+const GUEST={name:'',look:0};try{Object.assign(GUEST,JSON.parse(localStorage.getItem('bsw_guest')||'{}'))}catch(e){}
+function playerLook(){if(isOwner())return{c:S.end?'#fb923c':'#2b3140',h:'#17151c',p:'#17151c',lk:ME_LOOK};const L=G_LOOKS[GUEST.look]||G_LOOKS[0];return{c:S.end?'#fb923c':L.c,h:L.h,p:L.h,lk:L.lk}}
+function idRender(){
+  const m=$('#idMark');if(!m)return;const ow=isOwner(),L=G_LOOKS[GUEST.look]||G_LOOKS[0];
+  m.textContent=ow?'🧑🏻‍💻':L.i;$('#idName').textContent=ow?'KANG BO-SUNG':'GUEST'+(GUEST.name?' · '+GUEST.name:'');$('#idSub').textContent=ow?'BS WORLD 주인장':'BS WORLD '+L.n;
+  $('#idBtns').innerHTML=ow?'<button class="xb" style="padding:3px 8px;font-size:11px" onclick="DB.logout();toast(\'게스트로 돌아왔어요.\')">로그아웃</button>':'<button class="xb" style="padding:3px 8px;font-size:11px" onclick="guestEdit()">꾸미기</button><button class="xb" style="padding:3px 8px;font-size:11px" onclick="showLogin(\'me\')">운영자</button>';
+  if(typeof map!='undefined'&&map&&!busy&&!modal&&!dlg&&typeof buildNpcs=='function')buildNpcs();
+}
+function guestEdit(){openM(`<h3>🧳 게스트 꾸미기</h3><p style="font-size:12px;opacity:.8">이 브라우저에만 저장돼요.</p><input id="gName" class="xin" maxlength="10" placeholder="이름 (비워도 돼요)" value="${esc(GUEST.name)}"><div class="xcol" style="margin-top:8px">${G_LOOKS.map((L,i)=>`<button class="xb ${i==GUEST.look?'on':''}" onclick="guestSave(${i})">${L.i} ${L.n}</button>`).join('')}</div>`)}
+function guestSave(i){GUEST.look=i;GUEST.name=$('#gName').value.trim().slice(0,10);try{localStorage.setItem('bsw_guest',JSON.stringify(GUEST))}catch(e){}closeM();idRender()}
+/* 주인장으로 들어오면 가족이 알아봄 */
+const OWNER_TALK={'보성 아버지':['왔냐, 아들. 밥은 먹고 다니냐?','시간 나면 밭 일이나 좀 도와라. 🍊'],'보성 어머니':['아들 왔어? 얼굴이 왜 이렇게 말랐어.','밥 차려 줄게. 귤도 좀 싸 가고. 🍊'],'보성 여동생':['오빠 왔네? 또 사이트 고치고 있었지? 😄'],'보성 할아버지':['보성이 왔구나! 밥은 먹언?','귤 하영 먹엉 가라. 🍊'],'보성 외할아버지':['우리 보성이 왔구나. 잘 지냄시냐?','이 귤 한번 맛봐라. 🍊'],'해녀 할망 (보성 할머니)':['아이고 우리 손지 왔구나! 🐚','물질 얘기 또 들으러 왔나?'],'해녀 할망 (보성 외할머니)':['우리 보성이 왔구나게. 바당 바람 맞으멍 쉬다 가라. 🐚'],'동네 주민':['어, 안녕하세요! 오늘도 컵밥 드시러 나왔어요?']};
+Object.values(M).forEach(z=>(z.p||[]).forEach(n=>{const T=OWNER_TALK[n.n];if(T){const g0=n.s;n.s=()=>isOwner()?T:(typeof g0=='function'?g0():g0)}}));
+/* 게스트 눈에는 강보성이 세계 어딘가에 있음. 거울도 비추는 사람이 달라짐 */
+{const mir=M.house.p.find(n=>n.n=='거울 속의 나'),mw=mir.when;mir.when=()=>isOwner()&&(!mw||mw());
+ M.house.p.push({x:mir.x,y:mir.y,when:()=>!isOwner(),c:'#0ea5e9',h:'#3f2a1c',n:'거울',s:()=>['거울에 '+(GUEST.name||'게스트')+'님의 모습이 비친다. 🪞','주인장 강보성은 지금 어딘가를 돌아다니는 중이다.']});
+ const slot=()=>{const{h}=jejuNow();return h>=21||h<9?'home':h<12?'noryangjin':h<18?'rest':'noryangjin'},bs=(id,x,y)=>M[id].p.push({x,y,stay:1,when:()=>!isOwner()&&slot()==id,c:'#2b3140',h:'#17151c',p:'#17151c',lk:ME_LOOK,n:'강보성',s:['어! 여기까지 찾아오셨네요? 저 강보성입니다. 😄','BS World 재미있게 둘러보세요.'],ch:mir.ch});
+ bs('home',4,4);bs('noryangjin',28,11);bs('rest',8,7);}
 
 const PG=['...HHHHHH...','..HHHHHHHH..','.HHHHHHHHHH.','.HHSSSSSSHH.','.HSSSSSSSSH.','.PSEESSEESP.','.PSSSSSSSSP.','..SSSMMSSS..','...SSSSSS...','..CCCCCCCC..','.CCCCCCCCCC.','.CCCCCCCCCC.'];
 /* 인물별 머리·옷 표현 */
@@ -1339,6 +1361,7 @@ const DV=[[0,1],[0,-1],[-1,0],[1,0]],EK=['d','u','l','r'],WALK='.F=stDfxdu!:`ㄹ
 const at=(x,y)=>map.m[y]&&map.m[y][x],MW=()=>map.m[0].length,MH=()=>map.m.length;
 
 function free(x,y){
+  if(busBlocks(x,y))return false;
   if(x<0||y<0||x>=MW()||y>=MH()||!WALK.includes(at(x,y)))return false;
   if(npcs.some(n=>(n.x==x&&n.y==y)||(n.mv&&n.mv.tx==x&&n.mv.ty==y)))return false;
   return !(x==px&&y==py);
@@ -1370,7 +1393,14 @@ function unstick(){
 }
 /* 벤치·정자·놀이기구에 앉기 */
 let SIT=null;
-function sitDown(x,y,k,msg){SIT={x,y,k,fx:px,fy:py,n:0,up:0,at:performance.now()};px=x;py=y;dir=k=='bar'?1:0;mv=null;held=null;toast(msg)}
+/* 침대에서 자기: 화면이 어두워지고 쿨쿨, 일어나면 한마디 */
+let SLEEP=null;const WAKE=['후~ 푹 잤다! 😌','아~ 잘 잤다. 개운하다! ☀','벌써 아침인가? 한숨 더 잘까…'];
+function goSleep(){sitDown(1,2,'bed','');busy=true;SLEEP={a:null};if(bgm)tone(-5,.5,'sine',.04)}
+function drawSleep(t){if(SLEEP.a==null)SLEEP.a=t;const e=t-SLEEP.a,DUR=4200,w=cv.width,h=cv.height,al=e<900?e/900:e>DUR-800?Math.max(0,(DUR-e)/800):1;
+  g.fillStyle='rgba(3,5,15,'+al+')';g.fillRect(0,0,w,h);
+  if(e>500&&e<DUR-500){g.fillStyle='#e2e8f0';g.font='bold 18px sans-serif';g.textAlign='center';g.fillText('잠에 듭니다…',w/2,h/2-26);g.fillStyle='#93c5fd';g.font='bold 24px sans-serif';g.fillText('쿨쿨'+'.'.repeat((e/500|0)%4),w/2,h/2+12);g.font='bold 16px sans-serif';[0,1,2].forEach(i=>{const q=((e/1400+i/3)%1);g.globalAlpha=1-q;g.fillText('Z',w/2+50+q*40+i*6,h/2-10-q*50);g.globalAlpha=1});g.textAlign='start'}
+  if(e>=DUR){SLEEP=null;busy=false;sitUp();say('나',[WAKE[Math.random()*WAKE.length|0]])}}
+function sitDown(x,y,k,msg){SIT={x,y,k,fx:px,fy:py,n:0,up:0,at:performance.now()};px=x;py=y;dir=k=='bar'?1:0;mv=null;held=null;if(msg)toast(msg)}
 function sitUp(){if(!SIT)return;const b=SIT.k=='bar'&&SIT.n?SIT.n:0;px=SIT.fx;py=SIT.fy;SIT=null;held=null;if(b)toast('턱걸이 '+b+'회 수고했어요! 💪')}
 function sitFx(t){if(!SIT||SIT.k!='bench')return;const p=((t-SIT.at)/1600)%1;g.globalAlpha=1-p;g.font='14px sans-serif';g.fillText('💤',SIT.x*TS+20,SIT.y*TS+6-p*16);g.globalAlpha=1}
 function warp(id,x,y,d){
@@ -1508,7 +1538,7 @@ function act(){
   const[dx,dy]=DV[dir],x=px+dx,y=py+dy,n=npcs.find(o=>o.x==x&&o.y==y);
   sfx('s');
   if(n){n.dir=[1,0,3,2][dir];npcMet(n);return say(n.n,typeof n.s=='function'?n.s():n.s,typeof n.ch=='function'?n.ch():n.ch)}
-  if(map.bus!=null&&busOn()&&Math.abs(py-map.bus)<=1&&Math.abs(busX(performance.now())+42-(px*TS+16))<70)return say('심야버스 기사',['이 시간엔 막차 끊긴 사람들 태우고 다녀요. 🌙','조심히 들어가세요!']);
+  if(map.bus!=null&&busOn()&&Math.abs(py-map.bus)<=1&&BUS.m===cur&&Math.abs(BUS.x+42-(px*TS+16))<70)return say('심야버스 기사',['이 시간엔 막차 끊긴 사람들 태우고 다녀요. 🌙','조심히 들어가세요!']);
   const k=at(x,y);
   if(k=='k'||k=='ㅋ'){ // 카운터 너머 직원과 대화
     const bn=npcs.find(o=>o.x==x+dx&&o.y==y+dy)||npcs.filter(o=>o.y==y+dy&&Math.abs(o.x-x)<=3).sort((p,q)=>Math.abs(p.x-x)-Math.abs(q.x-x))[0];
@@ -1533,6 +1563,7 @@ function act(){
   else if(k==';')say('돗자리',['누가 맡아 둔 자리인가 보다.']);
   else if(k=='ø')say('TV',['부모님이 즐겨 보는 드라마가 나온다.']);
   else if(k=='æ')say('소파',['부모님 자리다. 푹신해 보인다.']);
+  else if(k=='ß'&&cur=='home')goSleep();
   else if(k=='ß')say('침대',['이불이 잘 개어져 있다. 아마도.']);
   else if(k=='þ')say('냉장고',['귤이 가득 들어 있다. 🍊']);
   else if(k=='ð')say('부엌',['맛있는 냄새가 남아 있다.']);
@@ -1646,8 +1677,9 @@ const DB={
     if(!await DB.rpc('is_admin')){DB.logout();throw new Error('운영자 권한이 없는 계정이에요')}
     visitMarkAdmin();
     try{sessionStorage.setItem('bsw_tok',DB.tok)}catch(e){}
+    idRender();
   },
-  logout(){DB.tok=null;try{sessionStorage.removeItem('bsw_tok')}catch(e){}},
+  logout(){DB.tok=null;try{sessionStorage.removeItem('bsw_tok')}catch(e){}idRender()},
   async regList(){const o={};(await DB.req('exam_reg?select=*')).forEach(r=>o[r.key]=r);return o},
   regSet(key,exam,part,date){
     const rec={key,exam,part,exam_date:date,receipt:'BS-'+String(Date.now()).slice(-6),created_at:new Date().toISOString()};
@@ -1664,7 +1696,7 @@ const dbErr=e=>e&&e.status==404||/PGRST20|42P01|42883/.test(e&&e.message||'')?'D
 
 const fmtT=t=>{try{return new Date(t).toLocaleString('ko-KR',{timeZone:'Asia/Seoul',hour12:false})}catch(e){return t||''}};
 const fmtD=d=>{try{return new Date(d+'T00:00:00').toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric',weekday:'short'})}catch(e){return d}};
-const BACKS={rec:()=>showRec(),mail:()=>showMail(),ex:()=>exHome(),qa:()=>showQA(),pl:()=>plHome()};
+const BACKS={me:()=>{closeM();idRender()},rec:()=>showRec(),mail:()=>showMail(),ex:()=>exHome(),qa:()=>showQA(),pl:()=>plHome()};
 function adm(k){
   return DB.tok?`<div class="adm">🔑 운영자 모드 <button class="xb" onclick="DB.logout();BACKS.${k}()">로그아웃</button></div>`
                :`<div class="adm">👀 보기 전용 <button class="xb" onclick="showLogin('${k}')">🔑 운영자 로그인</button></div>`;
@@ -2892,11 +2924,27 @@ function drawPlatform(t){
 /* 심야 버스 */
 const busOn=()=>{const{h}=jejuNow();return h>=23||h<5};
 function busX(t){return((t/26)%(MW()*TS+200))-100}
-function drawBus(t){const x=busX(t),y=map.bus*TS+3;g.fillStyle='#0003';g.fillRect(x,y+24,84,4);g.fillStyle='#1e3a8a';g.fillRect(x,y,84,25);g.fillStyle='#fbbf24';g.fillRect(x,y+17,84,3);g.fillStyle='#fde68a';for(let i=0;i<5;i++)g.fillRect(x+6+i*15,y+4,11,9);g.fillStyle='#fef9c3';g.fillRect(x+80,y+16,5,5);g.fillStyle='#111';g.fillRect(x+12,y+23,10,5);g.fillStyle='#111';g.fillRect(x+60,y+23,10,5);g.fillStyle='#fff';g.font='bold 9px sans-serif';g.fillText('심야',x+33,y+25)}
+/* 심야버스는 실제 차처럼 길을 막음: 앞에 사람이 있으면 멈추고, 사람도 버스를 통과할 수 없음 */
+const BUSW=84,BUS={x:null,m:null,t:0};
+function busStep(t){
+  if(!map||map.bus==null||!busOn()){BUS.m=null;return false}
+  const span=(MW()+6)*TS;
+  if(BUS.m!==cur){BUS.m=cur;BUS.t=t;BUS.x=-BUSW-10}
+  const dt=Math.min(60,t-BUS.t);BUS.t=t;
+  const ahead=(x,y,mvv)=>{if(y!=map.bus&&!(mvv&&mvv.ty==map.bus))return false;const L=((mvv?mvv.tx:x)*TS),gap=L-(BUS.x+BUSW);return gap>=-8&&gap<14};
+  if(BUS.wait>t)return false;
+  if(BUS.back){BUS.x-=dt/9;if(BUS.x<-BUSW-10){BUS.back=false;BUS.wait=t+9000;BUS.since=0}return true}
+  const stop=ahead(px,py,mv)||npcs.some(n=>ahead(n.x,n.y,n.mv));
+  BUS.stop=stop;if(stop){BUS.since=BUS.since||t;if(t-BUS.since>3500)BUS.back=true}else{BUS.since=0;BUS.x+=dt/14}
+  if(BUS.x>span)BUS.x=-BUSW-10;
+  return true;
+}
+function busBlocks(x,y){if(!map||map.bus==null||y!=map.bus||BUS.m!==cur||!busOn())return false;const a=x*TS,b=a+TS;return b>BUS.x&&a<BUS.x+BUSW}
+function drawBus(t){if(!busStep(t))return;const x=BUS.x,y=map.bus*TS+3;g.fillStyle='#0003';g.fillRect(x,y+24,84,4);g.fillStyle='#1e3a8a';g.fillRect(x,y,84,25);g.fillStyle='#fbbf24';g.fillRect(x,y+17,84,3);g.fillStyle='#fde68a';for(let i=0;i<5;i++)g.fillRect(x+6+i*15,y+4,11,9);g.fillStyle='#fef9c3';g.fillRect(x+80,y+16,5,5);g.fillStyle='#111';g.fillRect(x+12,y+23,10,5);g.fillStyle='#111';g.fillRect(x+60,y+23,10,5);g.fillStyle='#fff';g.font='bold 9px sans-serif';g.fillText('심야',x+33,y+25)}
 const DANGGN_URL='';   // 여기에 내 판매 물건 주소를 넣으면 가판대에 링크가 생겨요
 function showDanggn(){openM(`<h3>🥕 보성의 가판대</h3><div class="cd">주인장이 내놓은 물건들을 모아 둔 곳이에요.</div>`+(DANGGN_URL?`<div class="xcol" style="margin-top:8px"><a class="xb big" href="${esc(DANGGN_URL)}" target="_blank" rel="noopener">🥕 당근마켓에서 내 물건 보기</a></div>`:`<p style="font-size:12px;opacity:.8;margin-top:8px">판매 목록 링크는 곧 열려요.</p>`))}
 /* 열차 안 음악: 게임용으로 새로 쓴 짧은 멜로디. 탑승 중 배경음은 멈췄다가 내리면 이어 줌 */
-const TRAIN_MEL=[12,16,19,24,21,19,16,19,14,17,21,26,24,21,19,14,16,19,24,28,26,24,21,24,19,21,23,24,19,16,12,-99];
+const TRAIN_MEL=[0,4,7,9,7,4,2,0,2,4,7,4,2,-3,0,-99,7,9,12,9,7,9,7,4,2,4,7,9,7,4,0,-99];   // 국악풍 5음계로 새로 쓴 곡
 const TRAIN_S={tm:null,fa:false,yt:false};
 function trainMusic(on){
   clearInterval(TRAIN_S.tm);TRAIN_S.tm=null;
@@ -2904,12 +2952,15 @@ function trainMusic(on){
     clearInterval(mt);TRAIN_S.fa=typeof FA!='undefined'&&!FA.paused;TRAIN_S.yt=false;
     try{if(TRAIN_S.fa)FA.pause();if(PV.yt&&PV.yt.getPlayerState&&PV.yt.getPlayerState()==1){TRAIN_S.yt=true;PV.yt.pauseVideo()}}catch(e){}
     if(!bgm||!AC)return;let i=0;tone(24,.5,'sine',.07);tone(19,.7,'sine',.07,.32);
-    TRAIN_S.tm=setInterval(()=>{const n=TRAIN_MEL[i%TRAIN_MEL.length];if(n>-99)tone(n,.2,'triangle',.05);if(i%4==0)tone(-12,.3,'triangle',.05);if(i%2==0)tone(-29,.12,'sawtooth',.018);i++},170);
-  }else{try{if(TRAIN_S.fa)FA.play().catch(()=>{});if(TRAIN_S.yt&&PV.yt)PV.yt.playVideo()}catch(e){}TRAIN_S.fa=TRAIN_S.yt=false}
+    TRAIN_S.tm=setInterval(()=>{const n=TRAIN_MEL[i%TRAIN_MEL.length];if(n>-99){tone(n+12,.34,'triangle',.05);tone(n+24,.16,'sine',.016)}if(i%4==0)tone(-12,.5,'sine',.05);if(i%8==4)tone(-5,.3,'triangle',.03);if(i%2==0)tone(-29,.12,'sawtooth',.014);i++},300);
+  }else{try{speechSynthesis&&speechSynthesis.cancel()}catch(e){}try{if(TRAIN_S.fa)FA.play().catch(()=>{});if(TRAIN_S.yt&&PV.yt)PV.yt.playVideo()}catch(e){}TRAIN_S.fa=TRAIN_S.yt=false}
 }
-function metroGo(L,to){const M2=METRO[L],f=STN[map.stKey];trainMusic(true);const keep={fa:TRAIN_S.fa,yt:TRAIN_S.yt};closeM();Object.assign(TRAIN_S,keep);busy=true;FLY={to:'pf_'+to+'_'+L,a:null,train:1,col:M2.col,x:7,y:4,d:1,label:M2.n+'  '+f[0]+' → '+STN[to][0]};sfx('w')}
+function metroGo(L,to){const M2=METRO[L],f=STN[map.stKey],plan=metroPlan(L,map.stKey,to);trainMusic(true);const keep={fa:TRAIN_S.fa,yt:TRAIN_S.yt};closeM();Object.assign(TRAIN_S,keep);busy=true;FLY={plan,dur:plan.dur,to:'pf_'+to+'_'+L,a:null,train:1,col:M2.col,x:7,y:4,d:1,label:M2.n+'  '+f[0]+' → '+STN[to][0]};sfx('w')}
+const SAY_KO=t=>{if(!bgm)return;try{const u=new SpeechSynthesisUtterance(t);u.lang='ko-KR';u.rate=.95;u.volume=.9;const v=speechSynthesis.getVoices().find(q=>/^ko/i.test(q.lang));if(v)u.voice=v;speechSynthesis.speak(u)}catch(e){}};
+function metroPlan(L,from,to){const st=METRO[L].st,a=st.indexOf(from),b=st.indexOf(to),s=[];for(let i=a;i!=b;i+=b>a?1:-1)s.push(st[i+(b>a?1:-1)]);const nm=k=>STN[k][0],SEG=9000,o=[];s.forEach((k,i)=>{const last=i==s.length-1;o.push({at:i*SEG+1800,t:'이번 역은 '+nm(k)+'역입니다.'+(last?' 내리실 문은 오른쪽입니다.':'')})});return{ev:o,dur:s.length*SEG+2000,head:'이 열차는 '+nm(to)+'역 방면으로 갑니다.'}}
+function metroAnnounce(e){const P=FLY.plan;if(!P)return;if(!P.done){P.done=[];P.show=P.head;SAY_KO(P.head)}P.ev.forEach((v,i)=>{if(e>=v.at&&!P.done[i]){P.done[i]=1;P.show=v.t;SAY_KO(v.t)}})}
 function drawTrain(t){
-  if(FLY.a==null)FLY.a=t;const p=(t-FLY.a)/5000,w=cv.width,h=cv.height;
+  if(FLY.a==null)FLY.a=t;const p=(t-FLY.a)/FLY.dur,w=cv.width,h=cv.height;metroAnnounce(t-FLY.a);
   g.fillStyle='#16130f';g.fillRect(0,0,w,h);g.fillStyle='#2a2620';g.fillRect(0,h-70,w,70);
   g.fillStyle='#fde68a';for(let i=0;i<8;i++){const x=w-((t/1.6+i*90)%(w+60));g.fillRect(x,34,44,5)}
   g.fillStyle='#57534e';for(let i=0;i<14;i++)g.fillRect(w-((t/1.1+i*50)%(w+30)),h-46,24,5);g.fillStyle='#a8a29e';g.fillRect(0,h-54,w,3);g.fillRect(0,h-38,w,3);
@@ -2917,7 +2968,7 @@ function drawTrain(t){
   g.fillStyle='#d6d3d1';g.fillRect(-20,Y,CW,132);g.fillStyle=FLY.col||'#bdb092';g.fillRect(-20,Y+84,CW,22);g.fillStyle='#8a7a4e';g.fillRect(-20,Y+106,CW,5);g.fillStyle='#78716c';g.fillRect(-20,Y,CW,8);
   for(let i=0;i<5;i++){const X=18+i*94;g.fillStyle='#bae6fd';g.fillRect(X,Y+22,70,48);g.fillStyle='#fff6';g.fillRect(X+3,Y+25,20,8);g.fillStyle='#374151';g.fillRect(X+22,Y+46,12,24);g.fillStyle='#f2c9a0';g.fillRect(X+24,Y+38,8,8)}
   g.fillStyle='#57534e';[60,170,300,410].forEach(x=>g.fillRect(x,Y+132,34,10));
-  g.fillStyle='#fff';g.font='bold 15px sans-serif';g.textAlign='center';g.fillText(FLY.label,w/2,22);g.textAlign='start';
+  g.fillStyle='#fff';g.font='bold 15px sans-serif';g.textAlign='center';g.fillText(FLY.label,w/2,22);if(FLY.plan&&FLY.plan.show){g.fillStyle='#000a';g.fillRect(20,h-52,w-40,28);g.fillStyle='#fde047';g.font='bold 14px sans-serif';g.fillText(FLY.plan.show,w/2,h-33)}g.textAlign='start';
   g.fillStyle='#ffffff40';g.fillRect(40,h-16,w-80,4);g.fillStyle=FLY.col||'#bdb092';g.fillRect(40,h-16,(w-80)*Math.min(1,p),4);
   if(p>=1){const F=FLY;FLY=null;trainMusic(false);warp(F.to,F.x,F.y,F.d)}
 }
@@ -2967,7 +3018,8 @@ function draw(t){
       if(n.um)drawUmb(nx,ny,n.um);
     }}});
   E.push({y:uy,f:()=>{g.fillStyle='#0003';g.fillRect(ux*TS+6,uy*TS+28,20,4);const sb=SIT?(SIT.k=='bench'?{y:6,l:false}:SIT.k=='swing'?{y:-1+Math.abs(Math.sin(t/330))*-3,x:Math.sin(t/330)*6,l:false}:SIT.k=='seesaw'?{y:Math.sin(t/420)*5-5,x:-10,l:false}:{y:(t-SIT.up<240?-1:9),l:true}):{y:0,l:true};
-      spr(g,ux*TS+4+(sb.x||0),uy*TS+2+sb.y,2,{d:dir,w:mv&&steps%2,l:sb.l,c:S.end?'#fb923c':'#2b3140',h:'#17151c',p:'#17151c',lk:ME_LOOK});if(WX.kind=='rain'&&map.o)drawUmb(ux,uy,'#2563eb')}});
+      if(SIT&&SIT.k=='bed'){const bx=SIT.x*TS,by=SIT.y*TS;g.save();g.translate(bx+50,by+6);g.rotate(Math.PI/2);spr(g,0,0,2,{d:0,l:false,...playerLook()});g.restore();g.fillStyle='#60a5fa';g.fillRect(bx+30,by+6,32,22);g.fillStyle='#93c5fd';g.fillRect(bx+30,by+6,32,4);g.fillStyle='#fff';g.font='bold 11px sans-serif';if((t/700|0)%2)g.fillText('z',bx+12,by+2);if((t/700|0)%3==1)g.fillText('Z',bx+20,by-6);return}
+      spr(g,ux*TS+4+(sb.x||0),uy*TS+2+sb.y,2,{d:dir,w:mv&&steps%2,l:sb.l,...playerLook()});if(WX.kind=='rain'&&map.o)drawUmb(ux,uy,'#2563eb')}});
   if(map.opera)drawOpera(map.opera);
   if(map.sign){g.font='bold 10px sans-serif';g.textAlign='center';for(const k in map.sign){const[a,b]=k.split(',').map(Number),t2=map.sign[k],w2=g.measureText(t2).width+10,cx=a*TS+16,cy=b*TS-6;g.fillStyle='#3f2a1c';g.fillRect(cx-w2/2-1,cy-8,w2+2,15);g.fillStyle='#a06a36';g.fillRect(cx-w2/2,cy-7,w2,13);g.fillStyle='#fff';g.fillText(t2,cx,cy+3)}g.textAlign='start'}
   if(map.plane)drawPlane(map.plane[0]*TS,map.plane[1]*TS,2.1);
@@ -2979,6 +3031,7 @@ function draw(t){
   sitFx(t);
   weatherFX(t);
   orangeFX(t);
+  if(SLEEP)drawSleep(t);
 }
 
 const RUN_MS=230;
@@ -3027,7 +3080,7 @@ setInterval(()=>{
 },1100);
 
 function startGame(){
-  acUnlock();
+  acUnlock();idRender();
   const sp=S.pos&&M[S.pos[0]]&&M[S.pos[0]].m[S.pos[2]]&&WALK.includes(M[S.pos[0]].m[S.pos[2]][S.pos[1]])?S.pos:null;
   $('#st').style.display='none';busy=false;
   if(sp){warp(sp[0],sp[1],sp[2],0);toast('다시 오셨군요! 이어서 모험해요.')}
