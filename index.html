@@ -973,7 +973,7 @@ const METRO={1:{n:'1호선',col:'#0052A4',id:'1001',st:['yongsan','noryangjin','
 Object.entries(STN).forEach(([k,[nm,out,doors,stand]])=>{
   const L=Object.keys(METRO).filter(l=>METRO[l].st.includes(k)),sx=[3,11];let r2='wff'+(L.length?'ㅸ':'f')+'fffffff'+(L.length>1?'ㅸ':'f')+'ffw';
   const dd={'7,9':[out,stand[0],stand[1]]},sg={};L.forEach((l,i)=>{dd[sx[i]+',2']=['pf_'+k+'_'+l,7,6];sg[sx[i]+',2']=METRO[l].n+' 타는 곳'});
-  M['cc_'+k]={n:nm+'역 대합실',par:out,bgm:'indoor',stKey:k,m:['w'.repeat(W),'wwㅯwwwwwwwwwㅯww',r2,FR,FR,'wwwwwㅱㅱㅱㅱㅱwwwww',FR,'wfKKffffffffKKw',FR,'wwwwwwwxwwwwwww'],sign:sg,d:dd,p:[{x:3,y:8,stay:1,c:METRO[L[0]].col,h:'#222',n:nm+'역 역무원',s:['개찰구를 지나 위쪽 계단으로 내려가면 승강장이에요. 🚇',L.length>1?'환승도 여기서 하세요. 왼쪽이 '+METRO[L[0]].n+', 오른쪽이 '+METRO[L[1]].n+'이에요.':'벽 전광판을 누르면 실제 도착 정보를 볼 수 있어요.']}]};
+  M['cc_'+k]={n:nm+'역 대합실',par:out,bgm:'indoor',stKey:k,m:['w'.repeat(W),'wwwwwwㅯwㅯwwwwww',r2,FR,FR,'wwwwwㅱㅱㅱㅱㅱwwwww',FR,'wfKKffffffffKKw',FR,'wwwwwwwxwwwwwww'],sign:sg,d:dd,p:[{x:3,y:8,stay:1,c:METRO[L[0]].col,h:'#222',n:nm+'역 역무원',s:['개찰구를 지나 위쪽 계단으로 내려가면 승강장이에요. 🚇',L.length>1?'환승도 여기서 하세요. 왼쪽이 '+METRO[L[0]].n+', 오른쪽이 '+METRO[L[1]].n+'이에요.':'벽 전광판을 누르면 실제 도착 정보를 볼 수 있어요.']}]};
   L.forEach((l,i)=>{M['pf_'+k+'_'+l]={n:nm+'역 '+METRO[l].n+' 승강장',par:out,bgm:'indoor',stKey:k,line:l,pf:1,m:['w'.repeat(W),'ㅳ'.repeat(W),'ㅳ'.repeat(W),'ㅰ'.repeat(W),FR,'wfKKffffffffKKw',FR,'wffffffㅸffffffw','w'.repeat(W),'w'.repeat(W)],sign:{'7,7':'대합실'},d:{'7,7':['cc_'+k,sx[i],3]},p:[]}});
   const z=M[out];z.d=z.d||{};doors.forEach(([x,y])=>{z.d[x+','+y]=['cc_'+k,7,8]});
 });
@@ -1013,7 +1013,7 @@ function showProfilePic(){openM('<h3>🖼 내 프로필 사진</h3><div style="t
 /* 자기 자신의 NPC에게 말을 걸면 전용 대사 */
 /* 친구 이름이면 서버에서 그 친구 전용 대사를 받아 옴 */
 let FRIEND=null;
-async function friendLoad(nm){if(!nm){FRIEND=null;return'none'}try{const r=await DB.rpc('friend_by_name',{p_name:nm});if(r&&r.ok){FRIEND={short:r.short,greet:r.greet||[],lines:r.lines||[],self:r.self||null,kind:r.kind||'friend',title:r.title||'',parent:r.parent||null,lTalk:r.lTalk||null,side:r.side||''};return'ok'}FRIEND=null;return r&&r.err||'none'}catch(e){FRIEND=null;return'none'}}
+async function friendLoad(nm){if(!nm){FRIEND=null;return'none'}try{const r=await DB.rpc('friend_by_name',{p_name:nm});if(r&&r.ok){FRIEND={short:r.short,greet:r.greet||[],lines:r.lines||[],self:r.self||null,kind:r.kind||'friend',title:r.title||'',parent:r.parent||null,lTalk:r.lTalk||null,side:r.side||'',ckTalk:r.ckTalk||null};return'ok'}FRIEND=null;return r&&r.err||'none'}catch(e){FRIEND=null;return'none'}}
 function friendBoot(){if(GUEST.name)friendLoad(GUEST.name).then(v=>{if(v=='ok')idRender()})}
 const GS={pending:false,pick:0};
 function guestEdit(start){GS.pick=GUEST.look||0;GS.pending=!!start;
@@ -2681,7 +2681,7 @@ Object.values(M).forEach(z=>(z.p||[]).forEach(n=>{const T=OWNER_TALK[n.n];if(T){
  place('gpHome','gpHome','보성 할아버지',2,3,2*32,3*32+2,'#b45309',1);place('gpHome','gpHome','해녀 할망 (보성 할머니)',11,3,11*32,3*32+2,'#b45309',1);
  place('gmHome','gmHome','보성 외할아버지',2,3,2*32,3*32+2,'#0f766e',1);place('gmHome','gmHome','해녀 할망 (보성 외할머니)',11,3,11*32,3*32+2,'#0f766e',1);
  for(const[mp,names]of[['house',['보성 아버지','보성 어머니']],['gpHome',['보성 할아버지','해녀 할망 (보성 할머니)']],['gmHome',['보성 외할아버지','해녀 할망 (보성 외할머니)']]])M[mp].p.forEach(n=>{if(names.includes(n.n)){const w0=n.when;n.when=()=>!sleepHours()&&(!w0||w0())}})}
-{const ck=M.town.p.find(n=>n.n.startsWith('창끼'));if(ck){M.town.p.splice(M.town.p.indexOf(ck),1);const g0=ck.s;ck.s=()=>{if(!isOwner()&&FRIEND&&FRIEND.self&&FRIEND.short=='창환'){const L=FRIEND.self;return[L[Math.random()*L.length|0]]}return typeof g0=='function'?g0():g0};CK_MAPS.forEach(id=>{const z=M[id];let best=null,bd=1e9;for(let y=0;y<z.m.length;y++)for(let x=0;x<z.m[0].length;x++){if(!'.F'.includes(z.m[y][x])||(z.d&&z.d[x+','+y])||(z.p||[]).some(n=>n.x==x&&n.y==y))continue;const dd=Math.abs(x-9)+Math.abs(y-7);if(dd<bd){bd=dd;best=[x,y]}}if(best)z.p.push({...ck,x:best[0],y:best[1],when:()=>CK.at==id})})}}
+{const ck=M.town.p.find(n=>n.n.startsWith('창끼'));if(ck){M.town.p.splice(M.town.p.indexOf(ck),1);const g0=ck.s;ck.s=()=>{if(!isOwner()&&FRIEND&&FRIEND.self&&FRIEND.short=='창환'){const L=FRIEND.self;return[L[Math.random()*L.length|0]]}if(!isOwner()&&FRIEND&&FRIEND.ckTalk){const L=FRIEND.ckTalk;return[L[Math.random()*L.length|0]]}return typeof g0=='function'?g0():g0};CK_MAPS.forEach(id=>{const z=M[id];let best=null,bd=1e9;for(let y=0;y<z.m.length;y++)for(let x=0;x<z.m[0].length;x++){if(!'.F'.includes(z.m[y][x])||(z.d&&z.d[x+','+y])||(z.p||[]).some(n=>n.x==x&&n.y==y))continue;const dd=Math.abs(x-9)+Math.abs(y-7);if(dd<bd){bd=dd;best=[x,y]}}if(best)z.p.push({...ck,x:best[0],y:best[1],when:()=>CK.at==id})})}}
 
 /* ===== 오락실: 테트리스 ===== */
 const TET={run:false,tm:null,b:null,p:null,nx:null,score:0,lines:0,lvl:1,over:false};
@@ -2988,7 +2988,7 @@ async function metroLive(L){
     e2.innerHTML=lines.map(l=>{const R=items.filter(t=>t.line==METRO[l].id).slice(0,6);return `<b style="color:${METRO[l].col}">${METRO[l].n}</b>`+(R.length?R.map(liveRow).join(''):'<p style="margin:3px 0">지금 들어오는 열차 정보가 없어요. (운행 종료 시간일 수 있어요)</p>')}).join('');
   }catch(e){const e2=$('#mtLive');if(e2)e2.textContent=liveFail(e)}
 }
-const liveBox=L=>`<div class="qform" style="margin-top:10px"><b>📡 실제 도착 정보</b> <button class="xb" style="padding:2px 8px" onclick="metroLive(${L||0})">새로고침</button><div id="mtLive" style="margin-top:5px;font-size:12px">불러오는 중…</div><small style="opacity:.7">게임 속 열차와는 별개인 실제 서울 지하철 정보예요.</small></div>`;
+const liveBox=L=>`<div class="qform" style="margin-top:10px"><b>📡 실제 도착 정보</b> <button class="xb" style="padding:2px 8px;margin-left:24px" onclick="metroLive(${L||0})">새로고침</button><div id="mtLive" style="margin-top:5px;font-size:12px">불러오는 중…</div><small style="opacity:.7">게임 속 열차와는 별개인 실제 서울 지하철 정보예요.</small></div>`;
 function showStnBoard(){const k=map.stKey;openM(`<h3>🚉 ${esc(STN[k][0])}역 전광판</h3>`+liveBox(0));metroLive(0)}
 function showMetro(L){
   const M2=METRO[L],k=map.stKey;
