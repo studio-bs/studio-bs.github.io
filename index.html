@@ -151,6 +151,25 @@
     .rg{cursor:pointer}.rg path{transition:.15s}.rg:hover path,.rg.on path{stroke:#ec4899;stroke-width:3.4}
     .avatar-card small{display:block}
     .avatar-card small.lv{margin-top:5px;color:#fbbf24;font-weight:bold;letter-spacing:1px}
+    .avatar-card{position:relative}
+    .avatar-card.lvup{animation:lvGlow 1.8s ease-out}
+    .lvpop{position:absolute;left:0;right:0;top:44%;color:#fde047;font-weight:900;font-size:15px;letter-spacing:1px;text-shadow:0 2px 0 #92400e,0 0 10px #f59e0b;pointer-events:none;animation:lvPop 1.8s ease-out forwards}
+    @keyframes lvGlow{0%,70%{box-shadow:0 0 22px 4px #fbbf24;border-color:#fde047}100%{box-shadow:none}}
+    @keyframes lvPop{0%{transform:translateY(12px) scale(.7);opacity:0}15%{transform:none;opacity:1}75%{opacity:1}100%{transform:translateY(-22px);opacity:0}}
+    @media (prefers-reduced-motion:reduce){.avatar-card.lvup,.lvpop{animation:none}.lvpop{display:none}}
+    .tmap{position:relative;width:100%;margin:6px 0;border:2px solid #fbbf24;border-radius:4px;overflow:hidden;background:#17324f;line-height:0}
+    .tmap canvas{width:100%;display:block;image-rendering:pixelated;cursor:pointer}
+    .tpin{position:absolute;transform:translate(-5px,-5px);display:flex;align-items:center;gap:2px;background:none;border:0;padding:0;color:#fff;font:700 10px/1 sans-serif;white-space:nowrap;cursor:pointer;text-shadow:0 1px 2px #000,0 0 2px #000}
+    .tpin.l{transform:translate(calc(-100% + 5px),-5px);flex-direction:row-reverse}
+    .tpin i{width:10px;height:10px;flex:none;border-radius:50%;background:#fff;border:2px solid #b91c1c}
+    .tpin.has i{background:#fde047}.tpin span{position:relative}.tpin.u span{top:-6px}.tpin.d span{top:6px}
+    .tpin.hub{font-size:12px}.tpin.hub i{width:14px;height:14px}
+    .tchips{display:flex;flex-wrap:wrap;gap:4px;margin:3px 0 8px}
+    .tchips .xb{padding:4px 8px;font-size:12px}
+    .xb.on{background:#b45309;border-color:#fde047}
+    .frow{display:grid;grid-template-columns:46px 62px 1fr auto;gap:6px;align-items:center;padding:6px 4px;border-bottom:1px solid var(--bd);font-size:12px}
+    .frow b{font-variant-numeric:tabular-nums}.frow small{display:block;opacity:.75;font-size:10px}
+    .frow .st{font-weight:700;text-align:right;white-space:nowrap}.st.x{color:#dc2626}.st.w{color:#d97706}.st.k{color:#059669}
     .xin{display:block;width:100%;box-sizing:border-box;font:inherit;font-size:13px;padding:7px 9px;border:1px solid var(--bd);border-radius:6px;background:transparent;color:inherit}
     .xrow.pick{cursor:pointer}.xrow.pick:hover{border-color:#fbbf24}
     .adm{font-size:11px;opacity:.85;margin:2px 0 8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}.adm .xb{padding:3px 8px;font-size:11px}
@@ -267,7 +286,7 @@
     <div class="avatar-mark">🧑🏻‍💻</div>
     <strong>KANG BO-SUNG</strong>
     <small>BS WORLD EXPLORER</small>
-    <small class="lv">Lv. 01</small>
+    <small class="lv" id="lvText">Lv. 01</small>
   </div>
   <div class="stat-line"><span>탐험 진행도</span><b id="progressText">0 / 8 지역</b></div>
   <div class="meter"><span id="progressBar"></span></div>
@@ -279,7 +298,7 @@
     <button onclick="showOrder()">🍊 감귤농원</button>
     <button onclick="showBrain()">🧠 역량 지도</button>
     <button onclick="toggleMap()">🗺 월드맵</button>
-    <button onclick="showGallery()">📸 갤러리</button>
+    <button onclick="showTravel()">🗺 여행 지도</button>
     <button onclick="showQuestLog()">🎯 퀘스트</button>
   </div>
   <p class="world-note" style="margin-top:14px">키보드 방향키 또는 WASD로 이동하고, Z 키로 주민과 대화하세요. 모바일에서는 화면 아래 패드를 이용할 수 있습니다.</p>
@@ -580,8 +599,8 @@ studio:{n:'창작 마을',o:1,bgm:'indoor',land:[7,4],m:[
 projects:{n:'프로젝트 전시관',par:'studio',bgm:'knowledge',m:['w'.repeat(W),'w(w(wwwwww(w(ww',FR,FR,'wfKKffXffXffKKw'.slice(0,15),FR,FR,FR,FR,'wwwwwwwxwwwwwww'],d:{'7,9':['studio',3,3]},p:[
 {x:7,y:3,c:'#2563eb',h:'#1b1b26',n:'전시관 큐레이터',s:['보성이 직접 만든 것들을 모아 둔 곳입니다.'],ch:{'🗂 프로젝트 보기':()=>showProjects(),'✉ 연락처':()=>showProjects()}}]},
 
-photo:{n:'보성 사진관',par:'studio',bgm:'indoor',m:['w'.repeat(W),'w)w)w)w)w)w)w)w',FR,FR,FR,'wfKKfffffffKKfw',FR,FR,FR,'wwwwwwwxwwwwwww'],d:{'7,9':['studio',9,3]},p:[
-{x:7,y:3,c:'#a855f7',h:'#3f2a1c',n:'사진관 주인',s:['주인장이 찍은 사진들을 걸어 두었어요. 📷'],ch:{'🖼 사진 보기':()=>showPhotos()}}]},
+photo:{n:'보성 사진관',par:'studio',bgm:'indoor',m:['w'.repeat(W),'w)w)w)w)w)w)w)w',FR,'wfffⓜⓜⓜfffffffw',FR,'wfKKfffffffKKfw',FR,FR,FR,'wwwwwwwxwwwwwww'],d:{'7,9':['studio',9,3]},p:[
+{x:11,y:3,c:'#a855f7',h:'#3f2a1c',n:'사진관 주인',s:['주인장이 찍은 사진들을 걸어 두었어요. 📷','저 큰 지도에는 주인장이 다녀온 곳이 색칠돼 있어요.'],ch:{'🗺 여행 지도':()=>showTravel(),'🖼 사진 보기':()=>showPhotos()}}]},
 
 airfield:{n:'제주 공항 활주로',o:1,bgm:'route',plane:[9,3],land:[7,7],m:[
   'TTTTTTTTTTTTTTT',
@@ -595,7 +614,7 @@ airfield:{n:'제주 공항 활주로',o:1,bgm:'route',plane:[9,3],land:[7,7],m:[
   'T.F...i....FTTT',
   'TTTTTTTTTTTTTTT'],e:{l:['airport',14,0,2]},umb:[[12,7,'#0ea5e9']],p:[
 {x:7,y:4,c:'#ea580c',h:'#222',w:1,n:'유도 요원',s:['오라이~ 오라이~ ✈']},
-{x:5,y:7,c:'#4b5320',h:'#222',stay:1,n:'강하 교관',s:['이 하늘을 보면 보성이 생각이 나.','특전사 낙하산정비병 출신이지. 🪂'],ch:{'🪂 열기구 강하':['열기구에서 낙하산으로 5번 뛰었어. 🎈','그중 한 번은 자기가 직접 포장한 낙하산으로 뛰었지.','자기 손으로 접은 낙하산을 메고 뛰는 기분, 상상이 돼?'],'🔧 정비병이 하는 일':['낙하산 정비병은 남의 목숨을 접는 사람이야.','그래서 한 번 접을 때마다 몇 번이고 확인하지.']}},
+{x:5,y:7,c:'#4b5320',h:'#222',stay:1,n:'강하 교관',s:['이 하늘을 보면 보성이 생각이 나.','특전사 낙하산정비병 출신이지. 🪂'],ch:{'🪂 열기구 강하':['열기구에서 낙하산으로 5번 뛰었어. 🎈','그중 한 번은 자기가 직접 포장한 낙하산으로 뛰었지.','자기 손으로 접은 낙하산을 메고 뛰는 기분, 상상이 돼?'],'🔧 정비병이 하는 일':['우리 군의 안전을 위해 낙하산 정비에 힘쓰는 병력이야.','그래서 한 번 접을 때마다 몇 번이고 확인하지.']}},
 {x:9,y:7,c:'#64748b',h:'#d1d5db',n:'격납고 정비 삼춘',s:['격납고 안은 출입 금지우다게.']}]},
 
 fit:{n:'맨몸 운동 기록실',par:'sports',bgm:'sports',m:['w'.repeat(W),'wNwJwwwwwwJwNww',FR,'wf{{fff}}fffffw',FR,'wff}}fff````ffw','wfffffff````ffw','wfffffff````ffw',FR,'wwwwwwwxwwwwwww'],d:{'7,9':['sports',4,3]},sh:['💪 맨몸 운동 기록실','철봉이나 매트를 누르면 기록을 볼 수 있어요.'],p:[
@@ -704,18 +723,19 @@ house:{n:'보성의 집',par:'town',bgm:'indoor',m:[
 memo:{'1,1':{s:'INFJ',c:'#fde047',l:['🧩 MBTI','INFJ']},'5,1':{s:'💙',c:'#93c5fd',l:['💙 좋아하는 색깔','파란색!']},'11,1':{s:'🐶',c:'#f9a8d4',l:['🐶 좋아하는 동물','강아지!']},'13,1':{s:'🎵',c:'#86efac',l:['🎵 즐겨듣는 노래','쉼의 숲 음악 서재 벽에 달마다 걸어 두고 있어요!']}},
 d:{'7,9':['town',3,4]},p:[
 {x:1,y:4,c:'#7dd3fc',h:'#1b1b26',n:'거울 속의 나',s:['안녕, 나는 강보성.','BS World에 오신 것을 환영해!'],ch:{'지금까지의 길':['🧠 멘사 IQ 156 · 💻 정보처리기사 · 🏃 하프마라톤 3회 · 🩸 헌혈 167회','🪂 특전사 낙하산정비병 · 열기구 강하 5회 · 🥋 태권도 2단'],'다음 모험':['다음 챕터는 함께할 새로운 퀘스트야.','벽의 액자도 꼭 눌러봐. 📸']}},
-{x:12,y:6,c:'#f59e0b',h:'#f59e0b',w:1,n:'고양이',s:['야옹~ 🐱','(주인이 코딩하는 동안 키보드 옆을 지키는 중이다냥.)']},
+{x:12,y:6,ani:'cat',c:'#f59e0b',h:'#f59e0b',w:1,n:'고양이',s:['야옹~ 🐱','(주인이 코딩하는 동안 키보드 옆을 지키는 중이다냥.)']},
 {x:2,y:7,c:'#475569',h:'#374151',sit:1,fd:1,n:'보성 아버지',when:()=>!dadFarm(),s:['어서 와요. 보성이 아버지입니다.','KT에서 은퇴하고 지금은 농사를 짓고 있어요. 편히 둘러봐요.']},
 {x:4,y:7,c:'#db2777',h:'#3f2a1c',lh:1,sit:1,fd:1,n:'보성 어머니',when:()=>!momFarm(),s:['어머, 손님이 왔네! 보성이 엄마예요.','간호사로 일하고 있어요. 밥은 먹었어요? 귤이라도 하나 먹고 가요. 🍊']},
-{x:9,y:6,c:'#fef3c7',h:'#92400e',w:1,n:'강아지',when:()=>S.eggs.cat,s:['멍멍! 🐶','(고양이가 부른 친구인 것 같다.)']},
+{x:9,y:6,ani:'dog',c:'#fef3c7',h:'#92400e',w:1,n:'강아지',when:()=>S.eggs.cat,s:['멍멍! 🐶','(고양이가 부른 친구인 것 같다.)']},
 {x:11,y:8,c:'#f9a8d4',h:'#1b1b26',lh:1,n:'보성 여동생',s:['안녕하세요! 저는 보성이 여동생이에요.','가운데 테이블에 질문을 남기면 답을 받을 수 있어요. 😄']}]},
 
 gym:{n:'체육관',par:'sports',bgm:'sports',m:I('wNwMwJwwwJwMwNw','wfKKffXffXffKfw'),d:{'7,9':['sports',10,3]},p:[
 {x:7,y:5,c:'#16a34a',h:'#222',n:'메인 러닝 코치',s:['어서 와! 여기는 체육관.','마라톤 하프코스를 3번 완주한 러너의 기록실이지.'],ch:{'하프코스 3회':['2013 제2회 6.25 상기 및 정전 60주년 기념 국민대통합 마라톤 대회 하프 01:58:21.05','2016 제9회 아름다운제주국제마라톤대회 하프 2:27:11.23','2016 제21회 제주국제관광마라톤축제 하프 02:54:26.14'],'감귤마라톤 & 볼링':['2019 제주감귤국제마라톤 10km 01:22:38.32 🍊','2011 제30회 제주특별자치도볼링협회장기 전도볼링대회 대학부 남자 2인조전 3위 🎳']}},
 {x:3,y:6,c:'#60a5fa',h:'#222',w:1,n:'서브 러너',s:['후… 후… 아 안녕!','기록은 숫자지만 완주는 이야기야. 파이팅!']}]},
 
-terminal:{n:'제주 공항 터미널',par:'airport',bgm:'indoor',m:['w'.repeat(W),'wwlwwlwwwlwwlww',FR,'w'+'k'.repeat(W-2)+'w',FR,FR,'wfKKffffffffKKw',FR,FR,'wwwwwwwxwwwwwww'],d:{'7,9':['airport',10,7]},p:[
-{x:7,y:2,c:'#0369a1',h:'#222',n:'탑승 수속 직원',s:['BS 에어입니다. 어디로 가시겠어요? ✈'],ch:{'✈ 비행기 타기':()=>showFlight(),'공항 안내':['벽의 출발 안내판을 눌러도 탑승할 수 있어요.','BS World 안 어디든 바로 날아갑니다.']}},
+terminal:{n:'제주 공항 터미널',par:'airport',bgm:'indoor',m:['w'.repeat(W),'wwlwwlwwwlwwlww',FR,'wkkkkkkwkkkkkkw',FR,FR,'wfKKffffffffKKw',FR,FR,'wwwwwwwxwwwwwww'],sign:{'4,2':'국내선','10,2':'국제선'},d:{'7,9':['airport',10,7]},p:[
+{x:4,y:2,c:'#0369a1',h:'#222',n:'국내선 수속 직원',s:['BS 에어 국내선입니다. 어디로 가시겠어요? ✈'],ch:{'✈ 비행기 타기':()=>showFlight(),'📡 실제 운항 현황':()=>showAirBoard('D'),'공항 안내':['왼쪽이 국내선, 오른쪽이 국제선 카운터예요.','벽의 출발 안내판을 눌러도 탑승할 수 있어요.']}},
+{x:10,y:2,c:'#7c3aed',h:'#222',n:'국제선 수속 직원',s:['국제선 카운터입니다. 여권 챙기셨어요? 🛂','아직 BS World 밖으로 나가는 노선은 취항 준비 중이에요.'],ch:{'📡 실제 국제선 현황':()=>showAirBoard('I'),'✈ 국내선 안내받기':()=>showFlight(),'언제 취항해요?':['주인장이 다음 나라를 고르면 바로 엽니다.','그전까지는 제주 하늘부터 즐겨 봅서.']}},
 {x:3,y:5,c:'#f472b6',h:'#222',w:1,n:'출장 가는 직장인',s:['비행기 타기 전 감귤 주스 한 잔이 국룰이죠.']},
 {x:11,y:7,c:'#94a3b8',h:'#d1d5db',n:'마중 나온 삼춘',s:['보성이 오는 날인가 해서 기다렴수다게.']}]},
 
@@ -746,13 +766,45 @@ vc:{n:'나눔 & 기여 커뮤니티 센터',par:'coast',bgm:'beach',m:I('wUw^w^w
 };
 Object.values(M).forEach(z=>z.m=z.m.map(r=>r.padEnd(W,'T').slice(0,W)));
 Object.keys(SONG_XY).forEach(id=>M[id].p.push(songNpc(id)));
+const ME_LOOK={hair:'cover',cl:'plaid',leg:'#1f2937'};
+/* 인물 표현: 받은 사진의 분위기를 도트로 옮김 */
+const LOOKS=[
+  [n=>n=='거울 속의 나',{c:'#2b3140',h:'#17151c',p:'#17151c',lk:ME_LOOK}],
+  [n=>n.startsWith('창끼'),{c:'#1b2a33',h:'#17121a',p:'#17121a',lk:{hair:'bang',cl:'collar',leg:'#1f2937'}}],
+  [n=>n=='송',{c:'#1e3a8a',h:'#1f1a1a',p:'#1f1a1a',gl:'#3f2a1c',lk:{hair:'short',cl:'puffer',sh:'#9ca3af',leg:'#111827'}}],
+  [n=>n=='보성 아버지',{c:'#1f2433',h:'#3f3f46',p:'#3f3f46',gl:'#27272a',lk:{hair:'slick',hl:'#71717a',cl:'suit',sh:'#ddd6fe',tie:'#1e3a8a',leg:'#1f2433'}}],
+  [n=>n=='보성 어머니',{c:'#b91c1c',h:'#1c1917',p:'#1c1917',gl:'#1c1917',lh:0,lk:{hair:'bob',cl:'collar',sh:'#fff',leg:'#1e3a8a'}}]
+];
+Object.entries(M).forEach(([id,z])=>(z.p||[]).forEach(n=>{
+  LOOKS.forEach(([t,v])=>{if(t(n.n))Object.assign(n,v)});
+  if(n.n=='보성 할아버지')Object.assign(n,{h:'#27272a',p:'#27272a',gl:'#9ca3af',c:id=='gpHome'?'#1e2a4a':'#6b5b3e',lk:id=='gpHome'?{hair:'slick',hl:'#52525b',cl:'suit',sh:'#bfdbfe',tie:'#2563eb',leg:'#1e2a4a'}:{hair:'slick',hl:'#52525b',cl:'collar',sh:'#e7e5e4',leg:'#44403c'}});
+  if(n.n=='해녀 할망 (보성 할머니)')Object.assign(n,{h:'#1c1917',p:'#f2c9a0',lk:id=='gpHome'?{hair:'perm',cl:'hanbok',sh:'#fff',tie:'#7c3aed',skirt:'#f5f0dc',sit:1}:{hair:'perm',cl:'collar',sh:'#374151',leg:'#111827'},c:id=='gpHome'?'#9ca3af':'#1f2937'});
+}));
 
 const PG=['...HHHHHH...','..HHHHHHHH..','.HHHHHHHHHH.','.HHSSSSSSHH.','.HSSSSSSSSH.','.PSEESSEESP.','.PSSSSSSSSP.','..SSSMMSSS..','...SSSSSS...','..CCCCCCCC..','.CCCCCCCCCC.','.CCCCCCCCCC.'];
+/* 인물별 머리·옷 표현 */
+function sprLook(c,x,y,s,o,col,d){
+  const k=o.lk;if(!k)return;const P=(cc,L)=>{c.fillStyle=cc;L.forEach(([a,b,w=1,q=1])=>c.fillRect(x+a*s,y+b*s,w*s,q*s))},front=d!=1,H=col.H,SK=col.S;
+  if(k.hair=='bang'){P(H,[[2,3,8,1],[3,4,5,1],[2,4,1,2],[9,4,1,1]]);if(front)P(SK,[[8,4,1,1]])}          // 옆으로 내린 앞머리
+  if(k.hair=='cover'){P(H,[[2,3,8,1],[2,4,7,1],[1,5,1,1],[10,5,1,1]])}                                     // 눈썹까지 덮는 앞머리
+  if(k.hair=='short'){P(H,[[3,-1,6,1],[2,0,8,1]]);if(front)P(SK,[[3,3,6,1],[4,2,3,1]]);P(H,[[2,3,1,2],[9,3,1,2]])}   // 짧게 세운 머리
+  if(k.hair=='slick'){P(H,[[3,0,6,1],[2,1,8,2]]);if(front)P(SK,[[3,3,6,1],[4,2,5,1]]);if(k.hl)P(k.hl,[[4,1,4,1],[2,2,1,1],[9,2,1,1]])}   // 뒤로 넘긴 머리
+  if(k.hair=='perm'){P(H,[[3,0,6,1],[1,1,10,2],[0,2,1,3],[11,2,1,3],[1,5,1,3],[10,5,1,3],[2,3,8,1]]);P('#ffffff22',[[3,1,1,1],[6,1,1,1],[9,2,1,1],[1,3,1,1]])}   // 둥근 파마
+  if(k.hair=='bob'){P(H,[[0,3,2,6],[10,3,2,6],[2,8,1,1],[9,8,1,1]]);if(front)P(H,[[2,3,6,1],[2,4,3,1]])}     // 단발
+  const T=9;
+  if(k.cl=='suit'){if(front){P(k.sh||'#bfdbfe',[[5,T,2,3]]);P(k.tie||'#1d4ed8',[[5,T+1,2,2]]);P('#0002',[[4,T,1,3],[7,T,1,3]])}}
+  if(k.cl=='puffer'){P('#ffffff30',[[1,T+1,10,1]]);if(front)P(k.sh||'#9ca3af',[[5,T,2,3]])}
+  if(k.cl=='plaid'){P('#ffffff40',[[3,T,1,3],[8,T,1,3],[1,T+1,10,1]]);if(front)P('#0005',[[5,T,1,3]])}
+  if(k.cl=='collar'&&front)P(k.sh||'#f8fafc',[[4,T,1,2],[7,T,1,2],[5,T,2,1]]);
+  if(k.cl=='hanbok'){if(front){P(k.sh||'#fff',[[4,T,1,1],[7,T,1,1],[5,T+1,2,1]]);if(k.tie)P(k.tie,[[6,T+1,3,1],[7,T+2,1,1]])}if(o.l===false&&!k.sit)return}
+}
 function spr(c,x,y,s,o={}){const d=o.d||0,col={H:o.h||'#1b1b26',S:'#f2c9a0',E:'#111',P:o.p||'#8a94a8',M:'#b5655a',C:o.c||'#ece4d0'};
 PG.forEach((r,j)=>[...r].forEach((k,i)=>{if(k=='.')return;if(d==1&&j>2&&j<9&&'SEM'.includes(k))k='H';if(d==2&&k=='E'&&i>5)k='S';if(d==3&&k=='E'&&i<6)k='S';c.fillStyle=col[k];c.fillRect(x+i*s,y+j*s,s,s)}));
-if(o.gl&&d!=1){c.fillStyle=o.gl;const L=d==3?[]:[[2,4],[3,4],[4,4],[5,4],[2,5],[5,5],[2,6],[5,6],[2,7],[3,7],[4,7],[5,7]],R=d==2?[]:[[6,4],[7,4],[8,4],[9,4],[6,5],[9,5],[6,6],[9,6],[6,7],[7,7],[8,7],[9,7]];[...L,...R].forEach(([a,b])=>c.fillRect(x+a*s,y+b*s,s,s));}
+sprLook(c,x,y,s,o,col,d);
+if(o.gl&&d!=1){c.fillStyle=o.gl;const F=(l,r)=>{for(let i=l;i<=r;i++){c.fillRect(x+i*s,y+5*s,s,s/2);c.fillRect(x+i*s,y+7*s+s/2,s,s/2)}c.fillRect(x+l*s,y+5*s,s/2,3*s);c.fillRect(x+r*s+s/2,y+5*s,s/2,3*s)};if(d!=3)F(2,5);if(d!=2)F(6,9);if(!d)c.fillRect(x+5*s,y+5.5*s,2*s,s/2);}
 if(o.lh){c.fillStyle=col.H;[[0,4],[0,5],[0,6],[0,7],[0,8],[1,7],[1,8],[11,4],[11,5],[11,6],[11,7],[11,8],[10,7],[10,8]].forEach(([a,b])=>c.fillRect(x+a*s,y+b*s,s,s))}
-if(o.l!==false){c.fillStyle='#34495e';c.fillRect(x+3*s,y+12*s,2*s,o.w?s:2*s);c.fillRect(x+7*s,y+12*s,2*s,o.w?2*s:s)}}
+if(o.lk&&o.lk.skirt&&o.l!==false){c.fillStyle=o.lk.skirt;c.fillRect(x+2*s,y+12*s,8*s,2*s)}
+else if(o.l!==false){c.fillStyle=o.lk&&o.lk.leg||'#34495e';c.fillRect(x+3*s,y+12*s,2*s,o.w?s:2*s);c.fillRect(x+7*s,y+12*s,2*s,o.w?2*s:s)}}
 
 function tile(c,k,x,y,t){
   const X=x*TS,Y=y*TS,r=(x*7+y*13)%5,f=(col,a,b,w,h)=>{c.fillStyle=col;c.fillRect(X+a,Y+b,w,h)};
@@ -837,7 +889,7 @@ function tile(c,k,x,y,t){
     case 'X': fl(); f('#9ca3af',10,18,12,10); if(cur=='vc'){f('#374151',8,4,16,16);f('#fee2e2',10,6,12,12);ci(16,13,3,'#dc2626');f('#dc2626',15,8,2,3)}else{f('#15803d',8,6,16,14); f('#22c55e',10,8,12,10); f('#f43f5e',14,6,4,4)} break;
     case 'f': fl(); break; case 'w': wl(); f('#46352a',0,28,32,4); break;
     case 'K': fl(); f('#7a4a2a',2,6,28,22); f('#a8693f',2,6,28,6); break;
-    case 'P': wl(); f('#e0b840',6,2,20,26); f('#cfd8e8',9,5,14,20); spr(c,X+10,Y+7,1,{l:false,p:'#f2c9a0'}); break;
+    case 'P': wl(); f('#e0b840',6,2,20,26); f('#cfd8e8',9,5,14,20); f('#6cc04a',9,18,14,7); f('#fde047',16,8,4,4); break;
     case 'a': gr(); f('#1f2937',2,20,30,5); f('#374151',2,6,30,15); f('#4b5563',2,6,30,5); f('#6b7280',2,6,30,2); for(let i=0;i<5;i++)f('#2d3748',4+i*6,12,1,9); f('#374151',0,14,4,9); break;
     case 'c': gr(); f('#1f2937',0,20,30,5); f('#374151',0,6,30,15); f('#4b5563',0,6,30,5); f('#6b7280',0,6,30,2); for(let i=0;i<5;i++)f('#2d3748',2+i*6,12,1,9); f('#374151',28,14,4,9); break;
     case 'g': gr(); f('#b08968',2,16,30,14); f('#8f6b4a',2,28,30,2); f('#00000030',2,0,30,4); f('#9b2c2c',5,0,5,24); f('#c0392b',5,0,2,24); f('#7a4a22',2,14,30,3); break;
@@ -867,6 +919,7 @@ function tile(c,k,x,y,t){
     case ':': f('#3f3a36',0,0,32,32); f('#47423d',(r*5)%22,(r*3)%24,6,4); f('#2f2b28',(r*7)%24,(r*9)%26,4,3); break;
     case '*': f('#3f3a36',0,0,32,32); if(S.eggs.cave){f('#78350f',4,14,24,14);f('#fde047',7,16,18,5);f('#92400e',4,6,24,8)}else{f('#78350f',4,10,24,18);f('#b45309',4,10,24,5);f('#fbbf24',14,14,4,6)} break;
     case '(': wl(); f('#1e3a8a',4,3,24,24); f('#fff',7,6,18,12); f('#3b82f6',9,8,6,2); f('#fbbf24',9,12,12,2); f('#fff',7,21,18,3); break;
+    case 'ⓜ': { fl(); f('#3f2a1c',0,1,32,27); f('#17324f',0,3,32,22); f('#fb923c',x%2?6:12,8,x%2?12:9,8); f('#4b5563',x%2?20:3,13,7,8); f('#fbbf24',0,1,32,2); f('#5b3a22',4,28,4,4); f('#5b3a22',24,28,4,4); break}
     case ')': { wl(); f('#3f2a1c',3,3,26,24); f('#e5e7eb',5,5,22,20); const im=PHOTO_IMGS[(x-1)/2]; if(im&&im.complete&&im.naturalWidth)c.drawImage(im,X+6,Y+6,20,18); else f('#9ca3af',8,9,16,11); break}
     case '[': gr(); f('#64748b',5,6,3,24); f('#64748b',24,6,3,24); f('#e5e7eb',5,6,22,3); f('#00000025',4,29,24,2); break;
     case ']': { gr(); f('#b45309',3,3,3,27); f('#b45309',26,3,3,27); f('#92400e',3,3,26,3); const sw=SIT&&SIT.x==x&&SIT.y==y?Math.sin(t/330)*6:Math.sin(t/900)*1; f('#6b7280',11+sw/2,6,1,16); f('#6b7280',20+sw/2,6,1,16); f('#7c2d12',10+sw,21,12,3); break}
@@ -1034,7 +1087,7 @@ function drawUmb(nx,ny,col){const ux=nx*TS+16,uy=ny*TS+3;g.fillStyle=col;g.begin
 function buildNpcs(){
   const rain=WX.kind=='rain';
   const away=map.o&&(isNight()||WET());   // 밤이나 궂은 날엔 몇 명만 남고 귀가
-  npcs=map.p.filter((o,i)=>!(rain&&o.run)&&(!o.when||o.when())&&(!away||o.stay||FAMILY.includes(o.n)||o.eg||i%3==0)).map((o,i)=>{const n={...o,hx:o.x,hy:o.y,dir:o.fd||0};if(rain&&map.o&&!n.pet)n.um=UMC[i%UMC.length];if(n.run&&TRACK[n.ti]){n.x=TRACK[n.ti][0];n.y=TRACK[n.ti][1]}return n});
+  npcs=map.p.filter((o,i)=>!(rain&&o.run)&&(!o.when||o.when())&&(!away||o.stay||FAMILY.includes(o.n)||o.eg||i%3==0)).map((o,i)=>{const n={...o,hx:o.x,hy:o.y,dir:o.fd||0};if(rain&&map.o&&!n.pet&&!n.ani)n.um=UMC[i%UMC.length];if(n.run&&TRACK[n.ti]){n.x=TRACK[n.ti][0];n.y=TRACK[n.ti][1]}return n});
   if(rain&&map.o&&map.umb&&!isNight())map.umb.forEach(([x,y,c],i)=>npcs.push({x,y,hx:x,hy:y,dir:0,c:'#6b7280',h:'#222',w:1,um:c,n:'우산 쓴 주민',s:UMB[i%UMB.length]}));
 }
 
@@ -1060,7 +1113,7 @@ function sitFx(t){if(!SIT||SIT.k!='bench')return;const p=((t-SIT.at)/1600)%1;g.g
 function warp(id,x,y,d){
   SIT=null;busy=true;sfx('w');$('#fade').style.opacity=1;
   setTimeout(()=>{
-    const from=cur;cur=id;map=M[id];visited.add(id);
+    const from=cur;cur=id;map=M[id];visited.add(id);if(id=='photo')wallLoad();
     if(x==7&&y==8&&map.land)[x,y]=map.land;   // 지도·비행으로 올 때 내리는 자리
     updateHUD();px=x;py=y;dir=d;mv=null;
     songRoll(id);buildNpcs();unstick();
@@ -1212,6 +1265,7 @@ function act(){
   else if(k=='{'||k=='}')showFit();
   else if(k=='(')showProjects();
   else if(k==')')showPhotos();
+  else if(k=='ⓜ')showTravel();
   else if(k=='*')caveChest();
   else if(k=='+'||k==',')say('낙하산 격납고',['낙하산 접는 긴 탁자가 보인다. 🪂','벽에 강하 기록표가 걸려 있다: 열기구 강하 5회, 그중 1회는 직접 포장한 낙하산.']);
   else if(k=='&')say('감귤 콘테나',['갓 딴 귤이 콘테나에 가득 담겨 있다. 🍊','새콤달콤한 향이 난다.']);
@@ -1223,7 +1277,7 @@ function act(){
   else if(k=='r'||k=='y')say('활주로',['⚠ 활주로 출입 금지!','이착륙하는 비행기를 여기서 구경하자.']);
   else if(k=='S')say('관제탑',['관제탑이 활주로를 지켜보고 있다.']);
   else if(k=='i')say('표지판',['✈ 제주 공항 터미널','남쪽 해변 길: 제주 바닷가']);
-  else if(k=='P')showGallery();
+  else if(k=='P')showPhotos();
   else if(cur=='gym'&&'MJN'.includes(k))showRecWall();
   else if(k=='N'&&CTS[cur])showCerts(cur);
   else if(map.sh&&'MJNU^BEI'.includes(k))say('전시대',map.sh);
@@ -1242,7 +1296,7 @@ function act(){
 function cancel(){if(SIT&&!modal&&!dlg)return sitUp();if(lbOn())lbClose();else if(modal)closeM();else if(dlg)endDlg()}
 
 function openM(h){tetStop();sunoStop();$('#mc').innerHTML=h;$('#md').hidden=false;modal=true;document.body.classList.add('modal-on');$('.mb').scrollTop=0;kcSel(null);if(KC.on)kcMove(1);dockPos()}
-function closeM(){tetStop();sunoStop();$('#md').hidden=true;modal=false;document.body.classList.remove('modal-on');kcSel(null);dockPos();bgmUi()}
+function closeM(){tetFlush();tetStop();sunoStop();$('#md').hidden=true;modal=false;document.body.classList.remove('modal-on');kcSel(null);dockPos();bgmUi()}
 /* 창 안 커서: 방향키·패드로 고르고 Z·Enter·A로 누름 */
 const KC={on:false,el:null};
 const kcItems=()=>[...$('#mc').querySelectorAll('a[href],button:not(:disabled),summary,input,textarea,select,audio,[onclick]')].filter(e=>e.getClientRects().length&&!e.hidden);
@@ -1278,36 +1332,6 @@ function kcKey(e){
   if(['z','Z','Enter',' '].includes(k)){e.preventDefault();kcAct()}
 }
 
-const V=[{n:'겨울 점퍼 룩',bg:['#cfe0f2','#b8cfe8'],o:'#5d6250',o2:'#474b3d',in:'#2b2b2b',k:'j'},{n:'여름 흰 티 룩',bg:['#ffe7b8','#fbd38d'],o:'#f8fafc',o2:'#d6dce4',in:'#f8fafc',k:'t'},{n:'결혼식 정장 룩',bg:['#e7dcef','#d3c2e2'],o:'#2c2f3a',o2:'#1d1f27',in:'#a9c4e6',k:'s'}];
-function drawPortrait(ctx,v){
-  const W2=66,H2=70,cv2=document.createElement('canvas');cv2.width=W2;cv2.height=H2;const c=cv2.getContext('2d');
-  const R=(col,x,y,w,h)=>{c.fillStyle=col;c.fillRect(x,y,w,h)};
-  const O=(col,cx,cy,rx,ry)=>{c.fillStyle=col;for(let y=-ry;y<=ry;y++){const w=Math.round(rx*Math.sqrt(1-(y*y)/(ry*ry)));c.fillRect(cx-w,cy+y,w*2,1)}};
-  R(v.bg[0],0,0,W2,H2);for(let y=0;y<H2;y+=4)for(let x=(y%8?2:0);x<W2;x+=4)R(v.bg[1],x,y,1,1);
-  const SK='#f0c49c',SK2='#dfa97e',SK3='#fbdcbd',HR='#17151c',HR2='#2c2a38',HR3='#47465c';
-  // 몸
-  O(v.o,33,70,27,17);R(v.o,6,62,54,8);O(v.o2,8,68,5,8);O(v.o2,58,68,5,8);
-  R(SK2,27,46,12,9);R(SK,28,46,10,8);
-  if(v.k=='j'){R(v.in,26,55,14,15);R(v.o2,23,52,6,8);R(v.o2,37,52,6,8);R('#b08d57',32,56,2,14)}
-  if(v.k=='t'){O(v.o2,33,55,8,3);O(SK2,33,53,6,3);R(v.o2,10,64,1,6);R(v.o2,55,64,1,6)}
-  if(v.k=='s'){R(v.in,26,54,14,16);R('#39415f',31,55,4,3);R('#39415f',30,58,6,12);[0,1,2,3].forEach(i=>R('#c8d2e4',30,59+i*3,6,1));R(v.o2,20,54,8,16);R(v.o2,38,54,8,16)}
-  // 귀
-  O(SK,13,31,3,5);O(SK2,13,32,2,3);O(SK,53,31,3,5);O(SK2,53,32,2,3);
-  // 얼굴 (둥근 얼굴)
-  O(SK,33,29,20,22);O(SK3,29,23,11,11);R(SK2,14,41,2,2);R(SK2,50,41,2,2);O(SK2,33,50,10,1);
-  // 머리: 앞머리를 내린 짧은 검은 머리
-  O(HR,33,15,22,14);R(HR,11,14,44,8);R(HR,11,14,4,14);R(HR,51,14,4,14);
-  for(let x=14;x<52;x+=3)R(HR,x,20,3,3+((x*7)%3));
-  R(SK,14,27,2,1);R(HR2,18,6,28,3);R(HR2,14,10,10,3);R(HR3,20,6,12,1);R(HR3,16,10,5,1);R(HR2,38,11,10,2);
-  // 눈썹
-  R('#1b1820',19,26,10,2);R('#1b1820',37,26,10,2);
-  // 눈 (가늘고 또렷한 눈)
-  R('#201c24',19,31,10,1);R('#201c24',37,31,10,1);R('#fff',20,32,8,2);R('#fff',38,32,8,2);R('#2b1d14',23,32,3,2);R('#2b1d14',41,32,3,2);R('#fff',24,32,1,1);R('#fff',42,32,1,1);R(SK2,20,35,7,1);R(SK2,39,35,7,1);
-  // 코, 볼, 입
-  R(SK2,34,33,1,7);R(SK2,30,40,7,1);R(SK3,31,37,3,2);O('#f3b193',20,40,3,1);O('#f3b193',46,40,3,1);R('#a85a4f',28,45,10,1);R('#c9786a',30,46,6,1);R(SK2,29,48,8,1);
-  ctx.imageSmoothingEnabled=false;ctx.drawImage(cv2,0,0,132,140);
-}
-function showGallery(){openM('<h3>📸 AI 도트 초상화 갤러리</h3><div class="gl">'+V.map((v,i)=>`<figure><canvas id="pc${i}" width="132" height="140"></canvas><figcaption>${v.n}</figcaption></figure>`).join('')+'</div>');V.forEach((v,i)=>drawPortrait($('#pc'+i).getContext('2d'),v))}
 
 const CTS={
  agency:{t:'📜 자격 · 수상 전시',it:[['💻','정보처리기사','',1],['💻','컴퓨터활용능력 1급','',1],['💻','워드프로세서','',1],['📊','사회조사분석사 2급','',1],['📜','한국사능력검정시험 2급','',1],['🥋','태권도 2단','1품 · 2품에서 성인이 되며 1단 · 2단으로 전환',1],['🔤','TOEIC 최고 775점','',1],['🏆','2016 지역기업 청년 희망이음 프로젝트 경진대회 대상','산업통상자원부 장관상',1],['🥇','2017 같은 대회 금상','산업통상자원부 장관상',1]]},
@@ -2030,8 +2054,108 @@ function showProjects(){
 const PHOTOS=[
 ];
 const PHOTO_IMGS=PHOTOS.slice(0,7).map(p=>{const i=new Image();i.src=p.file;return i});
-function showPhotos(){
-  openM('<h3>🖼 보성 사진관</h3>'+(PHOTOS.length?'<div class="pgrid">'+PHOTOS.map(p=>`<figure><img src="${esc(p.file)}" alt="${esc(p.title||'사진')}" loading="lazy" onclick="lbOpen(this.src,this.alt)" onerror="this.closest('figure').remove()"><figcaption>${esc(p.title||'')}${p.date?` <small>${esc(p.date)}</small>`:''}</figcaption></figure>`).join('')+'</div>':'<div class="cd">주인장이 걸 사진을 고르고 있어요. 📷</div>'));
+BACKS.ph=()=>showPhotos();
+let WALL=null;
+async function wallLoad(){if(WALL)return WALL;try{WALL=await DB.req('travel_photo?select=*&place=eq.wall&order=id.desc&limit=200')}catch(e){WALL=[]}
+  PHOTO_IMGS.length=Math.min(7,PHOTOS.length);const room=7-PHOTOS.length;if(room>0)WALL.slice(0,room).forEach(p=>{const i=new Image();i.src=trvUrl(p.path);PHOTO_IMGS.push(i)});return WALL}
+async function showPhotos(){
+  openM('<h3>🖼 보성 사진관</h3><p style="font-size:12px;opacity:.8">불러오는 중…</p>');
+  WALL=null;const up=await wallLoad();if(!modal)return;const ad=DB.admin();
+  const fig=up.map(p=>trvFig(p,ad,"showPhotos")).join('')+PHOTOS.map(p=>`<figure><img src="${esc(p.file)}" alt="${esc(p.title||'사진')}" loading="lazy" onclick="lbOpen(this.src,this.alt)" onerror="this.closest('figure').remove()"><figcaption>${esc(p.title||'')}${p.date?` <small>${esc(p.date)}</small>`:''}</figcaption></figure>`).join('');
+  openM('<h3>🖼 보성 사진관</h3><div class="qbtn"><button class="xb" onclick="showTravel()">🗺 여행 지도</button></div>'+(fig?'<div class="pgrid">'+fig+'</div>':'<div class="cd">주인장이 걸 사진을 고르고 있어요. 📷</div>')+trvUp('wall','ph'));
+}
+
+/* ===== 여행 지도 ===== */
+const TRV_URL={w:'https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json',d:'https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-50m.json'};
+const TRV_C=['392','410','344','446','250','724','276','756','203','792','380','336','040'];   // 다녀온 나라 (ISO 번호)
+const TRV_V={
+  world:{n:'🌏 세계',b:[-180,180,-58,80],src:'w'},
+  kr:{n:'🇰🇷 대한민국',b:[125.3,130.3,33,38.8],src:'d',c:['410'],hub:[36.2,127.9]},
+  jp:{n:'🇯🇵 일본',b:[128.3,141,32.4,37.2],src:'d',c:['392'],hub:[36,138.5]},
+  eu:{n:'🇪🇺 유럽·튀르키예',b:[-5.5,31,35.5,52.2],src:'d',c:['250','724','276','756','203','792','380','336','040'],hub:[47,9]},
+  hk:{n:'🇭🇰 홍콩·마카오',b:[113.3,114.6,21.9,22.7],src:'d',c:['344','446'],hub:[22.3,114.2]}
+};
+/* 장소를 늘리려면 [키, 이름, 지도, 나라 묶음, 위도, 경도, 글자 방향(l이면 왼쪽)] 한 줄만 더하면 됩니다 */
+const TRV_P=[
+ ['seoul','서울','kr','대한민국',37.57,126.98],['incheon','인천','kr','대한민국',37.46,126.71,'l'],['suwon','수원','kr','대한민국',37.26,127.03],['sokcho','속초','kr','대한민국',38.21,128.59],['gangneung','강릉','kr','대한민국',37.75,128.88],['donghae','동해','kr','대한민국',37.52,129.11],['cheongju','청주','kr','대한민국',36.64,127.49],['cheonan','천안','kr','대한민국',36.81,127.11,'l'],['daejeon','대전','kr','대한민국',36.35,127.38],['gyeryong','계룡','kr','대한민국',36.27,127.25,'l u'],['nonsan','논산','kr','대한민국',36.19,127.10,'l d'],['gunsan','군산','kr','대한민국',35.97,126.74,'l'],['iksan','익산','kr','대한민국',35.95,126.96,'u'],['jeonju','전주','kr','대한민국',35.82,127.15],['gwangju','광주','kr','대한민국',35.16,126.85],['daegu','대구','kr','대한민국',35.87,128.60],['gyeongju','경주','kr','대한민국',35.86,129.22],['ulsan','울산','kr','대한민국',35.54,129.31],['busan','부산','kr','대한민국',35.18,129.08],['jeju','제주','kr','대한민국',33.50,126.53],
+ ['tsushima','대마도','jp','일본',34.41,129.33],['fukuoka','후쿠오카','jp','일본',33.59,130.40],['osaka','오사카','jp','일본',34.69,135.50],['kobe','고베','jp','일본',34.69,135.18,'l'],['nara','나라','jp','일본',34.46,135.83],['nagoya','나고야','jp','일본',35.18,136.91],['tokyo','도쿄','jp','일본',35.68,139.69],
+ ['hongkong','홍콩','hk','홍콩',22.30,114.17],['macau','마카오','hk','마카오',22.19,113.55],
+ ['paris','파리','eu','프랑스',48.86,2.35],['lyon','리옹','eu','프랑스',45.76,4.84,'l'],['aix','엑상프로방스','eu','프랑스',43.53,5.45,'u'],['marseille','마르세유','eu','프랑스',43.30,5.37,'l d'],['barcelona','바르셀로나','eu','스페인',41.39,2.17],['madrid','마드리드','eu','스페인',40.42,-3.70],['munich','뮌헨','eu','독일',48.14,11.58,'l'],['interlaken','인터라켄','eu','스위스',46.69,7.86],['prague','프라하','eu','체코',50.08,14.44],['salzburg','잘츠부르크','eu','오스트리아',47.81,13.05],['florence','피렌체','eu','이탈리아',43.77,11.25],['rome','로마','eu','이탈리아',41.90,12.50,'l'],['vatican','바티칸','eu','바티칸',41.90,12.45],['naples','나폴리','eu','이탈리아',40.85,14.27],['istanbul','이스탄불','eu','튀르키예',41.01,28.98,'l']
+];
+const trvName=k=>k=='wall'?'사진관 벽':(TRV_P.find(p=>p[0]==k)||[])[1]||k;
+const trvUrl=p=>DBCFG.url+'/storage/v1/object/public/travel/'+String(p).split('/').map(encodeURIComponent).join('/');
+const TRV={cache:{},cnt:{},view:'world',shapes:null,proj:null};
+async function trvGeo(src){
+  if(TRV.cache[src])return TRV.cache[src];
+  const r=await fetch(TRV_URL[src]);if(!r.ok)throw new Error('map');const t=await r.json();
+  const {scale:[sx,sy],translate:[tx,ty]}=t.transform;
+  const arcs=t.arcs.map(a=>{let x=0,y=0;return a.map(([dx,dy])=>{x+=dx;y+=dy;return[x*sx+tx,y*sy+ty]})});
+  const ring=R=>{const o=[];R.forEach(i=>{const A=i<0?arcs[~i].slice().reverse():arcs[i];o.push(...(o.length?A.slice(1):A))});return o};
+  return TRV.cache[src]=t.objects.countries.geometries.flatMap(g=>{const P=g.type=='Polygon'?[g.arcs]:g.type=='MultiPolygon'?g.arcs:[];return P.map(pl=>({id:String(g.id),rings:pl.map(ring)}))});
+}
+function trvHit(rings,x,y){let inn=false;for(const r of rings)for(let i=0,j=r.length-1;i<r.length;j=i++){const[a,b]=r[i],[c,d]=r[j];if((b>y)!=(d>y)&&x<(c-a)*(y-b)/(d-b)+a)inn=!inn}return inn}
+function trvDraw(shapes,v,w,h,on){
+  const [x0,x1,y0,y1]=v.b,cell=2,W2=Math.round(w/cell),H2=Math.round(h/cell),o=document.createElement('canvas');o.width=W2;o.height=H2;const g=o.getContext('2d',{willReadFrequently:true});
+  g.fillStyle='#17324f';g.fillRect(0,0,W2,H2);const X=a=>(a-x0)/(x1-x0)*W2,Y=a=>(y1-a)/(y1-y0)*H2;
+  const trace=s=>{g.beginPath();s.rings.forEach(r=>{const wrap=r.some(([a],i)=>i&&Math.abs(a-r[i-1][0])>180);r.forEach(([a,b],i)=>{if(wrap&&a<0)a+=360;i?g.lineTo(X(a),Y(b)):g.moveTo(X(a),Y(b))});g.closePath()})};
+  shapes.forEach(s=>{trace(s);g.fillStyle=on.includes(s.id)?'#fb923c':'#64748b';g.fill('evenodd')});
+  const PAL=[[23,50,79],[251,146,60],[100,116,139]],im=g.getImageData(0,0,W2,H2),D=im.data;
+  for(let i=0;i<D.length;i+=4){let m=0,bd=1e9;PAL.forEach((p,k)=>{const q=(p[0]-D[i])**2+(p[1]-D[i+1])**2+(p[2]-D[i+2])**2;if(q<bd){bd=q;m=k}});[D[i],D[i+1],D[i+2]]=PAL[m];D[i+3]=255}
+  g.putImageData(im,0,0);return o;
+}
+async function trvCounts(){try{const L=await DB.req('travel_photo?select=place&limit=5000');TRV.cnt={};L.forEach(r=>TRV.cnt[r.place]=(TRV.cnt[r.place]||0)+1)}catch(e){}}
+async function showTravel(view){
+  view=view||TRV.view||'world';TRV.view=view;const v=TRV_V[view],P=TRV_P.filter(p=>p[2]==view);
+  const tabs=Object.entries(TRV_V).map(([k,o])=>`<button class="xb ${k==view?'on':''}" onclick="showTravel('${k}')">${o.n}</button>`).join('');
+  const grp=[...new Set(P.map(p=>p[3]))].map(n=>`<b style="font-size:12px">${esc(n)}</b><div class="tchips">${P.filter(p=>p[3]==n).map(p=>`<button class="xb" onclick="trvPlace('${p[0]}')">${esc(p[1])}${TRV.cnt[p[0]]?` 📷${TRV.cnt[p[0]]}`:''}</button>`).join('')}</div>`).join('');
+  openM(`<h3>🗺 보성의 여행 지도</h3><p style="font-size:12px;opacity:.8">주황색이 다녀온 곳이에요. ${view=='world'?'색칠된 나라나 핀을 누르면 가까이 볼 수 있어요.':'도시를 누르면 사진을 볼 수 있어요.'}</p>
+  <div class="tchips">${tabs}</div><div class="tmap" id="tmap"><canvas id="tcv"></canvas></div>
+  <div id="tmsg" style="font-size:12px;opacity:.8"></div>${view=='world'?`<p style="font-size:12px">나라 ${TRV_C.length}곳 · 도시 ${TRV_P.length}곳을 다녀왔어요.</p>`:grp}`);
+  KC.on=false;kcSel(null);
+  const wrap=$('#tmap'),cv=$('#tcv'),w=wrap.clientWidth||480,[x0,x1,y0,y1]=v.b,mid=(y0+y1)/2*Math.PI/180,h=Math.min(Math.round(w*(y1-y0)/((x1-x0)*Math.cos(view=='world'?0:mid))),Math.max(320,Math.round(innerHeight*.62)));
+  cv.width=Math.round(w/2);cv.height=Math.round(h/2);cv.style.aspectRatio=cv.width+'/'+cv.height;
+  const ctx=cv.getContext('2d');ctx.fillStyle='#17324f';ctx.fillRect(0,0,cv.width,cv.height);
+  const pct=(lat,lon)=>`left:${(lon-x0)/(x1-x0)*100}%;top:${(y1-lat)/(y1-y0)*100}%`;
+  wrap.insertAdjacentHTML('beforeend',view=='world'
+    ?Object.entries(TRV_V).filter(([k])=>k!='world').map(([k,o])=>`<button class="tpin hub ${k=='kr'?'l':''}" style="${pct(o.hub[0],o.hub[1])}" onclick="showTravel('${k}')"><i></i>${esc(o.n.split(' ')[1])}</button>`).join('')
+    :P.map(p=>`<button class="tpin ${p[6]||''} ${TRV.cnt[p[0]]?'has':''}" style="${pct(p[4],p[5])}" onclick="trvPlace('${p[0]}')"><i></i><span>${esc(p[1])}</span></button>`).join(''));
+  trvCounts().then(()=>{if(modal&&$('#tmap')&&TRV.view==view&&!TRV.cntOk){TRV.cntOk=1;showTravel(view)}});
+  let shapes;try{shapes=await trvGeo(v.src)}catch(e){const m=$('#tmsg');if(m)m.textContent='지도 그림을 불러오지 못했어요. 아래 도시 목록으로 볼 수 있어요.';return}
+  if(!$('#tcv')||TRV.view!=view)return;
+  $('#tcv').getContext('2d').drawImage(trvDraw(shapes,v,cv.width*2,cv.height*2,TRV_C),0,0,cv.width,cv.height);
+  $('#tcv').onclick=e=>{if(view!='world')return;const r=e.target.getBoundingClientRect(),lon=x0+(e.clientX-r.left)/r.width*(x1-x0),lat=y1-(e.clientY-r.top)/r.height*(y1-y0),s=shapes.find(q=>TRV_C.includes(q.id)&&trvHit(q.rings,lon,lat));if(!s)return;const k=Object.keys(TRV_V).find(k=>(TRV_V[k].c||[]).includes(s.id));if(k)showTravel(k)};
+}
+const trvFig=(p,ad,back)=>`<figure><img src="${esc(trvUrl(p.path))}" alt="${esc(p.caption||trvName(p.place))}" loading="lazy" onclick="lbOpen(this.src,this.alt)"><figcaption>${esc(p.caption||'')}${ad?` <button class="xb r" style="padding:2px 6px" onclick="trvDel(${Number(p.id)},'${esc(p.path)}','${esc(p.place)}')">✕ 삭제</button>`:''}</figcaption></figure>`;
+const trvUp=(place,k)=>DB.admin()?`<div class="qform" style="margin-top:10px"><b>📤 사진 올리기</b><input id="tCap" class="xin" maxlength="80" placeholder="사진 설명 (선택)" style="margin:6px 0"><input id="tFile" type="file" accept="image/*" multiple style="font-size:12px;width:100%"><div class="qbtn"><button class="xb" onclick="trvSend('${place}')">올리기</button></div><small id="tUpMsg" style="opacity:.8">긴 쪽 1600px로 줄이고, 촬영 위치 같은 파일 정보는 지운 뒤 올려요.</small></div>${adm(k)}`:adm(k);
+BACKS.tr=()=>trvPlace(TRV.place||'seoul');
+async function trvPlace(k){
+  TRV.place=k;const P=TRV_P.find(p=>p[0]==k);
+  openM(`<h3>📍 ${esc(trvName(k))}</h3><p style="font-size:12px;opacity:.8">불러오는 중…</p>`);
+  let L=[],err='';try{L=await DB.req('travel_photo?select=*&place=eq.'+encodeURIComponent(k)+'&order=id.desc&limit=200')}catch(e){err=e.status==404||/PGRST|42P01/.test(e.message||'')?'사진 저장소 설정이 아직 안 끝났어요. (supabase_travel.sql 실행 필요)':dbErr(e)}
+  if(!modal||TRV.place!=k)return;const ad=DB.admin();
+  openM(`<h3>📍 ${esc(trvName(k))}</h3><p style="font-size:12px;opacity:.8">${esc(P?P[3]:'')}</p><div class="qbtn"><button class="xb" onclick="showTravel('${P?P[2]:'world'}')">← 지도로</button></div>`+
+    (err?`<div class="cd">${esc(err)}</div>`:L.length?'<div class="pgrid">'+L.map(p=>trvFig(p,ad)).join('')+'</div>':'<div class="cd">아직 올린 사진이 없어요. 📷</div>')+trvUp(k,'tr'));
+}
+async function trvShrink(file){
+  let src;try{src=await createImageBitmap(file,{imageOrientation:'from-image'})}catch(e){throw new Error('이 형식은 열 수 없어요. JPG나 PNG로 바꿔 주세요: '+file.name)}
+  const m=Math.min(1,1600/Math.max(src.width,src.height)),c=document.createElement('canvas');c.width=Math.round(src.width*m);c.height=Math.round(src.height*m);c.getContext('2d').drawImage(src,0,0,c.width,c.height);src.close&&src.close();
+  return new Promise((ok,no)=>c.toBlob(b=>b?ok(b):no(new Error('변환 실패')),'image/jpeg',.85));
+}
+function trvStore(method,path,body){return fetch(DBCFG.url+'/storage/v1/object/travel/'+path.split('/').map(encodeURIComponent).join('/'),{method,body,headers:{apikey:DBCFG.key,Authorization:'Bearer '+DB.tok,...(body?{'Content-Type':'image/jpeg'}:{})}})}
+async function trvSend(place){
+  if(!DB.admin())return toast('운영자 로그인이 필요해요.');
+  const F=[...$('#tFile').files],cap=$('#tCap').value.trim(),m=$('#tUpMsg');if(!F.length)return toast('사진을 골라 주세요.');
+  let n=0;
+  try{for(const f of F){m.textContent=`올리는 중… ${n+1} / ${F.length}`;
+      const blob=await trvShrink(f),path=`${place}/${Date.now()}-${Math.random().toString(36).slice(2,8)}.jpg`,r=await trvStore('POST',path,blob);
+      if(!r.ok){const e=new Error(await r.text());e.status=r.status;throw e}
+      await DB.req('travel_photo',{method:'POST',body:JSON.stringify({place,path,caption:cap||null})});n++}
+    toast(n+'장 올렸어요! 📷');TRV.cntOk=0;WALL=null;place=='wall'?showPhotos():trvPlace(place);
+  }catch(e){m.textContent=(n?n+'장은 올렸고, 나머지에서 ':'')+'문제가 생겼어요: '+(e.status?(e.status==401||e.status==403?'로그인이 만료됐거나 권한이 없어요.':/bucket/i.test(e.message)?'supabase_travel.sql 실행이 필요해요.':'저장소 오류('+e.status+')'):e.message||'연결 실패');toast('사진을 다 올리지 못했어요.')}
+}
+async function trvDel(id,path,place){
+  if(!confirm('이 사진을 지울까요?'))return;
+  try{await DB.req('travel_photo?id=eq.'+id,{method:'DELETE'});await trvStore('DELETE',path);toast('지웠어요.');TRV.cntOk=0;WALL=null;place=='wall'?showPhotos():trvPlace(place)}catch(e){toast(dbErr(e))}
 }
 
 /* ===== 맨몸 운동 기록 ===== */
@@ -2078,10 +2202,19 @@ function saveLoad(){try{const d=JSON.parse(localStorage.getItem('bsw_save')||'nu
 function saveGame(){try{localStorage.setItem('bsw_save',JSON.stringify({v:[...visited],steps,eggs:S.eggs,met:S.met,catN:S.catN,end:S.end,pos:cur&&M[cur]?[cur,px,py]:S.pos}))}catch(e){}}
 function saveReset(){openM('<h3>진행 기록 지우기</h3><p style="font-size:13px">이 브라우저의 퀘스트와 이스터 에그 기록을 지울까요?</p><div class="qbtn"><button class="xb r" onclick="saveWipe()">지우기</button><button class="xb" onclick="showQuestLog()">취소</button></div>')}
 function saveWipe(){try{localStorage.removeItem('bsw_save')}catch(e){}location.reload()}
-let questKey='';
+let questKey='',lvNow=0;
+/* 퀘스트를 다 깨면 92년생의 올해 나이(연 나이)가 최종 레벨 */
+const BIRTH_YEAR=1992,lvMax=()=>Math.max(2,new Date(Date.now()+9*36e5).getUTCFullYear()-BIRTH_YEAR);
+function lvCalc(){const d=QUESTS.filter(q=>q.ok()).length;return 1+Math.round(Math.max(0,d-1)/(QUESTS.length-1)*(lvMax()-1))}   // 시작하자마자 깨지는 첫 퀘스트는 Lv.1
+function lvUpdate(){
+  const L=lvCalc(),el=$('#lvText');if(!el)return;el.textContent='Lv. '+String(L).padStart(2,'0');
+  if(lvNow&&L>lvNow){const c=el.closest('.avatar-card');c.classList.remove('lvup');c.querySelector('.lvpop')?.remove();void c.offsetWidth;c.classList.add('lvup');const p=document.createElement('div');p.className='lvpop';p.textContent='LEVEL UP!';c.append(p);setTimeout(()=>{p.remove();c.classList.remove('lvup')},1900)}
+  lvNow=L;
+}
 function questRender(){
   const el=document.getElementById('questList');if(!el)return;
   const key=QUESTS.map(q=>q.ok()?1:0).join('')+Object.keys(S.eggs).length;if(key===questKey)return;questKey=key;
+  lvUpdate();
   el.innerHTML=QUESTS.map(q=>`<div class="quest"><b>${q.t}</b><small>${q.d}</small><div class="qtag">${q.ok()?'완료':'미완료'}</div></div>`).join('');
   questEnd();
 }
@@ -2175,6 +2308,7 @@ function tetDraw(){
 }
 function tetTick(){if(!TET.run)return;const p=TET.p;if(tetFits(p.s,p.x,p.y+1))p.y++;else tetLock();tetDraw();if(TET.run)TET.tm=setTimeout(tetTick,Math.max(90,620-(TET.lvl-1)*55))}
 function tetStart(){
+  tetFlush();
   TET.b=Array.from({length:TH},()=>Array(TW).fill(0));TET.score=0;TET.lines=0;TET.lvl=1;TET.over=false;TET.nx=null;TET.run=true;
   const o=$('#tOver');if(o)o.hidden=true;const B=$('#tStart');if(B)B.textContent='↻ 다시 시작';
   KC.on=false;kcSel(null);if(document.activeElement)document.activeElement.blur();
@@ -2182,11 +2316,15 @@ function tetStart(){
   tetSpawn();tetDraw();clearTimeout(TET.tm);TET.tm=setTimeout(tetTick,620);
   const c=$('#tc');if(c)c.scrollIntoView({block:'nearest'});
 }
+function tetFlush(){if(TET.run&&TET.score>=1)TET.pend={s:TET.score,l:TET.lines};if(TET.pend)tetSave()}
 function tetStop(){TET.run=false;clearTimeout(TET.tm)}
 function tetOver(){
   tetStop();TET.over=true;sfx('b');const o=$('#tOver');if(o){o.hidden=false;const n=$('#tName');try{n.value=localStorage.getItem('bsw_tname')||''}catch(e){}}
   const r=$('#tRes');if(r)r.textContent='게임 오버! '+TET.score.toLocaleString('ko-KR')+'점';
   const v=$('#tSave');if(v)v.hidden=TET.score<1;
+  TET.pend=TET.score>=1?{s:TET.score,l:TET.lines}:null;
+  let sv='';try{sv=localStorage.getItem('bsw_tname')||''}catch(e){}
+  if(TET.pend&&sv)tetSave();else if(o)o.scrollIntoView({block:'nearest'});
 }
 function tetMv(dx){if(tetFits(TET.p.s,TET.p.x+dx,TET.p.y)){TET.p.x+=dx;tetDraw()}}
 function tetRot(){const p=TET.p,s=p.s[0].map((_,i)=>p.s.map(r=>r[i]).reverse());for(const k of[0,-1,1,-2,2])if(tetFits(s,p.x+k,p.y)){p.s=s;p.x+=k;break}tetDraw()}
@@ -2205,13 +2343,15 @@ async function tetRank(){
   try{const L=await DB.rpc('tetris_top');el.innerHTML=L.length?L.map((r,i)=>`<div class="xrow" style="margin:2px 0;padding:3px 8px"><span>${i+1}. ${esc(r.name)}</span><b>${Number(r.score).toLocaleString('ko-KR')}</b></div>`).join(''):'<small style="opacity:.7">아직 기록이 없어요. 1등 해 보세요!</small>'}
   catch(e){el.innerHTML=`<small style="opacity:.7">${esc(dbErr(e))}</small>`}
 }
+/* 게임 오버 기록은 버튼을 안 눌러도 남습니다: 이름을 저장해 뒀으면 바로, 아니면 나가거나 다시 시작할 때 '익명'으로 */
 async function tetSave(){
-  const n=$('#tName').value.trim();
-  try{const r=await DB.rpc('tetris_add',{p_name:n,p_score:TET.score,p_lines:TET.lines});
-    if(!r.ok)return toast(r.err=='rate'?'지금 기록이 너무 많아요. 잠시 후 다시 해 주세요.':'저장할 수 없는 기록이에요.');
-    try{localStorage.setItem('bsw_tname',n)}catch(e){}
-    $('#tSave').hidden=true;toast('순위에 등록했어요! 🏆');tetRank();
-  }catch(e){toast(dbErr(e))}
+  const P=TET.pend;if(!P)return;TET.pend=null;
+  const e0=$('#tName'),n=e0?e0.value.trim():'',m=$('#tRes');
+  try{const r=await DB.rpc('tetris_add',{p_name:n,p_score:P.s,p_lines:P.l});
+    if(!r.ok){if(m)m.textContent='기록을 남기지 못했어요: '+(r.err=='rate'?'지금 기록이 너무 많아요. 잠시 후 다시 해 주세요.':'저장할 수 없는 기록이에요.');if(r.err=='rate'){TET.pend=P}return toast(r.err=='rate'?'지금 기록이 너무 많아요. 잠시 후 다시 해 주세요.':'저장할 수 없는 기록이에요.')}
+    if(n)try{localStorage.setItem('bsw_tname',n)}catch(e){}
+    const v=$('#tSave');if(v)v.hidden=true;if(m)m.textContent='게임 오버! '+P.s.toLocaleString('ko-KR')+'점 · '+(n||'익명')+' 이름으로 등록했어요 🏆';toast('순위에 등록했어요! 🏆');tetRank();
+  }catch(e){TET.pend=P;if(m)m.textContent='기록을 남기지 못했어요: '+dbErr(e);toast(dbErr(e))}
 }
 function showTetris(){
   openM(`<h3>🎮 테트리스</h3>
@@ -2222,7 +2362,7 @@ function showTetris(){
     <p style="font-size:10px;opacity:.8;margin-top:8px;line-height:1.5">←→ 이동<br>↑ / Z·A 회전<br>↓ 천천히<br>Space·패드▲ 한번에<br>X·B 나가기</p></div>
   </div>
   <div class="qbtn" style="justify-content:center"><button class="xb" id="tStart" onclick="tetStart()">▶ 시작</button></div>
-  <div id="tOver" hidden style="margin-top:8px;text-align:center"><b id="tRes"></b><div id="tSave" style="margin-top:6px"><input id="tName" class="xin" maxlength="12" placeholder="순위에 남길 이름"><div class="qbtn" style="justify-content:center"><button class="xb" onclick="tetSave()">🏆 순위 등록</button></div></div></div>
+  <div id="tOver" hidden style="margin-top:8px;text-align:center"><b id="tRes"></b><div id="tSave" style="margin-top:6px"><input id="tName" class="xin" maxlength="12" placeholder="순위에 남길 이름" onkeydown="if(event.key=='Enter'){event.stopPropagation();tetSave()}"><div class="qbtn" style="justify-content:center"><button class="xb" onclick="tetSave()">🏆 순위 등록</button></div></div></div>
   <div class="qform" style="margin-top:8px"><b>🏆 순위 TOP 10</b><div id="tRank" style="margin-top:4px"><small>불러오는 중…</small></div></div>`);
   TET.b=Array.from({length:TH},()=>Array(TW).fill(0));TET.score=0;TET.lines=0;TET.lvl=1;TET.nx=null;tetDraw();tetRank();
 }
@@ -2388,9 +2528,48 @@ function planeSky(t){
 let FLY=null;
 const FLIGHTS=[['town','태초마을','BS101'],['cert','학술·자격 검정 시티','BS202'],['sports','운동 센터','BS303'],['orchard','감귤 과수원','BS404'],['coast','제주 바닷가','BS505']];
 function showFlight(){
-  openM('<h3>✈ BS 에어 출발 안내</h3><p style="font-size:12px;opacity:.8;margin-bottom:6px">갈 곳을 고르면 바로 출발해요.</p><div class="xcol">'+
-    FLIGHTS.map(([id,n,c])=>`<button class="xb big" onclick="flyTo('${id}')">${c} · ${n} 행</button>`).join('')+'</div>');
+  openM('<h3>✈ BS 에어 출발 안내</h3><p style="font-size:12px;opacity:.8;margin-bottom:6px">갈 곳을 고르면 바로 출발해요.</p><b style="font-size:13px">🛫 국내선</b><div class="xcol" style="margin:4px 0 10px">'+
+    FLIGHTS.map(([id,n,c])=>`<button class="xb big" onclick="flyTo('${id}')">${c} · ${n} 행</button>`).join('')+'</div><b style="font-size:13px">🌏 국제선</b><p style="font-size:12px;opacity:.8;margin-top:4px">게임 속 국제선은 취항 준비 중이에요.</p><div class="qbtn"><button class="xb" onclick="showAirBoard()">📡 실제 제주공항 운항 현황 보기</button></div>');
 }
+/* ===== 실제 운항 현황 (한국공항공사 공공데이터, Edge Function 'flights' 경유) ===== */
+const FB={air:'CJU',io:'O',line:'D',q:'',all:false,items:null,err:''},FB_AIR=[['CJU','제주'],['GMP','김포'],['PUS','김해'],['TAE','대구'],['CJJ','청주']];
+function fbTime(s){s=String(s||'');return /^\d{4}$/.test(s)?s.slice(0,2)+':'+s.slice(2):''}
+function fbClass(r){return /결항/.test(r)?'x':/지연|변경|회항/.test(r)?'w':/탑승|마감|도착|출발/.test(r)?'k':''}
+function showAirBoard(line){if(line)FB.line=line;FB.q='';fbLoad()}
+function fbSet(k,v){FB[k]=v;if(k=='air'||k=='io'||k=='line')fbLoad();else fbRender()}
+async function fbLoad(){
+  FB.items=null;FB.err='';fbRender();const want=[FB.air,FB.io,FB.line].join();
+  try{const r=await fetch(`${DBCFG.url}/functions/v1/flights?air=${FB.air}&io=${FB.io}&line=${FB.line}`);
+    let j=null;try{j=await r.json()}catch(e){}
+    if(want!=[FB.air,FB.io,FB.line].join())return;
+    if(r.status==404)FB.err='실제 운항 정보 연결을 준비 중이에요.';
+    else if(!r.ok||!j||!j.ok)FB.err=j&&j.err=='no_key'?'공항 정보 인증키 설정이 아직 안 끝났어요.':'공항 정보 서버에서 답을 받지 못했어요. 잠시 후 다시 해 주세요.';
+    else{FB.items=j.items;FB.at=j.at}
+  }catch(e){if(want==[FB.air,FB.io,FB.line].join())FB.err='실제 운항 정보에 연결하지 못했어요. 잠시 후 다시 해 주세요.'}
+  if($('#fbList'))fbRender();
+}
+function fbRows(){
+  const q=FB.q.trim().toLowerCase(),nowM=new Date(Date.now()+9*36e5),cut=String(nowM.getUTCHours()*100+nowM.getUTCMinutes()-100).padStart(4,'0');
+  return (FB.items||[]).filter(r=>(FB.all||q||r.std>=cut)&&(!q||[r.place,r.fln,r.air].join(' ').toLowerCase().includes(q)));
+}
+function fbListHtml(){
+  if(FB.err)return `<div class="cd">${esc(FB.err)}</div>`;
+  if(!FB.items)return '<p style="font-size:12px;opacity:.8">전광판을 불러오는 중…</p>';
+  const R=fbRows();return R.length?R.map(r=>{const e=fbTime(r.etd),s=fbTime(r.std);return `<div class="frow"><b>${esc(s)}${e&&e!=s?`<small>→ ${esc(e)}</small>`:''}</b><b>${esc(r.fln)}</b><span>${esc(r.place)}<small>${esc(r.air)}${r.gate?' · '+esc(r.gate)+'번':''}</small></span><span class="st ${fbClass(r.rmk)}">${esc(r.rmk||'예정')}</span></div>`}).join(''):'<div class="cd">조건에 맞는 항공편이 없어요.</div>';
+}
+const fbRoute=()=>{const name=(FB_AIR.find(a=>a[0]==FB.air)||[])[1];return FB.io=='O'?`${name} → ${FB.q.trim()||'어디든'}`:`${FB.q.trim()||'어디서든'} → ${name}`};
+function fbRender(){
+  const name=(FB_AIR.find(a=>a[0]==FB.air)||[])[1],T=(k,v,t)=>`<button class="xb ${FB[k]===v?'on':''}" onclick="fbSet('${k}',${typeof v=='string'?`'${v}'`:v})">${t}</button>`;
+  const quick=['제주','김포','부산','청주','대구','광주'].filter(c=>c!=name&&!(c=='부산'&&name=='김해'));
+  const html=`<h3>📡 실제 운항 현황</h3><p style="font-size:12px;opacity:.8"><span id="fbR">${esc(fbRoute())}</span> · 오늘 기준이에요. 게임 속 BS 에어와는 별개인 실제 항공편이에요.</p>
+  <div class="tchips">${FB_AIR.map(a=>T('air',a[0],a[1])).join('')}</div>
+  <div class="tchips">${T('io','O','🛫 출발')}${T('io','I','🛬 도착')}${T('line','D','국내선')}${T('line','I','국제선')}</div>
+  <input id="fbQ" class="xin" maxlength="20" placeholder="도시·편명·항공사 (예: 김포, 7C101)" value="${esc(FB.q)}" oninput="FB.q=this.value;fbList()">
+  <div class="tchips" style="margin-top:5px">${quick.map(c=>`<button class="xb" onclick="FB.q='${c}';fbRender()">${c}</button>`).join('')}<button class="xb" onclick="FB.all=!FB.all;fbRender()">${FB.all?'지금부터만':'지난 편도 보기'}</button><button class="xb" onclick="showFlight()">← 게임 비행기</button></div>
+  <div id="fbList">${fbListHtml()}</div><p style="font-size:10px;opacity:.7;margin-top:6px">자료: 한국공항공사 공공데이터. 실제 탑승 전에는 항공사 안내를 확인해 주세요.${FB.at?' · '+esc(fmtT(FB.at))+' 기준':''}</p>`;
+  if($('#fbQ')){const s=$('.mb').scrollTop;$('#mc').innerHTML=html;$('.mb').scrollTop=s}else openM(html);
+}
+function fbList(){const r=$('#fbList');if(!r)return;r.innerHTML=fbListHtml();const t=$('#fbR');if(t)t.textContent=fbRoute()}
 function flyTo(id){closeM();busy=true;FLY={to:id,a:null};sfx('w')}
 function drawFlight(t){
   if(FLY.a==null)FLY.a=t;
@@ -2405,6 +2584,15 @@ function drawOpera([x0,y0,w,h]){const X=x0*TS,Y=y0*TS,W2=w*TS,H2=h*TS;
   const sail=(cx,bw,ht,fc)=>{g.fillStyle=fc;g.beginPath();g.moveTo(cx-bw/2,Y+H2);g.quadraticCurveTo(cx-bw/2+4,Y+H2-ht,cx+bw/2,Y+H2-ht-6);g.quadraticCurveTo(cx+bw/2-6,Y+H2-ht/3,cx+bw/2,Y+H2);g.closePath();g.fill();g.strokeStyle='#94a3b8';g.lineWidth=1;g.stroke()};
   sail(X+W2*.2,48,34,'#e2e8f0');sail(X+W2*.5,70,50,'#f8fafc');sail(X+W2*.78,56,40,'#f1f5f9');
   g.fillStyle='#fbbf24';g.font='12px sans-serif';g.textAlign='center';g.fillText('♪',X+W2*.5,Y+H2-14);g.textAlign='start'}
+/* 집 고양이·강아지 */
+function drawAni(nx,ny,k,col,col2,t,d){
+  const left=d==2,x=nx*TS+6,y=ny*TS+12,b=(t/260|0)%2,P=(a,q,w,h,c)=>{g.fillStyle=c;g.fillRect(left?x+20-a-w:x+a,y+q,w,h)};
+  P(1,17,18,3,'#0003');
+  P(0,8,14,7,col);P(1,15,2,3,col);P(4,15,2,3,col);P(9,15,2,3,col);P(12,15,2,3,col);   // 몸통·다리
+  P(11,1,9,9,col);P(13,4,1,2,'#111');P(17,4,1,2,'#111');
+  if(k=='cat'){P(11,-2,3,3,col);P(17,-2,3,3,col);P(12,-1,1,1,'#fda4af');P(18,-1,1,1,'#fda4af');P(15,6,1,1,'#fda4af');P(0,3+b,2,6,col2);P(2,10,8,2,'#b45309');P(13,7,1,1,'#fff');P(18,7,1,1,'#fff')}
+  else{P(10,1,2,6,col2);P(19,1,2,6,col2);P(14,6,3,3,'#fff');P(15,6,1,1,'#111');P(-1+b,5,2,4,col);P(4,9,6,3,col2)}
+}
 function drawDog(nx,ny,col,t,d){const x=nx*TS+(d==2?28:-2),y=ny*TS+22,b=(t/160|0)%2;g.fillStyle=col;g.fillRect(x,y,12,6);g.fillRect(x+(d==2?-3:9),y-4,6,6);g.fillStyle='#0008';g.fillRect(x+1,y+6,2,2+b);g.fillRect(x+9,y+6,2,3-b);g.fillRect(x+(d==2?-2:13),y-2,1,1)}
 function draw(t){
   for(let y=0;y<H;y++)for(let x=0;x<W;x++)tile(g,map.m[y][x],x,y,t);
@@ -2413,8 +2601,9 @@ function draw(t){
   const E=npcs.map(n=>{let nx=n.x,ny=n.y;
     if(n.mv){const p=Math.min(1,(t-n.mv.a)/RUN_MS);nx=n.mv.fx+(n.mv.tx-n.mv.fx)*p;ny=n.mv.fy+(n.mv.ty-n.mv.fy)*p}
     return{y:ny,f:()=>{
-      if(n.pet){const hop=Math.abs(Math.sin(t/120))*4,bx=nx*TS+6,by=ny*TS+16-hop,fc=n.dir==2?-1:1;g.fillStyle='#0003';g.fillRect(bx+1,ny*TS+29,20,3);g.fillStyle='#d6a35c';g.fillRect(bx,by,18,9);g.fillRect(fc>0?bx+13:bx-3,by-6,8,8);g.fillStyle='#92400e';g.fillRect(fc>0?bx+14:bx-2,by-8,3,4);g.fillStyle='#111';g.fillRect(fc>0?bx+18:bx-2,by-3,2,2);g.fillStyle='#d6a35c';g.fillRect(bx+2,by+9,3,4);g.fillRect(bx+13,by+9,3,4);const tl=(t/90|0)%2?-4:-1;g.fillStyle='#92400e';g.fillRect(fc>0?bx-4:bx+18,by+tl,4,3);return}
-      spr(g,nx*TS+4,ny*TS+2+(n.sit?6:0),2,{d:n.dir,h:n.h,p:n.h,c:n.c,lh:n.lh,gl:n.gl,l:!n.sit,w:(t/(n.run?110:350)|0)%2});
+      if(n.ani){drawAni(nx,ny,n.ani,n.c,n.h,t,n.dir);return}
+      else if(n.pet){const hop=Math.abs(Math.sin(t/120))*4,bx=nx*TS+6,by=ny*TS+16-hop,fc=n.dir==2?-1:1;g.fillStyle='#0003';g.fillRect(bx+1,ny*TS+29,20,3);g.fillStyle='#d6a35c';g.fillRect(bx,by,18,9);g.fillRect(fc>0?bx+13:bx-3,by-6,8,8);g.fillStyle='#92400e';g.fillRect(fc>0?bx+14:bx-2,by-8,3,4);g.fillStyle='#111';g.fillRect(fc>0?bx+18:bx-2,by-3,2,2);g.fillStyle='#d6a35c';g.fillRect(bx+2,by+9,3,4);g.fillRect(bx+13,by+9,3,4);const tl=(t/90|0)%2?-4:-1;g.fillStyle='#92400e';g.fillRect(fc>0?bx-4:bx+18,by+tl,4,3);return}
+      spr(g,nx*TS+4,ny*TS+2+(n.sit?6:0),2,{d:n.dir,h:n.h,p:n.h,c:n.c,lh:n.lh,gl:n.gl,lk:n.lk,l:!n.sit,w:(t/(n.run?110:350)|0)%2});
       if(n.dog)drawDog(nx,ny,n.dog,t,n.dir);
       if(n.cup&&n.dir!=1){const cx=nx*TS+(n.dir==2?1:24),cy=ny*TS+15;g.fillStyle='#16a34a';g.fillRect(cx+4,cy-5,1,6);g.fillStyle='#f8fafc';g.fillRect(cx,cy,8,2);g.fillStyle='#e2e8f0cc';g.fillRect(cx,cy+2,8,10);g.fillStyle='#3f2212';g.fillRect(cx+1,cy+4,6,8);g.fillStyle='#ffffffb0';g.fillRect(cx+2,cy+5,2,2);g.fillRect(cx+5,cy+7,1,2)}
       if(n.n=='배드민턴 치는 회원'){const pr=(t%1400)/1400,q=pr<.5?pr*2:2-pr*2;g.fillStyle='#fff';g.fillRect((8.8+q*2.2)*TS,(6.3-Math.sin(q*Math.PI)*.8)*TS,4,4)}
@@ -2422,7 +2611,7 @@ function draw(t){
       if(n.um)drawUmb(nx,ny,n.um);
     }}});
   E.push({y:uy,f:()=>{g.fillStyle='#0003';g.fillRect(ux*TS+6,uy*TS+28,20,4);const sb=SIT?(SIT.k=='bench'?{y:6,l:false}:SIT.k=='swing'?{y:-1+Math.abs(Math.sin(t/330))*-3,x:Math.sin(t/330)*6,l:false}:SIT.k=='seesaw'?{y:Math.sin(t/420)*5-5,x:-10,l:false}:{y:(t-SIT.up<240?-1:9),l:true}):{y:0,l:true};
-      spr(g,ux*TS+4+(sb.x||0),uy*TS+2+sb.y,2,{d:dir,w:mv&&steps%2,l:sb.l,c:S.end?'#fb923c':undefined});if(WX.kind=='rain'&&map.o)drawUmb(ux,uy,'#2563eb')}});
+      spr(g,ux*TS+4+(sb.x||0),uy*TS+2+sb.y,2,{d:dir,w:mv&&steps%2,l:sb.l,c:S.end?'#fb923c':'#2b3140',h:'#17151c',p:'#17151c',lk:ME_LOOK});if(WX.kind=='rain'&&map.o)drawUmb(ux,uy,'#2563eb')}});
   if(map.opera)drawOpera(map.opera);
   if(map.sign){g.font='bold 10px sans-serif';g.textAlign='center';for(const k in map.sign){const[a,b]=k.split(',').map(Number),t2=map.sign[k],w2=g.measureText(t2).width+10,cx=a*TS+16,cy=b*TS-6;g.fillStyle='#3f2a1c';g.fillRect(cx-w2/2-1,cy-8,w2+2,15);g.fillStyle='#a06a36';g.fillRect(cx-w2/2,cy-7,w2,13);g.fillStyle='#fff';g.fillText(t2,cx,cy+3)}g.textAlign='start'}
   if(map.plane)drawPlane(map.plane[0]*TS,map.plane[1]*TS,2.1);
