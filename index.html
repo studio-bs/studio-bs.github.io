@@ -3075,7 +3075,7 @@ function drawTrain(t){
   g.fillStyle='#ffffff40';g.fillRect(40,h-16,w-80,4);g.fillStyle=FLY.col||'#bdb092';g.fillRect(40,h-16,(w-80)*Math.min(1,p),4);
   if(p>=1){const F=FLY;FLY=null;trainMusic(false);warp(F.to,F.x,F.y,F.d)}
 }
-function flyTo(id){closeM();busy=true;const n=id=='terminal'?'제주공항':'서울 김포공항',seoul=id=='gimpo';
+function flyTo(id){closeM();busy=true;const seoul=SEOUL_IDS.includes(id),n=seoul?'서울 김포공항':'제주공항';
   const F={to:id,a:null,plan:{lines:['승객 여러분, 안녕하십니까. 기장입니다. 저희 BS 에어를 이용해 주셔서 감사합니다.','이 비행기는 '+n+'까지 갑니다. 오늘 하늘은 '+(WXL[WX.kind]?WXL[WX.kind][1]:'맑음')+', 편안한 비행 되십시오.',(seoul?'곧 김포공항에':'곧 제주공항에')+' 착륙합니다. 좌석 벨트를 매 주십시오.']}};FLY=F;sfx('w');captainTalk(F)}
 /* 기장 방송: 한 문장씩 빠르게 말하고, 다 끝나야 착륙 */
 function captainTalk(F){const L=F.plan.lines;let i=0;const next=()=>{if(FLY!==F)return;if(i>=L.length){F.doneAt=performance.now()+500;return}const tx=L[i++];F.plan.show=tx;let fin=false,tm=0;const go=()=>{if(fin)return;fin=true;clearTimeout(tm);next()};
