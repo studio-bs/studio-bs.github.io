@@ -241,6 +241,13 @@
     .brk{display:none}
     @media(max-width:620px){#bar b{width:auto;flex:1 1 0}.brk{display:block;flex:0 0 100%;height:0}#vc{margin-right:2px;font-size:10px}}
     .xb.kko{background:#fee500;color:#191600;border-color:#b8a600}.xb.kko:hover:not(:disabled){background:#ffeb3b}
+    @media(min-width:1100px){
+      #ctl #minimap-overlay{position:static;flex:0 0 auto;width:232px;opacity:1;pointer-events:auto;transform:none;padding:0;background:transparent;border:0;box-shadow:none}
+      #ctl #minimap-overlay.mm-off{visibility:hidden}
+      #ctl .minimap-title{display:none}
+      #toast{bottom:190px}
+      #ctl .minimap-node .lb{font-size:8px}
+    }
     .kcur{outline:3px solid #fbbf24!important;outline-offset:1px}
     #kc{position:fixed;z-index:12;font-size:20px;line-height:1;pointer-events:none;display:none;filter:drop-shadow(0 1px 1px #0008)}
     @media(max-width:900px){
@@ -471,7 +478,7 @@ town:{n:'태초마을',o:1,bgm:'town',m:[
   {x:9,y:8,c:'#111827',h:'#1b1b26',stay:1,w:1,n:'창끼 (a.k.a 노진구)',s:['전설의힘을 알고있나?','ㅋ']},
   {x:10,y:6,c:'#4aa3ff',h:'#6b3e26',n:'마을 소년',s:['어서 와! 여기가 BS World의 태초마을이야.','북쪽 귤향 올레 끝엔 자격 시티, 동쪽엔 운동 센터, 서쪽엔 나눔 해변, 남쪽엔 쉼의 숲이 있어.','위쪽 🧠 뇌구조 메뉴를 열면 어디든 순간이동할 수 있대!']},
   {x:12,y:7,c:'#312e81',h:'#fde047',n:'별지기',when:()=>{const{h}=jejuNow();return h>=23||h<1},s:['이 시간에 깨어 있네요. ✨','자정 무렵에만 여기 나와요. 비밀이에요.'],eg:'star'},
-  {x:5,y:7,c:'#ff8fb1',h:'#222',w:1,n:'꽃집 누나',s:['꽃향기 맡고 가렴. 🌸','달리기 전엔 스트레칭 필수야!']}
+  {x:5,y:7,c:'#ff8fb1',h:'#222',w:1,n:'꽃밭 이웃',s:['꽃향기 맡고 가렴. 🌸','달리기 전엔 스트레칭 필수야!']}
 ]},
 
 route1:{n:'귤향 올레',o:1,bgm:'route',m:[
@@ -657,10 +664,12 @@ rest:{n:'쉼의 숲',o:1,bgm:'indoor',m:[
 {x:12,y:5,c:'#fdba74',h:'#222',w:1,dog:'#f8fafc',n:'강아지 산책 삼춘',s:['이 녀석 산책 안 시켜 주민 집을 뒤집어 놔마씸. 🐕']},
 {x:5,y:7,c:'#c4b5fd',h:'#3f2a1c',w:1,n:'산책하는 사람',s:['아무것도 안 해도 되는 시간이 제일 좋네요.','연못 앞 벤치도 좋아요.']}]},
 
-library:{n:'보성의 음악 서재',par:'rest',bgm:'indoor',m:['w'.repeat(W),'wwzwzwzwzwzwzww',FR,FR,'wppffXfffXffppw',FR,'wfKKfffffffKKfw',FR,FR,'wwwwwwwxwwwwwww'],d:{'7,9':['rest',3,4]},p:[
-{x:7,y:3,c:'#0f766e',h:'#1b1b26',n:'서재 지기',s:['어서 오세요. 주인장이 고른 노래가 벽에 걸려 있어요. 🎵','액자를 누르면 곡 목록을 볼 수 있어요.'],ch:{'🎵 플레이리스트 보기':()=>plHome(),'듣는 방법':['🎬 표시 곡은 여기서 영상으로 재생되고, 전체 듣기와 반복도 돼요.','나머지 곡은 YouTube Music 작은 창으로 열려요.']}},
-{x:10,y:3,c:'#8b5cf6',h:'#f472b6',n:'Suno 음악가',s:['보성이가 Suno AI로 만든 노래를 제가 틀어 드려요. 🎧'],ch:{'🎧 보성의 노래 듣기':()=>showSuno(),'어떤 노래예요?':['주인장이 Suno AI로 직접 만든 노래들이에요.','한 곡씩 골라서 들어 보세요.']}},
-{x:11,y:7,c:'#fda4af',h:'#222',w:1,n:'음악 듣는 손님',s:['이 서재에 오면 시간이 천천히 가는 것 같아요.']}]},
+library:{n:'보성의 음악 서재',par:'rest',bgm:'indoor',m:['w'.repeat(W),'wwzwzwzwzwzwzww',FR,FR,'wppfkkkkkkkfppw','wfffkfffffkfffw','wfffkkkkkkkfffw','wɦffffffffffɡʊw',FR,'wwwwwwwxwwwwwww'],d:{'7,9':['rest',3,4]},p:[
+{x:5,y:5,c:'#0f766e',h:'#1b1b26',n:'서재 지기',s:['어서 오세요. 주인장이 고른 노래가 벽에 걸려 있어요. 🎵','액자를 누르면 곡 목록을 볼 수 있어요.'],ch:{'🎵 플레이리스트 보기':()=>plHome(),'듣는 방법':['🎬 표시 곡은 여기서 영상으로 재생되고, 전체 듣기와 반복도 돼요.','나머지 곡은 YouTube Music 작은 창으로 열려요.']}},
+{x:7,y:5,c:'#0ea5e9',h:'#222',n:'노래방 안내원',s:['노래방에서 뭐 부를지 고민이세요? 🎤','TJ 번호를 찾아 드릴게요.'],ch:{'🎤 노래 번호 찾기':()=>showTj()}},
+{x:9,y:5,c:'#8b5cf6',h:'#f472b6',n:'Suno 음악가',s:['보성이가 Suno AI로 만든 노래를 제가 틀어 드려요. 🎧'],ch:{'🎧 보성의 노래 듣기':()=>showSuno(),'어떤 노래예요?':['주인장이 Suno AI로 직접 만든 노래들이에요.','한 곡씩 골라서 들어 보세요.']}},
+{x:3,y:8,c:'#fb923c',h:'#3f2a1c',n:'노래 추천 손님',s:['저 요즘 들을 노래가 없어요.','노래 추천해 주세요! 🎶'],ch:{'🎶 노래 추천하기':()=>showRec()}},
+{x:11,y:8,c:'#fda4af',h:'#222',w:1,n:'음악 듣는 손님',s:['이 서재에 오면 시간이 천천히 가는 것 같아요.']}]},
 
 orchard:{n:'감귤 과수원',o:1,bgm:'route',land:[7,5],m:[
   'TTTTTTTTTTTTTTT',
@@ -710,8 +719,9 @@ terminal:{n:'제주 공항 터미널',par:'airport',bgm:'indoor',m:['w'.repeat(W
 {x:3,y:5,c:'#f472b6',h:'#222',w:1,n:'출장 가는 직장인',s:['비행기 타기 전 감귤 주스 한 잔이 국룰이죠.']},
 {x:11,y:7,c:'#94a3b8',h:'#d1d5db',n:'마중 나온 삼춘',s:['보성이 오는 날인가 해서 기다렴수다게.']}]},
 
-arcade:{n:'쉼터 오락실',par:'rest',bgm:'town',m:['w'.repeat(W),'wwwwwwwwwwwwwww',FR,'wf¤¤f¤¤f¤¤f¤¤fw',FR,FR,'wfKKfffffffKKfw',FR,FR,'wwwwwwwxwwwwwww'],d:{'7,9':['rest',10,8]},p:[
+arcade:{n:'쉼터 오락실 · PC 코너',par:'rest',bgm:'town',m:['w'.repeat(W),'wwwwwwwwwwwwwww',FR,'wf¤¤f¤¤fππfππfw',FR,'wfffffffππfππfw','wfKKffffffffffw',FR,FR,'wwwwwwwxwwwwwww'],d:{'7,9':['rest',10,8]},p:[
 {x:7,y:5,c:'#a855f7',h:'#111',n:'오락실 사장',s:['주인장이 테트리스를 좋아해서 전부 테트리스만 넣었수다.','기계 앞에서 눌러 봅서. 순위도 남습니다.'],ch:{'🎮 테트리스 하기':()=>showTetris()}},
+{x:10,y:7,c:'#f43f5e',h:'#1b1b26',n:'PC방 알바',s:['오른쪽은 PC 코너예요. 🖥','주인장은 롤이랑 스타를 좋아한대요. 자리 비었어요.'],ch:{'🖥 컴퓨터 쓰기':()=>showPc()}},
 {x:3,y:5,c:'#22d3ee',h:'#222',w:1,n:'동전 든 학생',s:['라인 넉 줄 한 번에 지우면 그날은 럭키비키죠.']}]},
 
 gpHome:{n:'할아버지댁',par:'route1',bgm:'indoor',cozy:'#b45309',m:ELDER_M,d:{'7,9':['route1',3,4]},p:[
@@ -824,7 +834,7 @@ function tile(c,k,x,y,t){
       if(!U)f(L,0,1,32,3); if(!D)f(L,0,28,32,3); if(!Le)f(L,1,0,3,32); if(!Ri)f(L,28,0,3,32); break}
     case 'H': f('#fef3c7',0,0,32,32); f('#b45309',0,28,32,4); f('#38bdf8',9,8,14,12); f('#fff',9,8,14,2); break;
     case 'D': fl(); f('#78350f',4,6,24,20); f('#b45309',6,8,20,14); f('#fde68a',10,11,6,6); break;
-    case 'X': fl(); f('#9ca3af',10,18,12,10); f('#15803d',8,6,16,14); f('#22c55e',10,8,12,10); f('#f43f5e',14,6,4,4); break;
+    case 'X': fl(); f('#9ca3af',10,18,12,10); if(cur=='vc'){f('#374151',8,4,16,16);f('#fee2e2',10,6,12,12);ci(16,13,3,'#dc2626');f('#dc2626',15,8,2,3)}else{f('#15803d',8,6,16,14); f('#22c55e',10,8,12,10); f('#f43f5e',14,6,4,4)} break;
     case 'f': fl(); break; case 'w': wl(); f('#46352a',0,28,32,4); break;
     case 'K': fl(); f('#7a4a2a',2,6,28,22); f('#a8693f',2,6,28,6); break;
     case 'P': wl(); f('#e0b840',6,2,20,26); f('#cfd8e8',9,5,14,20); spr(c,X+10,Y+7,1,{l:false,p:'#f2c9a0'}); break;
@@ -884,6 +894,10 @@ function tile(c,k,x,y,t){
     case '¶': { fl(); f((map.cozy||'#b45309')+'cc',0,0,32,32); f('#78350f',1,11,30,13); f('#a16207',1,11,30,4); f('#5c4028',4,24,4,5); f('#5c4028',24,24,4,5); if(x==map.m[y].indexOf('¶')+1){f('#ea580c',11,7,5,5);f('#fb923c',17,7,5,5);f('#f97316',14,4,5,5)} break}
     case '§': { fl(); f('#fef3c7',2,3,28,10); f(map.cozy||'#b45309',2,13,28,15); f('#ffffff40',2,13,28,3); break}
     case '℧': gr(); f('#6b7280',14,20,4,10); f('#dc2626',8,6,16,15); f('#ef4444',8,4,16,5); f('#7f1d1d',11,11,10,2); f('#fff',20,2,2,8); f('#fbbf24',22,2,6,4); break;
+    case 'π': { fl(); f('#6b4a2e',1,20,30,10); f('#8a6d4b',1,20,30,3); f('#111827',6,3,20,15); const sc=['#22d3ee','#a78bfa','#4ade80','#fbbf24'][(x+y)%4]; f(sc,8,5,16,11); f('#ffffff60',10,7,6,2); f('#111827',10,10,10,1); f('#374151',14,18,4,3); f('#d1d5db',9,23,14,3); break}
+    case 'ɡ': { fl(); f('#6b4a2e',6,27,20,3); f('#7a4a22',14,2,4,12); f('#d4a056',8,14,16,14); f('#c08a3e',10,12,12,5); f('#3f2a1c',13,17,6,6); f('#111',15,18,2,4); f('#e5e7eb',15,2,1,12); f('#e5e7eb',16,2,1,12); break}
+    case 'ʊ': { fl(); f('#6b4a2e',8,27,16,3); f('#92400e',14,5,4,9); ci(16,20,6,'#d97706'); ci(16,14,4,'#d97706'); f('#3f2a1c',14,17,4,4); f('#f8fafc',15,5,1,11); f('#f8fafc',16,5,1,11); break}
+    case 'ɦ': { fl(); f('#6b4a2e',4,15,24,13); f('#8a6d4b',4,15,24,3); f('#cbd5e1',7,8,18,7); f('#64748b',7,8,18,1); [9,12,15,18,21].forEach(a=>f('#1f2937',a,11,2,2)); break}
     case 'q': { wl(); const m=(map.memo||{})[x+','+y]||{};
       f('#00000030',7,7,20,20); f(m.c||'#fde047',6,5,20,20); f('#ffffff66',6,5,20,3); f('#ef4444',15,4,3,3);
       c.fillStyle='#374151'; c.font='bold '+((m.s||'').length>2?8:13)+'px sans-serif'; c.textAlign='center'; c.fillText(m.s||'',X+16,Y+21); c.textAlign='start'; break}
@@ -1063,7 +1077,7 @@ function banner(t){const b=$('#bn');b.textContent=t;b.style.opacity=1;setTimeout
 function zone(){return !map?null:(map.o?cur:map.par)}
 
 /* [월드맵] 각 지역의 실제 타일맵을 작은 캔버스로 그려 사각형 안에 투영 */
-const MM_COL={'℧':'#dc2626','Ж':'#a8875a','Ю':'#c2410c','ŋ':'#b45309','Ω':'#6cc04a','?':'#fde047',';':'#fde047','$':'#e2e8f0','¢':'#f8fafc','>':'#7c3aed','<':'#312e81',T:'#1e7a31','.':'#6cc04a',F:'#6cc04a','=':'#f3db98','~':'#38bdf8',s:'#fde047',
+const MM_COL={'ɡ':'#c9a36b','ʊ':'#c9a36b','ɦ':'#c9a36b','℧':'#dc2626','Ж':'#a8875a','Ю':'#c2410c','ŋ':'#b45309','Ω':'#6cc04a','?':'#fde047',';':'#fde047','$':'#e2e8f0','¢':'#f8fafc','>':'#7c3aed','<':'#312e81',T:'#1e7a31','.':'#6cc04a',F:'#6cc04a','=':'#f3db98','~':'#38bdf8',s:'#fde047',
   R:'#d64541',Q:'#3b6fd6',G:'#2f9e5f',Y:'#7e57c2',H:'#fef3c7',D:'#78350f',t:'#c8693f',
   W:'#0f766e','@':'#ea580c','+':'#94a3b8',',':'#475569','#':'#7a4a22','[':'#6cc04a',']':'#6cc04a','|':'#6cc04a','%':'#44403c','&':'#2563eb',r:'#374151',y:'#374151',u:'#9ca3af',e:'#f8fafc',n:'#2563eb',j:'#bae6fd',S:'#475569',d:'#8b5a2b',o:'#8b5a2b',V:'#bfdbfe',v:'#dbeafe',m:'#1e7a31','1':'#38bdf8','2':'#38bdf8','3':'#38bdf8','4':'#38bdf8'};
 const MM_FL=['#f472b6','#ffffff','#facc15','#a78bfa','#60a5fa','#fb923c','#e11d48'];
@@ -1125,7 +1139,7 @@ function updateMiniDot(){
 let mmPin=false,mmFlash=false,mmTimer=null;
 function syncMiniMap(){const ov=$('#minimap-overlay');if(ov)ov.classList.toggle('on',mmPin||mmFlash)}
 /* 모바일: 아래쪽 패널에 지도·프로필·모험 일지 */
-const mobMq=matchMedia('(max-width:620px)'),mobOn=()=>mobMq.matches;
+const mobMq=matchMedia('(max-width:620px)'),mobOn=()=>mobMq.matches,wideMq=matchMedia('(min-width:1100px)'),wideOn=()=>wideMq.matches;
 function mobTab(t){document.querySelectorAll('#mobPanel [data-t]').forEach(e=>e.classList.toggle('on',e.dataset.t==t));const b=$('#mobBody');if(b)b.scrollTop=0}
 function mobVh(){document.documentElement.style.setProperty('--vh',innerHeight+'px');if(typeof bgmPlace=='function')bgmPlace()}
 addEventListener('resize',mobVh);
@@ -1136,11 +1150,12 @@ function mobLayout(){
   if(mobOn()){P.hidden=false;
     P.querySelector('.mt[data-t=map]').append(O);P.querySelector('.mt[data-t=me]').append(L);P.querySelector('.mt[data-t=log]').append(R);
     if(!P.querySelector('.mt.on'))mobTab('map');
-  }else{P.hidden=true;S.append(O);A.prepend(L);A.append(R)}
+  }else{P.hidden=true;A.prepend(L);A.append(R);if(wideOn()){const C=$('#ctl');C.insertBefore(O,C.querySelector('.ab'))}else S.append(O)}
 }
 function flashMiniMap(){if(!map||!map.o){mmFlash=false;syncMiniMap();return}mmFlash=true;syncMiniMap();clearTimeout(mmTimer);mmTimer=setTimeout(()=>{mmFlash=false;syncMiniMap()},3600)}
 function toggleMap(){
   if(mobOn()){mobTab('map');return}
+  if(wideOn()){$('#minimap-overlay').classList.toggle('mm-off');return}
   if(busy)return;
   if(mmPin||mmFlash){mmPin=false;mmFlash=false;clearTimeout(mmTimer)}else{mmPin=true;toast('가고 싶은 지역을 눌러 이동하세요!')}
   syncMiniMap();
@@ -1175,12 +1190,17 @@ function act(){
   else if(k=='Z')openExam();
   else if(k=='l')showFlight();
   else if(k=='¤')showTetris();
+  else if(k=='π'){if(cur=='arcade'&&x==12&&y==5){eggGet('lol','주인장의 비밀 컴퓨터를 찾았다');showLolMe()}else showPc()}
+  else if(k=='ɡ')say('통기타',['주인장의 기타, Crafter Sure Plus다. 🎸','줄을 살짝 튕기니 맑은 소리가 난다.']);
+  else if(k=='ʊ')say('우쿨렐레',['작고 귀여운 우쿨렐레다. 🎵','통통 튀는 소리가 난다.']);
+  else if(k=='ɦ')say('하모니카',['은빛 하모니카가 놓여 있다.','후~ 하고 불어 보고 싶어진다.']);
   else if(k=='℧')showMail();
   else if(k=='ŋ')say('개집',isNight()&&!WET()?['쿨쿨… 💤','개가 웅크리고 잠들어 있다.']:WET()?['개집 안에서 두 눈만 반짝인다.','비가 그칠 때까지 나올 생각이 없나 보다.']:['개집이 비어 있다.','주인은 밖에서 신나게 뛰어다니는 중이다.']);
   else if(k=='¶')say('밥상',elderHome()?['따뜻한 귤차와 귤이 놓여 있다. 🍊']:['귤 옆에 쪽지가 있다.','"산책 나감. 귤 먹엉 가라."']);
   else if(k=='§')say('이불',['폭신한 이불이 잘 개어져 있다.']);
   else if(k=='†')say('창문',isNight()?['창밖으로 별이 보인다.']:['창밖으로 귤나무가 보인다.']);
   else if(k=='ψ')showKakao();
+  else if(k=='X'&&cur=='vc')showRed();
   else if(k=='Ω')say('농구 골대',['그물이 살짝 흔들린다. 🏀','누가 방금까지 슛 연습을 한 모양이다.']);
   else if(k=='?')say('파라솔',['그늘이 시원한 파라솔이다. 🏖']);
   else if(k==';')say('돗자리',['누가 맡아 둔 자리인가 보다.']);
@@ -1341,7 +1361,7 @@ const dbErr=e=>e&&e.status==404||/PGRST20|42P01|42883/.test(e&&e.message||'')?'D
 
 const fmtT=t=>{try{return new Date(t).toLocaleString('ko-KR',{timeZone:'Asia/Seoul',hour12:false})}catch(e){return t||''}};
 const fmtD=d=>{try{return new Date(d+'T00:00:00').toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric',weekday:'short'})}catch(e){return d}};
-const BACKS={mail:()=>showMail(),ex:()=>exHome(),qa:()=>showQA(),pl:()=>plHome()};
+const BACKS={rec:()=>showRec(),mail:()=>showMail(),ex:()=>exHome(),qa:()=>showQA(),pl:()=>plHome()};
 function adm(k){
   return DB.tok?`<div class="adm">🔑 운영자 모드 <button class="xb" onclick="DB.logout();BACKS.${k}()">로그아웃</button></div>`
                :`<div class="adm">👀 보기 전용 <button class="xb" onclick="showLogin('${k}')">🔑 운영자 로그인</button></div>`;
@@ -1926,6 +1946,46 @@ async function noteAns(id,st,ch){try{const e=$('#nrp'+id),r=await DB.rpc('note_a
 async function noteDel(id){try{const r=await DB.rpc('note_delete',{p_id:id});if(!r.ok)return toast(NERR[r.err]||NERR.bad);noteAdmin();noteBell()}catch(e){toast(dbErr(e))}}
 async function noteBell(){const b=$('#nBell');if(!b)return;if(!DB.tok){b.hidden=true;return}try{const n=await DB.rpc('note_count');b.hidden=!n;b.textContent='📬 '+n}catch(e){b.hidden=true}}
 
+/* ===== 주인장의 롤 전적 (이스터 에그) ===== */
+const LOL_ME=['징크스','Citrus','Galaxy','감귤','밀감'];
+function showLolMe(){
+  const u=n=>encodeURIComponent(n+'-Jeju');
+  openM(`<h3>🤫 주인장의 컴퓨터</h3><p style="font-size:12px;opacity:.85;margin-bottom:6px">켜져 있는 컴퓨터를 몰래 봤더니 롤 계정이 줄줄이…</p>`+LOL_ME.map(n=>`<div class="xrow"><b>${esc(n)}#Jeju</b><span class="qbtn" style="margin:0"><a class="xb" style="padding:3px 7px" href="https://op.gg/lol/summoners/kr/${u(n)}" target="_blank" rel="noopener">OP.GG</a><a class="xb" style="padding:3px 7px" href="https://www.deeplol.gg/summoner/kr/${u(n)}" target="_blank" rel="noopener">DEEPLOL</a></span></div>`).join(''));
+}
+
+/* ===== 노래방 번호 찾기 (TJ) ===== */
+function showTj(){
+  openM(`<h3>🎤 TJ 노래방 번호 찾기</h3><input id="tjq" class="xin" maxlength="40" placeholder="곡 제목이나 가수" style="margin-top:6px" onkeydown="if(event.key=='Enter')tjFind()"><div class="qbtn"><button class="xb" onclick="tjFind()">🔍 찾기</button></div><div id="tjr" style="margin-top:6px"></div><p style="font-size:10px;opacity:.7;margin-top:8px">번호 정보는 외부 공개 데이터라 최신곡은 없을 수 있어요.</p>`);
+}
+const ytSearch=q=>'https://www.youtube.com/results?search_query='+encodeURIComponent(q);
+async function tjFind(){
+  const q=$('#tjq').value.trim();if(!q)return toast('곡 제목이나 가수를 입력해 주세요.');
+  const R=$('#tjr');R.innerHTML='<small>찾는 중…</small>';
+  const get=k=>fetch('https://api.manana.kr/karaoke/'+k+'/'+encodeURIComponent(q)+'/tj.json').then(r=>r.ok?r.json():[]).catch(()=>null);
+  const[a,b]=await Promise.all([get('song'),get('singer')]);
+  if(!$('#tjr'))return;
+  if(a===null&&b===null){R.innerHTML=`<div class="cd">번호 서버에 연결하지 못했어요. <a href="https://www.tjmedia.com/" target="_blank" rel="noopener">TJ미디어 사이트 열기</a></div>`;return}
+  const seen=new Set(),L=[...(a||[]),...(b||[])].filter(s=>s&&s.no&&!seen.has(s.no)&&seen.add(s.no)).slice(0,30);
+  if(!L.length){R.innerHTML=`<div class="cd">찾지 못했어요. 띄어쓰기를 바꾸거나 가수 이름으로 찾아보세요.<div class="qbtn"><a class="xb" href="${ytSearch(q+' TJ노래방')}" target="_blank" rel="noopener" onclick="return plOut(this.href)">🎬 유튜브에서 찾기</a><a class="xb" href="https://www.tjmedia.com/" target="_blank" rel="noopener">TJ미디어 사이트</a></div></div>`;return}
+  R.innerHTML=L.map(s=>`<div class="xrow" style="margin:4px 0"><span class="qn">${esc(s.no)}</span><span class="qt" style="font-weight:normal"><b>${esc(s.title)}</b> · ${esc(s.singer||'')}</span><a class="xb" style="padding:3px 7px" href="${ytSearch(s.title+' '+(s.singer||'')+' TJ노래방')}" target="_blank" rel="noopener" onclick="return plOut(this.href)">🎬</a></div>`).join('');
+  if(typeof kcPos=='function')kcPos();
+}
+
+/* ===== 방문자 노래 추천 ===== */
+const RECERR={bad_title:'곡 제목을 입력해 주세요.',bad_artist:'가수 이름이 너무 길어요.',bad_link:'링크는 https:// 로 시작해야 해요.',rate:'지금 추천이 너무 많아요. 잠시 후 다시 해 주세요.'};
+async function showRec(){
+  openM('<h3>🎶 노래 추천</h3><p style="font-size:12px;opacity:.8">불러오는 중…</p>');
+  let L=[],err='';try{L=await DB.rpc('song_list')}catch(e){err=dbErr(e)}
+  const ad=DB.admin();
+  openM(`<h3>🎶 노래 추천해 주세요!</h3>${adm('rec')}<div class="qform"><input id="srT" class="xin" maxlength="60" placeholder="곡 제목"><input id="srA" class="xin" maxlength="40" placeholder="가수" style="margin-top:6px"><input id="srN" class="xin" maxlength="20" placeholder="내 이름 (선택)" style="margin-top:6px"><input id="srL" class="xin" type="url" maxlength="200" placeholder="듣기 링크 (선택, https://)" style="margin-top:6px"><div class="qbtn"><button class="xb" onclick="recAdd()">추천하기</button></div></div>`+
+   (err?`<div class="cd">${esc(err)}</div>`:L.length?L.map(s=>`<div class="xrow"><span class="qt" style="font-weight:normal"><b>${esc(s.title)}</b>${s.artist?' · '+esc(s.artist):''}<small style="display:block;opacity:.7">${esc(s.name)} 님 추천</small></span><span class="qbtn" style="margin:0"><a class="xb" style="padding:3px 7px" href="${esc(plUrl(s.link)||ytSearch(s.title+' '+(s.artist||'')))}" target="_blank" rel="noopener" onclick="return plOut(this.href)">▶</a>${ad?`<button class="xb r" style="padding:3px 7px" onclick="recDel(${s.id})">✕</button>`:''}</span></div>`).join(''):'<div class="cd">첫 번째 추천곡을 남겨 주세요!</div>'));
+}
+async function recAdd(){
+  const t=$('#srT').value.trim();if(!t)return toast(RECERR.bad_title);
+  try{const r=await DB.rpc('song_add',{p_name:$('#srN').value.trim(),p_title:t,p_artist:$('#srA').value.trim(),p_link:$('#srL').value.trim()});if(!r.ok)return toast(RECERR[r.err]||'추천하지 못했어요.');toast('추천 고마워요! 🎶');showRec()}catch(e){toast(dbErr(e))}
+}
+async function recDel(id){try{const r=await DB.rpc('song_del',{p_id:id});if(!r.ok)return toast('운영자만 지울 수 있어요.');showRec()}catch(e){toast(dbErr(e))}}
+
 /* ===== 프로젝트 전시관 ===== */
 const CONTACT_MAIL='b0s0n9.k@gmail.com';
 const PROJECTS=[
@@ -1935,6 +1995,30 @@ const PROJECTS=[
 const KAKAO_URL='https://open.kakao.com/o/sYJawzVi';
 function showKakao(){
   openM(`<h3>💬 보성에게 연락하기</h3><div class="cd">연락처를 모르시면 카카오톡 오픈채팅으로 말을 걸어 주세요.</div><div class="adbtn" style="margin-top:10px"><a class="xb kko" href="${KAKAO_URL}" target="_blank" rel="noopener">💬 카카오톡 오픈채팅 열기</a></div>`);
+}
+const RED={play:'https://play.google.com/store/apps/details?id=com.sk.redconnect',ios:'https://apps.apple.com/kr/app/id1481548384',web:'https://redconnect.co.kr/'};
+function showRed(){
+  const ua=navigator.userAgent,ad=/Android/i.test(ua),ios=/iPhone|iPad|iPod/i.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1);
+  const btn=(u,t)=>`<a class="xb" href="${u}" target="_blank" rel="noopener">${t}</a>`;
+  openM(`<h3>🩸 헌혈 예약 하시겠어요?</h3><div class="cd">헌혈 예약은 대한적십자사 공식 헌혈 앱 <b>레드커넥트</b>에서 할 수 있어요. 앱이 없으면 설치 화면이 열려요.</div><div class="qbtn" style="justify-content:center">${ad?btn('intent://#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=com.sk.redconnect;S.browser_fallback_url='+encodeURIComponent(RED.play)+';end','📱 앱 바로 열기')+btn(RED.play,'▶ 구글 플레이'):ios?btn(RED.ios,'🍎 App Store에서 열기'):btn(RED.play,'▶ 구글 플레이')+btn(RED.ios,'🍎 App Store')}${btn(RED.web,'🌐 공식 사이트')}</div>`);
+}
+/* ===== PC 코너: 게임 실행과 롤 전적 ===== */
+const PC_LOL=[['📊 DEEPLOL','https://www.deeplol.gg/'],['📊 OP.GG','https://www.op.gg/'],['📊 LOL.PS','https://lol.ps/']];
+const PC_APPS=[
+ {t:'🎮 스팀 실행',u:'steam://open/main',d:'https://store.steampowered.com/about/',n:'Steam'},
+ {t:'🚀 Battle.net 실행 (스타크래프트)',u:'battlenet://',d:'https://download.battle.net/',n:'Battle.net'}];
+function showPc(){
+  const ph=isPhone();
+  openM(`<h3>🖥 PC 코너</h3>
+  <div class="qform"><b>📊 롤 전적 검색</b><div class="qbtn">${PC_LOL.map(([t,u])=>`<a class="xb" href="${u}" target="_blank" rel="noopener">${t}</a>`).join('')}</div></div>
+  <div class="qform"><b>🎮 내 컴퓨터의 게임 켜기</b>${ph?'<p style="font-size:12px;margin-top:6px">게임 실행은 PC에서만 할 수 있어요.</p>':`<p style="font-size:11px;opacity:.8;margin:4px 0">브라우저가 "앱을 열까요?" 하고 물으면 허용해 주세요.</p><div class="qbtn">${PC_APPS.map((a,i)=>`<button class="xb" onclick="pcRun(${i})">${a.t}</button>`).join('')}</div>`}
+  <div id="pcR" class="qerr" hidden></div>
+  <p style="font-size:12px;margin-top:8px"><b>⚔ 리그 오브 레전드</b> · 공식 사이트에서 다운로드하거나 설치된 라이엇 클라이언트를 직접 켜 주세요.</p><div class="qbtn"><a class="xb" href="https://www.leagueoflegends.com/ko-kr/" target="_blank" rel="noopener">공식 사이트 열기</a></div></div>`);
+}
+function pcRun(i){
+  const a=PC_APPS[i],R=$('#pcR');let left=false;const on=()=>{left=true};window.addEventListener('blur',on,{once:true});
+  R.hidden=true;location.href=a.u;
+  setTimeout(()=>{window.removeEventListener('blur',on);const r=$('#pcR');if(left||!r)return;r.hidden=false;r.innerHTML=`${a.n}이(가) 켜지지 않았다면 설치되어 있지 않을 수 있어요. <a href="${a.d}" target="_blank" rel="noopener">설치 페이지 열기</a>`},2000);
 }
 function showProjects(){
   openM('<h3>🗂 프로젝트 전시관</h3>'+PROJECTS.map(p=>`<div class="qform"><b>${esc(p.t)}</b><p style="font-size:12px;line-height:1.6;margin:6px 0 8px">${esc(p.d)}</p><a class="xb" href="${esc(p.u)}" target="_blank" rel="noopener">${esc(p.b)}</a></div>`).join('')+
@@ -1973,7 +2057,7 @@ async function fitDel(id){try{await DB.req('workout?id=eq.'+id,{method:'DELETE',
 
 /* ===== 저장, 퀘스트, 이스터 에그 ===== */
 const FAMILY=['해녀 할망 (보성 할머니)','해녀 할망 (보성 외할머니)','보성 할아버지','보성 외할아버지','보성 아버지','보성 어머니','보성 여동생'];
-const EGGS=[['cave','비밀 동굴을 찾았다','숲의 흔들리는 나무…'],['konami','전설의 커맨드','↑↑↓↓…'],['cat','고양이 집사','누군가에게 열 번 말을 걸면?'],['steps','167걸음','주인장에게 의미 있는 숫자만큼 걷기'],['star','별지기를 만났다','자정 무렵의 마을']];
+const EGGS=[['lol','주인장의 비밀 컴퓨터','PC 코너 구석 자리…'],['cave','비밀 동굴을 찾았다','숲의 흔들리는 나무…'],['konami','전설의 커맨드','↑↑↓↓…'],['cat','고양이 집사','누군가에게 열 번 말을 걸면?'],['steps','167걸음','주인장에게 의미 있는 숫자만큼 걷기'],['star','별지기를 만났다','자정 무렵의 마을']];
 const EGG_N=EGGS.length;
 const QUESTS=[
   {t:'🌱 첫 발걸음',d:'태초마을에 도착하기',ok:()=>visited.has('town')},
@@ -2036,7 +2120,7 @@ setInterval(qAlert,120000);
 const TALK={
  '마을 소년':[['어서 와! 여기가 BS World의 태초마을이야.','북쪽엔 귤향 올레, 동쪽엔 운동 센터, 서쪽엔 바당 올레, 남쪽엔 쉼의 숲이 있어.'],['like station 동네사람들!! 새 손님 왔어요!!'],['어른들이 그러는데 숲에 이상한 나무가 있대.','나는 무서워서 못 가봤어. 진짜야.']],
  '창끼 (a.k.a 노진구)':[['전설의힘을 알고있나?','ㅋ'],['불새출격'],['hi 대돕 건방지게 대돕을안하노 ㅋ'],['대돕이새기야']],
- '꽃집 누나':[['꽃향기 맡고 가렴. 🌸','달리기 전엔 스트레칭 필수야!'],['어머, 오늘 럭키비키잖아? 꽃이 활짝 폈어.'],['제주 꽃은 바람을 이겨서 더 예쁜 거야.']],
+ '꽃밭 이웃':[['꽃향기 맡고 가렴. 🌸','달리기 전엔 스트레칭 필수야!'],['어머, 오늘 럭키비키잖아? 꽃이 활짝 폈어.'],['제주 꽃은 바람을 이겨서 더 예쁜 거야.']],
  '등산객':[['자격증 공부는 마라톤이래. 페이스 조절이 전부지!'],['한라산 백록담 봤냐고요? 올라갔는데 구름만 봤습니다.','그것도 추억이죠, 뭐.'],['무릎이 먼저 포기하는 나이가 왔습니다.']],
  '꼬마 트레이너':[['나는 귤향 올레의 달리기 선수!','눈이 마주쳤으니 달리기 승부다!'],['어쩔티비~ 나 방금 신기록 세웠거든!'],['엄마가 해 지기 전에 들어오랬어. 그래서 지금 뛰는 거야.']],
  '여행자':[['감귤 향 나는 섬에 왔어요. 🍊'],['제주 와서 흑돼지 안 먹으면 불법 아닌가요?'],['렌터카 반납까지 3시간 남았는데, 저 지금 어디 있는 거죠?']],
@@ -2404,7 +2488,7 @@ function startGame(){
 
 saveLoad();visitInit();qAlert();
 npUpdate();
-mobLayout();mobMq.addEventListener('change',mobLayout);
+mobLayout();mobMq.addEventListener('change',mobLayout);wideMq.addEventListener('change',mobLayout);
 buildMiniMap();
 updateHUD();
 updateWxChip();loadWeather();
