@@ -163,6 +163,7 @@
     .qq{white-space:pre-wrap;overflow-wrap:anywhere}
     .qm{display:block;opacity:.7;font-size:11px;margin:3px 0 6px}
     .qbtn{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+    .qbtn[hidden]{display:none}
     .qchk{display:flex;align-items:center;gap:6px;font-size:12px;margin:7px 0;cursor:pointer}
     .qform{border:1px solid var(--bd);border-radius:8px;padding:9px;margin:8px 0;font-size:13px}
     .qform>summary{cursor:pointer;font-weight:bold}
@@ -185,6 +186,21 @@
     @keyframes npm{to{transform:translateX(-100%)}}
     @media(max-width:620px){#npm{flex:1 1 90px}}
     .ytw{position:relative;aspect-ratio:16/9;background:#000;border-radius:8px;overflow:hidden;margin:6px 0}.ytw iframe,.ytw>div{position:absolute;inset:0;width:100%;height:100%;border:0}
+    #ytDock{position:fixed;display:none;z-index:8;background:#000;overflow:hidden}
+    #ytDock iframe{display:block;width:100%;height:100%;border:0}
+    #ytDock.mini{left:10px;bottom:48px;width:200px;height:200px;border:2px solid #fbbf24;border-radius:8px 8px 0 0}
+    #bgmBar{position:fixed;left:10px;bottom:10px;width:200px;box-sizing:border-box;z-index:8;background:#10192e;border:2px solid #fbbf24;border-radius:0 0 8px 8px;color:#fde68a;font-size:11px;padding:3px 6px}
+    #bgmBar[hidden]{display:none}
+    #bgmName{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    #bgmBar .bb{display:flex;gap:3px;margin-top:2px}#bgmBar button{flex:1;font:inherit;font-size:12px;padding:0;background:#1e3a8a;border:1px solid #93c5fd;border-radius:4px;color:#fff;cursor:pointer}
+    @media(max-width:900px){
+      #ytDock.mini{left:auto;right:6px;bottom:4px;border-radius:8px}
+      #bgmBar{left:6px;right:212px;width:auto;bottom:4px;border-radius:8px}
+      #bgmBar .bb{flex-wrap:wrap}#bgmBar button{flex:1 0 40%;padding:4px 0}
+      #bgmName{white-space:normal;max-height:42px}
+      body.bgm-on #ctl{align-items:flex-start}
+      body.bgm-on .dp{grid-template:repeat(3,36px)/repeat(3,36px);padding:4px}
+    }
     .kcur{outline:3px solid #fbbf24!important;outline-offset:1px}
     #kc{position:fixed;z-index:12;font-size:20px;line-height:1;pointer-events:none;display:none;filter:drop-shadow(0 1px 1px #0008)}
     @media(max-width:900px){
@@ -273,6 +289,8 @@
 </div>
 
 <div id="lb" onclick="if(event.target.tagName=='IMG')lbZoom();else lbClose()"><div class="fit"><img id="lbi" alt=""></div></div><button id="lbx" onclick="lbClose()" aria-label="닫기">✕</button>
+<div id="ytDock"></div>
+<div id="bgmBar" hidden><div id="bgmName"></div><div class="bb"><button id="bgmP" onclick="bgmToggle()" title="재생/일시정지 (M)">⏯</button><button onclick="bgmNext()" title="다음 곡 (N)">⏭</button><button onclick="bgmList()" title="목록">📃</button><button onclick="bgmOff()" title="끄기">✕</button></div></div>
 <div id="kc">👉</div>
 <div class="md" id="md" hidden>
   <div class="mb"><button class="x" onclick="closeM()">✕</button><div id="mc"></div></div>
@@ -938,8 +956,8 @@ function act(){
 
 function cancel(){if(lbOn())lbClose();else if(modal)closeM();else if(dlg)endDlg()}
 
-function openM(h){sunoStop();$('#mc').innerHTML=h;$('#md').hidden=false;modal=true;document.body.classList.add('modal-on');$('.mb').scrollTop=0;kcSel(null);if(KC.on)kcMove(1)}
-function closeM(){sunoStop();$('#md').hidden=true;modal=false;document.body.classList.remove('modal-on');kcSel(null)}
+function openM(h){sunoStop();$('#mc').innerHTML=h;$('#md').hidden=false;modal=true;document.body.classList.add('modal-on');$('.mb').scrollTop=0;kcSel(null);if(KC.on)kcMove(1);dockPos()}
+function closeM(){sunoStop();$('#md').hidden=true;modal=false;document.body.classList.remove('modal-on');kcSel(null);dockPos();bgmUi()}
 /* 창 안 커서: 방향키·패드로 고르고 Z·Enter·A로 누름 */
 const KC={on:false,el:null};
 const kcItems=()=>[...$('#mc').querySelectorAll('a[href],button:not(:disabled),summary,input,textarea,select,audio,[onclick]')].filter(e=>e.getClientRects().length&&!e.hidden);
@@ -1200,7 +1218,7 @@ async function plHome(){
     (DB.admin()?'<div class="qbtn"><button class="xb" onclick="plEdit(0)">＋ 새 플레이리스트</button></div>':''));
 }
 const ytId=u=>((u||'').match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:[^#\s]*&)?v=|embed\/|shorts\/|live\/))([\w-]{11})/)||[])[1]||'';
-const PV={p:null,i:-1,all:false,rep:0,yt:null};
+const PV={p:null,i:-1,all:false,rep:0,yt:null,bg:false};
 /* 재생목록 자동 매칭: 등록한 재생목록의 곡을 읽어 직접 넣은 곡 아래에 붙임 (API 키 불필요, 공개·일부 공개 목록만) */
 const PLA={};   // 목록ID → {at,songs,err}
 const plListId=p=>((p.url||'').match(/[?&]list=([\w-]+)/)||[])[1]||'';
@@ -1243,7 +1261,7 @@ function plRowsHtml(p){
 }
 function plBtnHtml(p){
   const u=plUrl(p.url),nV=plList(p).filter(s=>ytId(s.u)).length;
-  return (nV?`<button class="xb" onclick="plAll(${p.id})">▶ 전체 듣기 (${nV}곡)</button><button class="xb" id="plRepB" onclick="plRepTog()"></button>`:'')+(u?`<a class="xb" href="${esc(u)}" target="_blank" rel="noopener" onclick="return plOut(this.href)">YouTube Music에서 열기</a>`:'');
+  return (nV?`<button class="xb" onclick="plAll(${p.id})">▶ 전체 듣기 (${nV}곡)</button><button class="xb" id="plRepB" onclick="plRepTog()"></button><button class="xb" onclick="plBg(${p.id})">🎧 BGM으로 계속 듣기</button>`:'')+(u?`<a class="xb" href="${esc(u)}" target="_blank" rel="noopener" onclick="return plOut(this.href)">YouTube Music에서 열기</a>`:'');
 }
 function plInfoHtml(p){
   const a=PLA[plListId(p)],st=!plListId(p)?'':a&&a.busy?' · 재생목록 불러오는 중…':a&&a.err?' · 재생목록을 읽지 못했어요(공개·일부 공개만 가능)':'';
@@ -1253,18 +1271,65 @@ function plRowsUpd(p){
   const b=$('#plRows');if(b&&+b.dataset.id==p.id){b.innerHTML=plRowsHtml(p);$('#plBtns').innerHTML=plBtnHtml(p);$('#plInfo').textContent=plInfoHtml(p);plRepLbl();plMarkRow();kcPos()}
   document.querySelectorAll('.plcnt'+p.id).forEach(e=>e.textContent=plList(p).length+'곡');
 }
-function plMarkRow(){document.querySelectorAll('.plsong').forEach(e=>e.style.borderColor=+e.dataset.i==PV.i?'#fbbf24':'')}
+function plMarkRow(){const on=PV.p&&PV.p.id==plShownId();document.querySelectorAll('.plsong').forEach(e=>e.style.borderColor=on&&+e.dataset.i==PV.i?'#fbbf24':'')}
 function plShow(id){
   const p=PLS.find(x=>x.id==id);if(!p)return plHome();
   openM(`<h3>🎵 ${esc(p.title)}</h3><p id="plInfo" style="font-size:12px;opacity:.8;margin-bottom:6px"></p>
-    <div id="ytBox" hidden><div id="plNow" style="font-weight:bold;font-size:13px"></div><div class="ytw"><div id="ytP"></div></div></div>
+    <div id="ytBox" hidden><div id="plNow" style="font-weight:bold;font-size:13px"></div><div class="ytw" id="ytSlot"></div></div>
     <div class="qbtn" id="plBtns" style="margin-bottom:6px"></div>
     <div class="qbtn" id="plCtl" hidden style="margin-bottom:6px"><button class="xb" onclick="plToggle()">⏯ 재생/일시정지</button><button class="xb" onclick="plNext(true)">⏭ 다음 곡</button></div>
     <div id="plRows" data-id="${p.id}"></div>
     <div class="qbtn"><button class="xb" onclick="plHome()">◀ 목록으로</button>${DB.admin()?`<button class="xb" onclick="plEdit(${p.id})">수정</button><button class="xb r" onclick="plDelAsk(${p.id})">삭제</button>`:''}</div>`);
   plSync(p).then(()=>{}).catch(()=>{});
-  plRowsUpd(p);
+  plRowsUpd(p);plUi();
 }
+const plShownId=()=>{const b=$('#plRows');return b?+b.dataset.id:0};
+function plUi(){
+  const on=PV.p&&PV.p.id==plShownId(),L=PV.p?plList(PV.p):[],s=L[PV.i];
+  const B=$('#ytBox'),C=$('#plCtl'),N=$('#plNow');
+  if(B)B.hidden=!on;if(C)C.hidden=!on;if(N&&on&&s)N.textContent='♪ '+s.t+(s.a?' · '+s.a:'');
+  if(on)plMarkRow();dockPos();bgmUi();
+}
+function dockPos(){
+  const d=$('#ytDock');if(!d)return;
+  if(!PV.p){d.style.display='none';d.className='';return}
+  const slot=$('#ytSlot'),box=$('#ytBox');
+  if(modal&&!lbOn()&&slot&&box&&!box.hidden){
+    const r=slot.getBoundingClientRect(),m=$('.mb').getBoundingClientRect();
+    d.className='';d.style.cssText=`display:block;z-index:10;left:${r.left}px;top:${r.top}px;width:${r.width}px;height:${r.height}px;clip-path:inset(${Math.max(0,m.top-r.top)}px 0 ${Math.max(0,r.bottom-m.bottom)}px 0)`;
+    return;
+  }
+  d.style.cssText='';
+  if(PV.bg){d.className='mini';d.style.display='block'}
+  else{d.className='';d.style.cssText='display:block;left:-9999px;top:0;width:200px;height:200px'}
+}
+/* BGM으로 계속 듣기: 창을 닫아도 작은 플레이어로 이어서 재생 */
+function plBg(id){
+  const p=PLS.find(x=>x.id==id);if(!p)return;
+  if(!PV.p||PV.p.id!=id)plAll(id);
+  if(!PV.p)return toast('영상이 있는 곡이 없어요.');
+  PV.bg=true;PV.all=true;if(!PV.rep)PV.rep=1;
+  closeM();toast('BGM으로 계속 재생해요. 🎧');bgmUi();
+}
+function sunoBgm(){
+  if(!SUNO_TRACKS.some(t=>t.suno))return;
+  sunoAll=true;if(!sunoRep)sunoRep=1;
+  if(!sunoOpen())sunoPlay(0);else sunoArm();
+  if(!sunoOpen())return;   // 작은 창이 막힌 경우 안내를 보여 줌
+  SB.on=true;closeM();try{window.focus()}catch(e){}toast('BGM으로 계속 재생해요. 🎧');bgmUi();
+}
+const SB={on:false};
+function bgmUi(){
+  const bar=$('#bgmBar');if(!bar)return;
+  const yt=PV.p&&PV.bg,su=SB.on&&sunoOpen(),on=yt||su;
+  bar.hidden=!on;document.body.classList.toggle('bgm-on',!!on);
+  if(on){$('#bgmName').textContent='♪ '+(npExt||'');$('#bgmP').hidden=!yt}
+}
+function bgmToggle(){plToggle()}
+function bgmNext(){if(PV.p)plNext(true);else if(sunoOpen())sunoSkip();bgmUi()}
+function bgmList(){if(PV.p&&PV.bg)plShow(PV.p.id);else showSuno()}
+function bgmOff(){if(PV.p){PV.bg=false;plStop()}if(sunoOpen()||SB.on)sunoClose();SB.on=false;bgmUi();dockPos()}
+
 function plRepLbl(){const r=$('#plRepB');if(r)r.textContent='🔁 반복: '+REP_L[PV.rep]}
 function plRepTog(){PV.rep=(PV.rep+1)%3;plRepLbl()}
 /* YouTube Music은 다른 사이트 안에 넣을 수 없어서 작은 창으로 엶. 막히면 새 탭 링크가 그대로 동작 */
@@ -1279,20 +1344,21 @@ let ytReady=null;
 function ytLoad(){return ytReady||(ytReady=new Promise((ok,no)=>{if(window.YT&&YT.Player)return ok();window.onYouTubeIframeAPIReady=ok;const s=document.createElement('script');s.src='https://www.youtube.com/iframe_api';s.onerror=()=>{ytReady=null;no(new Error('yt'))};document.head.append(s)}))}
 async function plPlay(p,i){
   const s=plList(p)[i],id=ytId(s.u);if(!id)return;
-  if(sunoOpen())sunoClose();
+  if(sunoOpen())sunoClose();SB.on=false;
   PV.p=p;PV.i=i;
-  $('#ytBox').hidden=false;$('#plCtl').hidden=false;$('#plNow').textContent='♪ '+s.t+(s.a?' · '+s.a:'');
-  plMarkRow();
-  extOn(s.t+(s.a?' · '+s.a:''));
+  extOn(s.t+(s.a?' · '+s.a:''));plUi();
   if(PV.yt&&PV.yt.loadVideoById){PV.yt.loadVideoById(id);return}
-  try{await ytLoad()}catch(e){toast('YouTube 플레이어를 불러오지 못했어요.');return plStop()}
-  if(!$('#ytP'))return;
+  $('#ytDock').innerHTML='<div id="ytP"></div>';
+  try{await ytLoad()}catch(e){toast('YouTube 플레이어를 불러오지 못했어요.');PV.bg=false;return plStop()}
+  if(!$('#ytP')||!PV.p)return;
+  const cur=ytId(plList(PV.p)[PV.i].u);
   const vars={playsinline:1,rel:0,autoplay:1};if(/^https?:/.test(location.origin))vars.origin=location.origin;
-  PV.yt=new YT.Player('ytP',{videoId:id,playerVars:vars,events:{
+  PV.yt=new YT.Player('ytP',{videoId:cur,playerVars:vars,events:{
     onReady:e=>e.target.playVideo(),
     onStateChange:e=>{if(e.data===0)plNext(false)},
     onError:()=>{const c=PV.p&&plList(PV.p)[PV.i];toast((c?c.t+': ':'')+'사이트에서 재생할 수 없는 영상이에요.');plNext(false,true)}
   }});
+  dockPos();
 }
 function plNext(manual,failed){
   const p=PV.p;if(!p)return;const L=plList(p),n=L.length,has=k=>ytId(L[k].u);
@@ -1304,7 +1370,7 @@ function plNext(manual,failed){
   PV.all=false;
 }
 function plToggle(){const y=PV.yt;if(!y||!y.getPlayerState)return;y.getPlayerState()==1?y.pauseVideo():y.playVideo()}
-function plStop(){if(!PV.yt&&!PV.p)return;try{PV.yt&&PV.yt.destroy&&PV.yt.destroy()}catch(e){}PV.yt=null;PV.p=null;PV.i=-1;PV.all=false;if(sunoOn&&!sunoOpen()&&!sunoFileOn())extOff()}
+function plStop(){if(!PV.yt&&!PV.p)return;try{PV.yt&&PV.yt.destroy&&PV.yt.destroy()}catch(e){}PV.yt=null;PV.p=null;PV.i=-1;PV.all=false;PV.bg=false;$('#ytDock').innerHTML='';dockPos();if(sunoOn&&!sunoOpen()&&!sunoFileOn())extOff();bgmUi()}
 function plEdit(id){
   if(!DB.admin())return toast('운영자만 할 수 있어요.');
   const p=PLS.find(x=>x.id==id),now=jejuYm();
@@ -1361,11 +1427,11 @@ function extOn(title){sunoOn=true;npExt=title;clearInterval(mt);npUpdate()}
 function extOff(){sunoOn=false;npExt='';music()}
 function sunoStop(){
   const a=$('#sunoA');if(a)a.pause();
-  plStop();
-  if(sunoOpen())return;   // Suno 창이 열려 있으면 노래가 계속되므로 게임 음악은 계속 쉼
+  if(!PV.bg)plStop();else dockPos();
+  if(PV.p||sunoOpen())return;   // Suno 창이 열려 있으면 노래가 계속되므로 게임 음악은 계속 쉼
   if(sunoOn)extOff();
 }
-function sunoWatch(){clearInterval(sunoTm);sunoTm=setInterval(()=>{if(sunoOpen())return;clearInterval(sunoTm);clearTimeout(sunoEnd);sunoWin=null;sunoAll=false;sunoI=-1;extOff();sunoMark()},1000)}
+function sunoWatch(){clearInterval(sunoTm);sunoTm=setInterval(()=>{if(sunoOpen())return;clearInterval(sunoTm);clearTimeout(sunoEnd);sunoWin=null;sunoAll=false;sunoI=-1;SB.on=false;extOff();sunoMark();bgmUi()},1000)}
 function sunoArm(){
   clearTimeout(sunoEnd);const t=SUNO_TRACKS[sunoI];
   if(!t||!t.sec||!sunoOpen()||(!sunoAll&&!sunoRep))return;
@@ -1390,7 +1456,7 @@ function showSuno(){
   openM('<h3>🎧 보성의 노래</h3><p style="font-size:12px;opacity:.8;margin-bottom:8px">주인장이 Suno AI로 만든 노래예요. 노래는 작은 창에서 나와요.</p>'+
     (SUNO_TRACKS.length?`<div id="sunoNow" style="font-weight:bold;font-size:13px;margin-bottom:6px"></div>
     <audio id="sunoA" controls preload="none" hidden style="width:100%" onplay="extOn(sunoTitle())" onpause="if(sunoFileOn())extOff()" onended="sunoAdvance()" onerror="sunoErr()"></audio>
-    <div class="qbtn" style="margin-bottom:6px"><button class="xb" onclick="sunoPlayAll()">▶ 전체 듣기</button><button class="xb" id="sunoRepB" onclick="sunoRepTog()"></button></div>
+    <div class="qbtn" style="margin-bottom:6px"><button class="xb" onclick="sunoPlayAll()">▶ 전체 듣기</button><button class="xb" id="sunoRepB" onclick="sunoRepTog()"></button><button class="xb" onclick="sunoBgm()">🎧 BGM으로 계속 듣기</button></div>
     <div class="qbtn" id="sunoCtl" style="margin-bottom:6px" hidden><button class="xb" onclick="sunoSkip()">⏭ 다음 곡</button><button class="xb r" onclick="sunoClose()">⏹ 끄기</button></div>
     <div id="sunoL" style="margin:6px 0"></div><div id="sunoE" class="qerr" hidden></div>`+
     SUNO_TRACKS.map((t,i)=>`<div class="xrow pick sunot" onclick="sunoPick(${i})"><span class="qn">${i+1}</span><span class="qt" style="font-weight:normal"><b>${esc(t.title)}</b>${t.note?' · '+esc(t.note):''}</span><span>▶</span></div>`).join('')
@@ -1402,11 +1468,12 @@ function sunoPick(i){sunoAll=false;sunoPlay(i)}
 function sunoPlayAll(){if(!SUNO_TRACKS.length)return;sunoAll=true;sunoPlay(0)}
 function sunoSkip(){if(!SUNO_TRACKS.length)return;sunoPlay((sunoI+1)%SUNO_TRACKS.length)}
 function sunoRepTog(){sunoRep=(sunoRep+1)%3;sunoMark();sunoArm()}
-function sunoClose(){clearTimeout(sunoEnd);sunoAll=false;sunoI=-1;const a=$('#sunoA');if(a){a.pause();a.hidden=true}if(sunoOpen())try{sunoWin.close()}catch(e){}sunoWin=null;clearInterval(sunoTm);extOff();sunoMark()}
+function sunoClose(){clearTimeout(sunoEnd);sunoAll=false;sunoI=-1;const a=$('#sunoA');if(a){a.pause();a.hidden=true}if(sunoOpen())try{sunoWin.close()}catch(e){}sunoWin=null;SB.on=false;clearInterval(sunoTm);if(!PV.p)extOff();sunoMark();bgmUi()}
 function sunoPlay(i){
   const a=$('#sunoA'),t=SUNO_TRACKS[i];if(!t)return;
   sunoI=i;const E=$('#sunoE'),L=$('#sunoL');if(E)E.hidden=true;if(L)L.innerHTML='';sunoMark();
   if(t.suno){
+    if(PV.p){PV.bg=false;plStop()}
     if(a){a.pause();a.hidden=true}
     const id=sunoId(t.suno),link=/^https:\/\/[^\s"'<>]+$/.test(t.suno)?t.suno:'';
     if(!id){if(E){E.textContent='이 링크로는 바로 재생할 수 없어요. suno.com/song/… 주소가 필요해요.';E.hidden=false}if(L&&link)L.innerHTML=`<a class="xb" href="${esc(link)}" target="_blank" rel="noopener">Suno에서 열기</a>`;return}
@@ -1415,7 +1482,7 @@ function sunoPlay(i){
     if(sunoOpen())sunoWin.location.href=url;
     else sunoWin=window.open(url,'bsw_suno','popup,width=560,height=340');
     if(sunoOpen()){
-      sunoAt=Date.now();extOn(sunoTitle());sunoWatch();sunoArm();
+      sunoAt=Date.now();extOn(sunoTitle());sunoWatch();sunoArm();bgmUi();
       if(L)L.innerHTML='<p style="font-size:11px;opacity:.75;margin-bottom:6px">소리가 안 나면 작은 창의 재생 버튼을 눌러 주세요. 창을 닫으면 게임 음악이 다시 나와요.</p>';
     }else if(E){
       E.textContent='브라우저가 작은 창을 막았어요. 아래 버튼으로 열어 주세요.';E.hidden=false;
@@ -1564,6 +1631,8 @@ addEventListener('keydown',e=>{
     }
   }
 
+  if(['m','M'].includes(e.key)&&PV.p&&PV.bg)return plToggle();
+  if(['n','N'].includes(e.key)&&(PV.bg||SB.on))return bgmNext();
   const k=KM[e.key];
   if(k!=null){
     e.preventDefault();
@@ -1683,7 +1752,7 @@ buildMiniMap();
 updateHUD();
 updateWxChip();loadWeather();
 setInterval(updateWxChip,20000);setInterval(loadWeather,600000);
-document.querySelector('.mb').addEventListener('scroll',kcPos);addEventListener('resize',kcPos);
+document.querySelector('.mb').addEventListener('scroll',()=>{kcPos();dockPos()});addEventListener('resize',()=>{kcPos();dockPos()});
 requestAnimationFrame(loop);
 </script>
 </body>
