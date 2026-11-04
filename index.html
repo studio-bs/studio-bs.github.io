@@ -78,15 +78,15 @@
     /* [월드맵] 각 지역의 실제 땅 모양(타일맵)을 사각형 안에 투영 */
     #minimap-overlay{
       position:absolute;right:10px;bottom:10px;z-index:4;
-      width:clamp(150px,26%,210px);
+      width:clamp(170px,32%,270px);
       background:rgba(11,16,32,.92);border:2px solid #fbbf24;border-radius:8px;padding:6px;
       box-shadow:0 4px 15px rgba(0,0,0,.6);opacity:0;pointer-events:none;transform:translateY(10px);transition:opacity .35s,transform .35s;
     }
     .minimap-title{font-size:11px;color:#fbbf24;text-align:center;margin-bottom:5px;font-weight:bold;border-bottom:1px solid #2c3a5e;padding-bottom:3px}
     .minimap-grid{
       display:grid;
-      grid-template-areas:". cert ." "airport route1 orchard" "coast town sports" ". rest .";
-      grid-template-columns:repeat(3,1fr);gap:3px;
+      grid-template-areas:". . cert ." "airport . route1 orchard" "coast route2 town sports" ". . rest .";
+      grid-template-columns:repeat(4,1fr);gap:3px;
     }
     .minimap-node{
       position:relative;display:block;padding:0;margin:0;
@@ -95,7 +95,7 @@
       background-color:#1b2540;background-size:100% 100%;background-repeat:no-repeat;
       image-rendering:pixelated;font-family:inherit;transition:transform .15s,border-color .15s;
     }
-    .minimap-node.rest{grid-area:rest}.minimap-node.airport{grid-area:airport}.minimap-node.cert{grid-area:cert}.minimap-node.route1{grid-area:route1}
+    .minimap-node.route2{grid-area:route2}.minimap-node.rest{grid-area:rest}.minimap-node.airport{grid-area:airport}.minimap-node.cert{grid-area:cert}.minimap-node.route1{grid-area:route1}
     .minimap-node.orchard{grid-area:orchard}.minimap-node.coast{grid-area:coast}.minimap-node.town{grid-area:town}.minimap-node.sports{grid-area:sports}
     .minimap-node .lb{
       position:absolute;left:2px;bottom:2px;max-width:calc(100% - 4px);
@@ -130,7 +130,7 @@
      #scr{width:100%;height:auto;aspect-ratio:3/2;flex:none;min-height:0}
      #ctl{flex:1;min-height:120px;padding:8px 12px}
      #dl{font-size:12px;min-height:64px}
-     #minimap-overlay{width:128px;right:6px;bottom:6px;padding:4px}
+     #minimap-overlay{width:164px;right:6px;bottom:6px;padding:4px}
      .minimap-node .lb{font-size:7px}
      .portfolio-list{grid-template-columns:1fr}
     }
@@ -166,11 +166,33 @@
     .qchk{display:flex;align-items:center;gap:6px;font-size:12px;margin:7px 0;cursor:pointer}
     .qform{border:1px solid var(--bd);border-radius:8px;padding:9px;margin:8px 0;font-size:13px}
     .qform>summary{cursor:pointer;font-weight:bold}
-    .adimg{display:block;width:100%;max-height:60vh;object-fit:contain;margin:8px 0;border-radius:6px}
+    .adimg{display:block;width:100%;max-height:60vh;object-fit:contain;margin:8px 0 4px;border-radius:6px;cursor:zoom-in}
+    .adhint{text-align:center;font-size:11px;opacity:.7;margin-bottom:8px}.adbtn{text-align:center}
+    #lb{position:fixed;inset:0;z-index:13;background:#000e;overflow:auto;display:none;touch-action:auto}
+    #lb.on{display:block}
+    #lb img{display:block;margin:auto;width:auto;max-width:100%;height:auto;max-height:100%;cursor:zoom-in}
+    #lb .fit{height:100%;display:flex;align-items:center;justify-content:center}
+    #lb.big .fit{height:auto;display:block}
+    #lb.big img{width:min(220%,1100px);max-width:none;max-height:none;cursor:zoom-out}
+    #lbx{position:fixed;right:12px;top:12px;z-index:14;font:inherit;font-size:16px;background:#fbbf24;border:2px solid #111;border-radius:6px;padding:4px 12px;cursor:pointer;display:none}
+    #lb.on~#lbx{display:block}
+    @media(max-width:900px){body.lb-on #ctl{z-index:15}body.lb-on #lb{bottom:132px}#lb.big img{width:300%}}
     a.plsong{color:inherit;text-decoration:none;margin:5px 0}
     @media(max-width:620px){#bn{top:38px!important}}
     .qerr{color:#dc2626;font-size:12px;margin:6px 0}
-    .sunoif{display:block;width:100%;height:240px;border:0;border-radius:8px;background:#0b1020}
+    #npm{flex:0 1 170px;min-width:70px;height:24px;overflow:hidden;background:#10192e;color:#fde68a;border:1px solid #5b6f99;border-radius:4px;font-size:11px;line-height:22px;white-space:nowrap}
+    #npt{display:inline-block;padding-left:100%;animation:npm 11s linear infinite}
+    @keyframes npm{to{transform:translateX(-100%)}}
+    @media(max-width:620px){#npm{flex:1 1 90px}}
+    .ytw{position:relative;aspect-ratio:16/9;background:#000;border-radius:8px;overflow:hidden;margin:6px 0}.ytw iframe,.ytw>div{position:absolute;inset:0;width:100%;height:100%;border:0}
+    .kcur{outline:3px solid #fbbf24!important;outline-offset:1px}
+    #kc{position:fixed;z-index:12;font-size:20px;line-height:1;pointer-events:none;display:none;filter:drop-shadow(0 1px 1px #0008)}
+    @media(max-width:900px){
+      body.modal-on #ctl{position:fixed;left:0;right:0;bottom:0;height:132px;min-height:0;z-index:10;padding:2px 14px;border-radius:0}
+      body.modal-on .dp{grid-template:repeat(3,36px)/repeat(3,36px);padding:4px}
+      body.modal-on .md{bottom:132px}
+      body.modal-on .mb{max-height:100%}
+    }
 </style>
 </head>
 <body>
@@ -200,7 +222,7 @@
   <p class="world-note" style="margin-top:14px">키보드 방향키 또는 WASD로 이동하고, Z 키로 주민과 대화하세요. 모바일에서는 화면 아래 패드를 이용할 수 있습니다.</p>
 </aside>
 
-<div id="bar"><b>BS World</b><button onclick="toggleMap()">🗺 지도</button><button onclick="showBrain()">🧠 뇌구조</button><button id="bg" onclick="togBgm()">🔊</button></div>
+<div id="bar"><b>BS World</b><button onclick="toggleMap()">🗺 지도</button><button onclick="showBrain()">🧠 뇌구조</button><div id="npm" title="지금 나오는 음악"><span id="npt"></span></div><button id="bg" onclick="togBgm()">🔊</button></div>
 
 <div id="scr">
   <canvas id="c"></canvas>
@@ -250,6 +272,8 @@
 
 </div>
 
+<div id="lb" onclick="if(event.target.tagName=='IMG')lbZoom();else lbClose()"><div class="fit"><img id="lbi" alt=""></div></div><button id="lbx" onclick="lbClose()" aria-label="닫기">✕</button>
+<div id="kc">👉</div>
 <div class="md" id="md" hidden>
   <div class="mb"><button class="x" onclick="closeM()">✕</button><div id="mc"></div></div>
 </div>
@@ -272,6 +296,12 @@ function jejuNow(){
   return{h:hq!=null&&hq!==''?(+hq)%24:g('hour')%24,m:g('minute')};
 }
 const isNight=()=>{const{h}=jejuNow();return h>=19||h<6};
+/* 가족 일정: 11~1월, 날씨 좋을 때 아버지는 낮에, 어머니는 퇴근 후 가끔 과수원에 나감
+   미리 보기: 주소 뒤에 ?hour=14&month=12 또는 ?hour=18&month=12&mom=1 */
+const jejuDate=()=>new Date(Date.now()+9*36e5);
+const farmDay=()=>{const m=+QS.get('month')||jejuDate().getUTCMonth()+1;return (m==11||m==12||m==1)&&(WX.kind=='clear'||WX.kind=='cloud')};
+const dadFarm=()=>{const{h}=jejuNow();return farmDay()&&h>=7&&h<17};
+const momFarm=()=>{const{h}=jejuNow();return farmDay()&&h>=17&&h<19&&(QS.get('mom')=='1'||Math.floor(Date.now()/864e5+.375)%3==0)};
 const WET=()=>WX.kind=='rain'||WX.kind=='snow';
 function nightA(){const{h,m}=jejuNow(),t=h+m/60;if(t>=20||t<5)return .5;if(t>=19)return .5*(t-19);if(t<6)return .5*(6-t);return 0}
 function wxKind(c){if(c==null)return'clear';if(c>=95||(c>=51&&c<=67)||(c>=80&&c<=82))return'rain';if((c>=71&&c<=77)||c==85||c==86)return'snow';if(c==45||c==48)return'fog';if(c>=2)return'cloud';return'clear'}
@@ -302,7 +332,7 @@ async function loadWeather(){
     }catch(e2){console.warn('날씨 2차 실패',e2);setWx(WX.kind,WX.temp,false);setTimeout(loadWeather,60000)}   // 둘 다 실패하면 1분 뒤 다시 시도
   }
 }
-function onWxChange(){if(map&&map.o&&!busy&&!dlg&&!modal)buildNpcs()}
+function onWxChange(){if(map&&(map.o||cur=='house')&&!busy&&!dlg&&!modal)buildNpcs()}
 function weatherFX(t){
   if(!map||!map.o)return;
   const w=W*TS,h=H*TS,na=nightA();
@@ -322,6 +352,9 @@ function weatherFX(t){
 const AGL=['C','w','w','L','w','w','A'],AGR=['A','w','w','C','w','w','L'];
 const AGM=['w'.repeat(W),'wwCwwAwwwAwwCww',...[2,3,4,5,6,7,8].map(y=>{const i=y-2,mid=y==3?'k'.repeat(W-2):y==4?'fXfffffffffXf':y==6?'ffZfffffffZff':'f'.repeat(W-2);return AGL[i]+mid+AGR[i]}),'wwwwwwwxwwwwwww'];
 
+const MNL=['w','w','C','w','B','w','E'],MNR=['w','w','E','w','I','w','C'];
+const MNM=['w'.repeat(W),'wwBwwEwwwEwwBww',...[2,3,4,5,6,7,8].map(y=>{const i=y-2,mid=y==3?'k'.repeat(W-2):y==4?'fXfffffffffXf':y==6?'ffKKfffffKKff':'f'.repeat(W-2);return MNL[i]+mid+MNR[i]}),'wwwwwwwxwwwwwww'];
+
 /* 해녀 할망 (제주 사투리) */
 const hnS=()=>{
   if(WET())return['비가 오난 바당이 거칠어부난 오늘은 구경만 허주게.','보성이 할망이우다. 집에 강 감귤차나 마십서. ☕'];
@@ -336,7 +369,7 @@ const hnS2=()=>{
 const hnCh=()=>({
   '해녀 이야기':['제주바당은 우리 해녀들 삶터였주게.','숨 참앙 들어가민 바당 속이 또 다른 세상이주.','올라왕 내쉬는 숨비소리, 그게 해녀 소리라.'],
   '지금 제주 날씨':['제주는 지금 '+wxText()+'이우다게.',WET()?'이런 날엔 바당에 들어가민 안 된다게.':'바당도 잔잔허고 좋은 날이우다.'],
-  '감귤 이야기':['물질허고 나왕 먹는 감귤 한 쪽이 최고우다게. 🍊','1번 도로 오른쪽 과수원에 가민 귤 맛 볼 수 이서마씸.']
+  '감귤 이야기':['물질허고 나왕 먹는 감귤 한 쪽이 최고우다게. 🍊','귤향 올레 오른쪽 과수원에 가민 귤 맛 볼 수 이서마씸.']
 });
 const UMB=[['비가 와부난 우산 써사 헌다게~ ☔','이런 날엔 따끈한 감귤차가 딱이우다.'],['비 오는 날 바당은 구경만 허는 거라게.','미끄러우난 조심히 다녀갑서예!'],['아이고, 우산 뒤집어질 뻔 했쥬.','바람이 막 불어부난…']];
 
@@ -352,12 +385,12 @@ town:{n:'태초마을',o:1,bgm:'town',m:[
   'T...m..=m.F...T',
   'TT.F...=....TTT',
   'TTTTTTT=TTTTTTT'
-],d:{'3,3':['house',7,8]},e:{u:['route1',7,9],l:['coast',14,5],r:['sports',0,5],d:['rest',7,0]},umb:[[3,5,'#ef4444'],[11,5,'#3b82f6']],p:[
-  {x:10,y:6,c:'#4aa3ff',h:'#6b3e26',n:'마을 소년',s:['어서 와! 여기가 BS World의 태초마을이야.','북쪽 1번 도로 끝엔 자격 시티, 동쪽엔 마라톤 밸리, 서쪽엔 나눔 해변, 남쪽엔 쉼의 숲이 있어.','위쪽 🧠 뇌구조 메뉴를 열면 어디든 순간이동할 수 있대!']},
+],d:{'3,3':['house',7,8]},e:{u:['route1',7,9],l:['route2',14,5],r:['sports',0,5],d:['rest',7,0]},umb:[[3,5,'#ef4444'],[11,5,'#3b82f6']],p:[
+  {x:10,y:6,c:'#4aa3ff',h:'#6b3e26',n:'마을 소년',s:['어서 와! 여기가 BS World의 태초마을이야.','북쪽 귤향 올레 끝엔 자격 시티, 동쪽엔 마라톤 밸리, 서쪽엔 나눔 해변, 남쪽엔 쉼의 숲이 있어.','위쪽 🧠 뇌구조 메뉴를 열면 어디든 순간이동할 수 있대!']},
   {x:5,y:7,c:'#ff8fb1',h:'#222',w:1,n:'꽃집 누나',s:['꽃향기 맡고 가렴. 🌸','달리기 전엔 스트레칭 필수야!']}
 ]},
 
-route1:{n:'1번 도로',o:1,bgm:'route',m:[
+route1:{n:'귤향 올레',o:1,bgm:'route',m:[
   'TTTTTTT=TTTTTTT',
   'TT.F...=...F.TT',
   'T..TT..=..TT..T',
@@ -371,7 +404,7 @@ route1:{n:'1번 도로',o:1,bgm:'route',m:[
         e:{u:['cert',7,9], d:['town',7,0], r:['orchard',0,5]},umb:[[5,8,'#f59e0b']],
         p:[
 {x:4,y:3,c:'#8a6d4b',h:'#999',n:'등산객',s:['자격증 공부는 마라톤이래. 페이스 조절이 전부지!','북쪽 시티엔 시험을 줄줄이 통과한 사람이 있다던데… 🤔']},
-{x:10,y:5,c:'#ef4444',h:'#222',w:1,n:'꼬마 트레이너',s:['나는 1번 도로의 달리기 선수!','동쪽 마라톤 밸리까지 경주할래?']},
+{x:10,y:5,c:'#ef4444',h:'#222',w:1,n:'꼬마 트레이너',s:['나는 귤향 올레의 달리기 선수!','동쪽 마라톤 밸리까지 경주할래?']},
 {x:9,y:7,c:'#f59e0b',h:'#5a3a1a',n:'여행자',s:['감귤 향 나는 섬에서 왔어. 🍊','감귤마라톤은 코스도 공기도 최고야.']}]},
 
 cert:{n:'학술·자격 검정 시티',o:1,bgm:'knowledge',m:[
@@ -408,7 +441,7 @@ sports:{n:'체육 & 마라톤 밸리', o:1,bgm:'sports',land:[7,5], m:[
 {x:5,y:7,ti:13,run:1,c:'#f59e0b',h:'#222',n:'조깅 크루',s:['트랙 한 바퀴 더!','감귤마라톤 10km도 같이 뛸래? 🍊']}]},
 
 coast:{n:'제주 바닷가',o:1,bgm:'beach',m:[
-  '~~3~2~~=TTTTTTT',
+  '~~3~2ss=TTTTTTT',
   '~1~~~ss=..RRR.T',
   '4~~~~ss=..HDH.T',
   '~~2~sss=..===.T',
@@ -417,24 +450,38 @@ coast:{n:'제주 바닷가',o:1,bgm:'beach',m:[
   '~~~~ss.F.....FT',
   '~~~1~ss.......T',
   '~2~~3~ss..F.TTT',
-  '~~4~~~~sTTTTTTT'],d:{'11,2':['vc',7,8]},e:{r:['town',0,5],u:['airport',7,9]},p:[
+  '~~4~~~~sTTTTTTT'],d:{'11,2':['vc',7,8]},e:{r:['route2',0,5],u:['airport',7,9,1]},p:[
 {x:5,y:4,c:'#e879f9',h:'#222',w:1,n:'해변 산책러',s:['파도 소리를 들으면 마음이 차분해져. 🌊','센터에 가면 헌혈왕 이야기를 들을 수 있어!']},
 {x:4,y:6,c:'#1f2937',h:'#d1d5db',tw:1,n:'해녀 할망 (보성 할머니)',s:hnS,ch:hnCh},
 {x:6,y:8,c:'#334155',h:'#e5e7eb',tw:1,n:'해녀 할망 (보성 외할머니)',s:hnS2,ch:hnCh}],umb:[[9,6,'#3b82f6']]},
 
-airport:{n:'제주 공항',o:1,bgm:'route',plane:[2,3],m:[
+airport:{n:'제주 공항',o:1,bgm:'route',plane:[7,3],m:[
+  '~~~~ssTTTTTTTTT',
+  '~~~~ssrrrrrrrrr',
+  '~3~~ssyyyyyyyyy',
+  '~~~~ssueeeuuuuu',
+  '~1~ss.ueeeuuuuu',
+  '~~~ss..nnnnnnn.',
+  '~2~ss..jjjDjjj.',
+  '~~~~ss.====....',
+  '~~~3ss.=F..iS.T',
+  '~~3~2ss=TTTTTTT'],d:{'10,6':['terminal',7,8]},e:{d:['coast',7,0,1]},umb:[[6,7,'#0ea5e9']],p:[
+{x:11,y:4,c:'#ea580c',h:'#222',n:'항공 정비사',s:['기체 점검 이상 없음! ✈','비행기를 타고 싶으면 터미널 안 탑승 수속 카운터로 가 봐.']},
+{x:10,y:8,c:'#a78bfa',h:'#6b3e26',w:1,n:'여행객',s:['제주에 내리자마자 귤 냄새가 나는 것 같아요. 🍊','공항 바로 옆이 바다라니, 너무 좋아요!']}]},
+
+route2:{n:'바당 올레',o:1,bgm:'route',land:[7,5],m:[
   'TTTTTTTTTTTTTTT',
-  'rrrrrrrrrrrrrrr',
-  'yyyyyyyyyyyyyyy',
-  'uueeeuuuuuuuuuu',
-  'uueeeuuuuuuuuuu',
-  'nnnnnnnnn...S..',
-  'jjjjDjjjj......',
-  'Ti..=....F....T',
-  'T...========.FT',
-  'TTTTTTT=TTTTTTT'],d:{'4,6':['terminal',7,8]},e:{d:['coast',7,0]},umb:[[2,8,'#0ea5e9']],p:[
-{x:7,y:4,c:'#ea580c',h:'#222',n:'항공 정비사',s:['기체 점검 이상 없음! ✈','비행기를 타고 싶으면 터미널 안 탑승 수속 카운터로 가 봐.']},
-{x:12,y:7,c:'#a78bfa',h:'#6b3e26',w:1,n:'여행객',s:['제주에 내리자마자 귤 냄새가 나는 것 같아요. 🍊','남쪽 길로 내려가면 바로 바다예요!']}]},
+  'TT.F....F...FTT',
+  'T..m.....F..m.T',
+  'T.F......b....T',
+  '%%%%.%%%%.%%%%%',
+  '===============',
+  '%%%%%%.%%%%%.%%',
+  'T.F...b.....F.T',
+  'T..m..F...m...T',
+  'TTTTTTTTTTTTTTT'],e:{l:['coast',14,5],r:['town',0,5]},umb:[[2,3,'#0ea5e9']],p:[
+{x:5,y:3,c:'#0d9488',h:'#6b3e26',n:'올레꾼',s:['돌담 따라 걷는 이 길이 바당 올레라마씸. 🌊','서쪽으로 가민 해변, 동쪽으로 가민 태초마을이우다.']},
+{x:10,y:7,c:'#fb7185',h:'#222',w:1,n:'사진 찍는 여행자',s:['돌담이랑 귤나무가 같이 나오게 찍고 있어요. 📷']}]},
 
 rest:{n:'쉼의 숲',o:1,bgm:'indoor',m:[
   'TTTTTTT=TTTTTTT',
@@ -451,7 +498,7 @@ rest:{n:'쉼의 숲',o:1,bgm:'indoor',m:[
 {x:5,y:7,c:'#c4b5fd',h:'#3f2a1c',w:1,n:'산책하는 사람',s:['아무것도 안 해도 되는 시간이 제일 좋네요.','연못 앞 벤치도 좋아요.']}]},
 
 library:{n:'보성의 음악 서재',par:'rest',bgm:'indoor',m:['w'.repeat(W),'wwzwzwzwzwzwzww',FR,FR,'wppffXfffXffppw',FR,'wfKKfffffffKKfw',FR,FR,'wwwwwwwxwwwwwww'],d:{'7,9':['rest',3,4]},p:[
-{x:7,y:3,c:'#0f766e',h:'#1b1b26',n:'서재 지기',s:['어서 오세요. 주인장이 고른 노래가 벽에 걸려 있어요. 🎵','액자를 누르면 곡 목록을 볼 수 있어요.'],ch:{'🎵 플레이리스트 보기':()=>plHome(),'듣는 방법':['곡을 누르면 YouTube Music이 새 창으로 열려요.','다른 탭으로 넘어가 있는 동안에는 게임 음악이 쉬어요.']}},
+{x:7,y:3,c:'#0f766e',h:'#1b1b26',n:'서재 지기',s:['어서 오세요. 주인장이 고른 노래가 벽에 걸려 있어요. 🎵','액자를 누르면 곡 목록을 볼 수 있어요.'],ch:{'🎵 플레이리스트 보기':()=>plHome(),'듣는 방법':['🎬 표시 곡은 여기서 영상으로 재생되고, 전체 듣기와 반복도 돼요.','나머지 곡은 YouTube Music 작은 창으로 열려요.']}},
 {x:10,y:3,c:'#8b5cf6',h:'#f472b6',n:'Suno 음악가',s:['보성이가 Suno AI로 만든 노래를 제가 틀어 드려요. 🎧'],ch:{'🎧 보성의 노래 듣기':()=>showSuno(),'어떤 노래예요?':['주인장이 Suno AI로 직접 만든 노래들이에요.','한 곡씩 골라서 들어 보세요.']}},
 {x:11,y:7,c:'#fda4af',h:'#222',w:1,n:'음악 듣는 손님',s:['이 서재에 오면 시간이 천천히 가는 것 같아요.']}]},
 
@@ -460,16 +507,18 @@ orchard:{n:'감귤 과수원',o:1,bgm:'route',land:[7,5],m:[
   'T.F........VVVT',
   'T..dodododovvvT',
   'T..ddddddddvvvT',
-  'T..dodododo...T',
+  'T..dodododo.&&T',
   '===========...T',
-  'T..dodododo...T',
+  'T..dodododo.&.T',
   'T..dddddddd...T',
-  'T..dodododo..TT',
+  'T..dodododo&.TT',
   'TTTTTTTTTTTTTTT'],e:{l:['route1',14,5]},p:[
 {x:5,y:3,c:'#16a34a',h:'#6b7280',w:1,n:'감귤 농부 삼춘',s:['제주 감귤이 맛좋수다게~ 🍊','혼저 옵서예. 한 입 먹어봅서게!'],ch:{'감귤 이야기':['귤은 껍질 얇고 단내 확 나는 게 잘 익은 거우다.','겨울엔 비닐하우스에서 하우스감귤도 키우주.'],'농사 이야기':['허리가 아파도 열매 보민 힘이 나는 거라게.','비 오는 날은 하우스 안에서 가지 정리허곡 허여.']}},
 {x:9,y:7,c:'#f59e0b',h:'#d1d5db',w:1,n:'귤 따는 할망',s:['오늘 귤은 당도가 막 좋쿠다게~','저 안쪽 나무 밑에서 쉬엉 갑서예.']},
 {x:3,y:7,c:'#0ea5e9',h:'#222',w:1,n:'농부 청년',s:['귤 따는 철이 되민 눈코 뜰 새 없쥬.','보성이네 감귤농원 귤이 제일 맛좋수다게! 🍊']},
 {x:7,y:3,c:'#854d0e',h:'#d1d5db',n:'보성 할아버지',s:['어서 옵서. 보성이 할아버지우다.','우리 감귤밭 구경허영 갑서게. 🍊'],ch:{'감귤 농사':['감귤은 사람 발소리 듣고 큰다고 허주.','부지런히 밭에 나와사 귤도 달아지는 거라.'],'보성이 이야기':['보성이 왔걸랑 귤 많이 먹으라고 곧아줍서.']}},
+{x:9,y:3,c:'#475569',h:'#374151',w:1,n:'보성 아버지',when:dadFarm,s:['귤 철이라 요즘은 밭에서 살아요. 🍊','KT에서 은퇴하고 농사를 시작했는데, 이것도 재미있네요.']},
+{x:10,y:7,c:'#db2777',h:'#3f2a1c',lh:1,w:1,n:'보성 어머니',when:momFarm,s:['퇴근하고 일손 좀 도우러 왔어요. 🍊','병원 일 끝나고 맡는 귤 냄새가 참 좋아요.']},
 {x:6,y:7,c:'#166534',h:'#e5e7eb',n:'보성 외할아버지',s:['보성이 외할아버지우다. 잘 왔수다게.','여기 귤 한번 맛봅서. 달주게? 🍊'],ch:{'감귤 농사':['바람 막아주는 돌담이 제주 귤밭의 보물이주.','겨울 되민 노랗게 익은 밭이 그렇게 곱닥허여.'],'보성이 이야기':['보성이 잘 지내는지, 만나걸랑 안부 전해줍서.']}}]},
 
 house:{n:'보성의 집',par:'town',bgm:'indoor',m:(()=>{const r=I('wqwPwqwwKKwqwqw','wfKKffXffXffKfw');r[6]=r[6].slice(0,7)+'OO'+r[6].slice(9);return r})(),
@@ -477,15 +526,15 @@ memo:{'1,1':{s:'INFJ',c:'#fde047',l:['🧩 MBTI','INFJ']},'5,1':{s:'💙',c:'#93
 d:{'7,9':['town',3,4]},p:[
 {x:6,y:4,c:'#7dd3fc',h:'#1b1b26',n:'거울 속의 나',s:['안녕, 나는 강보성.','BS World에 오신 것을 환영해! IT, 전기공학 및 실무 역량을 지속 발전시키는 중이야.'],ch:{'지금까지의 길':['🧠 멘사 IQ 156 · 💻 정보처리기사 · 🏃 하프마라톤 3회 · 🩸 헌혈 167회'],'다음 모험':['다음 챕터는 함께할 새로운 퀘스트야.','벽의 액자도 꼭 눌러봐. 📸']}},
 {x:11,y:6,c:'#f59e0b',h:'#f59e0b',w:1,n:'고양이',s:['야옹~ 🐱','(주인이 코딩하는 동안 키보드 옆을 지키는 중이다냥.)']},
-{x:4,y:5,c:'#475569',h:'#374151',n:'보성 아버지',s:['어서 와요. 보성이 아버지입니다.','우리 보성이 집에 온 걸 환영합니다. 편히 둘러봐요.']},
-{x:4,y:7,c:'#db2777',h:'#3f2a1c',n:'보성 어머니',s:['어머, 손님이 왔네! 보성이 엄마예요.','밥은 먹었어요? 귤이라도 하나 먹고 가요. 🍊']},
-{x:11,y:4,c:'#22c55e',h:'#1b1b26',n:'보성 동생',s:['안녕하세요! 저는 보성이 동생이에요.','가운데 테이블에서 우리 보성이한테 질문 남길 수 있어요. 😄']}]},
+{x:4,y:5,c:'#475569',h:'#374151',n:'보성 아버지',when:()=>!dadFarm(),s:['어서 와요. 보성이 아버지입니다.','KT에서 은퇴하고 지금은 농사를 짓고 있어요. 편히 둘러봐요.']},
+{x:4,y:7,c:'#db2777',h:'#3f2a1c',lh:1,n:'보성 어머니',when:()=>!momFarm(),s:['어머, 손님이 왔네! 보성이 엄마예요.','간호사로 일하고 있어요. 밥은 먹었어요? 귤이라도 하나 먹고 가요. 🍊']},
+{x:11,y:4,c:'#f9a8d4',h:'#1b1b26',lh:1,n:'보성 여동생',s:['안녕하세요! 저는 보성이 여동생이에요.','가운데 테이블에 질문을 남기면 답을 받을 수 있어요. 😄']}]},
 
 gym:{n:'런 라이프 체육관',par:'sports',bgm:'sports',m:I('wNwMwJwwwJwMwNw','wfKKffXffXffKfw'),d:{'7,9':['sports',10,3]},sh:['🏅 마라톤 메달 진열대','2013 · 2016 · 2016 하프코스 완주 / 2019 감귤마라톤 10km'],p:[
 {x:7,y:5,c:'#16a34a',h:'#222',n:'메인 러닝 코치',s:['어서 와! 여기는 런 라이프 체육관.','마라톤 하프코스를 3번 완주한 러너의 기록실이지.'],ch:{'하프코스 3회':['2013 제2회 6.25 상기 및 정전 60주년 기념 국민대통합 마라톤 대회 하프 01:58:21.05','2016 제9회 아름다운제주국제마라톤대회 하프 2:27:11.23','2016 제21회 제주국제관광마라톤축제 하프 02:54:26.14'],'감귤마라톤 & 볼링':['2019 제주감귤국제마라톤 10km 01:22:38.32 🍊','2011 제30회 제주특별자치도볼링협회장기 전도볼링대회 대학부 남자 2인조전 3위 🎳']}},
 {x:3,y:6,c:'#60a5fa',h:'#222',w:1,n:'서브 러너',s:['후… 후… 아 안녕!','기록은 숫자지만 완주는 이야기야. 파이팅!']}]},
 
-terminal:{n:'제주 공항 터미널',par:'airport',bgm:'indoor',m:['w'.repeat(W),'wwlwwlwwwlwwlww',FR,'w'+'k'.repeat(W-2)+'w',FR,FR,'wfKKffffffffKKw',FR,FR,'wwwwwwwxwwwwwww'],d:{'7,9':['airport',4,7]},p:[
+terminal:{n:'제주 공항 터미널',par:'airport',bgm:'indoor',m:['w'.repeat(W),'wwlwwlwwwlwwlww',FR,'w'+'k'.repeat(W-2)+'w',FR,FR,'wfKKffffffffKKw',FR,FR,'wwwwwwwxwwwwwww'],d:{'7,9':['airport',10,7]},p:[
 {x:7,y:2,c:'#0369a1',h:'#222',n:'탑승 수속 직원',s:['BS 에어입니다. 어디로 가시겠어요? ✈'],ch:{'✈ 비행기 타기':()=>showFlight(),'공항 안내':['벽의 출발 안내판을 눌러도 탑승할 수 있어요.','BS World 안 어디든 바로 날아갑니다.']}},
 {x:3,y:5,c:'#f472b6',h:'#222',w:1,n:'출장 가는 직장인',s:['비행기 타기 전 감귤 주스 한 잔이 국룰이죠.']},
 {x:11,y:7,c:'#94a3b8',h:'#d1d5db',n:'마중 나온 삼춘',s:['보성이 오는 날인가 해서 기다렴수다게.']}]},
@@ -495,8 +544,8 @@ agency:{n:'국가 자격 검정원',par:'cert',bgm:'knowledge',m:AGM,d:{'7,9':['
 {x:4,y:2,c:'#0ea5e9',h:'#1b1b26',n:'접수 도우미',s:['컴퓨터에서 시험 접수를 하실 수 있어요.','Q-Net이랑 TOEIC, 둘 다 가능해요!']},
 {x:9,y:6,c:'#94a3b8',h:'#222',w:1,n:'시험 준비생',s:['으아… 정처기 실기 공부 중이에요.','저분 기록 보면 희망이 생겨요!']}]},
 
-mensa:{n:'멘사 지능 연구소',par:'cert',bgm:'knowledge',m:I('wBwEwCwIwCwEwBw'),d:{'7,9':['cert',9,4]},sh:['🧠 멘사 전시','IQ 156 · Percentile 99% · 상위 1% 준회원'],p:[
-{x:7,y:4,c:'#7c3aed',h:'#eee',n:'멘사 연구소장',s:['멘사 지능 연구소에 온 걸 환영합니다.','테스트 결과: IQ 156, Percentile 99%. 상위 1% 준회원입니다.']}]},
+mensa:{n:'멘사 지능 연구소',par:'cert',bgm:'knowledge',m:MNM,d:{'7,9':['cert',9,4]},sh:['🧠 멘사 전시','IQ 156 · Percentile 99% · 상위 1% 준회원'],p:[
+{x:7,y:2,c:'#7c3aed',h:'#eee',n:'멘사 연구소장',s:['멘사 지능 연구소에 온 걸 환영합니다.','이곳 주인의 테스트 결과는 IQ 156, Percentile 99%. 상위 1% 준회원입니다.','당신도 IQ 테스트 한번 진행해 보겠습니까?'],ch:{'🧠 IQ 테스트 해 보기':()=>showIq(),'연구소 둘러보기':['좌우 벽의 전시물을 눌러 보세요.','주인장의 멘사 기록을 볼 수 있습니다.']}}]},
 
 vc:{n:'나눔 & 기여 커뮤니티 센터',par:'coast',bgm:'beach',m:I('wUwVwCwwwCwVwUw'),d:{'7,9':['coast',11,3]},sh:['🩸 헌혈 유공 진열대','대한적십자사 헌혈유공장 은장 · 헌혈 167회','🤝 봉사활동 · 상상 Volunteer 활동'],p:[
 {x:7,y:5,c:'#dc2626',h:'#444',n:'커뮤니티 이사장',s:['어서 오세요. 나눔 & 기여 커뮤니티 센터입니다.'],ch:{'헌혈':['🩸 헌혈 167회 달성!','적십자 헌혈유공장 은장 포장증을 받았습니다.'],'봉사활동':['🤝 상상 Volunteer 활동에 참여했습니다.','작은 나눔이 모이면 큰 기록이 돼요.']}},
@@ -507,6 +556,7 @@ Object.values(M).forEach(z=>z.m=z.m.map(r=>r.padEnd(W,'T').slice(0,W)));
 const PG=['...HHHHHH...','..HHHHHHHH..','.HHHHHHHHHH.','.HHSSSSSSHH.','.HSSSSSSSSH.','.PSEESSEESP.','.PSSSSSSSSP.','..SSSMMSSS..','...SSSSSS...','..CCCCCCCC..','.CCCCCCCCCC.','.CCCCCCCCCC.'];
 function spr(c,x,y,s,o={}){const d=o.d||0,col={H:o.h||'#1b1b26',S:'#f2c9a0',E:'#111',P:o.p||'#8a94a8',M:'#b5655a',C:o.c||'#ece4d0'};
 PG.forEach((r,j)=>[...r].forEach((k,i)=>{if(k=='.')return;if(d==1&&j>2&&j<9&&'SEM'.includes(k))k='H';if(d==2&&k=='E'&&i>5)k='S';if(d==3&&k=='E'&&i<6)k='S';c.fillStyle=col[k];c.fillRect(x+i*s,y+j*s,s,s)}));
+if(o.lh){c.fillStyle=col.H;[[0,4],[0,5],[0,6],[0,7],[0,8],[1,7],[1,8],[11,4],[11,5],[11,6],[11,7],[11,8],[10,7],[10,8]].forEach(([a,b])=>c.fillRect(x+a*s,y+b*s,s,s))}
 if(o.l!==false){c.fillStyle='#34495e';c.fillRect(x+3*s,y+12*s,2*s,o.w?s:2*s);c.fillRect(x+7*s,y+12*s,2*s,o.w?2*s:s)}}
 
 function tile(c,k,x,y,t){
@@ -599,10 +649,12 @@ function tile(c,k,x,y,t){
     case 'S': gr(); f('#cbd5e1',12,12,8,20); f('#94a3b8',12,12,2,20); f('#475569',6,2,20,10); f('#7dd3fc',8,4,16,6); f('#ef4444',15,0,2,2); break;
     case 'i': gr(); f('#5c4028',14,16,4,16); f('#1d4ed8',4,4,24,14); c.fillStyle='#fff'; c.font='bold 12px sans-serif'; c.textAlign='center'; c.fillText('✈',X+16,Y+15); c.textAlign='start'; break;
     case 'l': wl(); f('#111827',3,4,26,22); f('#374151',3,4,26,2); f('#fbbf24',5,9,14,2); f('#fbbf24',5,14,18,2); f('#fbbf24',5,19,10,2); if((t/500|0)%2)f('#4ade80',23,9,3,2); break;
+    case '&': gr(); f('#00000030',3,25,28,5); f('#2563eb',3,10,26,18); f('#1d4ed8',3,10,26,3); f('#1e40af',3,25,26,3); [8,15,22].forEach(a=>f('#1e3a8a',a,14,3,9)); [5,12,19].forEach((a,i)=>{f('#ea580c',a,3+i%2*2,8,8);f('#fb923c',a+1,4+i%2*2,5,5)}); f('#f97316',9,5,7,7); break;
+    case '%': gr(); f('#3f3f46',0,6,32,22); [[0,7,10,9,'#57534e'],[11,6,11,10,'#44403c'],[23,8,9,8,'#52525b'],[2,17,12,10,'#44403c'],[15,17,9,10,'#57534e'],[25,17,7,10,'#44403c']].forEach(([a,b,w,q,c])=>f(c,a,b,w,q)); f('#78716c',3,8,4,2); f('#71717a',26,10,3,2); f('#00000030',0,28,32,2); break;
     case '#': gr(); f('#5c4028',5,20,4,12); f('#5c4028',23,20,4,12); f('#7a4a22',2,3,28,20); f('#a06a36',2,3,28,3); f('#fff7ed',7,8,10,13); f('#f97316',9,10,6,6); f('#16a34a',12,9,2,2); f('#fde68a',20,9,7,8); f('#ef4444',11,7,2,2); f('#ef4444',23,8,2,2); break;
     case 'p': fl(); f('#5c3d24',2,1,28,30); [[3,'#ef4444'],[8,'#3b82f6'],[13,'#22c55e'],[18,'#f59e0b'],[23,'#a78bfa']].forEach(([a,b],i)=>{f(b,a+1,4,4,10);f(b,27-a-3,18,4,10)}); f('#3f2a1c',2,15,28,2); break;
     case 'z': { wl(); const pl=PLS[PL_SLOT.indexOf(x)]; f('#3f2a1c',3,2,26,26);
-      if(pl){f('#0f766e',5,4,22,22); c.fillStyle='#fff'; c.textAlign='center'; c.font='bold 10px sans-serif'; c.fillText(+pl.ym.slice(5)+'월',X+16,Y+14); c.font='9px sans-serif'; c.fillText('🎵'+pl.songs.length,X+16,Y+24); c.textAlign='start'}
+      if(pl){f('#0f766e',5,4,22,22); c.fillStyle='#fff'; c.textAlign='center'; c.font='bold 10px sans-serif'; c.fillText(+pl.ym.slice(5)+'월',X+16,Y+14); c.font='9px sans-serif'; c.fillText('🎵'+plList(pl).length,X+16,Y+24); c.textAlign='start'}
       else f('#6b5a48',5,4,22,22); break}
     case 'q': { wl(); const m=(map.memo||{})[x+','+y]||{};
       f('#00000030',7,7,20,20); f(m.c||'#fde047',6,5,20,20); f('#ffffff66',6,5,20,3); f('#ef4444',15,4,3,3);
@@ -688,7 +740,7 @@ function tone(n,d,ty,v,t0){
 }
 
 function music(){
-  clearInterval(mt);
+  clearInterval(mt);npUpdate();
   if(!AC||!bgm||!map||sunoOn)return;
   const trackKey = map.bgm || (map.o ? (cur=='route1'?'route':'town') : 'indoor');
   const T = BGM_TRACKS[trackKey] || BGM_TRACKS.town;
@@ -708,7 +760,13 @@ function sfx(k){
   else tone(12,.06,'square',.04);
 }
 
-function togBgm(){bgm=!bgm;$('#bg').textContent=bgm?'🔊':'🔇';bgm&&!sunoOn?music():clearInterval(mt)}
+function togBgm(){bgm=!bgm;$('#bg').textContent=bgm?'🔊':'🔇';bgm&&!sunoOn?music():clearInterval(mt);npUpdate()}
+/* 위쪽 재생 이름 */
+let npExt='',npLast=null;
+const BGM_NAMES={town:'BS World Main Theme',route:'Olle Walk',beach:'Jeju Coast',knowledge:'Academy City',sports:'Marathon Valley',indoor:'Cozy Room'};
+function npUpdate(){const el=document.getElementById('npt');if(!el)return;
+  const key=map?(map.bgm||'town'):'town',tx=sunoOn&&npExt?'♪ '+npExt:bgm?'♪ '+BGM_NAMES[key]:'🔇 음악 꺼짐';
+  if(tx!==npLast){npLast=tx;el.textContent=tx}}
 /* 탭을 떠나 있는 동안에만 게임 음악을 쉼 (소리 설정은 그대로) */
 document.addEventListener('visibilitychange',()=>{document.hidden?clearInterval(mt):(!sunoOn&&music())});
 
@@ -722,9 +780,11 @@ function free(x,y){
   return !(x==px&&y==py);
 }
 
+const UMC=['#3b82f6','#ef4444','#f59e0b','#10b981','#a855f7','#ec4899','#0ea5e9'];
+function drawUmb(nx,ny,col){const ux=nx*TS+16,uy=ny*TS+3;g.fillStyle=col;g.beginPath();g.ellipse(ux,uy,15,9,0,Math.PI,0);g.fill();g.fillStyle='#0003';g.fillRect(ux-15,uy-1,30,2);g.fillStyle='#4b5563';g.fillRect(ux+11,uy,2,13)}
 function buildNpcs(){
   const rain=WX.kind=='rain';
-  npcs=map.p.filter(o=>!(rain&&o.run)).map(o=>{const n={...o,hx:o.x,hy:o.y,dir:0};if(n.run&&TRACK[n.ti]){n.x=TRACK[n.ti][0];n.y=TRACK[n.ti][1]}return n});
+  npcs=map.p.filter(o=>!(rain&&o.run)&&(!o.when||o.when())).map((o,i)=>{const n={...o,hx:o.x,hy:o.y,dir:0};if(rain&&map.o)n.um=UMC[i%UMC.length];if(n.run&&TRACK[n.ti]){n.x=TRACK[n.ti][0];n.y=TRACK[n.ti][1]}return n});
   if(rain&&map.o&&map.umb)map.umb.forEach(([x,y,c],i)=>npcs.push({x,y,hx:x,hy:y,dir:0,c:'#6b7280',h:'#222',w:1,um:c,n:'우산 쓴 주민',s:UMB[i%UMB.length]}));
 }
 
@@ -764,9 +824,9 @@ function zone(){return !map?null:(map.o?cur:map.par)}
 /* [월드맵] 각 지역의 실제 타일맵을 작은 캔버스로 그려 사각형 안에 투영 */
 const MM_COL={T:'#1e7a31','.':'#6cc04a',F:'#6cc04a','=':'#f3db98','~':'#38bdf8',s:'#fde047',
   R:'#d64541',Q:'#3b6fd6',G:'#2f9e5f',Y:'#7e57c2',H:'#fef3c7',D:'#78350f',t:'#c8693f',
-  W:'#0f766e','#':'#7a4a22',r:'#374151',y:'#374151',u:'#9ca3af',e:'#f8fafc',n:'#2563eb',j:'#bae6fd',S:'#475569',d:'#8b5a2b',o:'#8b5a2b',V:'#bfdbfe',v:'#dbeafe',m:'#1e7a31','1':'#38bdf8','2':'#38bdf8','3':'#38bdf8','4':'#38bdf8'};
+  W:'#0f766e','#':'#7a4a22','%':'#44403c','&':'#2563eb',r:'#374151',y:'#374151',u:'#9ca3af',e:'#f8fafc',n:'#2563eb',j:'#bae6fd',S:'#475569',d:'#8b5a2b',o:'#8b5a2b',V:'#bfdbfe',v:'#dbeafe',m:'#1e7a31','1':'#38bdf8','2':'#38bdf8','3':'#38bdf8','4':'#38bdf8'};
 const MM_FL=['#f472b6','#ffffff','#facc15','#a78bfa','#60a5fa','#fb923c','#e11d48'];
-const MM_NODES=[['rest','쉼터','쉼의 숲'],['airport','공항','제주 공항'],['orchard','과수원','감귤 과수원'],['cert','학술','학술시티'],['route1','1번','1번도로'],['coast','해변','제주해변'],['town','마을','태초마을'],['sports','마라톤','마라톤밸리']];
+const MM_NODES=[['route2','바당','바당 올레'],['rest','쉼터','쉼의 숲'],['airport','공항','제주 공항'],['orchard','과수원','감귤 과수원'],['cert','학술','학술시티'],['route1','귤향','귤향 올레'],['coast','해변','제주해변'],['town','마을','태초마을'],['sports','마라톤','마라톤밸리']];
 const mmEls={};let mmDot=null,mmLast=null;
 
 function mmShape(id){
@@ -842,7 +902,9 @@ $('#dt').addEventListener('click',e=>{if(dlg&&dlg.s=='m'&&e.target.dataset.i!=nu
 $('#dl').addEventListener('click',()=>dlg&&advance());
 
 function act(){
-  if(busy||modal)return;
+  if(modal&&lbOn())return lbZoom();
+  if(modal)return kcAct();
+  if(busy)return;
   if(dlg)return advance();
   const[dx,dy]=DV[dir],x=px+dx,y=py+dy,n=npcs.find(o=>o.x==x&&o.y==y);
   sfx('s');
@@ -850,17 +912,19 @@ function act(){
   const k=at(x,y);
   if(k=='k'){ // 카운터 너머 직원과 대화
     const bn=npcs.find(o=>o.x==x+dx&&o.y==y+dy)||npcs.filter(o=>o.y==y+dy&&Math.abs(o.x-x)<=3).sort((p,q)=>Math.abs(p.x-x)-Math.abs(q.x-x))[0];
-    if(bn)return say(bn.n,bn.s,bn.ch);
+    if(bn)return say(bn.n,typeof bn.s=='function'?bn.s():bn.s,typeof bn.ch=='function'?bn.ch():bn.ch);
   }
   else if(k=='Z')openExam();
   else if(k=='l')showFlight();
+  else if(k=='&')say('감귤 콘테나',['갓 딴 귤이 콘테나에 가득 담겨 있다. 🍊','새콤달콤한 향이 난다.']);
+  else if(k=='%')say('돌담',['제주 현무암을 쌓은 돌담이다.','바람이 돌 틈으로 슝슝 지나간다.']);
   else if(k=='#')showBoard();
   else if(k=='z')plWall(x);
   else if(k=='p')say('책장',['음악 책과 오래된 앨범이 가지런히 꽂혀 있다. 📚']);
   else if(k=='e')say('BS 에어 여객기',['승객을 기다리는 여객기다. ✈','터미널 카운터에서 수속하면 탈 수 있다.']);
   else if(k=='r'||k=='y')say('활주로',['⚠ 활주로 출입 금지!','이착륙하는 비행기를 여기서 구경하자.']);
   else if(k=='S')say('관제탑',['관제탑이 활주로를 지켜보고 있다.']);
-  else if(k=='i')say('표지판',['✈ 제주 공항 터미널','남쪽 길: 제주 바닷가']);
+  else if(k=='i')say('표지판',['✈ 제주 공항 터미널','남쪽 해변 길: 제주 바닷가']);
   else if(k=='P')showGallery();
   else if(k=='N'&&CTS[cur])showCerts(cur);
   else if(map.sh&&'MJNUVBEI'.includes(k))say('전시대',map.sh);
@@ -872,10 +936,43 @@ function act(){
   else if(k=='m'||k=='o')citrusAsk();
 }
 
-function cancel(){if(modal)closeM();else if(dlg)endDlg()}
+function cancel(){if(lbOn())lbClose();else if(modal)closeM();else if(dlg)endDlg()}
 
-function openM(h){sunoStop();$('#mc').innerHTML=h;$('#md').hidden=false;modal=true}
-function closeM(){sunoStop();$('#md').hidden=true;modal=false}
+function openM(h){sunoStop();$('#mc').innerHTML=h;$('#md').hidden=false;modal=true;document.body.classList.add('modal-on');$('.mb').scrollTop=0;kcSel(null);if(KC.on)kcMove(1)}
+function closeM(){sunoStop();$('#md').hidden=true;modal=false;document.body.classList.remove('modal-on');kcSel(null)}
+/* 창 안 커서: 방향키·패드로 고르고 Z·Enter·A로 누름 */
+const KC={on:false,el:null};
+const kcItems=()=>[...$('#mc').querySelectorAll('a[href],button:not(:disabled),summary,input,textarea,select,audio,[onclick]')].filter(e=>e.getClientRects().length&&!e.hidden);
+function kcPos(){const c=$('#kc'),e=KC.el;if(!c)return;if(!e||!e.isConnected){c.style.display='none';return}
+  const r=e.getBoundingClientRect();c.style.display='block';c.style.left=Math.max(2,r.left-24)+'px';c.style.top=(r.top+Math.min(r.height,44)/2-10)+'px'}
+function kcSel(e){if(KC.el)KC.el.classList.remove('kcur');KC.el=e;if(e){e.classList.add('kcur');e.scrollIntoView({block:'nearest'})}kcPos()}
+function kcMove(d){KC.on=true;const a=kcItems();if(!a.length)return kcSel(null);const i=a.indexOf(KC.el);kcSel(a[i<0?(d>0?0:a.length-1):(i+d+a.length)%a.length]);if(document.activeElement&&document.activeElement!==document.body)document.activeElement.blur()}
+function kcAct(){KC.on=true;const e=KC.el&&KC.el.isConnected?KC.el:null;if(!e)return kcMove(1);
+  const n=e.tagName;if(n=='TEXTAREA'||n=='SELECT'||(n=='INPUT'&&e.type!='checkbox'))return e.focus();
+  if(n=='AUDIO')return e.paused?e.play().catch(()=>{}):e.pause();
+  e.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true,view:window}));
+  setTimeout(()=>{if(KC.el&&!KC.el.isConnected)kcSel(null);if(!KC.el&&modal)kcMove(1);else kcPos()},60)}
+/* 광고지 크게 보기: 누르면 확대/축소, 끌어서 또는 방향키로 이동 */
+const lbOn=()=>$('#lb').classList.contains('on');
+function lbOpen(src,alt){const l=$('#lb'),i=$('#lbi');i.src=src;i.alt=alt||'';l.classList.add('on');l.classList.remove('big');document.body.classList.add('lb-on');l.scrollTop=l.scrollLeft=0;$('#kc').style.visibility='hidden'}
+function lbClose(){$('#lb').classList.remove('on','big');document.body.classList.remove('lb-on');$('#kc').style.visibility=''}
+function lbZoom(ev){const l=$('#lb');l.classList.toggle('big');l.scrollLeft=(l.scrollWidth-l.clientWidth)/2;l.scrollTop=0}
+function lbScroll(d){$('#lb').scrollBy({left:d==2?-90:d==3?90:0,top:d==1?-90:d==0?90:0})}
+function kcKey(e){
+  if(lbOn()){const k=e.key,d=KM[k];e.preventDefault();if(['x','X','Escape'].includes(k))lbClose();else if(d!=null)lbScroll(d);else if(['z','Z','Enter',' '].includes(k))lbZoom();return}
+  const t=e.target,tag=t&&t.tagName,k=e.key,typing=tag=='TEXTAREA'||tag=='SELECT'||(tag=='INPUT'&&t.type!='checkbox');
+  if(typing){
+    if(k=='Escape'){e.preventDefault();t.blur();return}
+    if(/date|month/.test(t.type||'')||tag=='SELECT')return;
+    const up=k=='ArrowUp',dn=k=='ArrowDown';if(!up&&!dn)return;
+    if(tag=='TEXTAREA'&&((up&&t.selectionStart>0)||(dn&&t.selectionEnd<t.value.length)))return;
+    e.preventDefault();kcSel(t);kcMove(up?-1:1);return;
+  }
+  if(['x','X','Escape'].includes(k)){cancel();return}
+  const d=KM[k];
+  if(d!=null){e.preventDefault();kcMove(d==1||d==2?-1:1);return}
+  if(['z','Z','Enter',' '].includes(k)){e.preventDefault();kcAct()}
+}
 
 const V=[{n:'단정한 댄디컷',bg:'#cfd8e8',c:'#ece4d0',p:'#f2c9a0'},{n:'헤드폰 룩',bg:'#2b3552',c:'#7a8599',p:'#e04f4f'},{n:'포근한 룩',bg:'#f5e1c8',c:'#c98f6b',p:'#f2c9a0'}];
 function showGallery(){openM('<h3>📸 AI 도트 초상화 갤러리</h3><div class="gl">'+V.map((v,i)=>`<figure><canvas id="pc${i}" width="132" height="140"></canvas><figcaption>${v.n}</figcaption></figure>`).join('')+'</div>');V.forEach((v,i)=>{const c=$('#pc'+i).getContext('2d');c.fillStyle=v.bg;c.fillRect(0,0,132,140);spr(c,0,8,11,{...v,l:false})})}
@@ -1085,7 +1182,7 @@ async function qaSave(id){
 /* ===== 음악 서재: 플레이리스트 ===== */
 const PL_SLOT=[2,4,6,8,10,12],PL_MAX=30;
 let PLS=[],PLERR='';
-async function plLoad(){try{PLS=await DB.plList();PLERR=''}catch(e){PLERR=dbErr(e)}}
+async function plLoad(){try{PLS=await DB.plList();PLERR='';PLS.forEach(p=>plSync(p).catch(()=>{}))}catch(e){PLERR=dbErr(e)}}
 const plUrl=u=>/^https:\/\/[^\s"'<>]+$/.test(u||'')?u:'';
 const plSongUrl=s=>plUrl(s.u)||'https://music.youtube.com/search?q='+encodeURIComponent([s.a,s.t].filter(Boolean).join(' '));
 const plYm=ym=>ym.slice(0,4)+'년 '+(+ym.slice(5))+'월';
@@ -1099,17 +1196,115 @@ async function plHome(){
   openM('<h3>🎵 플레이리스트</h3><p style="font-size:12px;opacity:.8">불러오는 중…</p>');
   await plLoad();
   openM(`<h3>🎵 주인장 추천 플레이리스트</h3>${adm('pl')}`+
-    (PLERR?`<div class="cd">${esc(PLERR)}</div>`:PLS.length?PLS.map(p=>`<div class="xrow pick" onclick="plShow(${p.id})"><div><b>${esc(p.title)}</b><small style="display:block;opacity:.75">${plYm(p.ym)} · ${p.songs.length}곡</small></div><span>▶</span></div>`).join(''):'<div class="cd">아직 걸린 플레이리스트가 없어요.</div>')+
+    (PLERR?`<div class="cd">${esc(PLERR)}</div>`:PLS.length?PLS.map(p=>`<div class="xrow pick" onclick="plShow(${p.id})"><div><b>${esc(p.title)}</b><small style="display:block;opacity:.75">${plYm(p.ym)} · <span class="plcnt${p.id}">${plList(p).length}곡</span></small></div><span>▶</span></div>`).join(''):'<div class="cd">아직 걸린 플레이리스트가 없어요.</div>')+
     (DB.admin()?'<div class="qbtn"><button class="xb" onclick="plEdit(0)">＋ 새 플레이리스트</button></div>':''));
 }
+const ytId=u=>((u||'').match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:[^#\s]*&)?v=|embed\/|shorts\/|live\/))([\w-]{11})/)||[])[1]||'';
+const PV={p:null,i:-1,all:false,rep:0,yt:null};
+/* 재생목록 자동 매칭: 등록한 재생목록의 곡을 읽어 직접 넣은 곡 아래에 붙임 (API 키 불필요, 공개·일부 공개 목록만) */
+const PLA={};   // 목록ID → {at,songs,err}
+const plListId=p=>((p.url||'').match(/[?&]list=([\w-]+)/)||[])[1]||'';
+const plNorm=s=>String(s||'').toLowerCase().replace(/[\s\W_]+/g,'');
+function plList(p){
+  const a=PLA[plListId(p)],out=p.songs.slice(),ids=new Set(p.songs.map(s=>ytId(s.u)).filter(Boolean)),tt=new Set(p.songs.map(s=>plNorm(s.t)));
+  if(a)a.songs.forEach(s=>{if(!ids.has(ytId(s.u))&&!tt.has(plNorm(s.t))){ids.add(ytId(s.u));out.push(s)}});
+  return out.slice(0,PL_MAX);
+}
+function plReadIds(list){
+  return new Promise((ok,no)=>{
+    const host=document.createElement('div');host.style='position:fixed;left:-9999px;top:0;width:200px;height:120px';host.innerHTML='<div></div>';document.body.append(host);
+    let done=false,pl=null;const fin=(v,e)=>{if(done)return;done=true;try{pl&&pl.destroy()}catch(_){}host.remove();e?no(e):ok(v)};
+    setTimeout(()=>fin(null,new Error('timeout')),9000);
+    pl=new YT.Player(host.firstChild,{width:200,height:120,playerVars:{listType:'playlist',list},events:{
+      onReady:e=>{const t0=Date.now(),tm=setInterval(()=>{const a=e.target.getPlaylist&&e.target.getPlaylist();if(a&&a.length){clearInterval(tm);fin(a)}else if(Date.now()-t0>7000){clearInterval(tm);fin(null,new Error('empty'))}},200)},
+      onError:()=>fin(null,new Error('list'))}});
+  });
+}
+async function plSongInfo(id){
+  const r=await fetch('https://www.youtube.com/oembed?format=json&url='+encodeURIComponent('https://www.youtube.com/watch?v='+id));
+  if(!r.ok)throw new Error('oembed');const j=await r.json();
+  return{a:String(j.author_name||'').replace(/\s*-\s*Topic$/i,''),t:String(j.title||id),u:'https://youtu.be/'+id,auto:1};
+}
+async function plSync(p,force){
+  const list=plListId(p);if(!list)return;
+  const c=PLA[list];if(c&&c.busy)return c.busy;if(c&&!force&&!c.err&&Date.now()-c.at<6e5)return;
+  const work=(async()=>{
+    try{await ytLoad();const ids=await plReadIds(list);
+      const got=await Promise.allSettled(ids.slice(0,PL_MAX).map(plSongInfo));
+      PLA[list]={at:Date.now(),songs:got.filter(x=>x.status=='fulfilled').map(x=>x.value)};
+    }catch(e){PLA[list]={at:Date.now(),songs:[],err:1}}
+    plRowsUpd(p);
+  })();
+  PLA[list]={...(c||{songs:[]}),busy:work};return work;
+}
+function plRowsHtml(p){
+  const L=plList(p);
+  return L.length?L.map((s,i)=>`<a class="xrow pick plsong" data-i="${i}" href="${esc(plSongUrl(s))}" target="_blank" rel="noopener" onclick="return plClick(${p.id},${i},this.href)"><span class="qn">${i+1}</span><span class="qt" style="font-weight:normal"><b>${esc(s.t)}</b>${s.a?' · '+esc(s.a):''}</span><span>${ytId(s.u)?'🎬':'▶'}</span></a>`).join(''):'<div class="cd">주인장이 곡을 고르는 중이에요. 🎧</div>';
+}
+function plBtnHtml(p){
+  const u=plUrl(p.url),nV=plList(p).filter(s=>ytId(s.u)).length;
+  return (nV?`<button class="xb" onclick="plAll(${p.id})">▶ 전체 듣기 (${nV}곡)</button><button class="xb" id="plRepB" onclick="plRepTog()"></button>`:'')+(u?`<a class="xb" href="${esc(u)}" target="_blank" rel="noopener" onclick="return plOut(this.href)">YouTube Music에서 열기</a>`:'');
+}
+function plInfoHtml(p){
+  const a=PLA[plListId(p)],st=!plListId(p)?'':a&&a.busy?' · 재생목록 불러오는 중…':a&&a.err?' · 재생목록을 읽지 못했어요(공개·일부 공개만 가능)':'';
+  return `${plYm(p.ym)} · ${plList(p).length}곡${st} · 🎬 곡은 여기서 영상으로 재생돼요.`;
+}
+function plRowsUpd(p){
+  const b=$('#plRows');if(b&&+b.dataset.id==p.id){b.innerHTML=plRowsHtml(p);$('#plBtns').innerHTML=plBtnHtml(p);$('#plInfo').textContent=plInfoHtml(p);plRepLbl();plMarkRow();kcPos()}
+  document.querySelectorAll('.plcnt'+p.id).forEach(e=>e.textContent=plList(p).length+'곡');
+}
+function plMarkRow(){document.querySelectorAll('.plsong').forEach(e=>e.style.borderColor=+e.dataset.i==PV.i?'#fbbf24':'')}
 function plShow(id){
   const p=PLS.find(x=>x.id==id);if(!p)return plHome();
-  const u=plUrl(p.url);
-  openM(`<h3>🎵 ${esc(p.title)}</h3><p style="font-size:12px;opacity:.8;margin-bottom:6px">${plYm(p.ym)} · ${p.songs.length}곡 · 곡을 누르면 YouTube Music이 열려요.</p>`+
-    (u?`<div style="margin:8px 0"><a class="xb" href="${esc(u)}" target="_blank" rel="noopener">▶ 전체 듣기</a></div>`:'')+
-    (p.songs.length?p.songs.map((s,i)=>`<a class="xrow pick plsong" href="${esc(plSongUrl(s))}" target="_blank" rel="noopener"><span class="qn">${i+1}</span><span class="qt" style="font-weight:normal"><b>${esc(s.t)}</b>${s.a?' · '+esc(s.a):''}</span><span>▶</span></a>`).join(''):'<div class="cd">주인장이 곡을 고르는 중이에요. 🎧</div>')+
-    `<div class="qbtn"><button class="xb" onclick="plHome()">◀ 목록으로</button>${DB.admin()?`<button class="xb" onclick="plEdit(${p.id})">수정</button><button class="xb r" onclick="plDelAsk(${p.id})">삭제</button>`:''}</div>`);
+  openM(`<h3>🎵 ${esc(p.title)}</h3><p id="plInfo" style="font-size:12px;opacity:.8;margin-bottom:6px"></p>
+    <div id="ytBox" hidden><div id="plNow" style="font-weight:bold;font-size:13px"></div><div class="ytw"><div id="ytP"></div></div></div>
+    <div class="qbtn" id="plBtns" style="margin-bottom:6px"></div>
+    <div class="qbtn" id="plCtl" hidden style="margin-bottom:6px"><button class="xb" onclick="plToggle()">⏯ 재생/일시정지</button><button class="xb" onclick="plNext(true)">⏭ 다음 곡</button></div>
+    <div id="plRows" data-id="${p.id}"></div>
+    <div class="qbtn"><button class="xb" onclick="plHome()">◀ 목록으로</button>${DB.admin()?`<button class="xb" onclick="plEdit(${p.id})">수정</button><button class="xb r" onclick="plDelAsk(${p.id})">삭제</button>`:''}</div>`);
+  plSync(p).then(()=>{}).catch(()=>{});
+  plRowsUpd(p);
 }
+function plRepLbl(){const r=$('#plRepB');if(r)r.textContent='🔁 반복: '+REP_L[PV.rep]}
+function plRepTog(){PV.rep=(PV.rep+1)%3;plRepLbl()}
+/* YouTube Music은 다른 사이트 안에 넣을 수 없어서 작은 창으로 엶. 막히면 새 탭 링크가 그대로 동작 */
+function plOut(url){const w=window.open(url,'bsw_ytm','popup,width=1000,height=720');if(w){try{w.focus()}catch(e){}return false}return true}
+function plClick(id,i,href){
+  const p=PLS.find(x=>x.id==id),s=p&&plList(p)[i];
+  if(s&&ytId(s.u)){PV.all=false;plPlay(p,i);return false}
+  return plOut(href);
+}
+function plAll(id){const p=PLS.find(x=>x.id==id);if(!p)return;const i=plList(p).findIndex(s=>ytId(s.u));if(i<0)return;PV.all=true;plPlay(p,i)}
+let ytReady=null;
+function ytLoad(){return ytReady||(ytReady=new Promise((ok,no)=>{if(window.YT&&YT.Player)return ok();window.onYouTubeIframeAPIReady=ok;const s=document.createElement('script');s.src='https://www.youtube.com/iframe_api';s.onerror=()=>{ytReady=null;no(new Error('yt'))};document.head.append(s)}))}
+async function plPlay(p,i){
+  const s=plList(p)[i],id=ytId(s.u);if(!id)return;
+  if(sunoOpen())sunoClose();
+  PV.p=p;PV.i=i;
+  $('#ytBox').hidden=false;$('#plCtl').hidden=false;$('#plNow').textContent='♪ '+s.t+(s.a?' · '+s.a:'');
+  plMarkRow();
+  extOn(s.t+(s.a?' · '+s.a:''));
+  if(PV.yt&&PV.yt.loadVideoById){PV.yt.loadVideoById(id);return}
+  try{await ytLoad()}catch(e){toast('YouTube 플레이어를 불러오지 못했어요.');return plStop()}
+  if(!$('#ytP'))return;
+  const vars={playsinline:1,rel:0,autoplay:1};if(/^https?:/.test(location.origin))vars.origin=location.origin;
+  PV.yt=new YT.Player('ytP',{videoId:id,playerVars:vars,events:{
+    onReady:e=>e.target.playVideo(),
+    onStateChange:e=>{if(e.data===0)plNext(false)},
+    onError:()=>{const c=PV.p&&plList(PV.p)[PV.i];toast((c?c.t+': ':'')+'사이트에서 재생할 수 없는 영상이에요.');plNext(false,true)}
+  }});
+}
+function plNext(manual,failed){
+  const p=PV.p;if(!p)return;const L=plList(p),n=L.length,has=k=>ytId(L[k].u);
+  if(!manual&&!failed&&PV.rep==2)return plPlay(p,PV.i);
+  if(!manual&&!PV.all&&!PV.rep)return;
+  for(let k=1;k<=n;k++){const j=PV.i+k;
+    if(j>=n&&!manual&&PV.rep!=1)break;
+    if(has(j%n)&&(j%n!=PV.i||!failed))return plPlay(p,j%n);}
+  PV.all=false;
+}
+function plToggle(){const y=PV.yt;if(!y||!y.getPlayerState)return;y.getPlayerState()==1?y.pauseVideo():y.playVideo()}
+function plStop(){if(!PV.yt&&!PV.p)return;try{PV.yt&&PV.yt.destroy&&PV.yt.destroy()}catch(e){}PV.yt=null;PV.p=null;PV.i=-1;PV.all=false;if(sunoOn&&!sunoOpen()&&!sunoFileOn())extOff()}
 function plEdit(id){
   if(!DB.admin())return toast('운영자만 할 수 있어요.');
   const p=PLS.find(x=>x.id==id),now=jejuYm();
@@ -1117,8 +1312,8 @@ function plEdit(id){
   openM(`<h3>🎵 ${p?'플레이리스트 수정':'새 플레이리스트'}</h3>
   <input id="ply" class="xin" type="month" value="${esc(p?p.ym:now)}">
   <input id="plt" class="xin" maxlength="60" placeholder="제목" value="${esc(p?p.title:plYm(now)+' 주인장 추천 플레이리스트')}" style="margin-top:6px">
-  <input id="plu" class="xin" type="url" placeholder="YouTube Music 재생목록 공유 링크 (선택)" value="${esc(p&&p.url||'')}" style="margin-top:6px">
-  <textarea id="pls" class="xin" rows="10" placeholder="한 줄에 한 곡, 최대 30곡&#10;가수 - 곡명&#10;가수 - 곡명 | 곡 링크(선택)" style="margin-top:6px">${esc(lines)}</textarea>
+  <input id="plu" class="xin" type="url" placeholder="YouTube Music 재생목록 공유 링크 (곡 자동 추가, 공개·일부 공개)" value="${esc(p&&p.url||'')}" style="margin-top:6px">
+  <textarea id="pls" class="xin" rows="10" placeholder="한 줄에 한 곡, 최대 30곡&#10;가수 - 곡명&#10;가수 - 곡명 | YouTube 영상 링크(선택)" style="margin-top:6px">${esc(lines)}</textarea>
   <div class="qbtn"><button class="xb" onclick="plSave(${p?p.id:0})">저장</button><button class="xb r" onclick="${p?`plShow(${p.id})`:'plHome()'}">취소</button></div>`);
 }
 function jejuYm(){return new Date(Date.now()+9*36e5).toISOString().slice(0,7)}
@@ -1148,55 +1343,111 @@ function plDelAsk(id){
 async function plDelGo(id){try{await DB.plDel(id);toast('삭제했어요.');plHome()}catch(e){toast(dbErr(e))}}
 
 /* ===== Suno 노래 플레이어 =====
-   아래 목록에 곡마다 한 줄씩 적으면 됩니다. 둘 중 편한 방식으로 적으세요.
-   Suno 링크) {title:'곡 제목',suno:'https://suno.com/song/곡ID',note:'한 줄 소개'},
+   곡마다 한 줄씩 적습니다. sec(곡 길이, 초)를 적어야 전체 듣기·반복 때 다음 곡으로 넘어갑니다.
+   Suno 링크) {title:'곡 제목',suno:'https://suno.com/song/곡ID',sec:180,note:'한 줄 소개'},
    음원 파일) {title:'곡 제목',file:'music/song1.mp3',note:'한 줄 소개'}, */
+const SUNO_ARTIST='studio_bs';
 const SUNO_TRACKS=[
-  {title:'Level Up!',suno:'https://suno.com/song/c14dc537-f927-4f18-b736-ac127fa1c848'},
+  {title:'Level Up!',suno:'https://suno.com/song/c14dc537-f927-4f18-b736-ac127fa1c848',sec:165},
+  {title:'fingerstyle bgm',suno:'https://suno.com/song/98bfc938-2ff5-4911-8ebb-29e3119442e8',sec:82},
+  {title:'warm',suno:'https://suno.com/song/498a9b29-fa5f-43a5-bd4b-ab34eb000fb7',sec:207},
 ];
-let sunoI=-1;
+const REP_L=['끔','전체','한 곡'];
+let sunoI=-1,sunoWin=null,sunoTm=null,sunoEnd=null,sunoAll=false,sunoRep=0,sunoAt=0;
 const sunoId=u=>((u||'').match(/suno\.com\/(?:song|embed)\/([0-9a-fA-F-]{36})/)||[])[1]||'';
 const sunoFileOn=()=>{const t=SUNO_TRACKS[sunoI];return !!(t&&t.file)};
+const sunoOpen=()=>!!(sunoWin&&!sunoWin.closed);
+function extOn(title){sunoOn=true;npExt=title;clearInterval(mt);npUpdate()}
+function extOff(){sunoOn=false;npExt='';music()}
 function sunoStop(){
   const a=$('#sunoA');if(a)a.pause();
-  const f=$('#sunoF');if(f)f.innerHTML='';
-  sunoOn=false;if(modal&&!document.hidden)music();
+  plStop();
+  if(sunoOpen())return;   // Suno 창이 열려 있으면 노래가 계속되므로 게임 음악은 계속 쉼
+  if(sunoOn)extOff();
+}
+function sunoWatch(){clearInterval(sunoTm);sunoTm=setInterval(()=>{if(sunoOpen())return;clearInterval(sunoTm);clearTimeout(sunoEnd);sunoWin=null;sunoAll=false;sunoI=-1;extOff();sunoMark()},1000)}
+function sunoArm(){
+  clearTimeout(sunoEnd);const t=SUNO_TRACKS[sunoI];
+  if(!t||!t.sec||!sunoOpen()||(!sunoAll&&!sunoRep))return;
+  sunoEnd=setTimeout(sunoAdvance,(Math.max(1,t.sec-(Date.now()-sunoAt)/1000)+2)*1000);
+}
+function sunoNextI(){
+  const n=SUNO_TRACKS.length;
+  if(sunoRep==2)return sunoI;
+  if(sunoI+1<n&&(sunoAll||sunoRep==1))return sunoI+1;
+  return sunoRep==1?0:-1;
+}
+function sunoAdvance(){const n=sunoNextI();if(n<0){sunoAll=false;sunoMark();return}sunoPlay(n)}
+function sunoMark(){
+  document.querySelectorAll('.sunot').forEach((e,k)=>e.style.borderColor=k==sunoI?'#fbbf24':'');
+  const t=SUNO_TRACKS[sunoI],n=$('#sunoNow'),r=$('#sunoRepB'),x=$('#sunoCtl');
+  if(n)n.textContent=t?'♪ '+t.title:'곡을 골라 주세요';
+  if(r)r.textContent='🔁 반복: '+REP_L[sunoRep];
+  if(x)x.hidden=!t;
 }
 function showSuno(){
-  sunoI=-1;
-  openM('<h3>🎧 보성의 노래</h3><p style="font-size:12px;opacity:.8;margin-bottom:8px">주인장이 Suno AI로 만든 노래예요.</p>'+
-    (SUNO_TRACKS.length?`<div id="sunoNow" style="font-weight:bold;font-size:13px;margin-bottom:6px">곡을 골라 주세요</div>
-    <div id="sunoF"></div>
-    <audio id="sunoA" controls preload="none" hidden style="width:100%" onplay="sunoOn=true;clearInterval(mt)" onpause="if(sunoFileOn()){sunoOn=false;music()}" onended="sunoNext()" onerror="sunoErr()"></audio>
+  if(!sunoOpen())sunoI=-1;
+  openM('<h3>🎧 보성의 노래</h3><p style="font-size:12px;opacity:.8;margin-bottom:8px">주인장이 Suno AI로 만든 노래예요. 노래는 작은 창에서 나와요.</p>'+
+    (SUNO_TRACKS.length?`<div id="sunoNow" style="font-weight:bold;font-size:13px;margin-bottom:6px"></div>
+    <audio id="sunoA" controls preload="none" hidden style="width:100%" onplay="extOn(sunoTitle())" onpause="if(sunoFileOn())extOff()" onended="sunoAdvance()" onerror="sunoErr()"></audio>
+    <div class="qbtn" style="margin-bottom:6px"><button class="xb" onclick="sunoPlayAll()">▶ 전체 듣기</button><button class="xb" id="sunoRepB" onclick="sunoRepTog()"></button></div>
+    <div class="qbtn" id="sunoCtl" style="margin-bottom:6px" hidden><button class="xb" onclick="sunoSkip()">⏭ 다음 곡</button><button class="xb r" onclick="sunoClose()">⏹ 끄기</button></div>
     <div id="sunoL" style="margin:6px 0"></div><div id="sunoE" class="qerr" hidden></div>`+
-    SUNO_TRACKS.map((t,i)=>`<div class="xrow pick sunot" onclick="sunoPlay(${i})"><span class="qn">${i+1}</span><span class="qt" style="font-weight:normal"><b>${esc(t.title)}</b>${t.note?' · '+esc(t.note):''}</span><span>▶</span></div>`).join('')
+    SUNO_TRACKS.map((t,i)=>`<div class="xrow pick sunot" onclick="sunoPick(${i})"><span class="qn">${i+1}</span><span class="qt" style="font-weight:normal"><b>${esc(t.title)}</b>${t.note?' · '+esc(t.note):''}</span><span>▶</span></div>`).join('')
     :'<div class="cd">주인장이 노래를 준비하고 있어요. 🎶</div>'));
+  sunoMark();
 }
+const sunoTitle=()=>{const t=SUNO_TRACKS[sunoI];return t?t.title+' · '+SUNO_ARTIST:''};
+function sunoPick(i){sunoAll=false;sunoPlay(i)}
+function sunoPlayAll(){if(!SUNO_TRACKS.length)return;sunoAll=true;sunoPlay(0)}
+function sunoSkip(){if(!SUNO_TRACKS.length)return;sunoPlay((sunoI+1)%SUNO_TRACKS.length)}
+function sunoRepTog(){sunoRep=(sunoRep+1)%3;sunoMark();sunoArm()}
+function sunoClose(){clearTimeout(sunoEnd);sunoAll=false;sunoI=-1;const a=$('#sunoA');if(a){a.pause();a.hidden=true}if(sunoOpen())try{sunoWin.close()}catch(e){}sunoWin=null;clearInterval(sunoTm);extOff();sunoMark()}
 function sunoPlay(i){
-  const a=$('#sunoA'),t=SUNO_TRACKS[i];if(!a||!t)return;
-  sunoI=i;$('#sunoE').hidden=true;$('#sunoNow').textContent='♪ '+t.title;$('#sunoL').innerHTML='';$('#sunoF').innerHTML='';
-  document.querySelectorAll('.sunot').forEach((e,k)=>e.style.borderColor=k==i?'#fbbf24':'');
+  const a=$('#sunoA'),t=SUNO_TRACKS[i];if(!t)return;
+  sunoI=i;const E=$('#sunoE'),L=$('#sunoL');if(E)E.hidden=true;if(L)L.innerHTML='';sunoMark();
   if(t.suno){
-    a.pause();a.hidden=true;
+    if(a){a.pause();a.hidden=true}
     const id=sunoId(t.suno),link=/^https:\/\/[^\s"'<>]+$/.test(t.suno)?t.suno:'';
-    // Suno 플레이어의 재생 상태는 알 수 없으므로 이 곡을 연 동안 게임 음악을 쉼
-    sunoOn=true;clearInterval(mt);
-    if(id)$('#sunoF').innerHTML=`<iframe class="sunoif" src="https://suno.com/embed/${id}" title="${esc(t.title)}" allow="autoplay; encrypted-media" loading="lazy"></iframe>`;
-    else{$('#sunoE').textContent='이 링크로는 바로 재생할 수 없어요. suno.com/song/… 주소가 필요해요.';$('#sunoE').hidden=false;sunoOn=false;music()}
-    if(link)$('#sunoL').innerHTML=`<a class="xb" href="${esc(link)}" target="_blank" rel="noopener">Suno에서 열기</a>`;
+    if(!id){if(E){E.textContent='이 링크로는 바로 재생할 수 없어요. suno.com/song/… 주소가 필요해요.';E.hidden=false}if(L&&link)L.innerHTML=`<a class="xb" href="${esc(link)}" target="_blank" rel="noopener">Suno에서 열기</a>`;return}
+    // Suno 플레이어는 다른 사이트 안에 띄우면 빈 화면이 되므로 작은 창으로 엶
+    const url='https://suno.com/embed/'+id+'?autoplay=1';
+    if(sunoOpen())sunoWin.location.href=url;
+    else sunoWin=window.open(url,'bsw_suno','popup,width=560,height=340');
+    if(sunoOpen()){
+      sunoAt=Date.now();extOn(sunoTitle());sunoWatch();sunoArm();
+      if(L)L.innerHTML='<p style="font-size:11px;opacity:.75;margin-bottom:6px">소리가 안 나면 작은 창의 재생 버튼을 눌러 주세요. 창을 닫으면 게임 음악이 다시 나와요.</p>';
+    }else if(E){
+      E.textContent='브라우저가 작은 창을 막았어요. 아래 버튼으로 열어 주세요.';E.hidden=false;
+      L.innerHTML=`<a class="xb" href="${esc(url)}" target="_blank" rel="noopener">🎧 플레이어 열기</a>`;
+    }
     return;
   }
+  if(!a)return;
+  if(sunoOpen())try{sunoWin.close()}catch(e){}
   a.hidden=false;a.src=t.file;a.play().catch(()=>{});
 }
-function sunoNext(){const t=SUNO_TRACKS[sunoI+1];if(t&&t.file)sunoPlay(sunoI+1);else{sunoOn=false;music()}}
-function sunoErr(){const t=SUNO_TRACKS[sunoI];if(!t||!t.file)return;sunoOn=false;music();const e=$('#sunoE');e.textContent='음원을 찾지 못했어요: '+t.file;e.hidden=false}
+function sunoErr(){const t=SUNO_TRACKS[sunoI];if(!t||!t.file)return;extOff();const e=$('#sunoE');e.textContent='음원을 찾지 못했어요: '+t.file;e.hidden=false}
+
+/* ===== 멘사 연구소: IQ 테스트 (외부 사이트를 작은 창으로) ===== */
+const IQ_URL='https://kor.wwiqtest.com/iq-test/';
+function showIq(){
+  openM(`<h3>🧠 IQ 테스트</h3><div class="cd">외부 사이트(WW IQ TEST)의 온라인 테스트가 작은 창으로 열려요. 30문항, 제한 시간은 약 20분이에요.</div>
+  <p style="font-size:12px;opacity:.8;margin:8px 0">이 사이트에서 운영하는 테스트가 아니에요. 결과 확인에 비용이 드는지는 그 사이트에서 먼저 확인해 주세요.</p>
+  <div class="adbtn"><a class="xb" href="${IQ_URL}" target="_blank" rel="noopener" onclick="return iqOpen(this.href)">🧠 테스트 시작하기</a></div>`);
+}
+function iqOpen(url){
+  const w=window.open(url,'bsw_iq','popup,width=1000,height=760');
+  if(w){try{w.focus()}catch(e){}return false}
+  return true;   // 작은 창이 막히면 새 탭으로 열림
+}
 
 /* ===== 마을 게시판: 광고지 파일을 index.html과 같은 곳에 올리고 여기에 적으면 됩니다 ===== */
 const ADS=[{img:'ad-citrus.jpg',title:'🍊 보성이네 감귤농원',link:'https://jeju-citrus.vercel.app/',btn:'🛒 주문 사이트 열기'}];
 function showBoard(){
   openM('<h3>📌 마을 게시판</h3>'+ADS.map(a=>`<div class="qform"><b>${esc(a.title)}</b>
-    <img class="adimg" src="${esc(a.img)}" alt="${esc(a.title)} 광고지" onerror="this.outerHTML='<div class=&quot;cd&quot;>광고지를 준비하고 있어요.</div>'">
-    ${a.link?`<a class="xb" href="${esc(a.link)}" target="_blank" rel="noopener">${esc(a.btn||'자세히 보기')}</a>`:''}</div>`).join(''));
+    <img class="adimg" src="${esc(a.img)}" alt="${esc(a.title)} 광고지" title="눌러서 크게 보기" onclick="lbOpen(this.src,this.alt)" onerror="this.outerHTML='<div class=&quot;cd&quot;>광고지를 준비하고 있어요.</div>'">
+    <p class="adhint">🔍 광고지를 누르면 크게 볼 수 있어요</p>${a.link?`<div class="adbtn"><a class="xb" href="${esc(a.link)}" target="_blank" rel="noopener">${esc(a.btn||'자세히 보기')}</a></div>`:''}</div>`).join(''));
 }
 
 /* ===== 감귤 주문 ===== */
@@ -1243,7 +1494,7 @@ function showBrain(){
 function brainPick(i){const b=BR[i];document.querySelectorAll('.rg').forEach((e,k)=>e.classList.toggle('on',k==i));$('#bi').innerHTML=`<div class="cd">${b[3]}</div><button class="go" style="font-size:13px;padding:5px 12px" onclick="closeM();warp('${b[2]}',7,8,1)">이 장소로 이동</button>`}
 
 const visited = new Set();
-const REGION_NAMES = {town:'태초마을',route1:'1번 도로',cert:'학술·자격 검정 시티',sports:'체육 & 마라톤 밸리',orchard:'감귤 과수원',coast:'제주 바닷가',house:'보성의 집',gym:'런 라이프 체육관',agency:'국가 자격 검정원',mensa:'멘사 지능 연구소',vc:'나눔 & 기여 커뮤니티 센터',airport:'제주 공항',terminal:'제주 공항 터미널',rest:'쉼의 숲',library:'보성의 음악 서재'};
+const REGION_NAMES = {town:'태초마을',route1:'귤향 올레',cert:'학술·자격 검정 시티',sports:'체육 & 마라톤 밸리',orchard:'감귤 과수원',coast:'제주 바닷가',house:'보성의 집',gym:'런 라이프 체육관',agency:'국가 자격 검정원',mensa:'멘사 지능 연구소',vc:'나눔 & 기여 커뮤니티 센터',route2:'바당 올레',airport:'제주 공항',terminal:'제주 공항 터미널',rest:'쉼의 숲',library:'보성의 음악 서재'};
 const REGION_DESC = {
  town:'BS World의 모험이 시작되는 태초마을입니다.',
  route1:'자격 시티로 통하는 도로입니다.',
@@ -1251,6 +1502,7 @@ const REGION_DESC = {
  sports:'체육관과 마라톤 트랙이 펼쳐져 있습니다.',
  coast:'트로피컬 해변의 시원한 파도 소리가 울려 퍼집니다.',
  orchard:'제주 감귤이 자라는 과수원입니다. 🍊',
+ route2:'돌담 따라 해변과 마을을 잇는 길입니다. 🌊',
  rest:'잠시 쉬어 가는 숲입니다. 음악 서재에서 주인장의 플레이리스트를 만나 보세요. 🌿',
  airport:'해변 북쪽의 공항입니다. 터미널에서 비행기를 탈 수 있어요. ✈'
 };
@@ -1295,12 +1547,12 @@ function showQuestLog(){
  <div class="cd"><b>🩸 나눔의 해변</b><small>${visited.has('coast')||visited.has('vc')?'완료':'제주 바닷가 방문하기'}</small></div>`);
 }
 
-function press(d){if(dlg&&dlg.s=='m'){dlg.sel=(dlg.sel+(d==1?-1:d==0?1:0)+dlg.keys.length)%dlg.keys.length;menu()}else held=d}
+function press(d){if(modal&&lbOn())return lbScroll(d);if(modal)return kcMove(d==1||d==2?-1:1);if(dlg&&dlg.s=='m'){dlg.sel=(dlg.sel+(d==1?-1:d==0?1:0)+dlg.keys.length)%dlg.keys.length;menu()}else held=d}
 const KM={ArrowDown:0,s:0,ArrowUp:1,w:1,ArrowLeft:2,a:2,ArrowRight:3,d:3};
 
 addEventListener('keydown',e=>{
+  if(modal)return kcKey(e);
   if(e.target&&/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName))return;   // 입력 중에는 게임 키 무시
-  if(modal){if(['x','X','Escape'].includes(e.key))cancel();return}   // 창이 열려 있으면 버튼·접기 박스·스크롤이 기본 동작하도록 둠
   const st = $('#st');
   const isStarted = st && st.style.display === 'none';
 
@@ -1338,8 +1590,8 @@ function drawPlane(x,y,s){const f=(c,a,b,w,h)=>{g.fillStyle=c;g.fillRect(x+a*s,y
 function planeSky(t){
   if(cur!='airport')return;
   const C=15000,p=(t%C)/C;if(p>.45)return;
-  const q=p/.45,x=-110+q*(cv.width+160),y=(q<.55?TS+6:TS+6-Math.pow((q-.55)/.45,2)*70);
-  drawPlane(x,y,2);
+  const q=p/.45,x=cv.width+20-q*(cv.width+160),y=(q<.5?TS+6:TS+6-Math.pow((q-.5)/.5,2)*70);
+  g.save();g.translate(x+94,y);g.scale(-1,1);drawPlane(0,0,2);g.restore();   // 오른쪽에서 왼쪽 바다로 이륙
 }
 let FLY=null;
 const FLIGHTS=[['town','태초마을','BS101'],['cert','학술·자격 검정 시티','BS202'],['sports','체육 & 마라톤 밸리','BS303'],['orchard','감귤 과수원','BS404'],['coast','제주 바닷가','BS505']];
@@ -1364,11 +1616,11 @@ function draw(t){
   const E=npcs.map(n=>{let nx=n.x,ny=n.y;
     if(n.mv){const p=Math.min(1,(t-n.mv.a)/RUN_MS);nx=n.mv.fx+(n.mv.tx-n.mv.fx)*p;ny=n.mv.fy+(n.mv.ty-n.mv.fy)*p}
     return{y:ny,f:()=>{
-      spr(g,nx*TS+4,ny*TS+2,2,{d:n.dir,h:n.h,p:n.h,c:n.c,w:(t/(n.run?110:350)|0)%2});
+      spr(g,nx*TS+4,ny*TS+2,2,{d:n.dir,h:n.h,p:n.h,c:n.c,lh:n.lh,w:(t/(n.run?110:350)|0)%2});
       if(n.tw){g.fillStyle='#f97316';g.beginPath();g.arc(nx*TS+27,ny*TS+24,5,0,7);g.fill();g.fillStyle='#fdba74';g.fillRect(nx*TS+24,ny*TS+21,2,2)}
-      if(n.um){const ux=nx*TS+16,uy=ny*TS+3;g.fillStyle=n.um;g.beginPath();g.ellipse(ux,uy,15,9,0,Math.PI,0);g.fill();g.fillStyle='#0003';g.fillRect(ux-15,uy-1,30,2);g.fillStyle='#4b5563';g.fillRect(ux+11,uy,2,13)}
+      if(n.um)drawUmb(nx,ny,n.um);
     }}});
-  E.push({y:uy,f:()=>{g.fillStyle='#0003';g.fillRect(ux*TS+6,uy*TS+28,20,4);spr(g,ux*TS+4,uy*TS+2,2,{d:dir,w:mv&&steps%2})}});
+  E.push({y:uy,f:()=>{g.fillStyle='#0003';g.fillRect(ux*TS+6,uy*TS+28,20,4);spr(g,ux*TS+4,uy*TS+2,2,{d:dir,w:mv&&steps%2});if(WX.kind=='rain'&&map.o)drawUmb(ux,uy,'#2563eb')}});
   if(map.plane)drawPlane(map.plane[0]*TS,map.plane[1]*TS,2.1);
   E.sort((a,b)=>a.y-b.y).forEach(e=>e.f());
   planeSky(t);
@@ -1395,7 +1647,7 @@ function loop(t){
   if(!map)return;
   if(!busy&&!dlg&&!modal&&!mv&&held!=null){
     dir=held;const[dx,dy]=DV[dir],nx=px+dx,ny=py+dy;
-    if(nx<0||ny<0||nx>=W||ny>=H){const e=map.e&&map.e[EK[dir]];if(e)warp(e[0],e[1],e[2],dir)}
+    if(nx<0||ny<0||nx>=W||ny>=H){const e=map.e&&map.e[EK[dir]];if(e)warp(e[0],e[3]?px:e[1],e[2],dir)}
     else if(free(nx,ny))mv={a:t,fx:px,fy:py,tx:nx,ty:ny};
     else if(t-bumpT>300){bumpT=t;sfx('b')}
   }
@@ -1426,10 +1678,12 @@ function startGame(){
   toast('BS World에 오신 것을 환영합니다!');
 }
 
+npUpdate();
 buildMiniMap();
 updateHUD();
 updateWxChip();loadWeather();
 setInterval(updateWxChip,20000);setInterval(loadWeather,600000);
+document.querySelector('.mb').addEventListener('scroll',kcPos);addEventListener('resize',kcPos);
 requestAnimationFrame(loop);
 </script>
 </body>
