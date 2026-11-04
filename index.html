@@ -462,15 +462,17 @@ const SONG_PLACE={
   route1:[['귤 향 좋다. 걷기만 해도 기분 좋아지네. 🍊'],['귤나무 보니까 올해 작황이 궁금하네. 이것도 투자처럼 봐야 돼. 📈']],
   cert:[['공부하다 막히면 나한테 물어봐. 같이 보자. 📚'],['시험은 차근차근 하면 돼. 넌 할 수 있어.']],
   rest:[['음악 서재 가 봤어? 플레이리스트 잘 골랐더라. 🎧'],['조용해서 좋다. 여기선 라젠카 말고 잔잔한 걸로 부를게. 🎤']],
-  studio:[['전시 잘 봤어. 다음엔 나도 사진 한 장 찍어 줘. 📷'],['만든 걸 보면 그 사람이 보이더라. 보성이답네.']]
+  studio:[['사진 잘 봤다~ 다음엔 나도 한 장 찍어 줘. 📷'],['만든 걸 보면 그 사람이 보이더라. 보성이답네.']]
 };
 const SONG_XY={airport:[9,8],coast:[9,3],route2:[7,3],town:[11,7],sports:[12,4],route1:[2,5],cert:[11,6],rest:[5,6],studio:[9,5]};
 const SONG={at:null,miss:0,last:-1};
 function songRoll(id){if(!SONG_XY[id]){return}const on=SONG.miss>=2||Math.random()<.4;SONG.at=on?id:null;SONG.miss=on?0:SONG.miss+1}
 const SONG_GUEST=[['어, 처음 보는 얼굴인데요? 보성이 손님인가 봐요? 😄','저는 보성이 친구예요.'],['보성이가 이 세상 제법 잘 만들었죠? 구경 잘하고 가요.'],['스벅은 역시 아이스 아메리카노죠. 날이 어떻든 포기 못 해요. 🥤'],['라젠카 세이브 어스 알아요? 넥스트 노래요.','이건 제대로 불러야 돼요. 🎤'],['농구 좋아해요? 패스 하나 잘 들어가면 그날 기분이 달라져요. 🏀']];
-function songFriend(){if(isOwner()||!FRIEND)return null;if(!FRIEND.met){FRIEND.met=1;return FRIEND.greet}const L=FRIEND.lines||[];return L.length&&Math.random()<.6?[L[Math.random()*L.length|0]]:null}
-function songTalk(){const fr=songFriend();if(fr)return fr;const P=SONG_PLACE[cur]||[],L=!isOwner()&&!FRIEND?SONG_GUEST:Math.random()<.6&&P.length?P:SONG_BASE;let i=Math.random()*L.length|0;if(L[i][0]==SONG.last)i=(i+1)%L.length;SONG.last=L[i][0];return L[i]}
-const SONG_CH=()=>!isOwner()&&!FRIEND?({'🥤 좋아하는 것':['스벅 아이스 아메리카노요. 겨울에도 얼죽아예요.'],'🎤 좋아하는 노래':['라젠카 세이브 어스요. 신해철 목소리는 진짜… 말해 뭐 해요.'],'🤝 보성이랑은':['친구예요. 같이 노래 부르고 농구하던 사이요. 😄']}):({'🥤 아아 이야기':['스벅 아이스 아메리카노, 이건 진리야.','겨울에도 예외 없어. 얼죽아지.'],'🎤 노래 이야기':['제일 좋아하는 노래? 라젠카 세이브 어스지.','신해철 목소리는 진짜… 말해 뭐 해.'],'🏀 농구 이야기':['농구는 혼자 못 해. 그래서 더 재밌는 거야.','패스 하나 잘 들어가면 그날 기분이 달라져.'],'📈 주식 이야기':['한화에어로스페이스, 내가 오른다 했지?','그렇다고 다 따라 사진 마. 공부하고 사는 거야.']});
+const songPal=()=>typeof FRIEND!='undefined'&&FRIEND&&FRIEND.greet&&FRIEND.greet.length>0;   // 송과 아는 사이인지
+const friendCall=()=>{if(typeof FRIEND=='undefined'||!FRIEND)return'';const s=FRIEND.short,c=s.charCodeAt(s.length-1)-0xAC00;return s+(c>=0&&c%28?'이':'')};
+function songFriend(){if(isOwner()||!songPal())return null;if(!FRIEND.met){FRIEND.met=1;return FRIEND.greet}const L=FRIEND.lines||[];return L.length&&Math.random()<.6?[L[Math.random()*L.length|0]]:null}
+function songTalk(){const fr=songFriend();if(fr)return fr;const P=(SONG_PLACE[cur]||[]).filter(l=>isOwner()||!l[0].startsWith('사진 잘 봤다')),L=!isOwner()&&!songPal()?SONG_GUEST:Math.random()<.6&&P.length?P:SONG_BASE;let i=Math.random()*L.length|0;if(L[i][0]==SONG.last)i=(i+1)%L.length;SONG.last=L[i][0];return L[i]}
+const SONG_CH=()=>!isOwner()&&!songPal()?({'🥤 좋아하는 것':['스벅 아이스 아메리카노요. 겨울에도 얼죽아예요.'],'🎤 좋아하는 노래':['라젠카 세이브 어스요. 신해철 목소리는 진짜… 말해 뭐 해요.'],'🤝 보성이랑은':['친구예요. 같이 노래 부르고 농구하던 사이요. 😄']}):({'🥤 아아 이야기':['스벅 아이스 아메리카노, 이건 진리야.','겨울에도 예외 없어. 얼죽아지.'],'🎤 노래 이야기':['제일 좋아하는 노래? 라젠카 세이브 어스지.','신해철 목소리는 진짜… 말해 뭐 해.'],'🏀 농구 이야기':['농구는 혼자 못 해. 그래서 더 재밌는 거야.','패스 하나 잘 들어가면 그날 기분이 달라져.'],'📈 주식 이야기':['한화에어로스페이스, 내가 오른다 했지?','그렇다고 다 따라 사진 마. 공부하고 사는 거야.']});
 function songNpc(id){const[x,y]=SONG_XY[id];return{x,y,c:'#1e3a8a',h:'#201a1a',p:'#201a1a',gl:'#6b4a2e',cup:1,stay:1,n:'송',when:()=>SONG.at==id,s:songTalk,ch:SONG_CH}}
 
 /* 해녀 할망 (제주 사투리) */
@@ -995,17 +997,21 @@ function showProfilePic(){openM('<h3>🖼 내 프로필 사진</h3><div style="t
 /* 자기 자신의 NPC에게 말을 걸면 전용 대사 */
 /* 친구 이름이면 서버에서 그 친구 전용 대사를 받아 옴 */
 let FRIEND=null;
-async function friendLoad(nm){if(!nm){FRIEND=null;return'none'}try{const r=await DB.rpc('friend_by_name',{p_name:nm});if(r&&r.ok){FRIEND={short:r.short,greet:r.greet||[],lines:r.lines||[],self:r.self||null};return'ok'}FRIEND=null;return r&&r.err||'none'}catch(e){FRIEND=null;return'none'}}
+async function friendLoad(nm){if(!nm){FRIEND=null;return'none'}try{const r=await DB.rpc('friend_by_name',{p_name:nm});if(r&&r.ok){FRIEND={short:r.short,greet:r.greet||[],lines:r.lines||[],self:r.self||null,kind:r.kind||'friend',title:r.title||''};return'ok'}FRIEND=null;return r&&r.err||'none'}catch(e){FRIEND=null;return'none'}}
 function friendBoot(){if(GUEST.name)friendLoad(GUEST.name).then(v=>{if(v=='ok')idRender()})}
 function guestEdit(){openM(`<h3>🧳 게스트 꾸미기</h3><p style="font-size:12px;opacity:.8">이름과 모습은 이 브라우저에만 저장돼요.</p><input id="gName" class="xin" maxlength="10" placeholder="이름 (비워도 돼요)" value="${esc(GUEST.name)}"><div class="xcol" style="margin-top:8px">${G_LOOKS.map((L,i)=>`<button class="xb ${i==GUEST.look?'on':''}" onclick="guestSave(${i})">${L.i} ${L.n}</button>`).join('')}</div>`)}
 async function guestSave(i){GUEST.look=i;GUEST.name=$('#gName').value.trim().slice(0,10);try{localStorage.setItem('bsw_guest',JSON.stringify(GUEST))}catch(e){}closeM();const v=await friendLoad(GUEST.name);if(v=='which')toast('같은 이름이 있어요. 성까지 입력해 주세요.');else if(v=='ok')toast('어, 아는 이름인데요? 세상 어딘가의 친구를 찾아보세요. 😄');idRender()}
 /* 주인장으로 들어오면 가족이 알아봄 */
+const FRIEND_TALK={'보성 아버지':(N,F)=>F.kind=='cousin'?['어이구, '+N+' 왔니? 많이 컸네. 반갑다.','보성이는 지금 외출 중이야~ 잘 지내지~?']:[N+' 왔니? 반갑다. 보성이 외출 중이야~','잘 지내지~? 밥은 먹고 다니냐?'],'보성 어머니':(N,F)=>F.kind=='cousin'?['어머, 우리 '+N+' 왔구나! 잘 지내지~?','밥은 먹었어? 귤 좀 싸 줄 테니까 가져가. 🍊']:['어머, '+N+' 왔구나! 잘 지내지~?','보성이는 지금 밖에 나갔어. 귤이라도 하나 먹고 가. 🍊'],'보성 여동생':(N,F)=>F.kind=='cousin'?['어~ '+N+' 왔어?','잘 지내~? 오빠는 지금 밖에 있어.']:[F.short+(F.title?' '+F.title:'')+' 오셨어요? 안녕하세요~','오빠 지금 밖에 있어요. 어디 돌아다니고 있을 거예요. 😄']};
 const OWNER_TALK={'보성 아버지':['왔냐, 아들. 밥은 먹고 다니냐?','시간 나면 밭 일이나 좀 도와라. 🍊'],'보성 어머니':['아들 왔어? 얼굴이 왜 이렇게 말랐어.','밥 차려 줄게. 귤도 좀 싸 가고. 🍊'],'보성 여동생':['오빠 왔네? 또 사이트 고치고 있었지? 😄'],'보성 할아버지':['보성이 왔구나! 밥은 먹언?','귤 하영 먹엉 가라. 🍊'],'보성 외할아버지':['우리 보성이 왔구나. 잘 지냄시냐?','이 귤 한번 맛봐라. 🍊'],'해녀 할망 (보성 할머니)':['아이고 우리 손지 왔구나! 🐚','물질 얘기 또 들으러 왔나?'],'해녀 할망 (보성 외할머니)':['우리 보성이 왔구나게. 바당 바람 맞으멍 쉬다 가라. 🐚'],'동네 주민':['어, 안녕하세요! 오늘도 컵밥 드시러 나왔어요?']};
 /* 게스트 눈에는 강보성이 세계 어딘가에 있음. 거울도 비추는 사람이 달라짐 */
 {const mir=M.house.p.find(n=>n.n=='거울 속의 나'),mw=mir.when;mir.when=()=>isOwner()&&(!mw||mw());
  M.house.p.push({x:mir.x,y:mir.y,when:()=>!isOwner(),c:'#0ea5e9',h:'#3f2a1c',n:'거울',s:()=>['거울에 '+(GUEST.name||'게스트')+'님의 모습이 비친다. 🪞','주인장 강보성은 지금 어딘가를 돌아다니는 중이다.']});
- const slot=()=>{const{h}=jejuNow();return h>=21||h<9?'home':h<12?'noryangjin':h<18?'rest':'noryangjin'},bs=(id,x,y)=>M[id].p.push({x,y,stay:1,when:()=>!isOwner()&&slot()==id,c:'#2b3140',h:'#17151c',p:'#17151c',lk:ME_LOOK,n:'강보성',s:['어! 여기까지 찾아오셨네요? 저 강보성입니다. 😄','BS World 재미있게 둘러보세요.'],ch:mir.ch});
- bs('home',4,4);bs('noryangjin',28,11);bs('rest',8,7);}
+ /* 주인장이 아닐 때 강보성은 시간마다 세상을 돌아다님. 깊은 밤엔 아지트에서 쉼 */
+ const ROAM=['noryangjin','town','coast','route1','rest','yeouido','nodeul','orchard'],slot=()=>{const{h,m}=jejuNow();return h>=1&&h<7?'home':ROAM[Math.floor((h*60+m)/30)%ROAM.length]};
+ const spot=id=>{const z=M[id],W0=z.m[0].length,H0=z.m.length,used=new Set((z.p||[]).map(n=>n.x+','+n.y));let best=null,bd=1e9;for(let y=0;y<H0;y++)for(let x=0;x<W0;x++){const k=z.m[y][x];if(!'.ㅣF'.includes(k)||used.has(x+','+y)||(z.d&&z.d[x+','+y]))continue;const d=Math.abs(x-Math.min(7,W0>>1))+Math.abs(y-(H0>>1));if(d<bd){bd=d;best=[x,y]}}return best};
+ const bsTalk=()=>friendCall()?['오~ '+friendCall()+'! 여기까지 찾아왔네? 😄','잘 지냈지? 천천히 둘러보고 가.']:['어! 여기까지 찾아오셨네요? 저 강보성입니다. 😄','BS World 재미있게 둘러보세요.'];
+ ['home',...ROAM].forEach(id=>{const[x,y]=id=='home'?[4,4]:spot(id);M[id].p.push({x,y,stay:1,w:id=='home'?0:1,when:()=>!isOwner()&&slot()==id,c:'#2b3140',h:'#17151c',p:'#17151c',lk:ME_LOOK,n:'강보성',s:bsTalk,ch:mir.ch})});}
 
 const PG=['...HHHHHH...','..HHHHHHHH..','.HHHHHHHHHH.','.HHSSSSSSHH.','.HSSSSSSSSH.','.PSEESSEESP.','.PSSSSSSSSP.','..SSSMMSSS..','...SSSSSS...','..CCCCCCCC..','.CCCCCCCCCC.','.CCCCCCCCCC.'];
 /* 인물별 머리·옷 표현 */
@@ -1369,7 +1375,10 @@ let cur=null,map=null,px=7,py=5,dir=0,mv=null,steps=0,busy=true,modal=false,dlg=
 const DV=[[0,1],[0,-1],[-1,0],[1,0]],EK=['d','u','l','r'],WALK='.F=stDfxdu!:`ㄹㅂㅗㅛㅣㅝㅚㅢㅕㅖㅓㅠㅀㅆㅸㅱ';
 const at=(x,y)=>map.m[y]&&map.m[y][x],MW=()=>map.m[0].length,MH=()=>map.m.length;
 
+const anbangLock=(x,y)=>cur=='house'&&x==14&&y==7&&!isOwner();
+let lockT=0;
 function free(x,y){
+  if(anbangLock(x,y)){if(Date.now()-lockT>2500&&held!=null){lockT=Date.now();toast('부모님 안방이에요. 들어갈 수 없어요. 🚪')}return false}
   if(busBlocks(x,y))return false;
   if(x<0||y<0||x>=MW()||y>=MH()||!WALK.includes(at(x,y)))return false;
   if(npcs.some(n=>(n.x==x&&n.y==y)||(n.mv&&n.mv.tx==x&&n.mv.ty==y)))return false;
@@ -1547,6 +1556,7 @@ function act(){
   const[dx,dy]=DV[dir],x=px+dx,y=py+dy,n=npcs.find(o=>o.x==x&&o.y==y);
   sfx('s');
   if(n){n.dir=[1,0,3,2][dir];npcMet(n);return say(n.n,typeof n.s=='function'?n.s():n.s,typeof n.ch=='function'?n.ch():n.ch)}
+  if(anbangLock(x,y))return say('안방 문',['부모님 안방이다. 함부로 들어가면 안 된다. 🚪']);
   if(map.bus!=null&&busOn()&&Math.abs(py-map.bus)<=1&&BUS.m===cur&&Math.abs(BUS.x+42-(px*TS+16))<70)return say('심야버스 기사',['이 시간엔 막차 끊긴 사람들 태우고 다녀요. 🌙','조심히 들어가세요!']);
   const k=at(x,y);
   if(k=='k'||k=='ㅋ'){ // 카운터 너머 직원과 대화
@@ -2630,7 +2640,7 @@ const TALK={
 };
 const pickTalk=p=>{let last=-1;return()=>{let i=Math.random()*p.length|0;if(p.length>1&&i==last)i=(i+1)%p.length;last=i;return p[i]}};
 Object.values(M).forEach(z=>(z.p||[]).forEach(n=>{if(TALK[n.n])n.s=pickTalk(TALK[n.n])}));
-Object.values(M).forEach(z=>(z.p||[]).forEach(n=>{const T=OWNER_TALK[n.n];if(T){const g0=n.s;n.s=()=>isOwner()?T:(typeof g0=='function'?g0():g0)}}));
+Object.values(M).forEach(z=>(z.p||[]).forEach(n=>{const T=OWNER_TALK[n.n];if(T){const g0=n.s;n.s=()=>isOwner()?T:(FRIEND&&FRIEND_TALK[n.n]?FRIEND_TALK[n.n](friendCall(),FRIEND):(typeof g0=='function'?g0():g0))}}));
 {const ck=M.town.p.find(n=>n.n.startsWith('창끼'));if(ck){const g0=ck.s;ck.s=()=>{if(!isOwner()&&FRIEND&&FRIEND.self&&FRIEND.short=='창환'){const L=FRIEND.self;return[L[Math.random()*L.length|0]]}return typeof g0=='function'?g0():g0}}}
 
 /* ===== 오락실: 테트리스 ===== */
