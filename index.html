@@ -90,14 +90,14 @@
     .minimap-title{font-size:11px;color:#fbbf24;text-align:center;margin-bottom:5px;font-weight:bold;border-bottom:1px solid #2c3a5e;padding-bottom:3px}
     .minimap-grid{
       display:grid;
-      grid-template-areas:". . cert ." "airport airfield route1 orchard" "coast route2 town sports" "beach studio rest .";
+      grid-template-areas:"shoreF studio cert rest" "airport airfield samgeori oreumF" "coast route2 town sports" "beach gotF route1 orchard";
       grid-template-columns:repeat(4,1fr);gap:3px;
     }
-    .minimap-grid.seoul{grid-template-areas:". . . yeouido yongsan . ." "gimpo . singil daebang noryangjin nodeul heukseok" ". . . . jangseung sangdo ." ". . . . . soongsil .";grid-template-columns:repeat(7,1fr)}
+    .minimap-grid.seoul{grid-template-areas:". . yeouido yeouido . yongsan ." "gimpo . singil daebang noryangjin nodeul heukseok" ". . . . jangseung sangdo ." ". . . . . soongsil .";grid-template-columns:repeat(7,1fr)}
     .minimap-node.heukseok{grid-area:heukseok}.minimap-node.jangseung{grid-area:jangseung}.minimap-node.soongsil{grid-area:soongsil}.minimap-node.sangdo{grid-area:sangdo}
     .minimap-node.gimpo{grid-area:gimpo}
     .wmhere{position:absolute;right:2px;top:0;font-style:normal;font-size:14px}
-    .minimap-node.singil{grid-area:singil}.minimap-node.yeouido{grid-area:yeouido}.minimap-node.yongsan{grid-area:yongsan}.minimap-node.daebang{grid-area:daebang}.minimap-node.noryangjin{grid-area:noryangjin}.minimap-node.nodeul{grid-area:nodeul}
+    .minimap-node.singil{grid-area:singil}.minimap-node.yeouido{grid-area:yeouido;aspect-ratio:auto}.minimap-node.yongsan{grid-area:yongsan}.minimap-node.daebang{grid-area:daebang}.minimap-node.noryangjin{grid-area:noryangjin}.minimap-node.nodeul{grid-area:nodeul}
     .minimap-node{
       position:relative;display:block;padding:0;margin:0;
       aspect-ratio:3/2;width:100%;min-width:0;
@@ -106,7 +106,7 @@
       image-rendering:pixelated;font-family:inherit;transition:transform .15s,border-color .15s;
     }
     .minimap-node.beach{grid-area:beach}.minimap-node.studio{grid-area:studio}.minimap-node.airfield{grid-area:airfield}.minimap-node.route2{grid-area:route2}.minimap-node.rest{grid-area:rest}.minimap-node.airport{grid-area:airport}.minimap-node.cert{grid-area:cert}.minimap-node.route1{grid-area:route1}
-    .minimap-node.orchard{grid-area:orchard}.minimap-node.coast{grid-area:coast}.minimap-node.town{grid-area:town}.minimap-node.sports{grid-area:sports}
+    .minimap-node.samgeori{grid-area:samgeori}.minimap-node.shoreF{grid-area:shoreF}.minimap-node.gotF{grid-area:gotF}.minimap-node.oreumF{grid-area:oreumF}.minimap-node.orchard{grid-area:orchard}.minimap-node.coast{grid-area:coast}.minimap-node.town{grid-area:town}.minimap-node.sports{grid-area:sports}
     .minimap-node .lb{
       position:absolute;left:2px;bottom:2px;max-width:calc(100% - 4px);
       font-size:8px;line-height:1.2;color:#fff;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
@@ -307,6 +307,7 @@
     <button onclick="showWorld()">🌏 전체 지도</button>
     <button onclick="showTravel()">🗺 여행 지도</button>
     <button onclick="showQuestLog()">🎯 퀘스트</button>
+    <button onclick="showStamps()">🏅 도장판</button>
   </div>
   <p class="world-note" style="margin-top:14px">키보드 방향키 또는 WASD로 이동하고, Z 키로 주민과 대화하세요. 모바일에서는 화면 아래 패드를 이용할 수 있습니다.</p>
 </aside>
@@ -332,7 +333,7 @@
     <div class="cd">
       <h1>BS World</h1>
       <h2>16-BIT RETRO RPG WORLD</h2>
-      <p>걷고, 말을 걸고, 건물에 들어가 보세요. 강보성이 만든 작은 세계입니다.</p>
+      <p>걷고, 말을 걸고, 건물에 들어가 보세요.<br>강보성이 만든 작은 세계입니다.</p>
     </div>
     <button class="go" onclick="startGame()">모험 시작하기 (START)</button>
     <p>스페이스바(Space) 또는 엔터(Enter)로 시작<br>방향키/WASD · Z=행동 · X=취소</p>
@@ -465,7 +466,7 @@ const SONG_PLACE={
   rest:[['음악 서재 가 봤어? 플레이리스트 잘 골랐더라. 🎧'],['조용해서 좋다. 여기선 라젠카 말고 잔잔한 걸로 부를게. 🎤']],
   studio:[['사진 잘 봤다~ 다음엔 나도 한 장 찍어 줘. 📷'],['만든 걸 보면 그 사람이 보이더라. 보성이답네.']]
 };
-const SONG_XY={airport:[9,8],coast:[9,3],route2:[7,3],town:[11,7],sports:[12,4],route1:[2,5],cert:[11,6],rest:[5,6],studio:[9,5]};
+const SONG_XY={airport:[9,8],coast:[9,3],route2:[7,3],town:[11,7],sports:[12,4],route1:[2,6],cert:[11,6],rest:[5,6],studio:[9,5]};
 const SONG={at:null,miss:0,last:-1};
 function songRoll(id){if(!SONG_XY[id]){return}const on=SONG.miss>=2||Math.random()<.4;SONG.at=on?id:null;SONG.miss=on?0:SONG.miss+1}
 const SONG_GUEST=[['어, 처음 보는 얼굴인데요? 보성이 손님인가 봐요? 😄','저는 보성이 친구예요.'],['보성이가 이 세상 제법 잘 만들었죠? 구경 잘하고 가요.'],['스벅은 역시 아이스 아메리카노죠. 날이 어떻든 포기 못 해요. 🥤'],['라젠카 세이브 어스 알아요? 넥스트 노래요.','이건 제대로 불러야 돼요. 🎤'],['농구 좋아해요? 패스 하나 잘 들어가면 그날 기분이 달라져요. 🏀']];
@@ -515,10 +516,10 @@ town:{n:'제주시',o:1,bgm:'town',m:[
   'T...m..=m.F...T',
   'TT.F...=....TTT',
   'TTTTTTT=TTTTTTT'
-],sign:{'3,3':'보성의 집','11,3':'제주미소'},d:{'3,3':['house',7,8],'11,3':['shabu',7,8]},e:{u:['route1',7,9],l:['route2',14,5],r:['sports',0,5],d:['rest',7,0]},umb:[[3,5,'#ef4444'],[11,5,'#3b82f6']],p:[
+],sign:{'3,3':'보성의 집','11,3':'제주미소'},d:{'3,3':['house',7,8],'11,3':['shabu',7,8]},e:{u:['samgeori',7,9],l:['route2',14,5],r:['sports',0,5],d:['route1',7,0]},umb:[[3,5,'#ef4444'],[11,5,'#3b82f6']],p:[
   {x:2,y:7,c:'#a16207',h:'#d1d5db',n:'마을 어르신',s:['보성이가 그렇게 가족들을 사랑하고 존경한다고 하더라~','요즘 그런 젊은이 드물어. 부모님이 복 받으셨지. 🍊']},
   {x:9,y:8,c:'#111827',h:'#1b1b26',stay:1,w:1,n:'창끼 (a.k.a 노진구)',s:['전설의힘을 알고있나?','ㅋ']},
-  {x:10,y:6,c:'#4aa3ff',h:'#6b3e26',n:'마을 소년',s:['어서 와! 여기가 BS World의 제주시이야.','북쪽 표선 끝엔 자격 시티, 동쪽엔 사라봉, 서쪽엔 나눔 해변, 남쪽엔 쉼의 숲이 있어.','위쪽 🧠 뇌구조 메뉴를 열면 어디든 순간이동할 수 있대!']},
+  {x:10,y:6,c:'#4aa3ff',h:'#6b3e26',n:'마을 소년',s:['어서 와! 여기가 BS World의 제주시이야.','북쪽 삼거리 지나면 학술시티, 동쪽엔 사라봉, 서쪽엔 바당 올레, 남쪽엔 표선이 있어.','위쪽 🧠 뇌구조 메뉴를 열면 어디든 순간이동할 수 있대!']},
   {x:12,y:7,c:'#312e81',h:'#fde047',n:'별지기',when:()=>{const{h}=jejuNow();return h>=23||h<1},s:['이 시간에 깨어 있네요. ✨','자정 무렵에만 여기 나와요. 비밀이에요.'],eg:'star'},
   {x:5,y:7,c:'#ff8fb1',h:'#222',w:1,n:'꽃밭 이웃',s:['꽃향기 맡고 가렴. 🌸','달리기 전엔 스트레칭 필수야!']}
 ]},
@@ -526,20 +527,20 @@ town:{n:'제주시',o:1,bgm:'town',m:[
 route1:{n:'표선',o:1,bgm:'route',m:[
   'TTTTTTT=TTTTTTT',
   'TT.F...=...F.TT',
-  'T.ЖЖЖ..=..TT..T',
-  'T.HDHŋ.=.ac..FT',
-  'T..=====.gh.TTT',
-  'T..F...========',
-  'T.ЮЮЮb.=.b.TT.T',
-  'T.HDH..=.F...TT',
-  'T..=====.....TT',
-  'TTTTTTT=TTTTTTT'],
-        sign:{'3,3':'할아버지댁','3,7':'외할아버지댁'},d:{'3,3':['gpHome',7,8],'3,7':['gmHome',7,8]},e:{u:['cert',7,9], d:['town',7,0], r:['orchard',0,5]},umb:[[5,8,'#f59e0b']],
+  'T.ЮЮЮ..=..ЖЖЖ.T',
+  'T.HDHb.=.ŋHDH.T',
+  'T..=========..T',
+  '===============',
+  'T..ac..=.b.TT.T',
+  'T..gh.F=...F.TT',
+  'sssssssssssssss',
+  '~~~~~~~~~~~~~~~'],
+        sign:{'11,3':'할아버지댁','3,3':'외할아버지댁','7,8':'표선 백사장'},d:{'11,3':['gpHome',7,8],'3,3':['gmHome',7,8]},e:{u:['town',7,9], l:['gotF',14,7], r:['orchard',0,5]},umb:[[4,8,'#f59e0b']],
         p:[
-{x:5,y:4,pet:1,w:1,c:'#000',h:'#000',n:'할아버지댁 개',when:()=>!isNight()&&!WET(),s:['멍! 멍멍! 🐕','(꼬리를 프로펠러처럼 흔들며 주위를 뛰어다닌다.)']},
+{x:10,y:4,pet:1,w:1,c:'#000',h:'#000',n:'할아버지댁 개',when:()=>!isNight()&&!WET(),s:['멍! 멍멍! 🐕','(꼬리를 프로펠러처럼 흔들며 주위를 뛰어다닌다.)']},
 {x:5,y:5,c:'#8a6d4b',h:'#999',n:'등산객',s:['자격증 공부는 마라톤이래. 페이스 조절이 전부지!','북쪽 시티엔 시험을 줄줄이 통과한 사람이 있다던데… 🤔']},
-{x:10,y:5,c:'#ef4444',h:'#222',w:1,n:'꼬마 트레이너',s:['나는 표선의 달리기 선수!','동쪽 사라봉까지 경주할래?']},
-{x:9,y:7,c:'#f59e0b',h:'#5a3a1a',n:'여행자',s:['감귤 향 나는 섬에서 왔어. 🍊','감귤마라톤은 코스도 공기도 최고야.']}]},
+{x:10,y:5,c:'#ef4444',h:'#222',w:1,n:'꼬마 트레이너',s:['나는 표선의 달리기 선수!','위쪽 제주시 지나 사라봉까지 경주할래?']},
+{x:9,y:8,c:'#f59e0b',h:'#5a3a1a',n:'여행자',s:['감귤 향 나는 섬에서 왔어. 🍊','감귤마라톤은 코스도 공기도 최고야.']}]},
 
 cert:{n:'학술·자격 검정 시티',o:1,bgm:'knowledge',m:[
    'TTTTTTTTTTTTTTT',
@@ -549,16 +550,16 @@ cert:{n:'학술·자격 검정 시티',o:1,bgm:'knowledge',m:[
    'T.===...===...T',
    'T..=.....=....T',
    'T.F=.....=F...T',
-   'T..=======....T',
+   '===============',
    'TT.F...=.....TT',
    'TTTTTTT=TTTTTTT'],
       sign:{'3,3':'자격 검정원','9,3':'멘사 연구소'},d:{'3,3':['agency',7,8], '9,3':['mensa',7,8]},
-      e:{d:['route1',7,0]},umb:[[10,5,'#a855f7']],
+      e:{l:['studio',14,4],r:['rest',0,4],d:['samgeori',7,0]},umb:[[10,5,'#a855f7']],
       p:[
 {x:5,y:6,c:'#3b82f6',h:'#222',n:'시티 안내원',s:['여기는 학술·자격 검정 시티.','파란 지붕은 국가 자격 검정원, 보라색 지붕은 멘사 지능 연구소야.']}]},
 
 sports:{n:'사라봉', o:1,bgm:'sports',land:[7,5], m:[
-           'TTTTTTTTTTTTTTT',
+           'TTTTTTT=TTTTTTT',
            'TT.@@@...GGG.TT',
            'T..HDH.F.HDH..T',
            'T...=.F.#===.ΩT',
@@ -567,8 +568,8 @@ sports:{n:'사라봉', o:1,bgm:'sports',land:[7,5], m:[
            'T..tttttttt..FT',
            'T..t......t...T',
            'TT.tttttttt.TTT',
-           'TTTTTTTTTTTTTTT'],
-        sign:{'10,2':'체육관','4,2':'운동 기록실'},d:{'10,2':['gym',7,8],'4,2':['fit',7,8]}, e:{l:['town',14,5]},umb:[[12,7,'#ef4444']],
+           'TTTTTTTTTTT=TTT'],
+        sign:{'10,2':'체육관','4,2':'운동 기록실'},d:{'10,2':['gym',7,8],'4,2':['fit',7,8]}, e:{u:['oreumF',7,9],l:['town',14,5],d:['orchard',6,0]},umb:[[12,7,'#ef4444']],
         p:[
 {x:3,y:3,ti:1,run:1,c:'#22c55e',h:'#222',n:'트랙 러너',s:['하나, 둘! 하나, 둘!','체육관 앞 게시판에 새 기록이 올라온대.']},
 {x:7,y:5,ti:7,run:1,c:'#ef4444',h:'#6b3e26',n:'마라토너',s:['헉헉… 하프코스는 21km래!','페이스 조절이 제일 중요해.']},
@@ -601,12 +602,12 @@ airport:{n:'제주 공항',o:1,bgm:'route',plane:[7,3],m:[
   '~2~ss..jjjDjjj.',
   '~~~~ss.====....',
   '~~~3ss.=F..iS.T',
-  '~~3~2ss=TTTTTTT'],sign:{'10,6':'터미널'},d:{'10,6':['terminal',7,8]},e:{d:['coast',7,0,1],r:['airfield',0,0,2]},umb:[[6,7,'#0ea5e9']],p:[
+  '~~3~2ss=TTTTTTT'],sign:{'10,6':'터미널'},d:{'10,6':['terminal',7,8]},e:{u:['shoreF',5,9],d:['coast',7,0,1],r:['airfield',0,0,2]},umb:[[6,7,'#0ea5e9']],p:[
 {x:11,y:4,c:'#ea580c',h:'#222',n:'항공 정비사',s:['기체 점검 이상 없음! ✈','비행기를 타고 싶으면 터미널 안 탑승 수속 카운터로 가 봐.']},
 {x:10,y:8,c:'#a78bfa',h:'#6b3e26',w:1,n:'여행객',s:['제주에 내리자마자 귤 냄새가 나는 것 같아요. 🍊','공항 바로 옆이 바다라니, 너무 좋아요!']}]},
 
 studio:{n:'창작 마을',o:1,bgm:'indoor',land:[7,4],m:[
-  'TTTTTT=TTTTTTTT',
+  'TTTTTTTTTTTTTTT',
   'T.QQQ.=.YYY..FT',
   'T.HDH.=.HDH...T',
   'T.===.=.===..FT',
@@ -615,7 +616,7 @@ studio:{n:'창작 마을',o:1,bgm:'indoor',land:[7,4],m:[
   'T..m.....b...FT',
   'TF....m.F.....T',
   'T..F.......m.TT',
-  'TTTTTTTTTTTTTTT'],sign:{'3,2':'프로젝트','9,2':'사진관'},d:{'3,2':['projects',7,8],'9,2':['photo',7,8]},e:{u:['route2',6,9],r:['rest',0,4],l:['beach',14,4]},umb:[[11,6,'#a855f7']],p:[
+  'TTTTTTTTTTTTTTT'],sign:{'3,2':'프로젝트','9,2':'사진관'},d:{'3,2':['projects',7,8],'9,2':['photo',7,8]},e:{r:['cert',0,7],l:['shoreF',14,7]},umb:[[11,6,'#a855f7']],p:[
 {x:12,y:7,c:'#fbbf24',h:'#3f2a1c',w:1,dog:'#d6a35c',n:'강아지와 스케치 나온 사람',s:['제 강아지가 모델이에요. 가만히는 안 있지만요. 🐕']},
 {x:7,y:6,c:'#6366f1',h:'#222',n:'동네 사진가',s:['파란 지붕은 프로젝트 전시관, 보라 지붕은 사진관이에요.']},
 {x:4,y:7,c:'#f59e0b',h:'#6b3e26',w:1,n:'스케치하는 학생',s:['돌담을 그리고 있어요.']}]},
@@ -647,7 +648,7 @@ fit:{n:'맨몸 운동 기록실',par:'sports',bgm:'sports',m:['w'.repeat(W),'wNw
 {x:11,y:6,c:'#3b82f6',h:'#6b3e26',n:'배드민턴 치는 친구',s:['방금 그거 아웃이었어요. 분명히요.']},
 {x:3,y:7,c:'#10b981',h:'#222',w:1,n:'철봉 매달린 회원',s:['하나만 더… 하나만 더…']}]},
 
-cave:{n:'??? 동굴',par:'rest',bgm:'knowledge',m:[
+cave:{n:'??? 동굴',par:'gotF',bgm:'knowledge',m:[
   '_______________',
   '__::::::__:::__',
   '_:::__:::::::__',
@@ -657,7 +658,7 @@ cave:{n:'??? 동굴',par:'rest',bgm:'knowledge',m:[
   '___:::::::::::_',
   '_::__::::::::__',
   '_::::::__:::::_',
-  '_______________'],d:{'0,5':['rest',13,5]},p:[
+  '_______________'],d:{'0,5':['gotF',12,4]},p:[
 {x:7,y:3,c:'#334155',h:'#94a3b8',n:'동굴 지기',s:['어찌 여길 찾아왔수과? 제주 땅 밑엔 용암동굴이 많주게.','저 안쪽 상자는 열어봐도 됩니다.']}]},
 
 beach:{n:'하얀 백사장',o:1,bgm:'beach',land:[7,8],m:[
@@ -670,7 +671,7 @@ beach:{n:'하얀 백사장',o:1,bgm:'beach',land:[7,8],m:[
   '~~~~sssss?;...T',
   '~~3~~ssssss.F.T',
   '~~~~~~~ssss.TTT',
-  '~~2~~~~~~TTTTTT'],e:{u:['coast',7,9,1],r:['studio',0,4]},umb:[[11,5,'#ef4444']],p:[
+  '~~2~~~~~~TTTTTT'],e:{u:['coast',7,9,1],r:['gotF',0,7]},umb:[[11,5,'#ef4444']],p:[
 {x:6,y:4,c:'#f472b6',h:'#6b3e26',n:'모래성 쌓는 아이',s:['이 모래성은 파도가 와도 안 무너질 거예요!']},
 {x:8,y:7,c:'#38bdf8',h:'#222',w:1,n:'비치볼 하는 사람',s:['받아라~!']},
 {x:10,y:6,c:'#fde047',h:'#3f2a1c',sit:1,n:'일광욕하는 사람',s:['맨도롱 또똣허니 잠 오쿠다… 😎']},
@@ -706,13 +707,13 @@ yongsan:{n:'용산',o:1,bgm:'route',land:[7,3],m:[
   '.F.....F.ㅔㅔㅔ.ㅑㅑ',
   'ㅈㅈ.F....ㄴㅀㄴ..TT',
   'ㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹT',
-  'ㅈㅈ.F...ㄹ.ㅅ.ㅈㄹ.F',
-  'sssssssㅂsㅅssㅂss',
-  '~~~~~~~ㅂ~ㅅ~~ㅂ~~',
-  '~~~~~~~ㅂ~ㅅ~~ㅂ~~',
-  '~~~~~~~ㅂ~ㅅ~~ㅂ~~',
-  '~~~~~~~ㅂ~ㅅ~~ㅂ~~'],ex:{'12,9':['nodeul',7,0]},sign:{'12,7':'한강대교','9,2':'용산역','11,0':'기념관','13,0':'남산'},e:{l:['yeouido',35,8],d:['noryangjin',13,0]},p:[
-{x:6,y:4,c:'#334155',h:'#222',n:'용산역 직원',s:['역 입구로 들어가 승강장까지 내려가면 1호선을 탈 수 있어요. 🚆','왼쪽 길로 가면 여의도예요.']},
+  'ㅈㅈ.F.....ㅅ.ㅈㄹ.F',
+  'sssssssssㅅssㅂss',
+  '~~~~~~~~~ㅅ~~ㅂ~~',
+  '~~~~~~~~~ㅅ~~ㅂ~~',
+  '~~~~~~~~~ㅅ~~ㅂ~~',
+  '~~~~~~~~~ㅅ~~ㅂ~~'],ex:{'12,9':['nodeul',7,0]},sign:{'12,7':'한강대교','9,2':'용산역','11,0':'기념관','13,0':'남산'},p:[
+{x:6,y:4,c:'#334155',h:'#222',n:'용산역 직원',s:['역 입구로 들어가 승강장까지 내려가면 1호선을 탈 수 있어요. 🚆','아래 한강대교로 쭉 가면 노들섬 지나 노들이에요.']},
 {x:12,y:1,c:'#fb7185',h:'#3f2a1c',w:1,n:'남산 가는 여행자',s:['저 탑까지 걸어가 볼까 해요. 올라가면 한강이 다 보인대요.']}]},
 
 yeouido:{n:'여의도',o:1,wide:1,bgm:'route',land:[18,8],m:[
@@ -730,18 +731,18 @@ yeouido:{n:'여의도',o:1,wide:1,bgm:'route',land:[18,8],m:[
   '~~~ssㄹㄹㄹ.Fㅐ..F..T.ㄹ.ㅊㅊ.ㅊㅊㅐ..ㄹㄹㄹss~~~',
   '~~~~sssㄹㄹㄹㄹ.T.Fㅐ..ㄹ..ㅐ..ㅐㄹㄹㄹㄹsss~~~~',
   '~~~~~~ssssㄹㄹㄹㄹㄹ...ㄹ.ㄹㄹㄹㄹㄹㄹssss~~~~~~',
-  '~~~~~~~~~ssssssㄹㄹㄹㄹㄹㄹsㅂssss~~~~~~~~~',
-  '~~~~~~~~~~~~~~ssssssssㅂ~~~~~~~~~~~~~',
-  '~~~~~~~~~~~~~~~~~~~~~~ㅂ~~~~~~~~~~~~~',
-  '~~~~~~~~~~~~~~~~~~~~~~ㅂ~~~~~~~~~~~~~'],sign:{'19,9':'9호선','9,6':'국회','14,5':'여의도공원','22,5':'금융가','27,6':'금빛 빌딩','16,1':'마포대교','33,7':'원효대교','24,16':'여의교','12,4':'윤중로'},e:{u:['yongsan',0,3],r:['yongsan',0,3],d:['daebang',7,0]},p:[
+  '~~~~~~~~~sssㅂssㄹㄹㄹㄹㄹㄹsㅂssss~~~~~~~~~',
+  '~~~~~~~~~~~~ㅂ~ssssssssㅂ~~~~~~~~~~~~~',
+  '~~~~~~~~~~~~ㅂ~~~~~~~~~ㅂ~~~~~~~~~~~~~',
+  '~~~~~~~~~~~~ㅂ~~~~~~~~~ㅂ~~~~~~~~~~~~~'],sign:{'19,9':'5·9호선','9,6':'국회','14,5':'여의도공원','22,5':'금융가','27,6':'금빛 빌딩','16,1':'마포대교','33,7':'원효대교','24,16':'여의교','12,15':'서울교','12,4':'윤중로'},ex:{'12,17':['singil',7,0],'22,17':['daebang',7,0]},p:[
 {x:19,y:7,c:'#1f2937',h:'#222',cup:1,when:()=>{const{h}=jejuNow();return h>=11&&h<14},n:'점심시간 직장인',s:['점심시간엔 커피 들고 한 바퀴 걸어야 오후를 버팁니다. ☕']},
 {x:21,y:9,c:'#1f2937',h:'#222',stay:1,when:()=>{const{h}=jejuNow();return h>=21||h<6},n:'야근한 직장인',s:['방금 일 끝났어요… 막차는 이미 갔고요. 🌙']},
 {x:9,y:5,c:'#f9a8d4',h:'#3f2a1c',w:1,n:'윤중로 산책하는 사람',s:['봄엔 섬 둘레가 온통 벚꽃이에요. 🌸']},
-{x:15,y:9,c:'#22c55e',h:'#3f2a1c',w:1,n:'공원 자전거 쉬는 사람',s:['남쪽 여의교로 샛강을 건너면 대방, 동쪽 원효대교로 가면 용산이에요.']}]},
+{x:15,y:9,c:'#22c55e',h:'#3f2a1c',w:1,n:'공원 자전거 쉬는 사람',s:['남쪽 다리로 샛강을 건너면 왼쪽은 신길, 오른쪽은 대방이에요.']}]},
 
 singil:{n:'신길',o:1,bgm:'route',land:[7,5],m:[
-  'ㅈㅈ.Tㅈㅈ.ㄹ.ㅊㅊ.ㅈㅈ.',
-  'ㅈㅈ.Tㅈㅈ.ㄹ.ㅊㅊ.ㅈㅈ.',
+  '~~~~~~~ㅂ~~~~~~~',
+  'sssssssㅂsssssss',
   'ㅈㅈㅈ.ㅈ..ㄹ..ㅊㅊ.ㅊㅊ',
   'ㅈㅈㅈ.ㅈ..ㄹ..ㅊㅊ.ㅊㅊ',
   'ㅅㅅㅅㅀㄴㅅㅅㄹㅅㅅㅅㅅㅅㅅㅅ',
@@ -749,8 +750,8 @@ singil:{n:'신길',o:1,bgm:'route',land:[7,5],m:[
   'ㅈㅈ.ㅈㅈ.F.ㅈㅈ.ㅈㅈ.F',
   '.F.....T....F..',
   'ㅈㅈ.ㅈㅈ.T.ㅈㅈ.ㅈㅈ.T',
-  'TTTTTTTTTTTTTTT'],sign:{'3,4':'신길역'},e:{r:['daebang',0,5]},p:[
-{x:3,y:7,c:'#0d9488',h:'#d1d5db',n:'신길 어르신',s:['여기는 집 많고 골목 많은 동네여. 살기는 편하지.','1호선도 5호선도 다 서니까 어디 가기 좋아. 오른쪽으로 가면 대방이고.']}]},
+  'TTTTTTTTTTTTTTT'],sign:{'3,4':'신길역'},e:{u:['yeouido',12,17],r:['daebang',0,5]},p:[
+{x:3,y:7,c:'#0d9488',h:'#d1d5db',n:'신길 어르신',s:['여기는 집 많고 골목 많은 동네예요. 살기는 편하죠.','1호선도 5호선도 다 서니까 어디 가기 좋아요. 위로 가면 여의도, 오른쪽은 대방이에요.']}]},
 
 daebang:{n:'대방',o:1,bgm:'route',land:[7,5],m:[
   '~~~~~~~ㅂ~~~~~~~',
@@ -765,27 +766,45 @@ daebang:{n:'대방',o:1,bgm:'route',land:[7,5],m:[
   'TTTTTTTTTTTTTTT'],sign:{'9,4':'대방역'},e:{u:['yeouido',22,17],l:['singil',14,5],r:['noryangjin',0,8]},p:[
 {x:11,y:7,c:'#a3e635',h:'#222',w:1,n:'대방역 앞 학생',s:['위로 가면 샛강 건너 여의도, 왼쪽은 신길, 오른쪽으로 쭉 가면 노량진이에요.']}]},
 
-nodeul:{n:'노들',o:1,bgm:'route',land:[7,7],m:[
+nodeul:{n:'노들',o:1,wide:1,bgm:'route',land:[7,25],m:[
+  'sssssssㅂsssssss',
+  '~~~~~~~ㅂ~~~~~~~',
+  '~~~~~~~ㅂ~~~~~~~',
+  '~~~~~~~ㅂ~~~~~~~',
+  '~~~~~~~ㅂ~~~~~~~',
+  '~~~~~~~ㅂ~~~~~~~',
+  '~~~~~~~ㅂ~~~~~~~',
+  '~~~~~~~ㅂ~~~~~~~',
+  '~~~~~~~ㅂ~~~~~~~',
   '~~~~~~~ㅂ~~~~~~~',
   '~~~ㅗㅗㅗㅗㅛㅗㅗㅗㅗ~~~',
   '~~~ㅗ.ㅉ.ㅛ.ㅉ.ㅗ~~~',
   '~~~ㅗ.F.ㅛ.T.ㅗ~~~',
   '~~~ㅗㅗㅗㅗㅛㅗㅗㅗㅗ~~~',
   '~~~~~~~ㅂ~~~~~~~',
+  '~~~~~~~ㅂ~~~~~~~',
+  '~~~~~~~ㅂ~~~~~~~',
+  '~~~~~~~ㅂ~~~~~~~',
+  '~~~~~~~ㅂ~~~~~~~',
+  '~~~~~~~ㅂ~~~~~~~',
+  '~~~~~~~ㅂ~~~~~~~',
+  '~~~~~~~ㅂ~~~~~~~',
+  '~~~~~~~ㅂ~~~~~~~',
+  '~~~~~~~ㅂ~~~~~~~',
   'sssssssㅂsssssss',
   'ㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹ',
   'ㄱㄱ.TF..ㄹ.ㄴㅀㄴㅠㄱㄱ',
-  'TTTTTTTㄹTTTTTTT'],sign:{'12,8':'9호선','9,6':'한강대교','5,2':'노들섬','10,8':'노들역'},e:{u:['yongsan',12,9],l:['noryangjin',31,8],r:['heukseok',0,5],d:['sangdo',7,0]},p:[
-{x:8,y:2,c:'#7c3aed',h:'#3f2a1c',n:'버스킹하는 사람',s:['해 질 때 여기서 치면 관객이 알아서 모여요. 🎸','섬 한가운데서 듣는 노을이 또 다르거든요.']},
-{x:4,y:3,c:'#fb923c',h:'#222',w:1,n:'돗자리 든 사람',s:['다리 한가운데 섬이라니, 서울 사람들도 은근 잘 몰라요.','잔디에 누워 있으면 위로 차 소리, 옆으로 강 소리예요.']},
-{x:5,y:4,c:'#22d3ee',h:'#3f2a1c',w:1,n:'트랙 도는 사람',s:['섬 둘레 트랙 한 바퀴 돌면 기분이 싹 풀려요. 🏃']},
-{x:3,y:7,c:'#475569',h:'#222',w:1,n:'노들역 앞 주민',s:['서쪽으로 쭉 가면 노량진, 위쪽 한강대교로 건너면 노들섬 지나 용산이에요.']}]},
+  'TTTTTTTㄹTTTTTTT'],sign:{'12,26':'9호선','9,24':'한강대교','5,11':'노들섬','10,26':'노들역'},e:{u:['yongsan',12,9],l:['noryangjin',31,8],r:['heukseok',0,5],d:['sangdo',7,0]},p:[
+{x:8,y:11,c:'#7c3aed',h:'#3f2a1c',n:'버스킹하는 사람',s:['해 질 때 여기서 치면 관객이 알아서 모여요. 🎸','섬 한가운데서 듣는 노을이 또 다르거든요.']},
+{x:4,y:12,c:'#fb923c',h:'#222',w:1,n:'돗자리 든 사람',s:['다리 한가운데 섬이라니, 서울 사람들도 은근 잘 몰라요.','잔디에 누워 있으면 위로 차 소리, 옆으로 강 소리예요.']},
+{x:5,y:13,c:'#22d3ee',h:'#3f2a1c',w:1,n:'트랙 도는 사람',s:['섬 둘레 트랙 한 바퀴 돌면 기분이 싹 풀려요. 🏃']},
+{x:3,y:25,c:'#475569',h:'#222',w:1,n:'노들역 앞 주민',s:['서쪽으로 쭉 가면 노량진, 위쪽 한강대교로 건너면 노들섬 지나 용산이에요.']}]},
 
 noryangjin:{n:'노량진',o:1,wide:1,bgm:'route',land:[13,10],m:[
-  '~~~~~~~~~~~~~ㅂ~ㅅ~~~~~~~~~~~~~~~~',
-  '~~~~~~~~~~~~~ㅂ~ㅅ~~~~~~~~~~~~~~~~',
-  '~~~~~~~~~~~~~ㅂ~ㅅ~~~~~~~~~~~~~~~~',
-  'sssssssssssssㅂsㅅssㅟㅢㅢㅟㅕㅕㅕㅢㅢㅟㅢㅢㅟㅢ',
+  '~~~~~~~~~~~~~~~ㅅ~~~~~~~~~~~~~~~~',
+  '~~~~~~~~~~~~~~~ㅅ~~~~~~~~~~~~~~~~',
+  '~~~~~~~~~~~~~~~ㅅ~~~~~~~~~~~~~~~~',
+  'sssssssssssssssㅅssㅟㅢㅢㅟㅕㅕㅕㅢㅢㅟㅢㅢㅟㅢ',
   '.ㄷㄷㄷㄷㄷㄷㄷㄷ..F.ㄹ.ㅅ..ㅢㅟㅢㅢㅚㅒㅒㅘㅘㅘㅒㅒㅢㅟ',
   '.ㄷㄷㄷㄷㄷㄷㄷㄷ.T..ㄹ.ㅅ..ㅟㅢㅢㅢㅚㅒㅒㅙㅙㅙㅒㅒㅢㅢ',
   '.ㄷㄷㄷㄷㄷㄷㄷㄷ..F.ㄹ.ㅅ..ㅢㅢㅟㅢㅚㅚㅚㅚㅖㅚㅚㅢㅟㅢ',
@@ -799,7 +818,7 @@ noryangjin:{n:'노량진',o:1,wide:1,bgm:'route',land:[13,10],m:[
   '.ㄱㄱ.ㄱㄱㄹㄱㄱ.ㄱㄱㄱㄹ.ㄱㄱ.ㄱㄱ.ㄱㄱ.ㄹ.T...T.',
   '.ㄱㄱ.ㄱㄱㄹㄱㄱ.ㄱㄱㄱㄹ.ㄱㄱ.ㄱㄱ.ㄱㄱ.ㄹF..T...',
   '.ㄱㄱ.ㄱㄱㄹㄱㄱ.ㄱㄱㄱㄹ.ㄱㄱ.ㄱㄱ.ㄱㄱ.ㄹ..F.TT.',
-  'TTTTTTTTTTTTTㄹTTTTTTTTTTTTTTTTTT'],sign:{'17,7':'9호선','4,4':'수산시장','15,7':'노량진역','26,4':'사육신공원','23,3':'전망대','27,9':'컵밥거리','11,10':'보성의 아지트','22,10':'학원가','3,14':'고시촌','28,14':'동네 공원','11,2':'한강대교'},d:{'11,12':['home',7,8]},e:{u:['yongsan',7,9],l:['daebang',14,5],r:['nodeul',0,7],d:['jangseung',7,0]},p:[
+  'TTTTTTTTTTTTTㄹTTTTTTTTTTTTTTTTTT'],sign:{'17,7':'9호선','4,4':'수산시장','15,7':'노량진역','26,4':'사육신공원','23,3':'전망대','27,9':'컵밥거리','11,10':'보성의 아지트','22,10':'학원가','3,14':'고시촌','28,14':'동네 공원','11,2':'한강대교'},d:{'11,12':['home',7,8]},e:{l:['daebang',14,5],r:['nodeul',0,25],d:['jangseung',7,0]},p:[
 {x:18,y:9,stay:1,c:'#bdb092',h:'#222',n:'노량진역 안내원',s:['파란 지붕 역 입구나 금색 9호선 입구로 들어가 보세요. 🚇','안에서 개찰구를 지나면 1호선, 9호선 승강장으로 내려갈 수 있어요.']},
 {x:9,y:6,c:'#f8fafc',h:'#222',stay:1,n:'수산시장 상인',s:['오늘 들어온 게 물이 좋아요! 새벽 경매 때 오면 더 볼 만하죠. 🐟']},
 {x:27,y:10,c:'#ea580c',h:'#222',stay:1,when:()=>{const{h}=jejuNow();return h>=7&&h<23},n:'컵밥집 사장',s:['시험 앞둔 학생들 든든하게 먹이는 게 보람이에요. 🍚','고기 듬뿍, 밥은 더 달라면 더 줘요!']},
@@ -819,7 +838,7 @@ heukseok:{n:'흑석·중앙대',o:1,bgm:'route',land:[7,5],m:[
   'ㅈㅈ.ㅈㅈ.F.ㅈㅈ.ㅈㅈ.F',
   '.F.....T....F..',
   'ㅈㅈ.ㅈㅈ.T.ㅈㅈ.ㅈㅈ.T',
-  'TTTTTTTTTTTTTTT'],sign:{'3,4':'흑석역','11,0':'중앙대'},e:{l:['nodeul',14,7]},p:[
+  'TTTTTTTTTTTTTTT'],sign:{'3,4':'흑석역','11,0':'중앙대'},e:{l:['nodeul',14,25]},p:[
 {x:9,y:3,c:'#2563eb',h:'#3f2a1c',w:1,n:'중앙대 학생',s:['언덕이 많아서 등교가 곧 운동이에요. 🏃','9호선 흑석역에서 내리면 금방이에요.']},
 {x:5,y:7,c:'#94a3b8',h:'#d1d5db',n:'흑석동 주민',s:['서쪽으로 가면 노들이고, 다리 건너면 한강이에요.']}]},
 
@@ -859,7 +878,7 @@ sangdo:{n:'상도',o:1,bgm:'route',land:[7,5],m:[
   'ㅈㅈ.ㅈㅈ..ㄹ.ㅈㅈ.ㅈㅈ.',
   '.F.....ㄹ...F...',
   'ㅈㅈ.ㅈㅈ..ㄹ.ㅈㅈ.ㅈㅈ.',
-  'TTTTTTTㄹTTTTTTT'],sign:{'9,4':'상도역'},e:{u:['nodeul',7,9],l:['jangseung',14,5],d:['soongsil',7,0]},p:[
+  'TTTTTTTㄹTTTTTTT'],sign:{'9,4':'상도역'},e:{u:['nodeul',7,27],l:['jangseung',14,5],d:['soongsil',7,0]},p:[
 {x:6,y:7,c:'#f472b6',h:'#222',w:1,n:'상도동 주민',s:['위로 가면 노들, 아래로 가면 숭실대입구, 왼쪽으로 가면 장승배기예요.']}]},
 
 anbang:{n:'부모님 안방',par:'town',bgm:'indoor',cozy:'#b45309',bedCol:'#d97706',m:['w'.repeat(W),'wqwwwqwwwwwqwww','wfffffffffffffw','wfffßßfffffKKfw','wfffßßffffffffw','xfffffffffffffw','wfffffffffffffw','wffKKfffffffffw','wfffffffffffffw','w'.repeat(W)],memo:{'1,1':{s:'📷',c:'#fde68a',l:['📷 가족사진','오래된 가족사진이 걸려 있다.']},'5,1':{s:'🍊',c:'#fdba74',l:['🍊 달력','귤 철엔 달력이 빽빽하다.']},'11,1':{s:'🪞',c:'#bae6fd',l:['🪞 거울','옷 입고 나서는 곳.']}},d:{'0,5':['house',13,7]},p:[]},
@@ -870,7 +889,7 @@ shabu:{n:'제주미소 샤브샤브',par:'town',bgm:'indoor',m:['w'.repeat(W),'w
 {x:10,y:6,w:1,c:'#0f766e',h:'#222',n:'가게 돕는 사촌동생',s:['어서 오세요! 여기가 보성이 형 작은아버지네 가게예요.','주문 도와드릴게요.','여기 채소 리필은 무료예요. 🥬']},
 {x:5,y:8,w:1,lh:1,c:'#db2777',h:'#3f2a1c',n:'서빙하는 사촌동생',s:['뜨거우니까 조심하세요! 🍲','오늘 손님 많아서 저희도 일 돕는 중이에요.']}]},
 
-home:{n:'보성의 아지트',par:'noryangjin',bgm:'indoor',cozy:'#2563eb',m:['w'.repeat(W),'w'.repeat(W),'wßßfππfþðfwㅮㅭfw','wfffffffffwfffw','wfffffffffwwfww',FR,'wffffffffffㅲㅲfw',FR,FR,'wwwwwwwxwwwwwww'],sign:{'11,6':'내 가판대','12,2':'화장실'},d:{'7,9':['noryangjin',11,13]},p:[]},
+home:{n:'보성의 아지트',par:'noryangjin',bgm:'indoor',cozy:'#2563eb',m:['w'.repeat(W),'wwwwwwㅯwwwwwwww','wßßfππfþðfwㅮㅭfw','wfffffffffwfffw','wfffffffffwwfww',FR,'wffffffffffㅲㅲfw',FR,FR,'wwwwwwwxwwwwwww'],sign:{'11,6':'내 가판대','12,2':'화장실','6,2':'보성의 하루'},d:{'7,9':['noryangjin',11,13]},p:[]},
 
 route2:{n:'바당 올레',o:1,bgm:'route',land:[7,5],m:[
   'TTTTTTTTTTTTTTT',
@@ -882,23 +901,23 @@ route2:{n:'바당 올레',o:1,bgm:'route',land:[7,5],m:[
   '%%%%%%.%%%%%.%%',
   'T.F...=.....F.T',
   'T..m..=...m...T',
-  'TTTTTT=TTTTTTTT'],e:{l:['coast',14,5],r:['town',0,5],d:['studio',6,0]},umb:[[2,3,'#0ea5e9']],p:[
+  'TTTTTT=TTTTTTTT'],e:{l:['coast',14,5],r:['town',0,5],d:['gotF',6,0]},umb:[[2,3,'#0ea5e9']],p:[
 {x:5,y:3,c:'#0d9488',h:'#6b3e26',n:'올레꾼',s:['돌담 따라 걷는 이 길이 바당 올레라마씸. 🌊','서쪽으로 가민 해변, 동쪽으로 가민 제주시이우다.']},
 {x:2,y:8,c:'#a3e635',h:'#3f2a1c',w:1,dog:'#92400e',n:'강아지 데리고 걷는 사람',s:['우리 강아지가 돌담 냄새를 다 맡아야 움직여요. 🐕']},
 {x:10,y:7,c:'#fb7185',h:'#222',w:1,n:'사진 찍는 여행자',s:['돌담이랑 귤나무가 같이 나오게 찍고 있어요. 📷']}]},
 
 rest:{n:'쉼의 숲',o:1,bgm:'indoor',m:[
-  'TTTTTTT=TTTTTTT',
+  'TTTTTTTTTTTTTTT',
   'T$$$$$.=...F.TT',
   'T$$$$$.=..~~~.T',
   'T¢¢D¢¢.=.F~~~FT',
   '========b.~~~.T',
-  'T...F.....b...!',
-  'TFb......>>>F.T',
-  'T..m....F<D<..T',
-  'TT.F.....===.TT',
-  'TTTTTTTTTTTTTTT'],opera:[1,1,5,2],sign:{'3,3':'음악 서재','10,7':'오락실'},d:{'3,3':['library',7,8],'10,7':['arcade',7,8]},e:{u:['town',7,9],l:['studio',14,4],r:['cave',1,5]},umb:[[5,6,'#14b8a6']],p:[
-{x:9,y:5,c:'#14b8a6',h:'#d1d5db',n:'숲지기',s:['잘 왔수다. 여긴 잠시 쉬어 가는 곳이우다. 🌿','초록 지붕 음악 서재에 들어강 노래 한 곡 들어봅서.'],ch:{'이 숲의 소문':['동쪽 끝 나무 하나가 바람도 없는데 흔들린댄 허여.','나도 가 보진 않았주게.']}},
+  'T...F.ㆄㆄㆄ.b...T',
+  'TFb...ㆅㆅㆅ>>>F.T',
+  'T..mㆈ.ㆇDㆇ<D<..T',
+  'TT.Fㆊㆊㆊㆊㆊ===.TT',
+  'TTTTTTTTTT=TTTT'],opera:[1,1,5,2],sign:{'3,3':'음악 서재','10,7':'오락실','7,7':'영화관'},d:{'3,3':['library',7,8],'10,7':['arcade',7,8],'7,7':['cinema',7,8]},e:{l:['cert',14,7],d:['oreumF',10,0]},umb:[[5,6,'#14b8a6']],p:[
+{x:9,y:5,c:'#14b8a6',h:'#d1d5db',n:'숲지기',s:['잘 왔수다. 여긴 잠시 쉬어 가는 곳이우다. 🌿','초록 지붕 음악 서재에 들어강 노래 한 곡 들어봅서.'],ch:{'이 숲의 소문':['곶자왈 숲길 어딘가에 바람도 없는데 흔들리는 나무가 있댄 허여.','나도 가 보진 않았주게.']}},
 {x:12,y:5,c:'#fdba74',h:'#222',w:1,dog:'#f8fafc',n:'강아지 산책 삼춘',s:['이 녀석 산책 안 시켜 주민 집을 뒤집어 놔마씸. 🐕']},
 {x:5,y:7,c:'#c4b5fd',h:'#3f2a1c',w:1,n:'산책하는 사람',s:['아무것도 안 해도 되는 시간이 제일 좋네요.','연못 앞 벤치도 좋아요.']}]},
 
@@ -910,7 +929,7 @@ library:{n:'보성의 음악 서재',par:'rest',bgm:'indoor',m:['w'.repeat(W),'w
 {x:11,y:8,c:'#fda4af',h:'#222',w:1,n:'음악 듣는 손님',s:['이 서재에 오면 시간이 천천히 가는 것 같아요.']}]},
 
 orchard:{n:'감귤 과수원',o:1,bgm:'route',land:[7,5],m:[
-  'TTTTTTTTTTTTTTT',
+  'TTTTTT=TTTTTTTT',
   'T.F........VVVT',
   'T..dodododovvvT',
   'T..ddddddddvvvT',
@@ -919,7 +938,7 @@ orchard:{n:'감귤 과수원',o:1,bgm:'route',land:[7,5],m:[
   'T..dodododo.&.T',
   'T..dddddddd...T',
   'T..dodododo&.TT',
-  'TTTTTTTTTTTTTTT'],e:{l:['route1',14,5]},p:[
+  'TTTTTTTTTTTTTTT'],e:{u:['sports',11,9],l:['route1',14,5]},p:[
 {x:5,y:3,c:'#16a34a',h:'#6b7280',w:1,n:'감귤 농부 삼춘',s:['제주 감귤이 맛좋수다게~ 🍊','혼저 옵서예. 한 입 먹어봅서게!'],ch:{'감귤 이야기':['귤은 껍질 얇고 단내 확 나는 게 잘 익은 거우다.','겨울엔 비닐하우스에서 하우스감귤도 키우주.'],'농사 이야기':['허리가 아파도 열매 보민 힘이 나는 거라게.','비 오는 날은 하우스 안에서 가지 정리허곡 허여.']}},
 {x:9,y:7,c:'#f59e0b',h:'#d1d5db',w:1,n:'귤 따는 할망',s:['오늘 귤은 당도가 막 좋쿠다게~','저 안쪽 나무 밑에서 쉬엉 갑서예.']},
 {x:3,y:7,c:'#0ea5e9',h:'#222',w:1,n:'농부 청년',s:['귤 따는 철이 되민 눈코 뜰 새 없쥬.','보성이네 감귤농원 귤이 제일 맛좋수다게! 🍊']},
@@ -941,7 +960,7 @@ house:{n:'보성의 집',par:'town',bgm:'indoor',m:[
   'wwwwwwwxwwwwwww'],
 memo:{'1,1':{s:'INFJ',c:'#fde047',l:['🧩 MBTI','INFJ']},'5,1':{s:'💙',c:'#93c5fd',l:['💙 좋아하는 색깔','파란색!']},'11,1':{s:'🐶',c:'#f9a8d4',l:['🐶 좋아하는 동물','강아지!']},'13,1':{s:'🎵',c:'#86efac',l:['🎵 즐겨듣는 노래','쉼의 숲 음악 서재 벽에 달마다 걸어 두고 있어요!']}},
 sign:{'1,3':'내 방','14,7':'안방'},d:{'7,9':['town',3,4],'14,7':['anbang',1,5]},p:[
-{x:1,y:4,c:'#7dd3fc',h:'#1b1b26',n:'거울 속의 나',s:['안녕, 나는 강보성.','BS World에 오신 것을 환영해!'],ch:{'지금까지의 길':['🍊 내 뿌리는 제주야. 할머니들은 해녀셨고, 집안은 감귤 농사를 지어.','🪂 군대는 특전사 낙하산정비병. 열기구 강하도 5번 해 봤어.','🧠 멘사 IQ 156 · 💻 정보처리기사 · 🥋 태권도 2단.','🏃 하프마라톤 3회 · 🩸 헌혈 167회. 달리고 나누는 건 계속할 거야.'],'다음 모험':['이 세상을 계속 넓혀 가는 중이야. 제주에서 시작해서 이제 서울까지 왔지.','요즘은 노량진에서 지내. 근처 지나가면 아지트도 구경하고 가. 🏠','다음엔 어디까지 넓힐지 나도 아직 몰라. 그게 재밌는 거지. 😄']}},
+{x:1,y:4,c:'#7dd3fc',h:'#1b1b26',n:'거울 속의 나',s:['안녕, 나는 강보성.','BS World에 오신 것을 환영해!'],ch:{'다음 모험':['이 세상을 계속 넓혀 가는 중이야. 제주에서 시작해서 이제 서울까지 왔지.','요즘은 노량진에서 지내. 근처 지나가면 아지트도 구경하고 가. 🏠','다음엔 어디까지 넓힐지 나도 아직 몰라. 그게 재밌는 거지. 😄']}},
 {x:12,y:6,ani:'cat',c:'#f59e0b',h:'#f59e0b',w:1,n:'고양이',s:['야옹~ 🐱','(주인이 코딩하는 동안 키보드 옆을 지키는 중이다냥.)']},
 {x:2,y:7,c:'#475569',h:'#374151',sit:1,fd:1,n:'보성 아버지',when:()=>!dadFarm(),s:['어서 와요. 보성이 아버지입니다.','KT에서 은퇴하고 지금은 농사를 짓고 있어요. 편히 둘러봐요.']},
 {x:4,y:7,c:'#db2777',h:'#3f2a1c',lh:1,sit:1,fd:1,n:'보성 어머니',when:()=>!momFarm(),s:['어머, 손님이 왔네! 보성이 엄마예요.','간호사로 일하고 있어요. 밥은 먹었어요? 귤이라도 하나 먹고 가요. 🍊']},
@@ -958,16 +977,64 @@ terminal:{n:'제주 공항 터미널',par:'airport',bgm:'indoor',m:['w'.repeat(W
 {x:3,y:5,c:'#f472b6',h:'#222',w:1,n:'출장 가는 직장인',s:['비행기 타기 전 감귤 주스 한 잔이 국룰이죠.']},
 {x:11,y:7,c:'#94a3b8',h:'#d1d5db',n:'마중 나온 삼춘',s:['보성이 오는 날인가 해서 기다렴수다게.']}]},
 
+samgeori:{n:'제주시 삼거리',o:1,bgm:'route',land:[7,5],m:[
+  'TTTTTTT=TTTTTTT',
+  'TT.F...=..F..TT',
+  'T..T.F.=...T..T',
+  'TF...T.=.F....T',
+  'T.T....=....F.T',
+  'TT.F...========',
+  'T..T.F.=.F.T..T',
+  'TF.....=...F.TT',
+  'TT.F.T.=.T...TT',
+  'TTTTTTT=TTTTTTT'],sign:{'8,4':'삼거리'},e:{u:['cert',7,9],d:['town',7,0],r:['oreumF',0,5]},p:[]},
+oreumF:{n:'오름 숲길',o:1,bgm:'route',land:[3,5],m:[
+  'TTTTTTTTTT=TTTT',
+  'TT.F..TT.F=..TT',
+  'T..T.F...T=.F.T',
+  'TF...TT.F.=.T.T',
+  'T.T....F..=T..T',
+  '===========.FTT',
+  'T.F.T..=T...F.T',
+  'T...F.T=...T..T',
+  'T.TF..T=...T.TT',
+  'TTTTTTT=TTTTTTT'],e:{u:['rest',10,9],l:['samgeori',14,5],d:['sports',7,0]},p:[]},
+gotF:{n:'곶자왈 숲길',o:1,bgm:'route',land:[6,7],m:[
+  'TTTTTT=TTTTTTTT',
+  'TTT.F.=T.T..TTT',
+  'T.T...=.F..T.FT',
+  'TT.F.T=..T.T!.T',
+  'T..T..=F.T..F.T',
+  'TF.T.T=..T.T.TT',
+  'T..F..=T..F...T',
+  '===============',
+  'TT.T.F..T..F.TT',
+  'TTTTTTTTTTTTTTT'],d:{'12,3':['cave',1,5]},e:{u:['route2',6,9],l:['beach',14,4],r:['route1',0,5]},p:[]},
+shoreF:{n:'해안 숲길',o:1,bgm:'route',land:[9,7],m:[
+  '~~~~ssTTTTTTTTT',
+  '~~~~ssT.F..T.TT',
+  '~~~~ss..T.F...T',
+  '~~~sss.F...T.FT',
+  '~~~~ss.T.F....T',
+  '~~~~ssT...T.F.T',
+  '~~~~ss.F.T...TT',
+  '~~~~s==========',
+  '~~~~s=T.F..T..T',
+  '~~~~s=TTTTTTTTT'],e:{r:['studio',0,4],d:['airport',5,0]},p:[]},
+
+cinema:{n:'쉼터 영화관',par:'rest',bgm:'indoor',m:['w'.repeat(W),'w'+'ㆀ'.repeat(W-2)+'w',FR,'wfㆁㆁㆁㆁㆁfㆁㆁㆁㆁㆁfw',FR,'wfㆁㆁㆁㆁㆁfㆁㆁㆁㆁㆁfw',FR,FR,FR,'wwwwwwwxwwwwwww'],d:{'7,9':['rest',7,8]},p:[
+{x:3,y:7,c:'#b91c1c',h:'#222',stay:1,n:'매표소 삼춘',s:['어서 옵서. 주인장이 본 영화 별점을 여기서 찾아볼 수 있수다. 🎬','보고 나서 점수도 남겨 봅서.'],ch:{'⭐ 영화 별점 보기':()=>showMovies()}}]},
+
 arcade:{n:'쉼터 오락실 · PC 코너',par:'rest',bgm:'town',m:['w'.repeat(W),'wwwwwwwwwwwwwww',FR,'wf¤¤f¤¤fππfππfw',FR,'wfffffffππfππfw','wfKKffffffffffw',FR,FR,'wwwwwwwxwwwwwww'],d:{'7,9':['rest',10,8]},p:[
 {x:7,y:5,c:'#a855f7',h:'#111',n:'오락실 사장',s:['주인장이 테트리스를 좋아해서 전부 테트리스만 넣었수다.','기계 앞에서 눌러 봅서. 순위도 남습니다.'],ch:{'🎮 테트리스 하기':()=>showTetris()}},
 {x:10,y:7,c:'#f43f5e',h:'#1b1b26',n:'PC방 알바',s:['오른쪽은 PC 코너예요. 🖥','주인장은 롤이랑 스타를 좋아한대요. 자리 비었어요.'],ch:{'🖥 컴퓨터 쓰기':()=>showPc()}},
 {x:3,y:5,c:'#22d3ee',h:'#222',w:1,n:'동전 든 학생',s:['라인 넉 줄 한 번에 지우면 그날은 럭키비키죠.']}]},
 
-gpHome:{n:'할아버지댁',par:'route1',bgm:'indoor',cozy:'#b45309',m:ELDER_M,d:{'7,9':['route1',3,4]},p:[
+gpHome:{n:'할아버지댁',par:'route1',bgm:'indoor',cozy:'#b45309',m:ELDER_M,d:{'7,9':['route1',11,4]},p:[
 {x:5,y:4,c:'#854d0e',h:'#d1d5db',sit:1,when:elderHome,n:'보성 할아버지',s:['어서 오라. 밥은 먹언?','오늘은 집이서 쉼져.'],ch:{'강아지 이야기':['우리 개는 힘이 넘쳐부난 산책 나가민 내가 끌려 댕겨.','그래도 그 녀석 덕분에 많이 걷주게.'],'감귤 이야기':['귤은 사람 발소리 듣고 큰다고 허주. 🍊']}},
 {x:9,y:4,c:'#1f2937',h:'#d1d5db',sit:1,tw:1,when:elderHome,n:'해녀 할망 (보성 할머니)',s:['혼저 옵서. 귤 하나 까 먹읍서. 🍊','옛날엔 나도 물질 허멍 살았주게.'],ch:hnCh}]},
 
-gmHome:{n:'외할아버지댁',par:'route1',bgm:'indoor',cozy:'#0f766e',m:ELDER_M,d:{'7,9':['route1',3,8]},p:[
+gmHome:{n:'외할아버지댁',par:'route1',bgm:'indoor',cozy:'#0f766e',m:ELDER_M,d:{'7,9':['route1',3,4]},p:[
 {x:5,y:4,c:'#166534',h:'#e5e7eb',sit:1,when:elderHome,n:'보성 외할아버지',s:['잘 왔수다게. 아랫목이 또똣허여.','보성이 만나걸랑 안부 전해줍서.'],ch:{'감귤 이야기':['겨울 되민 노랗게 익은 밭이 그렇게 곱닥허여. 🍊']}},
 {x:9,y:4,c:'#334155',h:'#e5e7eb',sit:1,tw:1,when:elderHome,n:'해녀 할망 (보성 외할머니)',s:['이 맨도롱헌 차 한 잔 들엉 갑서. ☕','나도 옛날엔 테왁 하나 들엉 바당에 들었주.'],ch:hnCh}]},
 
@@ -983,9 +1050,16 @@ vc:{n:'나눔 & 기여 커뮤니티 센터',par:'coast',bgm:'beach',m:I('wUw^w^w
 {x:7,y:5,c:'#dc2626',h:'#444',n:'커뮤니티 이사장',s:['어서 오세요. 나눔 & 기여 커뮤니티 센터입니다.'],ch:{'헌혈':['🩸 헌혈 167회 달성!','적십자 헌혈유공장 은장, 금장, 명예장을 모두 받았습니다.','벽의 리본 세 개가 바로 그 기록입니다.'],'봉사활동':['🤝 상상 Volunteer 활동에 참여했습니다.','작은 나눔이 모이면 큰 기록이 돼요.']}},
 {x:4,y:6,c:'#fb923c',h:'#222',w:1,n:'봉사원',s:['오늘도 봉사 활동 중! 😊','작은 나눔이 모이면 큰 기록이 돼요.']}]}
 };
+/* 제주도 둘레 바다: 가장자리는 바다, 그 안쪽은 모래. 길은 그대로 둠 */
+[['shoreF','t'],['studio','t'],['cert','t'],['rest','tr'],['oreumF','r'],['sports','r'],['orchard','br'],['gotF','b'],['beach','b']].forEach(([id,ed])=>{const z=M[id],R=z.m.map(r=>[...r]),H=R.length,Wd=R[0].length,sand=(x,y)=>{if('T.F'.includes(R[y][x]))R[y][x]='s'};
+  if(ed.includes('t')){R[0]=R[0].map(()=>'~');for(let x=0;x<Wd;x++)sand(x,1)}
+  if(ed.includes('b')){R[H-1]=R[H-1].map(()=>'~');for(let x=0;x<Wd;x++)sand(x,H-2)}
+  if(ed.includes('r')){for(let y=0;y<H;y++){if(R[y][Wd-1]!='=')R[y][Wd-1]='~';sand(Wd-2,y)}}
+  if(id=='sports')R[H-1][11]='=';if(id=='orchard')R[0][6]='=';if(id=='rest'){R[H-1][10]='=';R[1][0]='~'}if(id=='oreumF')R[0][10]='=';
+  z.m=R.map(r=>r.join(''))});
 Object.values(M).forEach(z=>{if(!z.wide)z.m=z.m.map(r=>r.padEnd(W,'T').slice(0,W))});
 /* 지하철 노선과 역: 대합실 cc_역, 승강장 pf_역_호선 을 자동으로 만듦 */
-const STN={gimpo:['김포공항','gimpo',[[11,8]],[11,7]],yeouido:['여의도','yeouido',[[19,9]],[19,8]],noryangjin:['노량진','noryangjin',[[15,7],[17,7]],[15,8]],nodeul:['노들','nodeul',[[10,8],[12,8]],[10,7]],heukseok:['흑석','heukseok',[[3,4]],[3,5]],yongsan:['용산','yongsan',[[9,2]],[9,3]],daebang:['대방','daebang',[[9,4]],[9,5]],singil:['신길','singil',[[3,4]],[3,5]],jangseung:['장승배기','jangseung',[[3,4]],[3,5]],sangdo:['상도','sangdo',[[9,4]],[9,5]],soongsil:['숭실대입구','soongsil',[[10,4]],[10,5]]};
+const STN={gimpo:['김포공항','gimpo',[[11,8]],[11,7]],yeouido:['여의도','yeouido',[[19,9]],[19,8]],noryangjin:['노량진','noryangjin',[[15,7],[17,7]],[15,8]],nodeul:['노들','nodeul',[[10,26],[12,26]],[10,25]],heukseok:['흑석','heukseok',[[3,4]],[3,5]],yongsan:['용산','yongsan',[[9,2]],[9,3]],daebang:['대방','daebang',[[9,4]],[9,5]],singil:['신길','singil',[[3,4]],[3,5]],jangseung:['장승배기','jangseung',[[3,4]],[3,5]],sangdo:['상도','sangdo',[[9,4]],[9,5]],soongsil:['숭실대입구','soongsil',[[10,4]],[10,5]]};
 const METRO={1:{n:'1호선',up:-1,col:'#0052A4',id:'1001',st:['yongsan','noryangjin','daebang','singil']},5:{n:'5호선',up:-1,col:'#996CAC',id:'1005',st:['gimpo','singil','yeouido']},7:{n:'7호선',up:1,col:'#747F00',id:'1007',st:['jangseung','sangdo','soongsil']},9:{n:'9호선',up:-1,col:'#BDB092',id:'1009',st:['gimpo','yeouido','noryangjin','nodeul','heukseok']}};
 /* up: 노선 목록에서 상행으로 갈 때의 방향. 호선마다 상행·하행 승강장이 따로 있고, 종착 쪽으로는 갈 역이 있는 방향만 만듦 */
 const DIRN={u:'상행',d:'하행'};
@@ -998,7 +1072,7 @@ Object.entries(STN).forEach(([k,[nm,out,doors,stand]])=>{
   L.forEach(l=>['u','d'].forEach(d=>{const dest=mDest(l,k,d);if(!dest.length)return;M['pf_'+k+'_'+l+'_'+d]={n:nm+'역 '+METRO[l].n+' '+DIRN[d]+' 승강장 ('+STN[dest[dest.length-1]][0]+' 방면)',par:out,bgm:'indoor',stKey:k,line:l,dir:d,pf:1,m:['w'.repeat(W),'ㅳ'.repeat(W),'ㅳ'.repeat(W),'ㅰ'.repeat(W),FR,'wfKKffffffffKKw',FR,'wffffffㅸffffffw','w'.repeat(W),'w'.repeat(W)],sign:{'7,7':'대합실'},d:{'7,7':['cc_'+k,back[l+d],3]},p:[]}}));
   const z=M[out];z.d=z.d||{};doors.forEach(([x,y])=>{z.d[x+','+y]=['cc_'+k,7,8]});
 });
-Object.entries({yongsan:3,yeouido:8,daebang:5,singil:5,noryangjin:8,nodeul:7,heukseok:5,jangseung:5,soongsil:5,sangdo:5}).forEach(([k,v])=>{M[k].bus=v});
+Object.entries({yongsan:3,yeouido:8,daebang:5,singil:5,noryangjin:8,nodeul:25,heukseok:5,jangseung:5,soongsil:5,sangdo:5}).forEach(([k,v])=>{M[k].bus=v});
 /* 서울 거리 다듬기: 큰길 옆은 인도, 강가는 한강공원 산책로, 곧은 인도엔 가로수와 가로등 */
 ['yongsan','yeouido','daebang','singil','noryangjin','nodeul','heukseok','jangseung','soongsil','sangdo'].forEach(id=>{const z=M[id],R=z.m.map(r=>[...r]),Q=(x,y)=>(R[y]||[])[x],road=(x,y)=>Q(x,y)=='ㄹ',used=new Set((z.p||[]).map(n=>n.x+','+n.y));
   R.forEach((r,y)=>r.forEach((k,x)=>{if(k=='s')r[x]='ㅝ';else if(k=='.'&&(road(x-1,y)||road(x+1,y)||road(x,y-1)||road(x,y+1)))r[x]='ㅣ'}));
@@ -1274,6 +1348,13 @@ function tile(c,k,x,y,t){
     case ';': f('#fde047',0,0,32,32); f(['#ec4899','#14b8a6','#f97316'][(x+y)%3],5,6,22,20); f('#ffffff90',5,12,22,3); f('#ffffff90',5,19,22,3); break;
     case '$': gr(); f('#94a3b8',0,26,32,6); break;
     case '¢': f('#e2e8f0',0,0,32,32); f('#94a3b8',0,0,32,3); [4,14,24].forEach(a=>{f('#f8fafc',a,3,5,27);f('#cbd5e1',a+4,3,1,27)}); f('#7c8aa0',0,29,32,3); break;
+    case 'ㆄ': { gr(); f('#111827',0,10,32,22); for(let i=1;i<32;i+=6){f('#f8fafc',i,12,3,3);f('#f8fafc',i,27,3,3)} if(x==7){f('#fbbf24',5,16,22,10);f('#b45309',5,16,22,1);f('#111827',14,18,4,6);f('#111827',12,20,8,2)}else{ci(16,12,11,'#374151');ci(16,12,8,'#9ca3af');ci(16,12,2,'#111827');[[16,6],[16,18],[10,12],[22,12]].forEach(q=>ci(q[0],q[1],2,'#111827'))} break}
+    case 'ㆅ': { f('#7f1d1d',0,0,32,32); f('#fbbf24',0,4,32,22); f('#b91c1c',0,8,32,14); for(let i=2;i<32;i+=7){f((((t/250|0)+i+x)%2)?'#fef08a':'#f59e0b',i,5,3,3);f((((t/250|0)+i+x+1)%2)?'#fef08a':'#f59e0b',i,22,3,3)} c.fillStyle='#fff7ed';c.font='bold 12px sans-serif';c.textAlign='center';c.fillText(['CI','NE','MA'][x-6]||'',X+16,Y+19);c.textAlign='start'; break}
+    case 'ㆇ': { f('#450a0a',0,0,32,32); f('#111827',0,28,32,4); f('#fbbf24',5,3,22,23); f(x<7?'#1e3a8a':'#7c2d12',7,5,18,19); ci(16,12,4,x<7?'#fde68a':'#fdba74'); f('#0f172a',9,17,14,5); f('#f8fafc',11,19,10,1); break}
+    case 'ㆈ': { gr(); f('#57534e',13,22,6,8); f('#44403c',8,28,16,3); ci(16,14,13,'#1f2937'); ci(16,14,10,'#9ca3af'); ci(16,14,3,'#111827'); [[16,7],[16,21],[9,14],[23,14]].forEach(q=>ci(q[0],q[1],2.5,'#111827')); break}
+    case 'ㆊ': { gr(); f('#111827',0,6,32,20); for(let i=1;i<32;i+=6){f('#f8fafc',i,8,3,2);f('#f8fafc',i,22,3,2)} f('#fbbf24',2,12,12,8); f('#fde68a',18,12,12,8); break}
+    case 'ㆀ': { f('#111827',0,0,32,32); f('#f8fafc',0,5,32,23); f('#bae6fd',0,5,32,3); break}
+    case 'ㆁ': { fl(); f('#7f1d1d',5,4,22,20); f('#b91c1c',7,6,18,14); f('#450a0a',4,22,24,5); break}
     case '>': f('#4c1d95',0,0,32,32); f('#7c3aed',0,0,32,6); f((((t/300|0)+x)%2)?'#f472b6':'#22d3ee',2,14,28,4); f('#312e81',0,26,32,6); break;
     case '<': f('#312e81',0,0,32,32); f('#22d3ee',8,8,16,12); f('#0e7490',10,10,12,8); f('#111827',0,28,32,4); break;
     case '¤': fl(); f('#1e1b4b',5,2,22,28); f('#4c1d95',5,2,22,6); f('#0f172a',8,9,16,11); [[10,11,'#ef4444'],[14,14,'#22d3ee'],[18,11,'#fde047'],[12,16,'#4ade80']].forEach(([a,b,q])=>f(q,a,b,4,3)); f('#374151',7,23,18,5); f('#ef4444',10,24,3,3); f('#fbbf24',19,24,3,3); break;
@@ -1419,7 +1500,7 @@ function npUpdate(){const el=document.getElementById('npt');if(!el)return;
 document.addEventListener('visibilitychange',()=>{if(document.hidden)clearInterval(mt);else{if(AC&&AC.state!='running')acUnlock();if(!sunoOn)music()}});
 
 let cur=null,map=null,px=7,py=5,dir=0,mv=null,steps=0,busy=true,modal=false,dlg=null,tw=null,npcs=[],held=null,bumpT=0;
-const DV=[[0,1],[0,-1],[-1,0],[1,0]],EK=['d','u','l','r'],WALK='ㅻ.F=stDfxdu!:`ㄹㅂㅗㅛㅣㅝㅚㅢㅕㅖㅓㅠㅀㅆㅸㅱ';
+const DV=[[0,1],[0,-1],[-1,0],[1,0]],EK=['d','u','l','r'],WALK='ㆊㅻ.F=stDfxdu!:`ㄹㅂㅗㅛㅣㅝㅚㅢㅕㅖㅓㅠㅀㅆㅸㅱ';
 const at=(x,y)=>map.m[y]&&map.m[y][x],MW=()=>map.m[0].length,MH=()=>map.m.length;
 
 /* 창끼: 제주에서 과수원·공항·활주로·표선을 뺀 곳에 무작위로 나타남 */
@@ -1477,7 +1558,7 @@ function sitFx(t){if(!SIT||SIT.k!='bench')return;const p=((t-SIT.at)/1600)%1;g.g
 function warp(id,x,y,d){
   SIT=null;busy=true;sfx('w');$('#fade').style.opacity=1;
   setTimeout(()=>{
-    const from=cur;cur=id;map=M[id];visited.add(id);wxSwitch();pfEnter(id);if(id=='photo')wallLoad();
+    const from=cur,isNewV=!visited.has(id);cur=id;map=M[id];visited.add(id);if(isNewV)stampNew(id);wxSwitch();pfEnter(id);if(id=='photo')wallLoad();
     if(x==7&&y==8&&map.land)[x,y]=map.land;   // 지도·비행으로 올 때 내리는 자리
     updateHUD();px=x;py=y;dir=d;mv=null;
     songRoll(id);ckRoll(id);buildNpcs();unstick();
@@ -1497,9 +1578,9 @@ function zone(){return !map?null:(map.o?cur:map.par)}
 const MM_COL={'ɡ':'#c9a36b','ʊ':'#c9a36b','ɦ':'#c9a36b','℧':'#dc2626','Ж':'#a8875a','Ю':'#c2410c','ŋ':'#b45309','Ω':'#6cc04a','?':'#fde047',';':'#fde047','$':'#e2e8f0','¢':'#f8fafc','>':'#7c3aed','<':'#312e81',T:'#1e7a31','.':'#6cc04a',F:'#6cc04a','=':'#f3db98','~':'#38bdf8',s:'#fde047',
   R:'#d64541',Q:'#3b6fd6',G:'#2f9e5f',Y:'#7e57c2',H:'#fef3c7',D:'#78350f',t:'#c8693f',
   W:'#0f766e','@':'#ea580c','+':'#94a3b8',',':'#475569','#':'#7a4a22','[':'#6cc04a',']':'#6cc04a','|':'#6cc04a','%':'#44403c','&':'#2563eb',r:'#374151',y:'#374151',u:'#9ca3af',e:'#f8fafc',n:'#2563eb',j:'#bae6fd',S:'#475569',d:'#8b5a2b',o:'#8b5a2b',V:'#bfdbfe',v:'#dbeafe',m:'#1e7a31','1':'#38bdf8','2':'#38bdf8','3':'#38bdf8','4':'#38bdf8'};
-Object.assign(MM_COL,{'ㄹ':'#6b7280','ㅂ':'#9ca3af','ㅅ':'#57534e','ㅈ':'#b45309','ㅊ':'#94a3b8','ㄱ':'#cbd5e1','ㄴ':'#1d4ed8','ㄷ':'#0284c7','ㅌ':'#f8fafc','ㅍ':'#15803d','ㅎ':'#fbbf24','ㅐ':'#f9a8d4','ㅔ':'#a8a29e','ㅑ':'#2f8f3a','ㅗ':'#c2553a','ㅛ':'#9ca3af','ㅉ':'#f8fafc','ㅋ':'#f97316','ㅣ':'#c9c1b1','ㅜ':'#c9c1b1','ㅞ':'#c9c1b1','ㅝ':'#e7dcc0','ㅢ':'#3f9148','ㅟ':'#14532d','ㅚ':'#a8a29e','ㅓ':'#a8a29e','ㅕ':'#a97142','ㅒ':'#7c6f64','ㅘ':'#1f2937','ㅙ':'#fef3c7','ㅖ':'#b91c1c','ㅡ':'#0f766e','ㅹ':'#7c2d12','ㅺ':'#e7d3b0','ㅻ':'#78350f','ㅠ':'#bdb092','ㅁ':'#a8533a','ㅃ':'#b5583f','ㅆ':'#92400e','ㅀ':'#1d4ed8'});
+Object.assign(MM_COL,{'ㆄ':'#111827','ㆅ':'#b91c1c','ㆇ':'#450a0a','ㆈ':'#6cc04a','ㆊ':'#111827','ㄹ':'#6b7280','ㅂ':'#9ca3af','ㅅ':'#57534e','ㅈ':'#b45309','ㅊ':'#94a3b8','ㄱ':'#cbd5e1','ㄴ':'#1d4ed8','ㄷ':'#0284c7','ㅌ':'#f8fafc','ㅍ':'#15803d','ㅎ':'#fbbf24','ㅐ':'#f9a8d4','ㅔ':'#a8a29e','ㅑ':'#2f8f3a','ㅗ':'#c2553a','ㅛ':'#9ca3af','ㅉ':'#f8fafc','ㅋ':'#f97316','ㅣ':'#c9c1b1','ㅜ':'#c9c1b1','ㅞ':'#c9c1b1','ㅝ':'#e7dcc0','ㅢ':'#3f9148','ㅟ':'#14532d','ㅚ':'#a8a29e','ㅓ':'#a8a29e','ㅕ':'#a97142','ㅒ':'#7c6f64','ㅘ':'#1f2937','ㅙ':'#fef3c7','ㅖ':'#b91c1c','ㅡ':'#0f766e','ㅹ':'#7c2d12','ㅺ':'#e7d3b0','ㅻ':'#78350f','ㅠ':'#bdb092','ㅁ':'#a8533a','ㅃ':'#b5583f','ㅆ':'#92400e','ㅀ':'#1d4ed8'});
 const MM_FL=['#f472b6','#ffffff','#facc15','#a78bfa','#60a5fa','#fb923c','#e11d48'];
-const MM_NODES=[['beach','백사장','하얀 백사장'],['studio','창작','창작 마을'],['airfield','활주로','제주 공항 활주로'],['route2','바당','바당 올레'],['rest','쉼터','쉼의 숲'],['airport','공항','제주 공항'],['orchard','과수원','감귤 과수원'],['cert','학술','학술시티'],['route1','표선','표선'],['coast','해변','제주해변'],['town','제주시','제주시'],['sports','사라봉','사라봉']];
+const MM_NODES=[['shoreF','해안숲','해안 숲길'],['gotF','곶자왈','곶자왈 숲길'],['oreumF','오름숲','오름 숲길'],['samgeori','삼거리','제주시 삼거리'],['beach','백사장','하얀 백사장'],['studio','창작','창작 마을'],['airfield','활주로','제주 공항 활주로'],['route2','바당','바당 올레'],['rest','쉼터','쉼의 숲'],['airport','공항','제주 공항'],['orchard','과수원','감귤 과수원'],['cert','학술','학술시티'],['route1','표선','표선'],['coast','해변','제주해변'],['town','제주시','제주시'],['sports','사라봉','사라봉']];
 const MM_SEOUL=[['gimpo','김포공항','김포공항'],['yeouido','여의도','여의도'],['yongsan','용산','용산'],['singil','신길','신길'],['daebang','대방','대방'],['noryangjin','노량진','노량진'],['nodeul','노들','노들섬'],['heukseok','흑석','흑석·중앙대'],['jangseung','장승배기','장승배기'],['soongsil','숭실대','숭실대입구'],['sangdo','상도','상도']];
 const SEOUL_IDS=MM_SEOUL.map(n=>n[0]),mmRegion=()=>SEOUL_IDS.includes(zone())?'seoul':'jeju';
 let mmEls={},mmDot=null,mmLast=null,mmNow='';
@@ -1608,6 +1689,7 @@ function act(){
   if(dlg)return advance();
   const[dx,dy]=DV[dir],x=px+dx,y=py+dy,n=npcs.find(o=>o.x==x&&o.y==y);
   sfx('s');
+  if(busBlocks(x,y))return showBusMenu();
   if(n){n.dir=[1,0,3,2][dir];npcMet(n);return say(n.n=='L 군'&&lgunKnown()?'이진혁':n.n,typeof n.s=='function'?n.s():n.s,typeof n.ch=='function'?n.ch():n.ch)}
   if(homeLock(x,y))return say('문',['불이 꺼져 있다. 모두 주무시는 시간이다. 🌙']);
   if(anbangLock(x,y))return say('안방 문',['부모님 안방이다. 함부로 들어가면 안 된다. 🚪']);
@@ -1645,7 +1727,7 @@ function act(){
   else if(k=='{'||k=='}')showFit();
   else if(k=='(')showProjects();
   else if(k=='ㅰ'){if(pfReady())showMetro(map.line);else toast(pfWait())}
-  else if(k=='ㅯ')showStnBoard();
+  else if(k=='ㅯ'){if(map.stKey)showStnBoard();else showDay()}
   else if(k=='ㅲ')showDanggn();
   else if(k=='ㅭ')say('화장실',['깔끔하게 쓰는 중. 🚽']);
   else if(k=='ㅮ')say('세면대',['주인장은 양치를 꼭 하고 잔다고 한다. 🪥']);
@@ -1660,8 +1742,12 @@ function act(){
   else if(k=='p')say('책장',['음악 책과 오래된 앨범이 가지런히 꽂혀 있다. 📚']);
   else if(k=='e')say('BS 에어 여객기',['승객을 기다리는 여객기다. ✈','터미널 카운터에서 수속하면 탈 수 있다.']);
   else if(k=='r'||k=='y')say('활주로',['⚠ 활주로 출입 금지!','이착륙하는 비행기를 여기서 구경하자.']);
+  else if(k=='ㆈ')say('필름 릴',['커다란 영화 필름 릴이다. 🎞','오래된 영사기 냄새가 나는 것 같다.']);
+  else if(k=='ㆄ'||k=='ㆅ'||k=='ㆇ')say('영화관',['오늘도 주인장이 본 영화 별점을 받는 작은 영화관이다. 🎬']);
+  else if(k=='ㆀ')showMovies();
+  else if(k=='ㆁ')say('영화관 좌석',['푹신한 빨간 의자다. 앉으면 잠들 것 같다.']);
   else if(k=='S')say('관제탑',['관제탑이 활주로를 지켜보고 있다.']);
-  else if(k=='i')say('표지판',['✈ 제주 공항 터미널','남쪽 해변 길: 제주 바닷가']);
+  else if(k=='i')say('표지판',cur=='gimpo'?['✈ 김포공항','위쪽 왼쪽 입구: 국내선 / 오른쪽 입구: 국제선','오른쪽 아래: 지하철 5호선·9호선']:['✈ 제주 공항 터미널','남쪽 해변 길: 제주 바닷가']);
   else if(k=='P')showProfilePic();
   else if(cur=='gym'&&'MJN'.includes(k))showRecWall();
   else if(k=='N'&&CTS[cur])showCerts(cur);
@@ -1682,7 +1768,7 @@ function cancel(){if(SIT&&!modal&&!dlg)return sitUp();if(lbOn())lbClose();else i
 
 function openM(h){tetStop();sunoStop();$('#mc').innerHTML=h;$('#md').hidden=false;modal=true;document.body.classList.add('modal-on');$('.mb').scrollTop=0;kcSel(null);if(KC.on)kcMove(1);dockPos()}
 function closeM(){if(GS.pending){GS.pending=false;closeMraw();startReal();return}closeMraw()}
-function closeMraw(){tetFlush();tetStop();sunoStop();$('#md').hidden=true;modal=false;document.body.classList.remove('modal-on');kcSel(null);dockPos();bgmUi()}
+function closeMraw(){tvOff();BUS.menu=false;tetFlush();tetStop();sunoStop();$('#md').hidden=true;modal=false;document.body.classList.remove('modal-on');kcSel(null);dockPos();bgmUi()}
 /* 창 안 커서: 방향키·패드로 고르고 Z·Enter·A로 누름 */
 const KC={on:false,el:null};
 const kcItems=()=>[...$('#mc').querySelectorAll('a[href],button:not(:disabled),summary,input,textarea,select,audio,[onclick]')].filter(e=>e.getClientRects().length&&!e.hidden);
@@ -2660,7 +2746,7 @@ setInterval(qAlert,120000);
 
 /* ===== 마을 NPC 대사 ===== */
 const TALK={
- '마을 소년':[['어서 와! 여기가 BS World의 제주시이야.','북쪽엔 표선, 동쪽엔 사라봉, 서쪽엔 바당 올레, 남쪽엔 쉼의 숲이 있어.'],['like station 동네사람들!! 새 손님 왔어요!!'],['어른들이 그러는데 숲에 이상한 나무가 있대.','나는 무서워서 못 가봤어. 진짜야.']],
+ '마을 소년':[['어서 와! 여기가 BS World의 제주시이야.','북쪽엔 삼거리와 학술시티, 동쪽엔 사라봉, 서쪽엔 바당 올레, 남쪽엔 표선이 있어.'],['like station 동네사람들!! 새 손님 왔어요!!'],['어른들이 그러는데 숲에 이상한 나무가 있대.','나는 무서워서 못 가봤어. 진짜야.']],
  '창끼 (a.k.a 노진구)':[['전설의힘을 알고있나?','ㅋ'],['불새출격'],['hi 대돕 건방지게 대돕을안하노 ㅋ'],['대돕이새기야']],
  '꽃밭 이웃':[['꽃향기 맡고 가렴. 🌸','달리기 전엔 스트레칭 필수야!'],['어머, 오늘 럭키비키잖아? 꽃이 활짝 폈어.'],['제주 꽃은 바람을 이겨서 더 예쁜 거야.']],
  '등산객':[['자격증 공부는 마라톤이래. 페이스 조절이 전부지!'],['한라산 백록담 봤냐고요? 올라갔는데 구름만 봤습니다.','그것도 추억이죠, 뭐.'],['무릎이 먼저 포기하는 나이가 왔습니다.']],
@@ -2686,7 +2772,7 @@ const TALK={
  '마중 나온 삼춘':[['보성이 오는 날인가 해서 기다렴수다게.'],['게난 오늘이 아닌가?']],
  '음악 듣는 손님':[['이 서재에 오면 시간이 천천히 가는 것 같아요.'],['이 노래 뭐예요? 아, 벽에 적혀 있네요.']],
  '산책하는 사람':[['아무것도 안 해도 되는 시간이 제일 좋네요.'],['연못 앞 벤치 명당이에요. 제가 맡아 뒀어요.']],
- '올레꾼':[['돌담 따라 걷는 이 길이 바당 올레라마씸. 🌊','서쪽으로 가민 해변, 동쪽으로 가민 제주시이우다.'],['남쪽 샛길로 가민 창작 마을이 나와마씸.'],['올레는 집으로 가는 좁은 길이란 뜻이우다.'],['무신거 헴수과? 그냥 걸어봅서.']],
+ '올레꾼':[['돌담 따라 걷는 이 길이 바당 올레라마씸. 🌊','서쪽으로 가민 해변, 동쪽으로 가민 제주시이우다.'],['남쪽 샛길로 가민 곶자왈 숲길이 나와마씸.'],['올레는 집으로 가는 좁은 길이란 뜻이우다.'],['무신거 헴수과? 그냥 걸어봅서.']],
  '사진 찍는 여행자':[['돌담이랑 귤나무가 같이 나오게 찍고 있어요. 📷'],['인생샷 건지기 전엔 못 갑니다.']],
  '기록실 트레이너':null,
  '철봉 매달린 회원':[['하나만 더… 하나만 더…'],['내려오는 법을 잊어버렸습니다.']],
@@ -2695,6 +2781,8 @@ const TALK={
 };
 const pickTalk=p=>{let last=-1;return()=>{let i=Math.random()*p.length|0;if(p.length>1&&i==last)i=(i+1)%p.length;last=i;return p[i]}};
 Object.values(M).forEach(z=>(z.p||[]).forEach(n=>{if(TALK[n.n])n.s=pickTalk(TALK[n.n])}));
+/* 동네마다 가게 사람 한 명씩. 근처 빈자리에 세움 */
+[['singil',11,7,'#b45309','순대국집 아주머니',['국물 한 그릇 하고 가세요. 환승하다 들르는 손님이 많아요.','1호선이랑 5호선이 여기서 만나니까 늘 북적여요.']],['daebang',5,7,'#dc2626','떡볶이 포차 사장',['매운맛 보통맛 다 돼요. 학생은 어묵 하나 더. 😄','오늘은 국물이 제일 잘됐어요.']],['jangseung',11,7,'#ca8a04','시장 과일가게 사장',['오늘 귤 들어왔어요! 제주 거라 달아요. 🍊','장 보러 나왔으면 한 바퀴 돌고 가요.']],['soongsil',11,7,'#7c3aed','학교 앞 카페 사장',['시험 기간엔 자리가 없어요. ☕','아메리카노 하나요? 샷은 공부량 보고 추가하세요.']],['sangdo',11,7,'#ea580c','붕어빵 아저씨',['팥이랑 슈크림, 뭐로 드릴까요? 🐟','추워지면 이 줄이 저기까지 가요.']],['heukseok',11,7,'#0891b2','대학가 서점 주인',['요즘은 전공책보다 소설이 더 나가요. 📚','한강 쪽으로 걸어 나가면 바람이 좋아요.']],['nodeul',4,11,'#16a34a','노들섬 매점 직원',['시원한 음료 있어요. 잔디밭에서 드세요.','해 질 때가 제일 바빠요. 🌇']],['yongsan',5,5,'#475569','전자상가 사장',['충전기부터 부품까지 웬만한 건 다 있어요. 🔌','고장 났어요? 일단 껐다 켜 봤어요?']],['yeouido',16,8,'#0ea5e9','편의점 직원',['점심시간엔 도시락이 금방 나가요. 🍱','야근하는 분들은 커피를 두 개씩 사 가세요.']],['gimpo',3,6,'#92400e','공항 커피 직원',['비행기 타기 전 커피 한 잔 어때요? ☕','제주 가시면 귤 많이 드세요. 🍊']]].forEach(([id,tx,ty,c,nm,lines])=>{const z=M[id];let best=null,bd=1e9;for(let y=0;y<z.m.length;y++){if(z.bus!=null&&Math.abs(y-z.bus)<1)continue;const row=[...z.m[y]];for(let x=0;x<row.length;x++){if(!'.F'.includes(row[x])||(z.d&&z.d[x+','+y])||(z.p||[]).some(n=>n.x==x&&n.y==y))continue;const dd=Math.abs(x-tx)+Math.abs(y-ty);if(dd<bd){bd=dd;best=[x,y]}}}if(best)z.p.push({x:best[0],y:best[1],c,h:'#222',stay:1,n:nm,s:pickTalk(lines.map(l=>[l]))})});
 Object.values(M).forEach(z=>(z.p||[]).forEach(n=>{const T=OWNER_TALK[n.n];if(T){const g0=n.s;n.s=()=>isOwner()?T:((FRIEND&&FRIEND_TALK[n.n]&&FRIEND_TALK[n.n](friendCall(),FRIEND))||(typeof g0=='function'?g0():g0))}}));
 /* 밤에는 부모님은 안방 침대, 어르신들은 각자 이부자리에서 주무심 */
 {const zz=['쿨쿨… 💤','(곤히 주무시고 계신다.)'],place=(mp,src,name,x,y,pxx,pyy,col,vert)=>{const o=M[src].p.find(n=>n.n==name);if(!o)return;M[mp].p.push({x,y,sit:1,stay:1,c:o.c,h:o.h,p:o.p,gl:o.gl,lk:o.lk,when:sleepHours,n:name+' (주무시는 중)',s:zz,sl:[pxx,pyy,col,vert]})};
@@ -2836,15 +2924,20 @@ function showBrain(){
 function brainPick(i){const b=BR[i];document.querySelectorAll('.rg').forEach((e,k)=>e.classList.toggle('on',k==i));$('#bi').innerHTML=`<div class="cd">${b[3]}</div><button class="go" style="font-size:13px;padding:5px 12px" onclick="closeM();warp('${b[2]}',7,8,1)">이 장소로 이동</button>`}
 
 const visited = new Set();
-const REGION_NAMES = {gimpo:'김포공항',gimpoT:'김포공항 터미널',gimpoI:'김포공항 국제선 터미널',singil:'신길',heukseok:'흑석·중앙대',jangseung:'장승배기',soongsil:'숭실대입구',sangdo:'상도',home:'보성의 아지트',nodeul:'노들',yongsan:'용산',yeouido:'여의도',daebang:'대방',shabu:'제주미소 샤브샤브',noryangjin:'노량진',gpHome:'할아버지댁',gmHome:'외할아버지댁',beach:'하얀 백사장',arcade:'쉼터 오락실',studio:'창작 마을',projects:'프로젝트 전시관',photo:'보성 사진관',airfield:'제주 공항 활주로',fit:'맨몸 운동 기록실',town:'제주시',route1:'표선',cert:'학술·자격 검정 시티',sports:'사라봉',orchard:'감귤 과수원',coast:'제주 바닷가',house:'보성의 집',gym:'체육관',agency:'국가 자격 검정원',mensa:'멘사 지능 연구소',vc:'나눔 & 기여 커뮤니티 센터',route2:'바당 올레',airport:'제주 공항',terminal:'제주 공항 터미널',rest:'쉼의 숲',library:'보성의 음악 서재'};
+const REGION_NAMES = {gimpo:'김포공항',cinema:'쉼터 영화관',samgeori:'제주시 삼거리',oreumF:'오름 숲길',gotF:'곶자왈 숲길',shoreF:'해안 숲길',gimpoT:'김포공항 터미널',gimpoI:'김포공항 국제선 터미널',singil:'신길',heukseok:'흑석·중앙대',jangseung:'장승배기',soongsil:'숭실대입구',sangdo:'상도',home:'보성의 아지트',nodeul:'노들',yongsan:'용산',yeouido:'여의도',daebang:'대방',shabu:'제주미소 샤브샤브',noryangjin:'노량진',gpHome:'할아버지댁',gmHome:'외할아버지댁',beach:'하얀 백사장',arcade:'쉼터 오락실',studio:'창작 마을',projects:'프로젝트 전시관',photo:'보성 사진관',airfield:'제주 공항 활주로',fit:'맨몸 운동 기록실',town:'제주시',route1:'표선',cert:'학술·자격 검정 시티',sports:'사라봉',orchard:'감귤 과수원',coast:'제주 바닷가',house:'보성의 집',gym:'체육관',agency:'국가 자격 검정원',mensa:'멘사 지능 연구소',vc:'나눔 & 기여 커뮤니티 센터',route2:'바당 올레',airport:'제주 공항',terminal:'제주 공항 터미널',rest:'쉼의 숲',library:'보성의 음악 서재'};
 const REGION_DESC = {
  yongsan:'한강 북쪽의 용산입니다. 남쪽 다리는 노량진, 서쪽 길은 여의도로 이어져요.',
  yeouido:'한강과 샛강 사이의 섬입니다. 동쪽 다리는 용산, 남쪽 다리는 대방으로 이어져요.',
  daebang:'대방의 주택가입니다. 북쪽은 여의도, 서쪽은 신길, 동쪽은 노량진이에요.',
+ samgeori:'위로 학술시티, 아래로 제주시, 오른쪽으로 오름 숲길이 갈라지는 삼거리입니다.',
+ oreumF:'쉼의 숲과 사라봉, 삼거리를 잇는 숲길입니다.',
+ gotF:'백사장과 표선, 바당 올레를 잇는 숲길입니다.',
+ shoreF:'바다 옆 숲길입니다. 아래로 제주 공항, 오른쪽으로 창작 마을이에요.',
+ cinema:'주인장이 본 영화 별점을 찾아보고, 내 점수도 남기는 작은 영화관입니다.',
  singil:'1호선과 5호선이 만나는 신길입니다. 동쪽으로 가면 대방이에요.',
  gimpoI:'김포공항 국제선 터미널입니다. BS 에어 국제선은 취항 준비 중이에요.',
  shabu:'보성이네 작은아버지 가게, 제주미소입니다. 월남쌈과 샤브샤브를 팔아요.',
- gimpo:'서울의 하늘길 김포공항입니다. 터미널에서 제주행을 타고, 9호선으로 시내에 갈 수 있어요.',
+ gimpo:'서울의 하늘길 김포공항입니다. 국내선 터미널에서 제주행을 타고, 5호선과 9호선으로 시내에 갈 수 있어요.',
  nodeul:'한강대교 한가운데 노들섬이 있는 곳입니다. 섬 둘레 트랙을 한 바퀴 돌 수 있어요. 다리로 건너면 용산, 서쪽 길은 노량진이에요.',
   heukseok:'9호선 흑석역과 중앙대가 있는 언덕 동네입니다.',
  jangseung:'노량진 남쪽, 7호선 장승배기역 동네입니다.',
@@ -2852,7 +2945,7 @@ const REGION_DESC = {
  sangdo:'장승배기와 숭실대입구 아래 7호선 상도역 동네입니다.',
  noryangjin:'주인장이 요즘 지내는 동네입니다. 역 안으로 들어가 1호선과 9호선을 탈 수 있어요.',
  town:'BS World의 모험이 시작되는 제주시입니다.',
- route1:'자격 시티로 통하는 도로입니다.',
+ route1:'할아버지댁과 외할아버지댁이 있는 표선입니다. 아래로는 백사장과 바다예요.',
  cert:'전문성과 지적 도전을 상징하는 지식의 도시입니다.',
  sports:'러닝 트랙과 체육관, 맨몸 운동 기록실이 있습니다.',
  coast:'트로피컬 해변의 시원한 파도 소리가 울려 퍼집니다.',
@@ -2942,10 +3035,11 @@ document.querySelectorAll('.dp button').forEach(b=>{const d=+b.dataset.d;b.addEv
 $('#bA').addEventListener('pointerdown',e=>{e.preventDefault();if(!modal)kcode('a');act()});$('#bB').addEventListener('pointerdown',e=>{e.preventDefault();if(!modal)kcode('b');cancel()});
 
 /* ===== 공항: 비행기 ===== */
-function drawPlane(x,y,s){const f=(c,a,b,w,h)=>{g.fillStyle=c;g.fillRect(x+a*s,y+b*s,w*s,h*s)};
+function drawPlane(x,y,s,dark){const f=(c,a,b,w,h)=>{g.fillStyle=dark?planeDark(c):c;g.fillRect(x+a*s,y+b*s,w*s,h*s)};
   f('#1d4ed8',1,1,6,8);f('#f8fafc',3,8,38,9);f('#f8fafc',41,10,4,6);f('#cbd5e1',3,15,40,2);f('#1e293b',41,10,3,3);
   for(let i=0;i<8;i++)f('#38bdf8',11+i*3.4,10,2,2);f('#2563eb',3,13,38,1);f('#1e3a8a',17,14,14,3);f('#1e3a8a',12,17,12,2);f('#64748b',22,19,6,3);
 }
+function planeDark(c){const n=parseInt(c.slice(1),16),m=v=>Math.round(v*.38).toString(16).padStart(2,'0');return'#'+m(n>>16)+m(n>>8&255)+m(n&255)}
 function balloonSky(t){if(cur!='airfield')return;const x=((t/90)%(cv.width+80))-40,y=26+Math.sin(t/1400)*8;g.fillStyle='#ef4444';g.beginPath();g.ellipse(x,y,13,16,0,0,7);g.fill();g.fillStyle='#fde047';g.fillRect(x-13,y-3,26,4);g.fillStyle='#78350f';g.fillRect(x-4,y+22,8,6);g.fillStyle='#57534e';g.fillRect(x-5,y+14,1,8);g.fillRect(x+4,y+14,1,8)}
 function planeSky(t){
   balloonSky(t);
@@ -3041,10 +3135,13 @@ const BUSW=84,BUS={x:null,m:null,t:0};
 function busStep(t){
   if(!map||map.bus==null||!busOn()){BUS.m=null;return false}
   const span=(MW()+6)*TS;
-  if(BUS.m!==cur){BUS.m=cur;BUS.t=t;BUS.x=-BUSW-10}
+  if(BUS.m!==cur){BUS.m=cur;BUS.t=t;BUS.x=-BUSW-10;BUS.holdTo=0;BUS.back=false;BUS.since=0}
   const dt=Math.min(60,t-BUS.t);BUS.t=t;
   const ahead=(x,y,mvv)=>{if(y!=map.bus&&!(mvv&&mvv.ty==map.bus))return false;const L=((mvv?mvv.tx:x)*TS),gap=L-(BUS.x+BUSW);return gap>=-8&&gap<14};
   if(BUS.wait>t)return false;
+  if(BUS.menu&&modal)return true;   // 고르는 동안 기다려 줌
+  if(BUS.holdTo>t)return true;
+  if(Math.abs(py-map.bus)==1&&t>(BUS.noHold||0)&&Math.abs(BUS.x+BUSW/2-(px*TS+TS/2))<dt/14+2&&!modal&&!dlg){BUS.holdTo=t+10000;BUS.noHold=t+22000;banner('🚌 심야버스가 섰어요. 버스를 보고 A(Z)를 누르면 타요');return true}
   if(BUS.back){BUS.x-=dt/9;if(BUS.x<-BUSW-10){BUS.back=false;BUS.wait=t+9000;BUS.since=0}return true}
   const stop=ahead(px,py,mv)||npcs.some(n=>ahead(n.x,n.y,n.mv));
   BUS.stop=stop;if(stop){BUS.since=BUS.since||t;if(t-BUS.since>3500)BUS.back=true}else{BUS.since=0;BUS.x+=dt/14}
@@ -3068,10 +3165,57 @@ function shabuFail(){const b=$('#shabuMapBox');if(b)b.textContent='지도를 불
 function shabuDraw(y,x){const b=$('#shabuMapBox');if(!b)return;b.textContent='';const n=naver.maps,p=new n.LatLng(y,x),m=new n.Map(b,{center:p,zoom:17,zoomControl:true});new n.Marker({position:p,map:m,title:'제주미소'})}
 function shabuPin(){navLoad().then(()=>{let c=null;try{c=JSON.parse(localStorage.getItem('bsw_shabu_ll'))}catch(e){}if(c){shabuDraw(c[0],c[1]);return}naver.maps.Service.geocode({query:SHABU_ADDR},(st,r)=>{const A=r&&r.v2&&r.v2.addresses&&r.v2.addresses[0];if(st!==naver.maps.Service.Status.OK||!A){shabuFail();return}try{localStorage.setItem('bsw_shabu_ll',JSON.stringify([+A.y,+A.x]))}catch(e){}shabuDraw(+A.y,+A.x)})}).catch(shabuFail)}
 function shabuMap(path){const u=path?SHABU_MAP.replace('/home','/'+path):SHABU_MAP,w=isPhone()?null:window.open(u,'bsw_map','popup=yes,width=480,height=820');if(w){try{w.opener=null}catch(e){}return}openM('<h3>📍 제주미소</h3><div class="xcol"><a class="xb big" href="'+u+'" target="_blank" rel="noopener">네이버에서 보기</a></div>')}
-/* 내가 즐겨 보는 유튜브. list에 UU로 시작하는 채널 재생목록을, url에 채널 주소를 넣으면 사이트 안에서 재생됨 */
-const YT_CH=[{n:'보따'},{n:'용쥬르 이용주'},{n:'THE면상'},{n:'밈고리즘'},{n:'메타코미디클럽'}];
-const ytLink=c=>c.url||'https://www.youtube.com/results?search_query='+encodeURIComponent(c.n);
-function showYoutube(i){const c=YT_CH[i];openM('<h3>📺 내가 즐겨 보는 유튜브</h3>'+(c&&c.list?`<div style="aspect-ratio:16/9;margin-bottom:8px"><iframe src="https://www.youtube.com/embed/videoseries?list=${esc(c.list)}&autoplay=1" title="${esc(c.n)}" style="width:100%;height:100%;border:0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>`:'')+YT_CH.map((x,k)=>`<div class="xrow" style="margin:4px 0"><b>${esc(x.n)}</b><div>${x.list?`<button class="xb" onclick="showYoutube(${k})">▶ 여기서 보기</button> `:''}<a class="xb" href="${esc(ytLink(x))}" target="_blank" rel="noopener">채널 보기</a></div></div>`).join(''))}
+/* 쉼터 영화관: 검색은 Edge Function movies(TMDB), 별점은 Supabase */
+const MV={q:'',list:null,found:null,err:'',busy:false};
+const mvStars=v=>v==null?'-':'★'+Number(v).toFixed(1);
+const mvPoster=p=>typeof p=='string'&&/^\/[A-Za-z0-9._-]+$/.test(p)?`<img src="https://image.tmdb.org/t/p/w92${p}" alt="" loading="lazy" style="width:46px;height:69px;object-fit:cover;border-radius:4px;background:#1f2937;flex:none">`:'<div style="width:46px;height:69px;border-radius:4px;background:#1f2937;color:#fff;display:flex;align-items:center;justify-content:center;flex:none">🎬</div>';
+function mvTok(){let t='';try{t=localStorage.getItem('bsw_movie_tok')||'';if(!t){const a=new Uint8Array(16);crypto.getRandomValues(a);t=[...a].map(x=>x.toString(16).padStart(2,'0')).join('');localStorage.setItem('bsw_movie_tok',t)}}catch(e){}return t}
+function mvNick(){try{return localStorage.getItem('bsw_movie_nick')||GUEST.name||''}catch(e){return GUEST.name||''}}
+function mvErr(e,fb){const s=String(e&&e.message||e||'');return /no_key|503/.test(s)?'영화 검색 키가 아직 연결되지 않았어요.':/PGRST202|404|movie_list|Could not find/.test(s)?'영화관 서버 준비 중이에요.':fb}
+function mvSel(id,cur_){const o=['<option value="">별점</option>'];for(let v=5;v>=.5;v-=.5)o.push(`<option value="${v}"${cur_!=null&&Number(cur_)==v?' selected':''}>★ ${v.toFixed(1)}</option>`);if(cur_!=null)o.push('<option value="del">지우기</option>');return`<select onchange="mvRate(${id},this.value,this)" aria-label="별점" style="font-size:13px;padding:4px">${o.join('')}</select>`}
+function mvCard(m,rated){const my=isOwner()?m.owner:m.mine;return`<div class="xrow" style="margin:5px 0;padding:6px;gap:8px;align-items:center;justify-content:flex-start">${mvPoster(m.poster)}<div style="flex:1;min-width:0"><b style="font-size:13px">${esc(m.title)}</b> <small style="opacity:.7">${esc(m.year||'')}</small><br>${rated?`<small>보성 <b>${mvStars(m.owner)}</b> · 방문자 ${m.n?`<b>${mvStars(m.avg)}</b> (${m.n}명)`:'아직 없음'}</small> ${m.n||m.owner!=null?`<button class="xb" style="padding:1px 6px;font-size:11px" onclick="mvDetail(${m.id})">누가?</button>`:''}`:'<small style="opacity:.7">아직 별점 전</small>'}</div>${mvSel(m.id,my)}</div>`}
+function mvPaint(){const b=$('#mvBody');if(!b)return;const L=MV.list||[],seen=new Set(L.map(m=>m.id)),F=(MV.found||[]).filter(m=>!seen.has(m.id));b.innerHTML=(MV.err?`<div class="cd" style="margin:6px 0">${esc(MV.err)}</div>`:'')+(MV.busy?'<p style="font-size:12px">찾는 중…</p>':'')+`<h4 style="margin:8px 0 2px;font-size:13px">⭐ 별점 있는 영화 (${L.length})</h4>`+(L.length?L.map(m=>mvCard(m,true)).join(''):'<p style="font-size:12px;opacity:.7">아직 없어요.</p>')+(MV.found?`<h4 style="margin:10px 0 2px;font-size:13px">🎬 새로 찾은 영화 (${F.length})</h4>`+(F.length?F.map(m=>mvCard(m,false)).join(''):'<p style="font-size:12px;opacity:.7">새로 찾은 영화가 없어요.</p>'):'')}
+async function mvLoad(){try{const r=await DB.rpc('movie_list',{p_q:MV.q||null,p_nick:isOwner()?null:mvNick()||null});MV.list=Array.isArray(r)?r:[]}catch(e){MV.list=[];MV.err=mvErr(e,'별점을 불러오지 못했어요.')}}
+async function mvSearch(){const i=$('#mvQ');MV.q=(i?i.value:'').trim().slice(0,60);MV.err='';MV.found=null;MV.busy=true;mvPaint();await mvLoad();if(MV.q){try{const r=await fetch(`${DBCFG.url}/functions/v1/movies?q=${encodeURIComponent(MV.q)}`,{headers:{apikey:DBCFG.key}});const j=await r.json().catch(()=>null);if(j&&j.ok)MV.found=j.items||[];else MV.err=j&&j.err=='no_key'?'영화 검색 키가 아직 연결되지 않았어요. 별점 있는 영화만 찾을 수 있어요.':'영화 검색이 잠시 안 돼요. 별점 있는 영화만 찾았어요.'}catch(e){MV.err='영화 검색이 잠시 안 돼요. 별점 있는 영화만 찾았어요.'}}MV.busy=false;mvPaint()}
+async function mvRate(id,val,el){const n=$('#mvNick'),nick=isOwner()?null:(n?n.value:mvNick()).trim();if(!isOwner()&&!nick){toast('닉네임을 먼저 적어 주세요.');if(el)el.value='';if(n)n.focus();return}if(val==='')return;
+  try{if(nick)localStorage.setItem('bsw_movie_nick',nick)}catch(e){}
+  try{if(val!=='del'){const r=await fetch(`${DBCFG.url}/functions/v1/movies?id=${id}`,{headers:{apikey:DBCFG.key}});const j=await r.json().catch(()=>null);if(!j||!j.ok&&!(MV.list||[]).some(m=>m.id==id))throw new Error(j&&j.err||'movie')}
+    const r=await DB.rpc('movie_rate',{p_movie:id,p_stars:val==='del'?null:Number(val),p_nick:nick,p_token:isOwner()?null:mvTok()});
+    if(!r||!r.ok){const E={taken:'이미 다른 사람이 쓰는 닉네임이에요.',reserved:'쓸 수 없는 닉네임이에요.',nick:'닉네임은 1~12자로 적어 주세요.',slow:'너무 빨라요. 잠시 뒤에 다시 해 주세요.',token:'이 브라우저에서는 별점을 저장할 수 없어요.'};toast(E[r&&r.err]||'저장하지 못했어요.');await mvLoad();mvPaint();return}
+    toast(val==='del'?'별점을 지웠어요.':'별점을 남겼어요! ⭐');await mvLoad();mvPaint()}catch(e){toast(mvErr(e,'저장하지 못했어요. 잠시 뒤에 다시 해 주세요.'));await mvLoad();mvPaint()}}
+async function mvDetail(id){const m=(MV.list||[]).find(x=>x.id==id);let r=[];try{r=await DB.rpc('movie_detail',{p_movie:id})}catch(e){}openM(`<h3>🎬 ${esc(m?m.title:'영화')}</h3>`+((r||[]).length?r.map(x=>`<div class="xrow" style="margin:3px 0;padding:5px 8px"><span>${x.owner?'🍊 ':''}${esc(x.nick)}</span><span><b>${mvStars(x.stars)}</b>${isOwner()&&!x.owner?` <button class="xb" style="padding:1px 6px;font-size:11px" data-n="${esc(x.nick)}" onclick="mvDel(${id},this.dataset.n)">삭제</button>`:''}</span></div>`).join(''):'<p style="font-size:12px">아직 별점이 없어요.</p>')+'<div class="qbtn" style="margin-top:8px"><button class="xb" onclick="showMovies(1)">← 목록으로</button></div>')}
+async function mvDel(id,nick){try{await DB.rpc('movie_rating_del',{p_movie:id,p_nick:nick});toast('지웠어요.');await mvLoad();mvDetail(id)}catch(e){toast('지우지 못했어요.')}}
+async function showMovies(keep){if(!keep){MV.q='';MV.found=null;MV.err=''}openM(`<h3>🎬 쉼터 영화관</h3><p style="font-size:12px;opacity:.8">제목으로 찾아서 보성의 별점을 보고, 내 점수도 남겨 보세요.</p><form onsubmit="event.preventDefault();mvSearch()" style="display:flex;gap:6px;margin:6px 0"><input id="mvQ" maxlength="60" placeholder="영화 제목" value="${esc(MV.q)}" style="flex:1;min-width:0;padding:6px"><button class="xb">찾기</button></form>${isOwner()?'<small>운영자 별점으로 저장돼요.</small>':`<label style="font-size:12px;display:flex;gap:6px;align-items:center">닉네임 <input id="mvNick" maxlength="12" value="${esc(mvNick())}" placeholder="1~12자" style="flex:1;min-width:0;padding:4px"></label><small style="opacity:.7">닉네임과 별점은 다른 방문자에게 공개돼요.</small>`}<div id="mvBody"></div><small style="display:block;margin-top:8px;opacity:.65">영화 정보와 포스터: TMDB. This product uses the TMDB API but is not endorsed or certified by TMDB.</small>`);MV.list=keep?MV.list:null;MV.busy=!keep;mvPaint();if(!keep){await mvLoad();MV.busy=false;mvPaint()}}
+/* 집 TV: 채널마다 [이름, 첫 영상, 재생목록, 채널 주소]. 재생목록 순서대로 이어서 틀어 줌 */
+const YT_CH=[['보따','alTqAuMOw2k','PLvj_Y4P2CGjCScFcfb33gjfBcCRzOJNVB','@%EB%B3%B4%EB%94%B0'],['용쥬르이용주','kwLJ3TNh4pk','PLa_r5IX2w_j6nzxuQcw-pqF1cXIMq-6J3','@YonjourLeeyongju'],['더면상','nA9KJj7ro6U','PLBxIHQ98Qh8g','@the_myeonsang'],['밈고리즘','uXdBptQc0cg','PL4Qf_5Eq1DyPxOZXMR9EOHGqxFwHrLdk1','@%EB%B0%88%EA%B3%A0%EB%A6%AC%EC%A6%98'],['메타코미디클럽','tJEKL4LvW1s','PLM4MkkQkZjWknAm0KzbNXqus_3GH1vo2L','@metacomedyclub'],['안원잘부','bvUS-ri9nqQ','PLtcIxL2gNkrFsCLWQcm0apj-HvxRUGlBt','@helloiamwoninicetomeetyou'],['담비','LiYCnifGXBk','PLRy7V0DsJoFYCVRhngaYOoEcurB4oRFdP','@%EB%8B%B4%EB%B9%84']];
+const TV={on:false,ch:0,fa:false,yt:false};
+function tvSrc(i){const c=YT_CH[i];return 'https://www.youtube.com/embed/'+c[1]+'?list='+c[2]+'&autoplay=1&rel=0'}
+function tvPaint(){const c=YT_CH[TV.ch],f=$('#tvF');if(!f)return;f.src=tvSrc(TV.ch);f.title=c[0];$('#tvN').textContent='CH '+(TV.ch+1)+' · '+c[0];$('#tvL').href='https://www.youtube.com/'+c[3];document.querySelectorAll('.tvb').forEach((b,i)=>b.classList.toggle('big',i==TV.ch));try{localStorage.setItem('bsw_tv',TV.ch)}catch(e){}}
+function tvGo(i){TV.ch=(i+YT_CH.length)%YT_CH.length;tvPaint()}
+function showYoutube(){try{const v=+localStorage.getItem('bsw_tv');if(v>=0&&v<YT_CH.length)TV.ch=v}catch(e){}
+  openM(`<h3>📺 BS TV</h3><div style="aspect-ratio:16/9;background:#000;border-radius:6px;overflow:hidden"><iframe id="tvF" style="width:100%;height:100%;border:0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div><div class="xrow" style="margin:8px 0"><button class="xb" onclick="tvGo(TV.ch-1)">◀ 이전</button><b id="tvN" style="font-size:13px;text-align:center"></b><button class="xb" onclick="tvGo(TV.ch+1)">다음 ▶</button></div><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:4px">${YT_CH.map((c,i)=>`<button class="xb tvb" onclick="tvGo(${i})">${i+1}. ${esc(c[0])}</button>`).join('')}</div><div class="qbtn" style="margin-top:8px"><a id="tvL" class="xb" target="_blank" rel="noopener">유튜브에서 채널 보기</a></div>`);
+  clearInterval(mt);TV.fa=typeof FA!='undefined'&&!FA.paused;TV.yt=false;try{if(TV.fa)FA.pause();if(PV.yt&&PV.yt.getPlayerState&&PV.yt.getPlayerState()==1){TV.yt=true;PV.yt.pauseVideo()}}catch(e){}TV.on=true;tvPaint()}
+function tvOff(){if(!TV.on)return;TV.on=false;const f=$('#tvF');if(f)f.src='about:blank';try{if(TV.fa)FA.play().catch(()=>{});else if(TV.yt&&PV.yt)PV.yt.playVideo();else music()}catch(e){}}
+/* 도장판: 제주, 서울, 지하철역을 처음 가면 도장이 찍힘 */
+function stampGroups(){return[['🍊 제주',MM_NODES.map(n=>[n[0],n[2]])],['🏙 서울',MM_SEOUL.map(n=>[n[0],n[2]])],['🚇 지하철역',Object.keys(STN).map(k=>['cc_'+k,STN[k][0]+'역'])]]}
+function stampNew(id){if(stampGroups().some(g=>g[1].some(s=>s[0]==id)))toast('🏅 도장을 찍었어요! ('+(REGION_NAMES[id]||M[id].n.replace(' 대합실',''))+')')}
+function showStamps(){if(busy||dlg)return;const G=stampGroups(),all=G.flatMap(g=>g[1]),n=all.filter(s=>visited.has(s[0])).length;
+  openM(`<h3>🏅 BS World 도장판</h3><p style="font-size:13px"><b>${n} / ${all.length}</b> ${n==all.length?'· 🎉 전부 모았어요! 진짜 BS World 주민이네요.':'· 처음 가는 곳마다 도장이 찍혀요.'}</p>`+G.map(([t,L])=>`<h4 style="margin:10px 0 4px;font-size:13px">${t} (${L.filter(s=>visited.has(s[0])).length}/${L.length})</h4><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(82px,1fr));gap:5px">${L.map(([id,nm])=>{const on=visited.has(id);return`<div style="border:2px ${on?'solid #dc2626':'dashed #9ca3af'};border-radius:8px;padding:6px 2px;text-align:center;font-size:11px;${on?'':'opacity:.55'}"><div style="font-size:18px">${on?'🏅':'⬜'}</div>${esc(on?nm:'???')}</div>`}).join('')}</div>`).join(''))}
+/* 보성의 하루: 아지트 벽 메모판. 시간대별 문구는 여기서 고치면 됨 */
+const BS_DAY=[[6,'☀️ 일어나서 하루 준비 중'],[9,'💻 할 일 하는 중'],[18,'🍚 저녁 먹는 중. 컵밥거리 어딘가일지도'],[20,'🛠 BS World 고치는 중'],[23,'😴 자는 중 (아마도)']];
+function showDay(){const hr=jejuNow().h;let cu=BS_DAY.length-1;BS_DAY.forEach((b,i)=>{if(hr>=b[0])cu=i});openM(`<h3>📝 보성의 하루</h3><div class="cd" style="margin-bottom:8px"><small>지금 ${String(hr).padStart(2,'0')}시쯤의 보성은</small><br><b>${esc(BS_DAY[cu][1])}</b></div>`+BS_DAY.map((b,i)=>`<div class="xrow" style="margin:3px 0;padding:5px 8px;${i==cu?'font-weight:bold;border-color:#f59e0b':''}"><span>${String(b[0]).padStart(2,'0')}시~</span><span>${esc(b[1])}</span></div>`).join('')+'<small style="opacity:.7">대략 이렇다는 메모예요. 실제 일정과 다를 수 있어요.</small>')}
+/* 심야버스 탑승 */
+function busDests(){return Object.keys(M).filter(k=>M[k].bus!=null&&k!=cur)}
+function showBusMenu(){BUS.menu=true;openM(`<h3>🚌 심야버스</h3><p style="font-size:12px;opacity:.8">밤 11시부터 새벽 5시까지 다녀요. 어디까지 갈까요?</p><div class="xcol">`+busDests().map(k=>`<button class="xb big" onclick="busGo('${k}')">${esc(M[k].n)}</button>`).join('')+'</div>')}
+function busGo(to){const L=M[to].land||[7,M[to].bus+1],nm=M[to].n;BUS.menu=false;closeM();trainMusic(true,'bus');busy=true;FLY={bus:1,dur:9000,to,a:null,x:L[0],y:L[1],d:1,col:'#1e3a8a',label:'심야버스 · '+nm+' 방면',plan:{head:'이 버스는 '+nm+' 방면 심야버스입니다.',ev:[{at:4800,t:'이번 정류장은 '+nm+'입니다. 내리실 분은 벨을 눌러 주세요.'}]}};sfx('w')}
+function drawBusRide(t){if(FLY.a==null)FLY.a=t;const p=(t-FLY.a)/FLY.dur,w=cv.width,h=cv.height;metroAnnounce(t-FLY.a);
+  g.fillStyle='#0b1226';g.fillRect(0,0,w,h);g.fillStyle='#fff';for(let i=0;i<24;i++)g.fillRect((i*73)%w,(i*37)%90,2,2);
+  for(let i=0;i<9;i++){const bw=46+(i*29)%46,bh=70+(i*53)%90,X=w-((t/7+i*94)%(w+110));g.fillStyle=i%2?'#1e293b':'#27324a';g.fillRect(X,h-96-bh,bw,bh);g.fillStyle='#fde68a';for(let a=0;a<3;a++)for(let b=0;b<4;b++)if((a*5+b*3+i)%3)g.fillRect(X+7+a*13,h-90-bh+b*16,6,8)}
+  g.fillStyle='#374151';g.fillRect(0,h-96,w,96);g.fillStyle='#fde047';for(let i=0;i<9;i++)g.fillRect(w-((t/2.4+i*90)%(w+60)),h-44,44,4);
+  const bob=Math.sin(t/90)*1.5,X=w/2-140,Y=h-190+bob;g.fillStyle='#1e3a8a';g.fillRect(X,Y,280,120);g.fillStyle='#fbbf24';g.fillRect(X,Y+82,280,8);g.fillStyle='#fde68a';for(let i=0;i<5;i++)g.fillRect(X+14+i*52,Y+16,42,42);g.fillStyle='#fef9c3';g.fillRect(X+272,Y+94,8,10);g.fillStyle='#111';[50,210].forEach(a=>{g.beginPath();g.arc(X+a,Y+120,18,0,7);g.fill()});g.fillStyle='#fff';g.font='bold 13px sans-serif';g.textAlign='center';g.fillText('심야',X+140,Y+108);
+  g.font='bold 15px sans-serif';g.fillText(FLY.label,w/2,22);if(FLY.plan&&FLY.plan.show){g.fillStyle='#000a';g.fillRect(20,36,w-40,28);g.fillStyle='#fde047';g.font='bold 14px sans-serif';g.fillText(FLY.plan.show,w/2,55)}g.textAlign='start';
+  g.fillStyle='#ffffff40';g.fillRect(40,h-16,w-80,4);g.fillStyle='#fbbf24';g.fillRect(40,h-16,(w-80)*Math.min(1,p),4);
+  if(p>=1){const F=FLY;FLY=null;trainMusic(false);warp(F.to,F.x,F.y,F.d)}}
 function showDanggn(){openM(`<h3>🥕 보성의 가판대</h3><div class="cd">주인장이 내놓은 물건들을 모아 둔 곳이에요.</div>`+(DANGGN_URL?`<div class="xcol" style="margin-top:8px"><a class="xb big" href="${esc(DANGGN_URL)}" target="_blank" rel="noopener" onclick="return danggnPop(event)">🥕 당근마켓에서 내 물건 보기</a></div>`:`<p style="font-size:12px;opacity:.8;margin-top:8px">판매 목록 링크는 곧 열려요.</p>`))}
 /* 탑승 중에는 배경음을 멈추고 탈것 소리만 냄. 내리면 배경음을 이어 줌 */
 const TRAIN_S={tm:null,fa:false,yt:false,kind:'',nodes:null};
@@ -3081,6 +3225,7 @@ function rideStop(){clearInterval(TRAIN_S.tm);TRAIN_S.tm=null;const N=TRAIN_S.no
 function rideStart(){rideStop();const kind=TRAIN_S.kind;if(!kind||!bgm||!AC||AC.state!='running')return;
   const g=AC.createGain(),f=AC.createBiquadFilter(),s=rideNoise(),src=[s],t=AC.currentTime;g.connect(AC.destination);g.gain.setValueAtTime(0,t);s.connect(f);f.connect(g);f.type='lowpass';
   if(kind=='fly'){f.frequency.value=1100;f.Q.value=.3;g.gain.linearRampToValueAtTime(.34,t+2);const o=AC.createOscillator(),og=AC.createGain();o.type='sawtooth';o.frequency.value=92;og.gain.value=.012;o.connect(og);og.connect(g);o.start();src.push(o);const w=AC.createOscillator(),wg=AC.createGain();w.type='sine';w.frequency.value=1480;wg.gain.value=.012;w.connect(wg);wg.connect(g);w.start();src.push(w)}
+  else if(kind=='bus'){f.frequency.value=260;f.Q.value=.5;g.gain.linearRampToValueAtTime(.3,t+1);const o=AC.createOscillator(),og=AC.createGain();o.type='sawtooth';o.frequency.value=46;og.gain.value=.03;o.connect(og);og.connect(g);o.start();src.push(o)}
   else{f.frequency.value=420;f.Q.value=.6;g.gain.linearRampToValueAtTime(.3,t+1);const o=AC.createOscillator(),og=AC.createGain();o.type='sine';o.frequency.value=64;og.gain.value=.05;o.connect(og);og.connect(g);o.start();src.push(o);const clack=d=>{const c=AC.createOscillator(),cg=AC.createGain(),n=AC.currentTime+d;c.type='square';c.frequency.value=70;cg.gain.setValueAtTime(.1,n);cg.gain.exponentialRampToValueAtTime(.0001,n+.09);c.connect(cg);cg.connect(AC.destination);c.start(n);c.stop(n+.1)};TRAIN_S.tm=setInterval(()=>{if(AC.state!='running')return;clack(0);clack(.17);clack(.62);clack(.79)},1500)}
   s.start();TRAIN_S.nodes={g,src}}
 function trainMusic(on,fly){
@@ -3088,7 +3233,7 @@ function trainMusic(on,fly){
   if(on){
     clearInterval(mt);TRAIN_S.fa=typeof FA!='undefined'&&!FA.paused;TRAIN_S.yt=false;
     try{if(TRAIN_S.fa)FA.pause();if(PV.yt&&PV.yt.getPlayerState&&PV.yt.getPlayerState()==1){TRAIN_S.yt=true;PV.yt.pauseVideo()}}catch(e){}
-    TRAIN_S.kind=fly?'fly':'train';rideStart();
+    TRAIN_S.kind=fly===1?'fly':fly||'train';rideStart();
   }else{TRAIN_S.kind='';try{speechSynthesis&&speechSynthesis.cancel()}catch(e){}try{if(TRAIN_S.fa)FA.play().catch(()=>{});if(TRAIN_S.yt&&PV.yt)PV.yt.playVideo()}catch(e){}TRAIN_S.fa=TRAIN_S.yt=false}
 }
 function metroGo(L,to){if(!pfReady()){closeM();toast('열차가 떠났어요. 다음 열차를 기다려 주세요.');return}const M2=METRO[L],f=STN[map.stKey],plan=metroPlan(L,map.stKey,to);trainMusic(true);const keep={fa:TRAIN_S.fa,yt:TRAIN_S.yt};closeM();Object.assign(TRAIN_S,keep);busy=true;FLY={plan,dur:plan.dur,to:pfId(L,to,map.dir),a:null,train:1,col:M2.col,x:7,y:4,d:1,label:M2.n+'  '+f[0]+' → '+STN[to][0]};sfx('w')}
@@ -3109,20 +3254,38 @@ function drawTrain(t){
   if(p>=1){const F=FLY;FLY=null;trainMusic(false);if(M[F.to]&&M[F.to].pf)PF.ev[F.to]=Date.now()-PF_IN-PF_STOP+6000;warp(F.to,F.x,F.y,F.d)}
 }
 function flyTo(id){closeM();trainMusic(true,1);busy=true;const seoul=SEOUL_IDS.includes(id),n=seoul?'서울 김포공항':'제주공항';
-  const F={to:id,a:null,plan:{lines:['승객 여러분, 안녕하십니까. 기장입니다. 저희 BS 에어를 이용해 주셔서 감사합니다.','이 비행기는 '+n+'까지 갑니다. 오늘 하늘은 '+(WXL[WX.kind]?WXL[WX.kind][1]:'맑음')+', 편안한 비행 되십시오.',(seoul?'곧 김포공항에':'곧 제주공항에')+' 착륙합니다. 좌석 벨트를 매 주십시오.']}};FLY=F;sfx('w');captainTalk(F)}
+  const F={to:id,a:null,plan:{lines:['승객 여러분, 안녕하십니까. 기장입니다. 저희 BS 에어를 이용해 주셔서 감사합니다.','이 비행기는 '+n+'까지 갑니다. 오늘 하늘은 '+(WXL[WX.kind]?WXL[WX.kind][1]:'맑음')+(hr0=>hr0>=19||hr0<5?', 편안한 야간 비행 되십시오.':', 편안한 비행 되십시오.')(jejuNow().h),(seoul?'곧 김포공항에':'곧 제주공항에')+' 착륙합니다. 좌석 벨트를 매 주십시오.']}};FLY=F;sfx('w');captainTalk(F)}
 /* 기장 방송: 한 문장씩 빠르게 말하고, 다 끝나야 착륙 */
 function captainTalk(F){const L=F.plan.lines;let i=0;const next=()=>{if(FLY!==F)return;if(i>=L.length){F.doneAt=performance.now()+500;return}const tx=L[i++];F.plan.show=tx;let fin=false,tm=0;const go=()=>{if(fin)return;fin=true;clearTimeout(tm);next()};
   if(!bgm||!window.speechSynthesis||!window.SpeechSynthesisUtterance){tm=setTimeout(go,2300);return}
   tm=setTimeout(go,tx.length*170+1500);   // 음성이 끝 신호를 안 줘도 멈추지 않게
   try{const u=new SpeechSynthesisUtterance(tx);u.lang='ko-KR';u.rate=1.3;u.volume=.9;const v=speechSynthesis.getVoices().find(q=>/^ko/i.test(q.lang));if(v)u.voice=v;u.onend=go;u.onerror=go;speechSynthesis.speak(u)}catch(e){go()}};
   setTimeout(next,250)}
+/* 비행 화면: 실제 시각과 날씨를 따름 */
+function drawFlightSky(t){const w=cv.width,hh=cv.height,hr=jejuNow().h,kind=WX.kind,night=hr>=19||hr<5,dawn=hr>=5&&hr<7,dusk=hr>=17&&hr<19,grim=kind=='rain'||kind=='snow'||kind=='fog';
+  const top=night?'#050a1f':dawn?'#3b5b92':dusk?'#3f3a78':grim?'#6b7280':kind=='cloud'?'#7c9ab8':'#38bdf8',bot=night?'#141c3d':dawn?'#fdba74':dusk?'#fb923c':grim?'#9ca3af':kind=='cloud'?'#b6c6d6':'#bae6fd',G=g.createLinearGradient(0,0,0,hh);G.addColorStop(0,top);G.addColorStop(1,bot);g.fillStyle=G;g.fillRect(0,0,w,hh);
+  if(night&&!grim){for(let i=0;i<46;i++){g.fillStyle=(i+(t/500|0))%7==0?'#ffffff55':'#fff';g.fillRect((i*83)%w,(i*47)%(hh*.65),2,2)}g.fillStyle='#fef3c7';g.beginPath();g.arc(w-70,52,20,0,7);g.fill();g.fillStyle=top;g.beginPath();g.arc(w-62,46,17,0,7);g.fill()}
+  else if(!night&&!grim&&kind!='cloud'&&!dawn&&!dusk){g.fillStyle='#fde68a';g.beginPath();g.arc(w-70,52,20,0,7);g.fill()}
+  else if((dawn||dusk)&&!grim){g.fillStyle='#fed7aa';g.beginPath();g.arc(dawn?70:w-70,hh-70,24,0,7);g.fill()}
+  /* 땅 위 불빛 */
+  if(night){for(let i=0;i<34;i++){const x=(w+40)-((t/9+i*61)%(w+40));g.fillStyle=i%3?'#fde68a':'#fb923c';g.fillRect(x,hh-20-(i*13)%34,2,2)}}
+  const cc=night?(grim?'#4b5563':'#334155'):grim?'#d1d5db':dawn||dusk?'#fde4cf':'#fff',nc=grim||kind=='cloud'?12:7;g.fillStyle=cc;for(let i=0;i<nc;i++){const x=(w+80)-((t/4+i*97)%(w+160)),y=30+(i*41)%(hh-60);g.fillRect(x,y,70,12);g.fillRect(x+14,y-9,36,10)}
+  const px0=w/2-92,py0=hh/2-50+Math.sin(t/260)*5,s=4;drawPlane(px0,py0,s,night);
+  if(night||dusk||grim&&hr<7){
+    g.fillStyle='#fde68a';for(let i=0;i<8;i++)g.fillRect(px0+(11+i*3.4)*s,py0+10*s,2*s,2*s);
+    g.fillStyle='#ef4444';g.fillRect(px0+18*s,py0+16*s,4,4);g.fillStyle='#22c55e';g.fillRect(px0+30*s,py0+16*s,4,4);
+    if((t%1200)<120){g.fillStyle='#fff';g.fillRect(px0+s,py0+s,6,6);g.fillRect(px0+21*s,py0+17*s,6,6)}
+    if((t%1800)<900){g.fillStyle='#ef4444';g.fillRect(px0+20*s,py0+21*s,5,5)}
+    const b=g.createLinearGradient(px0+45*s,0,px0+45*s+130,0);b.addColorStop(0,'rgba(254,249,195,.55)');b.addColorStop(1,'rgba(254,249,195,0)');g.fillStyle=b;g.beginPath();g.moveTo(px0+45*s,py0+13*s);g.lineTo(px0+45*s+130,py0+13*s-24);g.lineTo(px0+45*s+130,py0+13*s+24);g.fill()}
+  if(kind=='rain'){g.fillStyle=night?'#93c5fd88':'#ffffffaa';for(let i=0;i<60;i++){const x=(i*53-t/1.5)%(w+30),y=(i*71+t/2.2)%hh;g.fillRect(x<0?x+w+30:x,y,10,2)}}
+  if(kind=='snow'){g.fillStyle='#fff';for(let i=0;i<50;i++){const x=w-((i*61+t/5)%(w+10)),y=(i*37+t/14)%hh;g.fillRect(x,y,3,3)}}
+  if(kind=='fog'){g.fillStyle=night?'rgba(148,163,184,.28)':'rgba(255,255,255,.4)';g.fillRect(0,0,w,hh)}
+}
 function drawFlight(t){
-  if(FLY.train)return drawTrain(t);
+  if(FLY.bus)return drawBusRide(t);if(FLY.train)return drawTrain(t);
   if(FLY.a==null)FLY.a=t;
   const landed=FLY.doneAt&&performance.now()>=FLY.doneAt;
-  g.fillStyle='#7dd3fc';g.fillRect(0,0,cv.width,cv.height);
-  g.fillStyle='#fff';for(let i=0;i<7;i++){const x=(cv.width+80)-((t/4+i*97)%(cv.width+160)),y=30+i*41;g.fillRect(x,y,70,12);g.fillRect(x+14,y-9,36,10)}
-  drawPlane(cv.width/2-92,cv.height/2-50+Math.sin(t/260)*5,4);
+  drawFlightSky(t);
   if(FLY.plan&&FLY.plan.show){const w=cv.width,hh=cv.height,tx=FLY.plan.show;g.font='bold 13px sans-serif';g.textAlign='center';const pw=Math.min(w-20,g.measureText(tx).width+24);g.fillStyle='#000a';g.fillRect((w-pw)/2,hh-46,pw,30);g.fillStyle='#fff';g.fillText('🧑‍✈️ '+tx,w/2,hh-26,w-30);g.textAlign='start'}
   if(landed){const id=FLY.to;FLY=null;trainMusic(false);warp(id,7,8,1)}
 }
