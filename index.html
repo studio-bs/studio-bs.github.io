@@ -458,15 +458,37 @@ const SONG_BASE=[['왔어? 😄','아아 한 잔 할래? 스벅은 역시 아이
 const SONG_PLACE={
   airport:[['비행기 타기 전엔 공항 스벅 아아가 국룰이지. ✈'],['저기 뜨는 비행기 좀 봐. 볼 때마다 좋다.'],['한화에어로스페이스가 왜 궁금한지 알겠지? 저 엔진 소리 들어 봐. 📈']],
   coast:[['바다 앞에서 아아 한 잔이면 더 바랄 게 없지. 🌊'],['여기서 라젠카 부르면 파도랑 잘 어울릴 것 같지 않냐? 🎤']],
-  route2:[['돌담 따라 걷다 보니 생각이 정리되네.'],['이 길은 걸을수록 좋아. 천천히 가자.']],
+  route2:[['제주미소 앞이네. 먹고 나서 아아 한 잔 어때? 🥤'],['카페도 생겼네? 근데 스벅 아아도 포기 못 해. 🥤'],['돌담 따라 걷다 보니 생각이 정리되네.'],['이 길은 걸을수록 좋아. 천천히 가자.']],
   town:[['왔어? 동네 한 바퀴 돌자.'],['게시판 봤어? 저 귤 진짜 맛있대. 🍊']],
-  sports:[['골대 있네? 공 어디 있어. 한 판 하자. 🏀'],['운동 끝나고 마시는 아아. 이게 완벽한 코스지.'],['트랙 말고 농구 코트 없냐고 보성이한테 말 좀 해 줘. 😄']],
-  route1:[['귤 향 좋다. 걷기만 해도 기분 좋아지네. 🍊'],['귤나무 보니까 올해 작황이 궁금하네. 이것도 투자처럼 봐야 돼. 📈']],
-  cert:[['공부하다 막히면 나한테 물어봐. 같이 보자. 📚'],['시험은 차근차근 하면 돼. 넌 할 수 있어.']],
-  rest:[['음악 서재 가 봤어? 플레이리스트 잘 골랐더라. 🎧'],['조용해서 좋다. 여기선 라젠카 말고 잔잔한 걸로 부를게. 🎤']],
-  studio:[['사진 잘 봤다~ 다음엔 나도 한 장 찍어 줘. 📷'],['만든 걸 보면 그 사람이 보이더라. 보성이답네.']]
+  sports:[['골대 있네? 공 어디 있어. 한 판 하자. 🏀'],['운동 끝나고 마시는 아아. 이게 완벽한 코스지.'],['트랙 말고 농구 코트 없냐고 보성이한테 말 좀 해 줘. 😄'],['철봉도 좋은데 난 역시 농구가 좋더라.']],
+  route1:[['표선 바다 좋다. 백사장 쪽으로 걸어 볼까? 🌊'],['어르신들 댁이 이 길 위쪽이지? 인사드리고 가자.'],['귤 향 좋다. 걷기만 해도 기분 좋아지네. 🍊'],['귤나무 보니까 올해 작황이 궁금하네. 이것도 투자처럼 봐야 돼. 📈']],
+  cert:[['프로젝트 전시관 봤어? 하나씩 쌓인 게 보기 좋더라.'],['공부하다 막히면 나한테 물어봐. 같이 보자. 📚'],['시험은 차근차근 하면 돼. 넌 할 수 있어.']],
+  rest:[['영화 뭐 볼까? 보고 나서 별점 내기 하자. 🎬'],['오락실 가자. 인형은 내가 뽑아 줄게. 🧸'],['조용해서 좋다. 여기선 라젠카 말고 잔잔한 걸로 부를게. 🎤']],
+  studio:[['멘사 연구소가 여기 있네? 문제 하나 같이 풀어 볼까? 🧠'],['만든 걸 보면 그 사람이 보이더라. 보성이답네.']],
+  samgeori:[['사진 잘 봤다~ 다음엔 나도 한 장 찍어 줘. 📷'],['음악 서재 가 봤어? 플레이리스트 잘 골랐더라. 🎧'],['공원 벤치에 앉아서 아아 한 잔. 이런 게 좋은 거지. 🥤'],['연못 앞에서 라젠카 한 소절 불러 볼까? 🎤']],
+  beach:[['맨발로 걷기 딱 좋네. 아아는 내가 들고 갈게. 🏖'],['바다 보면서 부르는 라젠카, 이건 못 참지. 🎤']],
+  orchard:[['귤 진짜 잘 익었다. 아버지 고생 많으시겠네. 🍊'],['귤 따는 거 도와드리고 가자. 나도 손 보탤게.'],['귤 시세도 궁금한데 일단 하나 먹어 보자. 📈']],
+  gotF:[['서귀포 바람 좋다. 천천히 걷자.'],['숲이랑 바다가 같이 있으니 더 좋네. 🌊']],
+  oreumF:[['숲길은 걷기만 해도 머리가 맑아지네. 🌲'],['조용해서 노래 연습하기 딱 좋다. 🎤']],
+  shoreF:[['한쪽은 숲, 한쪽은 바다. 여기 괜찮은데? 🌊'],['바다 보면서 아아 한 잔 어때? 🥤']],
+  gimpo:[['서울 왔네! 공항 스벅부터 들르자. ✈🥤'],['제주 갈 때 뭐 사 갈지 벌써 고민된다.']],
+  noryangjin:[['노량진 사는 거 어때? 밥은 잘 챙겨 먹고 다니지? 🍚'],['컵밥 먹고 아아 한 잔 하자. 🥤'],['열심히 하는 사람들 많다. 너도 무리는 하지 마.']],
+  yeouido:[['증권가네. 차트 보는 것도 좋은데 아아부터 마시자. 📈'],['벚꽃 필 때 여기 걸으면 좋겠다. 🌸'],['한강 앞에서 농구 한 판 어때? 🏀']],
+  nodeul:[['노들섬에서 노을 보며 노래하면 진짜 좋겠다. 🌇'],['다리 위 바람 시원하네. 라젠카 부르면서 건너자. 🎤']],
+  yongsan:[['용산 왔으면 구경 좀 하고 가야지.'],['강 건너왔네. 잠깐 아아 한 잔 어때? 🥤']],
+  heukseok:[['여기 학교 앞 분위기 좋다. 📚'],['강 쪽으로 걸으면 바람이 좋아.']],
+  sangdo:[['붕어빵 냄새 난다. 아아랑 먹으면 조합 괜찮을걸? 🐟'],['언덕 많네. 운동된다 생각하자.']],
+  soongsil:[['학교 앞이라 활기차네. 공부 막히면 같이 보자. 📚'],['농구 코트 있나 한번 찾아볼까? 🏀']],
+  jangseung:[['시장 구경 재밌다. 귤 파는지 볼까? 🍊'],['이런 동네 골목 걷는 거 좋아.']],
+  daebang:[['떡볶이 어때? 아아랑 같이. 😄'],['노량진 금방이네. 천천히 걸어가자.']],
+  singil:[['환승역이라 북적이네. 스벅 어디 있나 찾아볼까? 🥤'],['골목이 많아서 걷는 맛이 있네.']]
 };
-const SONG_XY={airport:[9,8],coast:[9,3],route2:[7,3],town:[11,7],sports:[12,4],route1:[2,6],cert:[11,6],rest:[5,6],studio:[11,8]};
+/* 처음 만난 손님에게는 존댓말 */
+const SONG_PLACE_G={
+  town:[['여기가 보성이네 동네예요. 천천히 둘러보세요.']],coast:[['바다 앞에서 마시는 아아, 정말 좋아요. 🌊']],beach:[['맨발로 걷기 좋은 백사장이에요. 🏖']],orchard:[['제주 귤 맛보고 가세요. 진짜 달아요. 🍊']],route1:[['표선 백사장까지 내려가 보세요. 🌊']],route2:[['돌담길은 천천히 걸어야 좋아요.']],sports:[['농구 좋아하세요? 한 판 하고 싶네요. 🏀']],cert:[['보성이가 공부 정말 열심히 했어요. 📚']],rest:[['영화관도 오락실도 들러 보세요. 🎬']],studio:[['보성이가 만든 곳 구경 잘하고 가요.']],samgeori:[['음악 서재에 좋은 노래 많아요. 🎧']],airport:[['비행기 타기 전엔 아아 한 잔이죠. ✈']],gotF:[['서귀포 바람이 참 좋아요.']],oreumF:[['숲길 걸으면 머리가 맑아져요. 🌲']],shoreF:[['숲과 바다가 같이 보여서 좋아요. 🌊']],
+  gimpo:[['서울 오셨네요. 공항 스벅부터 들러 볼까요? 🥤']],noryangjin:[['컵밥거리 꼭 가 보세요. 🍚']],yeouido:[['벚꽃 필 때 여기 정말 좋을 거예요. 🌸']],nodeul:[['노을 질 때 다리 위가 참 좋아요. 🌇']],yongsan:[['용산은 구경거리가 많아요.']],heukseok:[['강 쪽으로 걸으면 바람이 좋아요.']],sangdo:[['붕어빵 드셔 보셨어요? 🐟']],soongsil:[['학교 앞이라 활기차죠? 📚']],jangseung:[['시장 구경 재밌어요.']],daebang:[['떡볶이 한 접시 어떠세요? 😄']],singil:[['1호선 5호선이 만나는 곳이에요.']]
+};
+const SONG_XY={airport:[9,8],coast:[9,3],route2:[7,3],town:[11,7],sports:[12,4],route1:[2,6],cert:[11,6],rest:[5,6],studio:[11,8],samgeori:[5,6],beach:[12,6],orchard:[4,2],gotF:[4,7],oreumF:[9,6],shoreF:[8,4],gimpo:[3,7],noryangjin:[20,10],yeouido:[16,9],nodeul:[9,12],yongsan:[5,6],heukseok:[9,7],sangdo:[11,7],soongsil:[4,7],jangseung:[4,7],daebang:[4,7],singil:[10,7]};
 const SONG={at:null,miss:0,last:-1};
 function songRoll(id){if(!SONG_XY[id]){return}const on=SONG.miss>=2||Math.random()<.4;SONG.at=on?id:null;SONG.miss=on?0:SONG.miss+1}
 const SONG_GUEST=[['어, 처음 보는 얼굴인데요? 보성이 손님인가 봐요? 😄','저는 보성이 친구예요.'],['보성이가 이 세상 제법 잘 만들었죠? 구경 잘하고 가요.'],['스벅은 역시 아이스 아메리카노죠. 날이 어떻든 포기 못 해요. 🥤'],['라젠카 세이브 어스 알아요? 넥스트 노래요.','이건 제대로 불러야 돼요. 🎤'],['농구 좋아해요? 패스 하나 잘 들어가면 그날 기분이 달라져요. 🏀']];
@@ -480,11 +502,16 @@ function lgunTalk(){if(isOwner()){const L=[['쉬는 건 죽고 나서 쉬는 겁
 function lgunStep(){if(cur!='sports'||!lgunMe()||LG.done)return;const q=py==6?(px<7?0:1):py==8?(px>=7?2:3):(py==7&&px==10)?1.5:(py==7&&px==3)?3.5:null;if(q==null||![3,4,5,6,7,8,9,10].includes(px))return;const Q=Math.floor(q);if(LG.q==null){LG.q=Q;return}if(Q==LG.q)return;const d=(Q-LG.q+4)%4;if(d==1)LG.pos++;else if(d==3)LG.pos--;LG.q=Q;if(Math.abs(LG.pos)>=12){LG.done=true;try{localStorage.setItem('bsw_lgun','1')}catch(e){}buildNpcs();sfx('w');toast('트랙 세 바퀴 완주! 저기 누가 뛰고 있다… 🏃')}}
 const friendCall=()=>{if(typeof FRIEND=='undefined'||!FRIEND)return'';const s=FRIEND.short,c=s.charCodeAt(s.length-1)-0xAC00;return s+(c>=0&&c%28?'이':'')};
 function songFriend(){if(isOwner()||!songPal())return null;if(!FRIEND.met){FRIEND.met=1;return FRIEND.greet}const L=FRIEND.lines||[];return L.length&&Math.random()<.6?[L[Math.random()*L.length|0]]:null}
-function songTalk(){const fr=songFriend();if(fr)return fr;const P=(SONG_PLACE[cur]||[]).filter(l=>isOwner()||!l[0].startsWith('사진 잘 봤다')),L=!isOwner()&&!songPal()?SONG_GUEST:Math.random()<.6&&P.length?P:SONG_BASE;let i=Math.random()*L.length|0;if(L[i][0]==SONG.last)i=(i+1)%L.length;SONG.last=L[i][0];return L[i]}
+function songTalk(){const fr=songFriend();if(fr)return fr;const P=(SONG_PLACE[cur]||[]).filter(l=>isOwner()||!l[0].startsWith('사진 잘 봤다')),G=SONG_PLACE_G[cur],L=!isOwner()&&!songPal()?(G&&Math.random()<.5?G:SONG_GUEST):Math.random()<.65&&P.length?P:SONG_BASE;let i=Math.random()*L.length|0;if(L[i][0]==SONG.last)i=(i+1)%L.length;SONG.last=L[i][0];return L[i]}
 const SONG_CH=()=>!isOwner()&&!songPal()?({'🥤 좋아하는 것':['스벅 아이스 아메리카노요. 겨울에도 얼죽아예요.'],'🎤 좋아하는 노래':['라젠카 세이브 어스요. 신해철 목소리는 진짜… 말해 뭐 해요.'],'🤝 보성이랑은':['친구예요. 같이 노래 부르고 농구하던 사이요. 😄']}):({'🥤 아아 이야기':['스벅 아이스 아메리카노, 이건 진리야.','겨울에도 예외 없어. 얼죽아지.'],'🎤 노래 이야기':['제일 좋아하는 노래? 라젠카 세이브 어스지.','신해철 목소리는 진짜… 말해 뭐 해.'],'🏀 농구 이야기':['농구는 혼자 못 해. 그래서 더 재밌는 거야.','패스 하나 잘 들어가면 그날 기분이 달라져.'],'📈 주식 이야기':['한화에어로스페이스, 내가 오른다 했지?','그렇다고 다 따라 사진 마. 공부하고 사는 거야.']});
 function songNpc(id){const[x,y]=SONG_XY[id];return{x,y,c:'#1e3a8a',h:'#201a1a',p:'#201a1a',gl:'#6b4a2e',cup:1,stay:1,n:'송',when:()=>SONG.at==id,s:songTalk,ch:SONG_CH}}
 
 /* 해녀 할망 (제주 사투리) */
+/* 수영장 시간: 보내 주신 제주국민체육센터 이용안내 기준. 설·추석과 1월 1일 휴관은 안내문으로만 표시 */
+const poolState=()=>{const{h}=jejuNow(),d=jejuDate().getUTCDay();if(d==2)return'tue';if(h>=12&&h<14)return'noon';const end=d==0||d==6?18:21;return(h>=6&&h<12)||(h>=14&&h<end)?'open':'closed'};
+const poolOpen=()=>poolState()=='open';
+const poolMsg=()=>({open:'지금 수영할 수 있는 시간이에요. 🏊',noon:'12시부터 14시까지는 물 교환과 청소 시간이라 쉬어요.',tue:'매주 화요일은 휴관이에요.',closed:'지금은 문 닫은 시간이에요. 운영 시간을 확인해 주세요.'})[poolState()];
+const hnMeal=()=>{const{h}=jejuNow();return !WET()&&((h>=11&&h<14)||(h>=17&&h<20))};   // 점심·저녁엔 해녀의 집에서 함께 쉼
 const elderHome=()=>{const{h}=jejuNow();return h>=17||h<7||WET()};   // 저녁·밤·궂은 날에는 집에서 쉼
 const hnS=()=>{
   if(WET())return['비가 오난 바당이 거칠어부난 오늘은 구경만 허주게.','보성이 할망이우다. 집에 강 감귤차나 마십서. ☕'];
@@ -508,18 +535,18 @@ const M={
 town:{n:'제주시',o:1,bgm:'town',m:[
   'TTTTTTT=TTTTTTT',
   'T..F...=...F..T',
-  'T.RRR..=.mㅹㅹㅹ.T',
-  'T.HDH℧.=..ㅺㅻㅺ.T',
-  'T.===..=#..=.TT',
+  'T.RRR..=.m.F..T',
+  'T.HDH℧.=...T..T',
+  'T.===..=#....TT',
   '===============',
   'T.F...m=....F.T',
   'T...m..=m.F...T',
   'TT.F...=....TTT',
   'TTTTTTT=TTTTTTT'
-],sign:{'3,3':'보성의 집','11,3':'제주미소'},d:{'3,3':['house',7,8],'11,3':['shabu',7,8]},e:{u:['samgeori',7,9],l:['route2',14,5],r:['sports',0,5],d:['route1',7,0]},umb:[[3,5,'#ef4444'],[11,5,'#3b82f6']],p:[
+],sign:{'3,3':'보성의 집'},d:{'3,3':['house',7,8]},e:{u:['samgeori',7,9],l:['route2',14,5],r:['sports',0,5],d:['route1',7,0]},umb:[[3,5,'#ef4444']],p:[
   {x:2,y:7,c:'#a16207',h:'#d1d5db',n:'마을 어르신',s:['보성이가 그렇게 가족들을 사랑하고 존경한다고 하더라~','요즘 그런 젊은이 드물어. 부모님이 복 받으셨지. 🍊']},
   {x:9,y:8,c:'#111827',h:'#1b1b26',stay:1,w:1,n:'창끼 (a.k.a 노진구)',s:['전설의힘을 알고있나?','ㅋ']},
-  {x:10,y:6,c:'#4aa3ff',h:'#6b3e26',n:'마을 소년',s:['어서 와! 여기가 BS World의 제주시이야.','북쪽 공원 지나면 학술시티, 동쪽엔 사라봉, 서쪽엔 바당 올레, 남쪽엔 표선이 있어.','위쪽 🧠 뇌구조 메뉴를 열면 어디든 순간이동할 수 있대!']},
+  {x:10,y:6,c:'#4aa3ff',h:'#6b3e26',n:'마을 소년',s:['어서 와! 여기가 BS World의 제주시이야.','북쪽 공원 지나면 학술시티, 동쪽엔 사라봉, 서쪽엔 탑동 거리, 남쪽엔 표선이 있어.','위쪽 🧠 뇌구조 메뉴를 열면 어디든 순간이동할 수 있대!']},
   {x:12,y:7,c:'#312e81',h:'#fde047',n:'별지기',when:()=>{const{h}=jejuNow();return h>=23||h<1},s:['이 시간에 깨어 있네요. ✨','자정 무렵에만 여기 나와요. 비밀이에요.'],eg:'star'},
   {x:5,y:7,c:'#ff8fb1',h:'#222',w:1,n:'꽃밭 이웃',s:['꽃향기 맡고 가렴. 🌸','달리기 전엔 스트레칭 필수야!']}
 ]},
@@ -560,9 +587,9 @@ cert:{n:'학술·자격 검정 시티',o:1,bgm:'knowledge',m:[
 
 sports:{n:'사라봉', o:1,bgm:'sports',land:[7,5], m:[
            'TTTTTTT=TTTTTTT',
-           'TT.@@@...GGG.TT',
-           'T..HDH.F.HDH..T',
-           'T...=.F.#===.ΩT',
+           'TT.@@@.=.GGG.TT',
+           'T..HDH.=.HDH..T',
+           'T...====#===.ΩT',
            'T.F.=.[]|.=...T',
            '===========...T',
            'T..tttttttt..FT',
@@ -578,7 +605,7 @@ sports:{n:'사라봉', o:1,bgm:'sports',land:[7,5], m:[
 
 coast:{n:'제주 바닷가',o:1,bgm:'beach',m:[
   '~~3~2ss=TTTTTTT',
-  '~1~~~ss=..RRR.T',
+  '~1~~~ss=..ЖЖЖ.T',
   '4~~~~ss=..HDH.T',
   '~~2~sss=..===.T',
   '~~~3ss.=.====.T',
@@ -586,14 +613,14 @@ coast:{n:'제주 바닷가',o:1,bgm:'beach',m:[
   '~~~~ss.F.....FT',
   '~~~1~ss.......T',
   '~2~~3~ss..F.TTT',
-  '~~4~~~~sTTTTTTT'],sign:{'11,2':'나눔 센터'},d:{'11,2':['vc',7,8]},e:{r:['route2',0,5],u:['airport',7,9,1],d:['beach',7,0,1]},p:[
+  '~~4~~~~sTTTTTTT'],sign:{'11,2':'해녀의 집'},d:{'11,2':['haenyeo',7,8]},e:{r:['route2',0,5],u:['airport',7,9,1],d:['beach',7,0,1]},p:[
 {x:10,y:7,c:'#475569',h:'#d1d5db',n:'셋동네 삼춘',s:['쾅 소리 나난 "아이고, 베락 털어졈신가?" 했주게.','이 셋동네 사름들, 밝도록 줌 혼줌 못 잤수다!']},
 {x:5,y:4,c:'#e879f9',h:'#222',w:1,n:'해변 산책러',s:['파도 소리를 들으면 마음이 차분해져. 🌊','센터에 가면 헌혈왕 이야기를 들을 수 있어!']},
-{x:4,y:6,c:'#1f2937',h:'#d1d5db',tw:1,when:()=>!elderHome(),n:'해녀 할망 (보성 할머니)',s:hnS,ch:hnCh},
-{x:6,y:8,c:'#334155',h:'#e5e7eb',tw:1,when:()=>!elderHome(),n:'해녀 할망 (보성 외할머니)',s:hnS2,ch:hnCh}],umb:[[9,6,'#3b82f6']]},
+{x:4,y:6,c:'#1f2937',h:'#d1d5db',tw:1,when:()=>!elderHome()&&!hnMeal(),n:'해녀 할망 (보성 할머니)',s:hnS,ch:hnCh},
+{x:6,y:8,c:'#334155',h:'#e5e7eb',tw:1,when:()=>!elderHome()&&!hnMeal(),n:'해녀 할망 (보성 외할머니)',s:hnS2,ch:hnCh}],umb:[[9,6,'#3b82f6']]},
 
 airport:{n:'제주 공항',o:1,bgm:'route',plane:[7,3],m:[
-  '~~~~ssTTTTTTTTT',
+  '~~~~TTTTTTTTTTT',
   '~~~~ssrrrrrrrrr',
   '~3~~ssyyyyyyyyy',
   '~~~~ssueeeuuuuu',
@@ -602,7 +629,7 @@ airport:{n:'제주 공항',o:1,bgm:'route',plane:[7,3],m:[
   '~2~ss..jjjDjjj.',
   '~~~~ss.====....',
   '~~~3ss.=F..iS.T',
-  '~~3~2ss=TTTTTTT'],sign:{'10,6':'터미널'},d:{'10,6':['terminal',7,8]},e:{u:['shoreF',5,9],d:['coast',7,0,1],r:['airfield',0,0,2]},umb:[[6,7,'#0ea5e9']],p:[
+  '~~3~2ss=TTTTTTT'],sign:{'10,6':'터미널'},d:{'10,6':['terminal',7,8]},e:{d:['coast',7,0,1],r:['airfield',0,0,2]},umb:[[6,7,'#0ea5e9']],p:[
 {x:11,y:4,c:'#ea580c',h:'#222',n:'항공 정비사',s:['기체 점검 이상 없음! ✈','비행기를 타고 싶으면 터미널 안 탑승 수속 카운터로 가 봐.']},
 {x:10,y:8,c:'#a78bfa',h:'#6b3e26',w:1,n:'여행객',s:['제주에 내리자마자 귤 냄새가 나는 것 같아요. 🍊','공항 바로 옆이 바다라니, 너무 좋아요!']}]},
 
@@ -624,8 +651,8 @@ studio:{n:'창작 마을',o:1,bgm:'indoor',land:[7,7],m:[
 projects:{n:'프로젝트 전시관',par:'cert',bgm:'knowledge',m:['w'.repeat(W),'w(w(wwwwww(w(ww',FR,FR,'wfKKffXffXffKKw'.slice(0,15),FR,FR,FR,FR,'wwwwwwwxwwwwwww'],d:{'7,9':['cert',9,5]},p:[
 {x:7,y:3,c:'#2563eb',h:'#1b1b26',n:'전시관 큐레이터',s:['보성이 직접 만든 것들을 모아 둔 곳입니다.'],ch:{'🗂 프로젝트 보기':()=>showProjects(),'✉ 연락처':()=>showProjects()}}]},
 
-photo:{n:'보성 사진관',par:'samgeori',bgm:'indoor',m:['w'.repeat(W),'w)w)w)w)w)w)w)w',FR,'wfffⓜⓜⓜfffffffw',FR,'wfKKfffffffKKfw',FR,FR,FR,'wwwwwwwxwwwwwww'],d:{'7,9':['samgeori',11,4]},p:[
-{x:11,y:3,c:'#a855f7',h:'#3f2a1c',n:'사진관 주인',s:['주인장이 찍은 사진들을 걸어 두었어요. 📷','저 큰 지도에는 주인장이 다녀온 곳이 색칠돼 있어요.'],ch:{'🗺 여행 지도':()=>showTravel(),'🖼 사진 보기':()=>showPhotos()}}]},
+photo:{n:'보성 사진관',par:'samgeori',wide:1,bgm:'indoor',m:['wwwwwwwwwwwwwwwwwwwwwww','w)w)w)w)w)w)w)w)w)w)w)w','wfffffffffffffffffffffw','wfffⓜⓜⓜfffffffffffffffw','wfffffffffffffffffffffw','wfKKfffffⓔfffⓔfffⓔfKKfw','wfffffffffffffffffffffw','wfffⓔfffⓔffffkkkffⓔfffw','wfffffffffffffffffffffw','wwwwwwwwwwwxwwwwwwwwwww'],d:{'11,9':['samgeori',11,4]},p:[
+{x:14,y:6,c:'#a855f7',h:'#3f2a1c',stay:1,n:'사진관 주인',s:['주인장이 찍은 사진들을 걸어 두었어요. 📷','벽 액자나 세워 둔 그림 앞에서 누르면 크게 볼 수 있어요.'],ch:{'🖼 사진 전체 보기':()=>showPhotos(),'🗺 여행 지도':()=>showTravel()}}]},
 
 airfield:{n:'제주 공항 활주로',o:1,bgm:'route',plane:[9,3],land:[7,7],m:[
   'TTTTTTTTTTTTTTT',
@@ -883,7 +910,7 @@ sangdo:{n:'상도',o:1,bgm:'route',land:[7,5],m:[
 
 anbang:{n:'부모님 안방',par:'town',bgm:'indoor',cozy:'#b45309',bedCol:'#d97706',m:['w'.repeat(W),'wqwwwqwwwwwqwww','wfffffffffffffw','wfffßßfffffKKfw','wfffßßffffffffw','xfffffffffffffw','wfffffffffffffw','wffKKfffffffffw','wfffffffffffffw','w'.repeat(W)],memo:{'1,1':{s:'📷',c:'#fde68a',l:['📷 가족사진','오래된 가족사진이 걸려 있다.']},'5,1':{s:'🍊',c:'#fdba74',l:['🍊 달력','귤 철엔 달력이 빽빽하다.']},'11,1':{s:'🪞',c:'#bae6fd',l:['🪞 거울','옷 입고 나서는 곳.']}},d:{'0,5':['house',13,7]},p:[]},
 
-shabu:{n:'제주미소 샤브샤브',par:'town',bgm:'indoor',m:['w'.repeat(W),'w'.repeat(W),FR,'w'+'k'.repeat(W-2)+'w',FR,'wfㅼfㅼfffffㅼfㅼfw',FR,'wfㅼfㅼfffffㅼfㅼfw',FR,'wwwwwwwxwwwwwww'],d:{'7,9':['town',11,4]},p:[
+shabu:{n:'제주미소 샤브샤브',par:'route2',bgm:'indoor',m:['w'.repeat(W),'w'.repeat(W),FR,'w'+'k'.repeat(W-2)+'w',FR,'wfㅼfㅼfffffㅼfㅼfw',FR,'wfㅼfㅼfffffㅼfㅼfw',FR,'wwwwwwwxwwwwwww'],d:{'7,9':['route2',3,4]},p:[
 {x:7,y:2,stay:1,c:'#f8fafc',h:'#27272a',n:'작은아버지',s:['어서 오세요! 보성이 작은아버지입니다. 🍲','고기랑 채소는 넉넉하게 드릴 테니 편히 드세요.'],ch:{'🍲 가게 정보·위치':()=>showShabu()}},
 {x:4,y:4,stay:1,w:1,c:'#be123c',h:'#1c1917',n:'작은엄마',s:['어서 오세요~ 보성이 작은엄마예요. 편한 자리에 앉으세요. 😊','육수 더 필요하면 말씀하세요.'],ch:{'🍲 가게 정보·위치':()=>showShabu()}},
 {x:10,y:6,w:1,c:'#0f766e',h:'#222',n:'가게 돕는 사촌동생',s:['어서 오세요! 여기가 보성이 형 작은아버지네 가게예요.','주문 도와드릴게요.','여기 채소 리필은 무료예요. 🥬']},
@@ -891,18 +918,18 @@ shabu:{n:'제주미소 샤브샤브',par:'town',bgm:'indoor',m:['w'.repeat(W),'w
 
 home:{n:'보성의 아지트',par:'noryangjin',bgm:'indoor',cozy:'#2563eb',m:['w'.repeat(W),'wwwwwwㅯwwwwwwww','wßßfππfþðfwㅮㅭfw','wfffffffffwfffw','wfffffffffwwfww',FR,'wffffffffffㅲㅲfw',FR,FR,'wwwwwwwxwwwwwww'],sign:{'11,6':'내 가판대','12,2':'화장실','6,2':'보성의 하루'},d:{'7,9':['noryangjin',11,13]},p:[]},
 
-route2:{n:'바당 올레',o:1,bgm:'route',land:[7,5],m:[
+route2:{n:'탑동 거리',o:1,bgm:'route',land:[7,5],m:[
   'TTTTTTTTTTTTTTT',
   'TT.F....F...FTT',
-  'T..m.....F..m.T',
-  'T.F......b....T',
-  '%%%%.%%%%.%%%%%',
+  'TTㅹㅹㅹ....FGGGTT',
+  'TTㅺㅻㅺ....bHDHTT',
+  '%%%=%.%%%.%=%%%',
   '===============',
   '%%%%%%.%%%%%.%%',
   'T.F...=.....F.T',
   'T..m..=...m...T',
-  'TTTTTT=TTTTTTTT'],e:{l:['coast',14,5],r:['town',0,5],d:['gotF',6,0]},umb:[[2,3,'#0ea5e9']],p:[
-{x:5,y:3,c:'#0d9488',h:'#6b3e26',n:'올레꾼',s:['돌담 따라 걷는 이 길이 바당 올레라마씸. 🌊','서쪽으로 가민 해변, 동쪽으로 가민 제주시이우다.']},
+  'TTTTTT=TTTTTTTT'],sign:{'11,3':'바당 카페','3,3':'제주미소'},d:{'11,3':['cafe',7,8],'3,3':['shabu',7,8]},e:{l:['coast',14,5],r:['town',0,5],d:['gotF',6,0]},umb:[[6,2,'#0ea5e9']],p:[
+{x:5,y:3,c:'#0d9488',h:'#6b3e26',n:'탑동 산책객',s:['돌담 옆으로 바다 보멍 걷는 탑동 거리라마씸. 🌊','서쪽으로 가민 해변, 동쪽으로 가민 제주시이우다.']},
 {x:2,y:8,c:'#a3e635',h:'#3f2a1c',w:1,dog:'#92400e',n:'강아지 데리고 걷는 사람',s:['우리 강아지가 돌담 냄새를 다 맡아야 움직여요. 🐕']},
 {x:10,y:7,c:'#fb7185',h:'#222',w:1,n:'사진 찍는 여행자',s:['돌담이랑 귤나무가 같이 나오게 찍고 있어요. 📷']}]},
 
@@ -925,9 +952,8 @@ rest:{n:'쉼의 숲',wide:1,land:[7,7],o:1,bgm:'indoor',m:[
 {x:12,y:8,c:'#fdba74',h:'#222',w:1,dog:'#f8fafc',n:'강아지 산책 삼춘',s:['이 녀석 산책 안 시켜 주민 집을 뒤집어 놔마씸. 🐕']},
 {x:1,y:6,c:'#c4b5fd',h:'#3f2a1c',w:1,n:'산책하는 사람',s:['아무것도 안 해도 되는 시간이 제일 좋네요.','연못 앞 벤치도 좋아요.']}]},
 
-library:{n:'보성의 음악 서재',par:'samgeori',bgm:'indoor',m:['w'.repeat(W),'wwzwzwzwzwzwzww',FR,FR,'wppfkkkkkkkfppw','wfffkfffffkfffw','wfffkkkkkkkfffw','wɦffffffffffɡʊw',FR,'wwwwwwwxwwwwwww'],d:{'7,9':['samgeori',3,4]},p:[
+library:{n:'보성의 음악 서재',par:'samgeori',wide:1,bgm:'indoor',m:['wwwwwwwwwwwwwwwwwwwwwww','wwzwzwzwzwzwzwwwwwwwwww','wfffffffffffffwㆌⓚㆌwㆌⓚㆌw','wfffffffffffffwㆌㆌㆌwㆌㆌㆌw','wppfkkkkkkkfppwㆁㆌㆁwㆁㆌㆁw','wfffkfffffkfffwwㆌwwwㆌww','wfffkkkkkkkfffffffffffw','wɦffffffffffɡʊwwwwwwwww','wfffffffffffffwwwwwwwww','wwwwwwwxwwwwwwwwwwwwwww'],sign:{'16,5':'1번방','20,5':'2번방','15,6':'코인 노래방'},d:{'7,9':['samgeori',3,4]},p:[
 {x:5,y:5,c:'#0f766e',h:'#1b1b26',n:'서재 지기',s:['어서 오세요. 주인장이 고른 노래가 벽에 걸려 있어요. 🎵','액자를 누르면 곡 목록을 볼 수 있어요.'],ch:{'🎵 플레이리스트 보기':()=>plHome(),'듣는 방법':['🎬 표시 곡은 여기서 영상으로 재생되고, 전체 듣기와 반복도 돼요.','나머지 곡은 YouTube Music 작은 창으로 열려요.']}},
-{x:7,y:5,c:'#0ea5e9',h:'#222',n:'노래방 안내원',s:['노래방에서 뭐 부를지 고민이세요? 🎤','TJ 번호를 찾아 드릴게요.'],ch:{'🎤 노래 번호 찾기':()=>showTj()}},
 {x:9,y:5,c:'#8b5cf6',h:'#f472b6',n:'Suno 음악가',s:['보성이가 Suno AI로 만든 노래를 제가 틀어 드려요. 🎧'],ch:{'🎧 보성의 노래 듣기':()=>showSuno(),'어떤 노래예요?':['주인장이 Suno AI로 직접 만든 노래들이에요.','한 곡씩 골라서 들어 보세요.']}},
 {x:3,y:8,c:'#fb923c',h:'#3f2a1c',n:'노래 추천 손님',s:['저 요즘 들을 노래가 없어요.','노래 추천해 주세요! 🎶'],ch:{'🎶 노래 추천하기':()=>showRec()}},
 {x:11,y:8,c:'#fda4af',h:'#222',w:1,n:'음악 듣는 손님',s:['이 서재에 오면 시간이 천천히 가는 것 같아요.']}]},
@@ -991,30 +1017,31 @@ samgeori:{n:'공원',o:1,bgm:'route',land:[7,5],opera:[1,1,5,2],m:[
   'T.~~~..=.F.b..T',
   'T.~~~.b=...F.TT',
   'TF~~~..=.m...TT',
-  'TTTTTTT=TTTTTTT'],sign:{'3,3':'음악 서재','11,3':'사진관'},d:{'3,3':['library',7,8],'11,3':['photo',7,8]},e:{u:['cert',7,9],d:['town',7,0],r:['oreumF',0,5]},p:[
+  'TTTTTTT=TTTTTTT'],sign:{'3,3':'음악 서재','11,3':'사진관'},d:{'3,3':['library',7,8],'11,3':['photo',11,8]},e:{u:['cert',7,9],d:['town',7,0],r:['oreumF',0,5]},p:[
 {x:9,y:6,c:'#65a30d',h:'#3f2a1c',w:1,n:'공원 산책객',s:['벤치에 앉아 있으면 음악 서재에서 노래가 들리는 것 같아요. 🎧','위로 가면 학술시티, 아래로 가면 제주시, 오른쪽은 오름 숲길이에요.']}]},
-oreumF:{n:'오름 숲길',o:1,bgm:'route',land:[3,5],m:[
+oreumF:{n:'오름 숲길',o:1,bgm:'route',land:[6,5],m:[
   'TTTTTTT=TTTTTTT',
   'TT.F..T=.F...TT',
   'T..T.F.=.T..F.T',
-  'TF...T.=.F..T.T',
-  'T.T....=....T.T',
-  '========..T.FTT',
-  'T.F.T..=T...F.T',
-  'T...F.T=...T..T',
-  'T.TF..T=...T.TT',
-  'TTTTTTT=TTTTTTT'],e:{u:['rest',7,13],l:['samgeori',14,5],d:['sports',7,0]},p:[]},
+  'T.QQQ..=.YYY..T',
+  'T.HDH..=.HDH.TT',
+  '============..T',
+  'T.F....=.F...TT',
+  'T.[]|..=...T..T',
+  'T..F..T=...T.TT',
+  'TTTTTTT=TTTTTTT'],sign:{'3,4':'우당 도서관','10,4':'수영장','3,6':'놀이터'},d:{'3,4':['woodang',7,8],'10,4':['swim',7,8]},e:{u:['rest',7,13],l:['samgeori',14,5],d:['sports',7,0]},p:[
+{x:2,y:6,c:'#f59e0b',h:'#222',w:1,n:'놀이터 꼬마',s:['그네 타 봤어요? 시소도 있어요!']}]},
 gotF:{n:'서귀포',o:1,bgm:'route',land:[6,5],m:[
   'TTTTTT=TTTTTTTT',
   'TTT.F.=T.T..TTT',
   'TTT...=.F..T.FT',
-  'TT.F.T=..T.T!.T',
-  'T..T..=F.T..F.T',
+  'TTRRRT=..T.T!.T',
+  'T.HDH.=F.T..F.T',
   '===============',
   'TF.T.T...T.T.TT',
   'T..F...T..F...T',
   'TT.T.F..T..F.TT',
-  'TTTTTTTTTTTTTTT'],d:{'12,3':['cave',1,5]},e:{u:['route2',6,9],l:['beach',14,5],r:['route1',0,5]},p:[]},
+  'TTTTTTTTTTTTTTT'],sign:{'3,4':'나눔 센터'},d:{'12,3':['cave',1,5],'3,4':['vc',7,8]},e:{u:['route2',6,9],l:['beach',14,5],r:['route1',0,5]},p:[]},
 shoreF:{n:'해안 숲길',o:1,bgm:'route',land:[9,7],m:[
   '~~~~ssTTTTTTTTT',
   '~~~~ssT.F..T.TT',
@@ -1024,8 +1051,30 @@ shoreF:{n:'해안 숲길',o:1,bgm:'route',land:[9,7],m:[
   '~~~~ssT...T.F.T',
   '~~~~ss.F.T...TT',
   '~~~~s==========',
-  '~~~~s=T.F..T..T',
-  '~~~~s=TTTTTTTTT'],e:{r:['studio',0,7],d:['airport',5,0]},p:[]},
+  '~~~~s.T.F..T..T',
+  '~~~~sTTTTTTTTTT'],e:{r:['studio',0,7]},p:[]},
+
+haenyeo:{n:'해녀의 집',par:'coast',bgm:'beach',m:['w'.repeat(W),'wwⓦwwⓦwwwⓦwwⓦww',FR,FR,FR,'wffffㆍㆍㆍㆍㆍffffw',FR,'wKKfffffffffKKw',FR,'wwwwwwwxwwwwwww'],d:{'7,9':['coast',11,3]},p:[
+{x:5,y:4,c:'#1f2937',h:'#d1d5db',sit:1,tw:1,when:hnMeal,n:'해녀 할망 (보성 할머니)',s:()=>[jejuNow().h<15?'점심 먹엉 또 들어가야주. 혼저 앉아 먹읍서. 🍚':'오늘 물질 고생했주. 저녁 먹엉 쉬게.'],ch:hnCh},
+{x:7,y:4,c:'#334155',h:'#e5e7eb',sit:1,tw:1,when:hnMeal,n:'해녀 할망 (보성 외할머니)',s:()=>[jejuNow().h<15?'밥 먹을 땐 바당 이야기만 허게 뒈주. 허허.':'따뜻헌 국 호끔 들엉 갑서.'],ch:hnCh},
+{x:9,y:4,c:'#0f766e',h:'#9ca3af',sit:1,tw:1,when:hnMeal,n:'상군 해녀 삼춘',s:['오늘은 소라가 제법 잡혔수다. 🐚','숨비소리 들어 봐시냐? 그게 우리 숨이주게.']},
+{x:5,y:6,c:'#7c3aed',h:'#374151',sit:1,tw:1,when:hnMeal,n:'막내 해녀 삼춘',s:['나가 막내라도 환갑은 넘었수다. 허허.','테왁 하나믄 바당이 집이나 마찬가지우다.']},
+{x:9,y:6,c:'#b45309',h:'#e5e7eb',sit:1,tw:1,when:hnMeal,n:'옆집 해녀 할망',s:['물에서 나오민 불턱에 몸 녹이는 게 제일이주. 🔥','배 고프댄 말 말앙 혼저 먹읍서.']},
+{x:7,y:7,c:'#475569',h:'#d1d5db',stay:1,when:()=>!hnMeal(),n:'해녀의 집 지키는 삼춘',s:()=>[WET()?'날 궂언 오늘은 물질 쉼수다. 다들 집이 이서마씸.':'지금은 다들 물질허레 갔수다. 점심이나 저녁때 오민 다 모여 쉬어마씸. 🌊']}]},
+
+woodang:{n:'우당 도서관',par:'oreumF',bgm:'knowledge',m:['w'.repeat(W),'wppppppppppppzw'.replace('z','p'),FR,'wfppfppfppfppfw',FR,'wfppfppfppfppfw',FR,'wkkkffffffkkfw',FR,'wwwwwwwxwwwwwww'],d:{'7,9':['oreumF',3,5]},p:[
+{x:2,y:6,c:'#475569',h:'#222',stay:1,n:'도서관 사서',s:['우당 도서관입니다. 조용히 둘러보세요. 📚','책은 제자리에 꽂아 주시면 고맙겠어요.']},
+{x:6,y:4,c:'#22d3ee',h:'#3f2a1c',n:'공부하는 학생',s:['시험 기간엔 자리가 금방 차요.','여기 오면 집중이 잘돼요. 📖']},
+{x:11,y:6,c:'#a78bfa',h:'#222',w:1,n:'책 고르는 손님',s:['제주 이야기 책이 많아서 좋아요.']}]},
+swim:{n:'수영장',par:'oreumF',bgm:'indoor',m:['w'.repeat(W),'w'.repeat(W),'wⓓⓓⓓⓓⓓⓓⓓⓓⓓⓓⓓⓓⓓw','wⓓⓟⓟⓟⓟⓟⓟⓟⓟⓟⓟⓟⓓw','wⓓⓟⓟⓟⓟⓟⓟⓟⓟⓟⓟⓟⓓw','wⓓⓟⓟⓟⓟⓟⓟⓟⓟⓟⓟⓟⓓw','wⓓⓟⓟⓟⓟⓟⓟⓟⓟⓟⓟⓟⓓw','wⓓⓓⓓⓓⓓⓓⓓⓓⓓⓓⓓⓓw','wⓓⓓⓓⓓⓓⓓⓓⓓⓓⓓⓓⓓw','wwwwwwwxwwwwwww'],d:{'7,9':['oreumF',10,5]},p:[
+{x:2,y:3,c:'#dc2626',h:'#111827',when:poolOpen,swim:[2,12,0],n:'수영하는 사람',s:['(열심히 수영 중이다. 말 걸기는 미안하다. 🏊)']},{x:5,y:4,c:'#2563eb',h:'#f8fafc',when:poolOpen,swim:[2,12,2.5],n:'수영하는 사람',s:['(열심히 수영 중이다. 말 걸기는 미안하다. 🏊)']},{x:8,y:5,c:'#16a34a',h:'#fde047',when:poolOpen,swim:[2,12,5.2],n:'수영하는 사람',s:['(열심히 수영 중이다. 말 걸기는 미안하다. 🏊)']},{x:11,y:6,c:'#9333ea',h:'#f472b6',when:poolOpen,swim:[2,12,7.6],n:'수영하는 사람',s:['(열심히 수영 중이다. 말 걸기는 미안하다. 🏊)']},
+{x:4,y:8,c:'#0ea5e9',h:'#222',stay:1,n:'수영장 안내원',s:()=>[poolMsg()],ch:{'🏊 이용 안내 보기':()=>showPool()}},
+{x:12,y:2,c:'#ef4444',h:'#111',stay:1,n:'안전 요원',s:['뛰지 마세요! 물에 들어가기 전엔 준비운동 먼저요.','수영모는 꼭 쓰셔야 해요. 🏊']},
+{x:2,y:8,c:'#7dd3fc',h:'#3f2a1c',w:1,n:'수영 끝난 손님',s:['물에 한 번 들어갔다 나오면 머리가 맑아져요.']}]},
+
+cafe:{n:'바당 카페',par:'route2',bgm:'indoor',m:['w'.repeat(W),'wwⓦwwⓦwwwⓦwwⓦww',FR,'wkkkkkfffffKKfw',FR,'wfffffffㆎㆍㆎfffw',FR,'wfㆎㆍㆎffffㆎㆍㆎffw',FR,'wwwwwwwxwwwwwww'],d:{'7,9':['route2',11,4]},p:[
+{x:3,y:2,c:'#92400e',h:'#222',stay:1,n:'바당 카페 사장',s:['어서 옵서. 바다 보멍 한 잔 허고 갑서. ☕','주문허영 빈자리에 앉으민 돼마씸.'],ch:{'☕ 주문하기':()=>showCafe()}},
+{x:12,y:6,c:'#60a5fa',h:'#3f2a1c',w:1,n:'커피 든 손님',cup:1,s:['창가 자리가 제일 좋아요.','앉아서 멍하니 바다 보는 게 오늘 일정이에요. 🌊']}]},
 
 cinema:{n:'쉼터 영화관',par:'rest',bgm:'indoor',m:['w'.repeat(W),'w'+'ㆀ'.repeat(W-2)+'w',FR,'wfㆁㆁㆁㆁㆁfㆁㆁㆁㆁㆁfw',FR,'wfㆁㆁㆁㆁㆁfㆁㆁㆁㆁㆁfw',FR,FR,FR,'wwwwwwwxwwwwwww'],d:{'7,9':['rest',4,11]},p:[
 {x:3,y:7,c:'#b91c1c',h:'#222',stay:1,n:'매표소 삼춘',s:['어서 옵서. 주인장이 본 영화 별점을 여기서 찾아볼 수 있수다. 🎬','보고 나서 점수도 남겨 봅서.'],ch:{'⭐ 영화 별점 보기':()=>showMovies()}}]},
@@ -1037,11 +1086,11 @@ arcade:{n:'쉼터 오락실 · PC 코너',par:'rest',bgm:'town',m:['w'.repeat(W)
 
 gpHome:{n:'할아버지댁',par:'route1',bgm:'indoor',cozy:'#b45309',m:ELDER_M,d:{'7,9':['route1',11,4]},p:[
 {x:5,y:4,c:'#854d0e',h:'#d1d5db',sit:1,when:elderHome,n:'보성 할아버지',s:['어서 오라. 밥은 먹언?','오늘은 집이서 쉼져.'],ch:{'강아지 이야기':['우리 개는 힘이 넘쳐부난 산책 나가민 내가 끌려 댕겨.','그래도 그 녀석 덕분에 많이 걷주게.'],'감귤 이야기':['귤은 사람 발소리 듣고 큰다고 허주. 🍊']}},
-{x:9,y:4,c:'#1f2937',h:'#d1d5db',sit:1,tw:1,when:elderHome,n:'해녀 할망 (보성 할머니)',s:['혼저 옵서. 귤 하나 까 먹읍서. 🍊','옛날엔 나도 물질 허멍 살았주게.'],ch:hnCh}]},
+{x:9,y:4,c:'#1f2937',h:'#d1d5db',sit:1,tw:1,when:()=>elderHome()&&!hnMeal(),n:'해녀 할망 (보성 할머니)',s:['혼저 옵서. 귤 하나 까 먹읍서. 🍊','옛날엔 나도 물질 허멍 살았주게.'],ch:hnCh}]},
 
 gmHome:{n:'외할아버지댁',par:'route1',bgm:'indoor',cozy:'#0f766e',m:ELDER_M,d:{'7,9':['route1',3,4]},p:[
 {x:5,y:4,c:'#166534',h:'#e5e7eb',sit:1,when:elderHome,n:'보성 외할아버지',s:['잘 왔수다게. 아랫목이 또똣허여.','보성이 만나걸랑 안부 전해줍서.'],ch:{'감귤 이야기':['겨울 되민 노랗게 익은 밭이 그렇게 곱닥허여. 🍊']}},
-{x:9,y:4,c:'#334155',h:'#e5e7eb',sit:1,tw:1,when:elderHome,n:'해녀 할망 (보성 외할머니)',s:['이 맨도롱헌 차 한 잔 들엉 갑서. ☕','나도 옛날엔 테왁 하나 들엉 바당에 들었주.'],ch:hnCh}]},
+{x:9,y:4,c:'#334155',h:'#e5e7eb',sit:1,tw:1,when:()=>elderHome()&&!hnMeal(),n:'해녀 할망 (보성 외할머니)',s:['이 맨도롱헌 차 한 잔 들엉 갑서. ☕','나도 옛날엔 테왁 하나 들엉 바당에 들었주.'],ch:hnCh}]},
 
 agency:{n:'국가 자격 검정원',par:'cert',bgm:'knowledge',m:AGM,d:{'7,9':['cert',3,5]},p:[
 {x:7,y:2,c:'#2563eb',h:'#333',n:'접수 데스크',s:['어서 오세요. 국가 자격 검정원입니다.','시험 접수는 안쪽 컴퓨터에서 하실 수 있어요.'],ch:{'자격증':['📜 정보처리기사 · 컴퓨터활용능력 1급 · 워드프로세서','📊 사회조사분석사 2급 · 한국사능력검정시험 2급','🥋 태권도 2단 (1품 · 2품에서 전환)','🔤 TOEIC 최고 775점'],'공모전·수상':['🏆 2016 지역기업 청년 희망이음 프로젝트 경진대회 대상 (산업통상자원부 장관상)','🥇 2017 같은 대회 금상 (산업통상자원부 장관상)'],'접수 방법':['컴퓨터 앞에서 Z 키를 누르면 접수 화면이 열려요.','Q-Net, TOEIC, 한국사능력검정시험 접수 페이지로 바로 갈 수 있고, 접수내역도 확인할 수 있어요.'],'벽의 증명서':['좌우 벽의 액자를 눌러 보세요.','증명서 목록을 자세히 볼 수 있어요.']}},
@@ -1051,7 +1100,7 @@ agency:{n:'국가 자격 검정원',par:'cert',bgm:'knowledge',m:AGM,d:{'7,9':['
 mensa:{n:'멘사 지능 연구소',par:'studio',bgm:'knowledge',m:MNM,d:{'7,9':['studio',3,5]},sh:['🧠 멘사 전시','IQ 156 · Percentile 99% · 입회 시험 합격 (준회원)'],p:[
 {x:7,y:2,c:'#7c3aed',h:'#eee',n:'멘사 연구소장',s:['멘사 지능 연구소에 온 걸 환영합니다.','BS World의 운영자, 강보성의 입회 시험 결과는 IQ 156, Percentile 99%. 입회 시험 합격자입니다.','당신도 IQ 테스트 한번 진행해 보겠습니까?'],ch:{'🧠 IQ 테스트 해 보기':()=>showIq(),'연구소 둘러보기':['좌우 벽의 전시물을 눌러 보세요.','주인장의 멘사 기록을 볼 수 있습니다.']}}]},
 
-vc:{n:'나눔 & 기여 커뮤니티 센터',par:'coast',bgm:'beach',m:I('wUw^w^w^wCwwwUw'),d:{'7,9':['coast',11,3]},sh:['🩸 헌혈유공장','은장(30회) · 금장(50회) · 명예장(100회)','헌혈 167회 · 대한적십자사','🤝 봉사활동 · 상상 Volunteer 활동'],p:[
+vc:{n:'나눔 & 기여 커뮤니티 센터',par:'gotF',bgm:'indoor',m:I('wUw^w^w^wCwwwUw'),d:{'7,9':['gotF',3,5]},sh:['🩸 헌혈유공장','은장(30회) · 금장(50회) · 명예장(100회)','헌혈 167회 · 대한적십자사','🤝 봉사활동 · 상상 Volunteer 활동'],p:[
 {x:7,y:5,c:'#dc2626',h:'#444',n:'커뮤니티 이사장',s:['어서 오세요. 나눔 & 기여 커뮤니티 센터입니다.'],ch:{'헌혈':['🩸 헌혈 167회 달성!','적십자 헌혈유공장 은장, 금장, 명예장을 모두 받았습니다.','벽의 리본 세 개가 바로 그 기록입니다.'],'봉사활동':['🤝 상상 Volunteer 활동에 참여했습니다.','작은 나눔이 모이면 큰 기록이 돼요.']}},
 {x:4,y:6,c:'#fb923c',h:'#222',w:1,n:'봉사원',s:['오늘도 봉사 활동 중! 😊','작은 나눔이 모이면 큰 기록이 돼요.']}]}
 };
@@ -1085,7 +1134,7 @@ Object.entries({yongsan:3,yeouido:8,daebang:5,singil:5,noryangjin:8,nodeul:25,he
   R.forEach((r,y)=>r.forEach((k,x)=>{if(k=='s')r[x]='ㅝ';else if(k=='.'&&(road(x-1,y)||road(x+1,y)||road(x,y-1)||road(x,y+1)))r[x]='ㅣ'}));
   R.forEach((r,y)=>r.forEach((k,x)=>{if(k!='ㅣ'||used.has(x+','+y))return;const hz=(road(x,y-1)&&road(x-1,y-1)&&road(x+1,y-1))||(road(x,y+1)&&road(x-1,y+1)&&road(x+1,y+1)),vt=(road(x-1,y)&&road(x-1,y-1)&&road(x-1,y+1))||(road(x+1,y)&&road(x+1,y-1)&&road(x+1,y+1));if(hz&&x%6==2)r[x]='ㅜ';else if(hz&&x%6==5)r[x]='ㅞ';else if(!hz&&vt&&y%5==2)r[x]='ㅜ'}));
   z.m=R.map(r=>r.join(''))});
-Object.keys(SONG_XY).forEach(id=>M[id].p.push(songNpc(id)));
+Object.keys(SONG_XY).forEach(id=>{const z=M[id],[tx,ty]=SONG_XY[id],used=new Set((z.p||[]).map(n=>n.x+','+n.y));let best=null,bd=1e9;for(let y=0;y<z.m.length;y++){const row=[...z.m[y]];for(let x=0;x<row.length;x++){if(!'.F'.includes(row[x])||used.has(x+','+y)||(z.d&&z.d[x+','+y])||(z.umb||[]).some(u=>u[0]==x&&u[1]==y&&id!='rest'))continue;const q=Math.abs(x-tx)+Math.abs(y-ty);if(q<bd){bd=q;best=[x,y]}}}if(best&&bd>0)SONG_XY[id]=best;z.p.push(songNpc(id))});
 const ME_LOOK={hair:'cover',cl:'plaid',leg:'#1f2937'};
 /* 인물 표현: 받은 사진의 분위기를 도트로 옮김 */
 const LOOKS=[
@@ -1232,7 +1281,7 @@ function tile(c,k,x,y,t){
     case 'ㅭ': { fl(); f('#dbeafe',0,0,32,32); for(let i=0;i<32;i+=8)f('#bfdbfe',i,0,1,32); f('#f8fafc',8,2,16,10); f('#e2e8f0',7,12,18,13); f('#94a3b8',11,15,10,7); break}
     case 'ㅮ': { fl(); f('#dbeafe',0,0,32,32); for(let i=0;i<32;i+=8)f('#bfdbfe',i,0,1,32); f('#7dd3fc',8,0,16,10); f('#f8fafc',5,14,22,8); f('#94a3b8',9,16,14,4); f('#a8a29e',13,22,6,8); break}
     case 'ㅲ': { fl(); f('#92400e',1,16,30,14); f('#f97316',0,4,32,8); [0,16].forEach(i=>f('#fdba74',i,4,8,8)); if(at(x+1,y)=='ㅲ'){f('#ea580c',11,15,6,12);f('#ea580c',9,15,10,4);f('#22c55e',12,11,2,4);f('#22c55e',15,11,2,4)}else{f('#fde68a',6,18,8,6);f('#bfdbfe',18,19,8,5)} break}
-    case 'ㅹ': { gr(); f('#7c2d12',0,6,32,26); f('#9a3412',0,6,32,5); for(let i=2;i<32;i+=7)f('#6b2410',i,11,2,21); if(x==11){f('#fef3c7',7,14,18,12);c.fillStyle='#7c2d12';c.font='bold 9px sans-serif';c.textAlign='center';c.fillText('🍲',X+16,Y+24);c.textAlign='start'} break}
+    case 'ㅹ': { gr(); f('#7c2d12',0,6,32,26); f('#9a3412',0,6,32,5); for(let i=2;i<32;i+=7)f('#6b2410',i,11,2,21); if(x==3){f('#fef3c7',7,14,18,12);c.fillStyle='#7c2d12';c.font='bold 9px sans-serif';c.textAlign='center';c.fillText('🍲',X+16,Y+24);c.textAlign='start'} break}
     case 'ㅺ': { gr(); f('#e7d3b0',0,0,32,32); f('#a16207',0,0,32,3); f('#bae6fd',5,8,22,14); f('#fff7',7,10,6,4); f('#7c2d12',0,28,32,4); break}
     case 'ㅻ': { f('#e7d3b0',0,0,32,32); f('#a16207',0,0,32,3); f('#78350f',6,8,20,24); f('#b45309',8,10,16,20); f('#dc2626',4,2,24,7); f('#fff',8,5,16,2); f('#fde68a',20,20,3,3); break}
     case 'ㅼ': { fl(); f('#6b4423',2,10,28,17); f('#8a5a30',2,10,28,4); f('#475569',9,4,14,14); f('#d97706',11,6,10,7); f('#fef3c7',13,7,3,2); f('#f8fafc',4,17,5,5); f('#f8fafc',23,17,5,5); f('#b45309',12,0+((t/300|0)%2),2,3); f('#b45309',18,1-((t/300|0)%2),2,3); break}
@@ -1322,8 +1371,8 @@ function tile(c,k,x,y,t){
     case 'g': gr(); f('#b08968',2,16,30,14); f('#8f6b4a',2,28,30,2); f('#00000030',2,0,30,4); f('#9b2c2c',5,0,5,24); f('#c0392b',5,0,2,24); f('#7a4a22',2,14,30,3); break;
     case 'h': gr(); f('#b08968',0,16,30,14); f('#8f6b4a',0,28,30,2); f('#00000030',0,0,30,4); f('#9b2c2c',22,0,5,24); f('#c0392b',22,0,2,24); f('#7a4a22',0,14,30,3); break;
     case 'b': gr(); f('#a06a36',4,8,24,5); f('#8a5a2b',4,15,24,6); f('#c08850',4,15,24,2); f('#5c4028',6,21,3,7); f('#5c4028',23,21,3,7); f('#00000025',4,28,24,2); break;
-    case 'r': f('#374151',0,0,32,32); f('#e5e7eb',0,2,32,2); if(x%2==0)f('#f8fafc',4,29,22,3); if(at(x+1,y)=='T'){f('#f8fafc',26,4,4,28);[6,12,18,24].forEach(q=>f('#f8fafc',6,q+2,14,3))} break;
-    case 'y': f('#374151',0,0,32,32); f('#e5e7eb',0,28,32,2); if(x%2==0)f('#f8fafc',4,0,22,3); if(at(x+1,y)=='T'){f('#f8fafc',26,0,4,28);[0,6,12,18].forEach(q=>f('#f8fafc',6,q+2,14,3))} break;
+    case 'r': f('#374151',0,0,32,32); f('#e5e7eb',0,2,32,2); if(x%2==0)f('#f8fafc',4,29,22,3); if(at(x+1,y)=='T'){f('#f8fafc',26,4,4,28);[6,12,18,24].forEach(q=>f('#f8fafc',6,q+2,14,3))} if(rwStart(x,y))[6,12,18,24].forEach(q=>f('#f8fafc',2,q+2,12,3)); break;
+    case 'y': f('#374151',0,0,32,32); f('#e5e7eb',0,28,32,2); if(x%2==0)f('#f8fafc',4,0,22,3); if(at(x+1,y)=='T'){f('#f8fafc',26,0,4,28);[0,6,12,18].forEach(q=>f('#f8fafc',6,q+2,14,3))} if(rwStart(x,y)){[0,6,12,18].forEach(q=>f('#f8fafc',2,q+2,12,3));f('#f8fafc',0,0,2,28);c.save();c.translate(X+24,Y);c.rotate(-Math.PI/2);c.fillStyle='#f8fafc';c.font='bold 13px sans-serif';c.textAlign='center';c.fillText(cur=='gimpo'?'GIMPO':'JEJU',0,4);c.restore();c.textAlign='start'} break;
     case 'u': case 'e': f('#9ca3af',0,0,32,32); f('#8b95a3',0,0,32,1); f('#8b95a3',0,0,1,32); if(y==3)f('#facc15',0,29,32,2); break;
     case 'n': f('#2563eb',0,0,32,32); f('#60a5fa',0,0,32,5); f('#1d4ed8',0,27,32,5); if(x%2)f('#3b82f6',0,8,32,3); if(x==4){c.fillStyle='#fff';c.font='bold 18px sans-serif';c.textAlign='center';c.fillText('✈',X+16,Y+22);c.textAlign='start'} break;
     case 'j': f('#e2e8f0',0,0,32,32); f('#38bdf8',3,4,26,20); f('#bae6fd',3,4,26,4); f('#94a3b8',15,4,2,20); f('#64748b',0,28,32,4); break;
@@ -1347,7 +1396,8 @@ function tile(c,k,x,y,t){
     case '*': f('#3f3a36',0,0,32,32); if(S.eggs.cave){f('#78350f',4,14,24,14);f('#fde047',7,16,18,5);f('#92400e',4,6,24,8)}else{f('#78350f',4,10,24,18);f('#b45309',4,10,24,5);f('#fbbf24',14,14,4,6)} break;
     case '(': wl(); f('#1e3a8a',4,3,24,24); f('#fff',7,6,18,12); f('#3b82f6',9,8,6,2); f('#fbbf24',9,12,12,2); f('#fff',7,21,18,3); break;
     case 'ⓜ': { fl(); f('#3f2a1c',0,1,32,27); f('#17324f',0,3,32,22); f('#fb923c',x%2?6:12,8,x%2?12:9,8); f('#4b5563',x%2?20:3,13,7,8); f('#fbbf24',0,1,32,2); f('#5b3a22',4,28,4,4); f('#5b3a22',24,28,4,4); break}
-    case ')': { wl(); f('#3f2a1c',3,3,26,24); f('#e5e7eb',5,5,22,20); const im=PHOTO_IMGS[(x-1)/2]; if(im&&im.complete&&im.naturalWidth)c.drawImage(im,X+6,Y+6,20,18); else f('#9ca3af',8,9,16,11); break}
+    case ')': { wl(); const im=PHOTO_IMGS[(x-1)/2]; if(im){f('#3f2a1c',3,3,26,24); f('#e5e7eb',5,5,22,20); if(im.complete&&im.naturalWidth)c.drawImage(im,X+6,Y+6,20,18); else f('#9ca3af',8,9,16,11)} break}
+    case 'ⓔ': { fl(); f('#92400e',6,14,3,18); f('#92400e',23,14,3,18); f('#78350f',14,20,4,12); const im=PHOTO_IMGS[frameIdx(x,y)]; f('#3f2a1c',3,1,26,22); f('#f8fafc',5,3,22,18); if(im&&im.complete&&im.naturalWidth)c.drawImage(im,X+5,Y+3,22,18); f('#b45309',2,22,28,3); break}
     case '[': gr(); f('#64748b',5,6,3,24); f('#64748b',24,6,3,24); f('#e5e7eb',5,6,22,3); f('#00000025',4,29,24,2); break;
     case ']': { gr(); f('#b45309',3,3,3,27); f('#b45309',26,3,3,27); f('#92400e',3,3,26,3); const sw=SIT&&SIT.x==x&&SIT.y==y?Math.sin(t/330)*6:Math.sin(t/900)*1; f('#6b7280',11+sw/2,6,1,16); f('#6b7280',20+sw/2,6,1,16); f('#7c2d12',10+sw,21,12,3); break}
     case '|': { gr(); const on=SIT&&SIT.x==x&&SIT.y==y,a=on?Math.sin(t/420)*5:2; f('#475569',14,20,4,9); c.save();c.translate(X+16,Y+20);c.rotate(a*.045);c.fillStyle='#ef4444';c.fillRect(-14,-2,28,4);c.fillStyle='#1f2937';c.fillRect(-13,-6,2,4);c.fillRect(11,-6,2,4);c.restore(); break}
@@ -1361,6 +1411,13 @@ function tile(c,k,x,y,t){
     case 'ㆈ': { gr(); f('#57534e',13,22,6,8); f('#44403c',8,28,16,3); ci(16,14,13,'#1f2937'); ci(16,14,10,'#9ca3af'); ci(16,14,3,'#111827'); [[16,7],[16,21],[9,14],[23,14]].forEach(q=>ci(q[0],q[1],2.5,'#111827')); break}
     case 'ㆊ': { gr(); f('#111827',0,6,32,20); for(let i=1;i<32;i+=6){f('#f8fafc',i,8,3,2);f('#f8fafc',i,22,3,2)} f('#fbbf24',2,12,12,8); f('#fde68a',18,12,12,8); break}
     case 'ㆋ': { fl(); f('#be185d',2,2,28,28); f('#fce7f3',5,5,22,14); f('#f472b6',5,5,22,2); f('#9d174d',5,22,22,6); f('#fbbf24',12,23,8,3); ci(11,16,3,'#fb923c'); ci(21,16,3,'#60a5fa'); f('#6b7280',15,6,2,5); break}
+    case 'ㆌ': { f('#3b0764',0,0,32,32); f('#4c1d95',0,0,16,16); f('#4c1d95',16,16,16,16); if(((x+y+(t/500|0))%3)==0)f('#f472b6',14,14,4,4); break}
+    case 'ⓚ': { f('#3b0764',0,0,32,32); f('#111827',3,2,26,27); f(((t/400|0)%2)?'#22d3ee':'#a78bfa',6,5,20,12); f('#fde047',8,9,16,2); f('#f472b6',8,13,10,2); f('#374151',6,20,20,6); f('#ef4444',9,22,3,3); f('#22c55e',15,22,3,3); f('#94a3b8',24,18,3,9); break}
+    case 'ㆎ': { fl(); f('#92400e',8,8,16,18); f('#b45309',10,10,12,10); f('#78350f',9,26,3,4); f('#78350f',20,26,3,4); break}
+    case 'ㆍ': { fl(); f('#a16207',4,8,24,14); f('#ca8a04',4,8,24,3); f('#78350f',14,22,4,8); if(SIT&&cur=='cafe'&&Math.abs(SIT.x-x)==1&&SIT.y==y&&CAFE.drink){f('#f8fafc',12,3,8,6)} break}
+    case 'ⓦ': { wl(); f('#78350f',3,3,26,24); f('#7dd3fc',5,5,22,12); f('#0ea5e9',5,17,22,8); f('#f8fafc',5+(t/400%14),19,6,1); f('#78350f',15,5,2,20); break}
+    case 'ⓟ': { f('#0ea5e9',0,0,32,32); f('#38bdf8',((t/120+y*7)%40)-8,(y*5)%24,14,2); f('#7dd3fc',((t/170+x*9)%40)-6,((x*7)%24)+6,10,2); if(y%2)f('#f8fafc',0,30,32,2),f('#ef4444',((x%2)*16),30,16,2); break}
+    case 'ⓓ': { f('#e2e8f0',0,0,32,32); f('#cbd5e1',0,0,16,16); f('#cbd5e1',16,16,16,16); break}
     case 'ㆀ': { f('#111827',0,0,32,32); f('#f8fafc',0,5,32,23); f('#bae6fd',0,5,32,3); break}
     case 'ㆁ': { fl(); f('#7f1d1d',5,4,22,20); f('#b91c1c',7,6,18,14); f('#450a0a',4,22,24,5); break}
     case '>': f('#4c1d95',0,0,32,32); f('#7c3aed',0,0,32,6); f((((t/300|0)+x)%2)?'#f472b6':'#22d3ee',2,14,28,4); f('#312e81',0,26,32,6); break;
@@ -1508,7 +1565,7 @@ function npUpdate(){const el=document.getElementById('npt');if(!el)return;
 document.addEventListener('visibilitychange',()=>{if(document.hidden)clearInterval(mt);else{if(AC&&AC.state!='running')acUnlock();if(!sunoOn)music()}});
 
 let cur=null,map=null,px=7,py=5,dir=0,mv=null,steps=0,busy=true,modal=false,dlg=null,tw=null,npcs=[],held=null,bumpT=0;
-const DV=[[0,1],[0,-1],[-1,0],[1,0]],EK=['d','u','l','r'],WALK='ㆊㅻ.F=stDfxdu!:`ㄹㅂㅗㅛㅣㅝㅚㅢㅕㅖㅓㅠㅀㅆㅸㅱ';
+const DV=[[0,1],[0,-1],[-1,0],[1,0]],EK=['d','u','l','r'],WALK='ⓓㆌㆊㅻ.F=stDfxdu!:`ㄹㅂㅗㅛㅣㅝㅚㅢㅕㅖㅓㅠㅀㅆㅸㅱ';
 const at=(x,y)=>map.m[y]&&map.m[y][x],MW=()=>map.m[0].length,MH=()=>map.m.length;
 
 /* 창끼: 제주에서 과수원·공항·활주로·표선을 뺀 곳에 무작위로 나타남 */
@@ -1562,7 +1619,7 @@ function drawSleep(t){if(SLEEP.a==null)SLEEP.a=t;const e=t-SLEEP.a,DUR=4200,w=cv
   if(e>=DUR){SLEEP=null;busy=false;sitUp();say('나',[WAKE[Math.random()*WAKE.length|0]])}}
 function sitDown(x,y,k,msg){SIT={x,y,k,fx:px,fy:py,n:0,up:0,at:performance.now()};px=x;py=y;dir=k=='bar'?1:0;mv=null;held=null;if(msg)toast(msg)}
 function sitUp(){if(!SIT)return;const b=SIT.k=='bar'&&SIT.n?SIT.n:0;px=SIT.fx;py=SIT.fy;SIT=null;held=null;if(b)toast('턱걸이 '+b+'회 수고했어요! 💪')}
-function sitFx(t){if(!SIT||SIT.k!='bench')return;const p=((t-SIT.at)/1600)%1;g.globalAlpha=1-p;g.font='14px sans-serif';g.fillText('💤',SIT.x*TS+20,SIT.y*TS+6-p*16);g.globalAlpha=1}
+function sitFx(t){if(!SIT||SIT.k!='bench')return;if(SIT.cafe)return cafeFx(t);const p=((t-SIT.at)/1600)%1;g.globalAlpha=1-p;g.font='14px sans-serif';g.fillText('💤',SIT.x*TS+20,SIT.y*TS+6-p*16);g.globalAlpha=1}
 function warp(id,x,y,d){
   SIT=null;busy=true;sfx('w');$('#fade').style.opacity=1;
   setTimeout(()=>{
@@ -1586,9 +1643,9 @@ function zone(){return !map?null:(map.o?cur:map.par)}
 const MM_COL={'ɡ':'#c9a36b','ʊ':'#c9a36b','ɦ':'#c9a36b','℧':'#dc2626','Ж':'#a8875a','Ю':'#c2410c','ŋ':'#b45309','Ω':'#6cc04a','?':'#fde047',';':'#fde047','$':'#e2e8f0','¢':'#f8fafc','>':'#7c3aed','<':'#312e81',T:'#1e7a31','.':'#6cc04a',F:'#6cc04a','=':'#f3db98','~':'#38bdf8',s:'#fde047',
   R:'#d64541',Q:'#3b6fd6',G:'#2f9e5f',Y:'#7e57c2',H:'#fef3c7',D:'#78350f',t:'#c8693f',
   W:'#0f766e','@':'#ea580c','+':'#94a3b8',',':'#475569','#':'#7a4a22','[':'#6cc04a',']':'#6cc04a','|':'#6cc04a','%':'#44403c','&':'#2563eb',r:'#374151',y:'#374151',u:'#9ca3af',e:'#f8fafc',n:'#2563eb',j:'#bae6fd',S:'#475569',d:'#8b5a2b',o:'#8b5a2b',V:'#bfdbfe',v:'#dbeafe',m:'#1e7a31','1':'#38bdf8','2':'#38bdf8','3':'#38bdf8','4':'#38bdf8'};
-Object.assign(MM_COL,{'ㆋ':'#be185d','ㆄ':'#111827','ㆅ':'#b91c1c','ㆇ':'#450a0a','ㆈ':'#6cc04a','ㆊ':'#111827','ㄹ':'#6b7280','ㅂ':'#9ca3af','ㅅ':'#57534e','ㅈ':'#b45309','ㅊ':'#94a3b8','ㄱ':'#cbd5e1','ㄴ':'#1d4ed8','ㄷ':'#0284c7','ㅌ':'#f8fafc','ㅍ':'#15803d','ㅎ':'#fbbf24','ㅐ':'#f9a8d4','ㅔ':'#a8a29e','ㅑ':'#2f8f3a','ㅗ':'#c2553a','ㅛ':'#9ca3af','ㅉ':'#f8fafc','ㅋ':'#f97316','ㅣ':'#c9c1b1','ㅜ':'#c9c1b1','ㅞ':'#c9c1b1','ㅝ':'#e7dcc0','ㅢ':'#3f9148','ㅟ':'#14532d','ㅚ':'#a8a29e','ㅓ':'#a8a29e','ㅕ':'#a97142','ㅒ':'#7c6f64','ㅘ':'#1f2937','ㅙ':'#fef3c7','ㅖ':'#b91c1c','ㅡ':'#0f766e','ㅹ':'#7c2d12','ㅺ':'#e7d3b0','ㅻ':'#78350f','ㅠ':'#bdb092','ㅁ':'#a8533a','ㅃ':'#b5583f','ㅆ':'#92400e','ㅀ':'#1d4ed8'});
+Object.assign(MM_COL,{'ⓟ':'#0ea5e9','ⓓ':'#e2e8f0','ⓦ':'#7dd3fc','ㆌ':'#3b0764','ⓚ':'#111827','ⓔ':'#92400e','ㆎ':'#92400e','ㆍ':'#a16207','ㆋ':'#be185d','ㆄ':'#111827','ㆅ':'#b91c1c','ㆇ':'#450a0a','ㆈ':'#6cc04a','ㆊ':'#111827','ㄹ':'#6b7280','ㅂ':'#9ca3af','ㅅ':'#57534e','ㅈ':'#b45309','ㅊ':'#94a3b8','ㄱ':'#cbd5e1','ㄴ':'#1d4ed8','ㄷ':'#0284c7','ㅌ':'#f8fafc','ㅍ':'#15803d','ㅎ':'#fbbf24','ㅐ':'#f9a8d4','ㅔ':'#a8a29e','ㅑ':'#2f8f3a','ㅗ':'#c2553a','ㅛ':'#9ca3af','ㅉ':'#f8fafc','ㅋ':'#f97316','ㅣ':'#c9c1b1','ㅜ':'#c9c1b1','ㅞ':'#c9c1b1','ㅝ':'#e7dcc0','ㅢ':'#3f9148','ㅟ':'#14532d','ㅚ':'#a8a29e','ㅓ':'#a8a29e','ㅕ':'#a97142','ㅒ':'#7c6f64','ㅘ':'#1f2937','ㅙ':'#fef3c7','ㅖ':'#b91c1c','ㅡ':'#0f766e','ㅹ':'#7c2d12','ㅺ':'#e7d3b0','ㅻ':'#78350f','ㅠ':'#bdb092','ㅁ':'#a8533a','ㅃ':'#b5583f','ㅆ':'#92400e','ㅀ':'#1d4ed8'});
 const MM_FL=['#f472b6','#ffffff','#facc15','#a78bfa','#60a5fa','#fb923c','#e11d48'];
-const MM_NODES=[['shoreF','해안숲','해안 숲길'],['gotF','서귀포','서귀포'],['oreumF','오름숲','오름 숲길'],['samgeori','공원','공원'],['beach','백사장','하얀 백사장'],['studio','창작','창작 마을'],['airfield','활주로','제주 공항 활주로'],['route2','바당','바당 올레'],['rest','쉼터','쉼의 숲'],['airport','공항','제주 공항'],['orchard','과수원','감귤 과수원'],['cert','학술','학술시티'],['route1','표선','표선'],['coast','해변','제주해변'],['town','제주시','제주시'],['sports','사라봉','사라봉']];
+const MM_NODES=[['shoreF','해안숲','해안 숲길'],['gotF','서귀포','서귀포'],['oreumF','오름숲','오름 숲길'],['samgeori','공원','공원'],['beach','백사장','하얀 백사장'],['studio','창작','창작 마을'],['airfield','활주로','제주 공항 활주로'],['route2','탑동','탑동 거리'],['rest','쉼터','쉼의 숲'],['airport','공항','제주 공항'],['orchard','과수원','감귤 과수원'],['cert','학술','학술시티'],['route1','표선','표선'],['coast','해변','제주해변'],['town','제주시','제주시'],['sports','사라봉','사라봉']];
 const MM_SEOUL=[['gimpo','김포공항','김포공항'],['yeouido','여의도','여의도'],['yongsan','용산','용산'],['singil','신길','신길'],['daebang','대방','대방'],['noryangjin','노량진','노량진'],['nodeul','노들','노들섬'],['heukseok','흑석','흑석·중앙대'],['jangseung','장승배기','장승배기'],['soongsil','숭실대','숭실대입구'],['sangdo','상도','상도']];
 const SEOUL_IDS=MM_SEOUL.map(n=>n[0]),mmRegion=()=>SEOUL_IDS.includes(zone())?'seoul':'jeju';
 let mmEls={},mmDot=null,mmLast=null,mmNow='';
@@ -1740,7 +1797,8 @@ function act(){
   else if(k=='ㅲ')showDanggn();
   else if(k=='ㅭ')say('화장실',['깔끔하게 쓰는 중. 🚽']);
   else if(k=='ㅮ')say('세면대',['주인장은 양치를 꼭 하고 잔다고 한다. 🪥']);
-  else if(k==')')showPhotos();
+  else if(k==')')showFrame((x-1)/2);
+  else if(k=='ⓔ')showFrame(frameIdx(x,y));
   else if(k=='ⓜ')showTravel();
   else if(k=='*')caveChest();
   else if(k=='+'||k==',')say('낙하산 격납고',['낙하산 접는 긴 탁자가 보인다. 🪂','벽에 강하 기록표가 걸려 있다: 열기구 강하 5회, 그중 1회는 직접 포장한 낙하산.']);
@@ -1753,6 +1811,11 @@ function act(){
   else if(k=='r'||k=='y')say('활주로',['⚠ 활주로 출입 금지!','이착륙하는 비행기를 여기서 구경하자.']);
   else if(k=='ㆈ')say('필름 릴',['커다란 영화 필름 릴이다. 🎞','오래된 영사기 냄새가 나는 것 같다.']);
   else if(k=='ㆄ'||k=='ㆅ'||k=='ㆇ')say('영화관',['오늘도 주인장이 본 영화 별점을 받는 작은 영화관이다. 🎬']);
+  else if(k=='ⓚ')showTj();
+  else if(k=='ㆎ')cafeSit(x,y);
+  else if(k=='ㆍ')say('탁자',cur=='haenyeo'?['밥과 국, 소라와 귤이 차려져 있다. 🍚🍊']:['창밖으로 바다가 보이는 자리다. 🌊']);
+  else if(k=='ⓦ')say('창문',['창밖으로 바다가 보인다. 🌊']);
+  else if(k=='ⓟ')say('수영장',['물이 시원해 보인다. 레인마다 사람들이 열심히 돈다. 🏊']);
   else if(k=='ㆀ')showMovies();
   else if(k=='ㆁ')say('영화관 좌석',['푹신한 빨간 의자다. 앉으면 잠들 것 같다.']);
   else if(k=='S')say('관제탑',['관제탑이 활주로를 지켜보고 있다.']);
@@ -2556,16 +2619,24 @@ function showProjects(){
    예) {file:'photos/jeju1.jpg',title:'사진 제목',date:'2026.11'}, */
 const PHOTOS=[
 ];
-const PHOTO_IMGS=PHOTOS.slice(0,7).map(p=>{const i=new Image();i.src=p.file;return i});
+/* 벽 액자 11개와 세워 둔 그림 6개. 이 수까지만 걸리고 나머지는 데스크에서 볼 수 있음 */
+const FRAME_MAX=17,EASELS=[[9,5],[13,5],[17,5],[4,7],[8,7],[18,7]],frameIdx=(x,y)=>11+EASELS.findIndex(e=>e[0]==x&&e[1]==y);
+const PHOTO_IMGS=PHOTOS.slice(0,FRAME_MAX).map(p=>{const i=new Image();i.src=p.file;return i});
 BACKS.ph=()=>showPhotos();
 let WALL=null;
 async function wallLoad(){if(WALL)return WALL;try{WALL=await DB.req('travel_photo?select=*&place=eq.wall&order=id.desc&limit=200')}catch(e){WALL=[]}
-  PHOTO_IMGS.length=Math.min(7,PHOTOS.length);const room=7-PHOTOS.length;if(room>0)WALL.slice(0,room).forEach(p=>{const i=new Image();i.src=trvUrl(p.path);PHOTO_IMGS.push(i)});return WALL}
+  PHOTO_IMGS.length=Math.min(FRAME_MAX,PHOTOS.length);const room=FRAME_MAX-PHOTOS.length;if(room>0)WALL.slice(0,room).forEach(p=>{const i=new Image();i.src=trvUrl(p.path);PHOTO_IMGS.push(i)});return WALL}
+function frameItems(){return PHOTOS.map(p=>({src:p.file,cap:p.title||''})).concat((WALL||[]).map(p=>({src:trvUrl(p.path),cap:p.caption||'',id:p.id}))).slice(0,FRAME_MAX)}
+async function showFrame(i){await wallLoad();const L=frameItems(),n=PHOTO_IMGS.length;if(!L[i]||i>=n){toast('아직 빈 자리예요. 사진이 더 걸리면 채워져요. 🖼');return}const p=L[i];
+  openM(`<h3>🖼 ${esc(p.cap||'보성의 사진')}</h3><img src="${esc(p.src)}" alt="${esc(p.cap||'사진')}" style="width:100%;max-height:60vh;object-fit:contain;background:#111827;border-radius:8px;cursor:zoom-in" onclick="lbOpen(this.src,this.alt)"><div class="xrow" style="margin-top:8px;gap:6px;justify-content:center"><button class="xb" onclick="showFrame(${(i-1+n)%n})">◀ 이전</button><small>${i+1} / ${n}</small><button class="xb" onclick="showFrame(${(i+1)%n})">다음 ▶</button>${DB.admin()&&p.id?`<button class="xb" onclick="capEdit(${Number(p.id)},'wall',${i})">✏ 설명</button>`:''}</div>`)}
+async function capEdit(id,place,fr){let cur_='';try{const r=await DB.req('travel_photo?select=caption&id=eq.'+Number(id));cur_=r&&r[0]&&r[0].caption||''}catch(e){}
+  openM(`<h3>✏ 사진 설명 고치기</h3><input id="capI" class="xin" maxlength="80" value="${esc(cur_)}" placeholder="사진 설명" onkeydown="if(event.key=='Enter')capSave(${Number(id)},'${esc(place)}',${fr==null?'null':Number(fr)})"><div class="qbtn" style="margin-top:8px"><button class="xb" onclick="capSave(${Number(id)},'${esc(place)}',${fr==null?'null':Number(fr)})">저장</button></div><small style="opacity:.7">비우고 저장하면 설명이 지워져요.</small>`)}
+async function capSave(id,place,fr){const v=($('#capI').value||'').trim().slice(0,80);try{await DB.req('travel_photo?id=eq.'+Number(id),{method:'PATCH',body:JSON.stringify({caption:v||null})});toast('설명을 고쳤어요.');WALL=null;TRV.cntOk=0;if(fr!=null){await wallLoad();showFrame(fr)}else if(place=='wall')showPhotos();else trvPlace(place)}catch(e){toast(dbErr(e))}}
 async function showPhotos(){
   openM('<h3>🖼 보성 사진관</h3><p style="font-size:12px;opacity:.8">불러오는 중…</p>');
   WALL=null;const up=await wallLoad();if(!modal)return;const ad=DB.admin();
   const fig=up.map(p=>trvFig(p,ad,"showPhotos")).join('')+PHOTOS.map(p=>`<figure><img src="${esc(p.file)}" alt="${esc(p.title||'사진')}" loading="lazy" onclick="lbOpen(this.src,this.alt)" onerror="this.closest('figure').remove()"><figcaption>${esc(p.title||'')}${p.date?` <small>${esc(p.date)}</small>`:''}</figcaption></figure>`).join('');
-  openM('<h3>🖼 보성 사진관</h3><div class="qbtn"><button class="xb" onclick="showTravel()">🗺 여행 지도</button></div>'+(fig?'<div class="pgrid">'+fig+'</div>':'<div class="cd">주인장이 걸 사진을 고르고 있어요. 📷</div>')+trvUp('wall','ph'));
+  openM('<h3>🖼 보성 사진관</h3><div class="qbtn"><button class="xb" onclick="showTravel()">🗺 여행 지도</button></div>'+(fig?'<div class="pgrid">'+fig+'</div>':'<div class="cd">주인장이 걸 사진을 고르고 있어요. 📷</div>')+(up.length+PHOTOS.length>FRAME_MAX?`<p style="font-size:12px;opacity:.75">벽과 그림 자리에는 최신 ${FRAME_MAX}장만 걸려요. 나머지는 여기서 볼 수 있어요.</p>`:'')+trvUp('wall','ph'));
 }
 
 /* ===== 여행 지도 ===== */
@@ -2628,7 +2699,7 @@ async function showTravel(view){
   $('#tcv').getContext('2d').drawImage(trvDraw(shapes,v,cv.width*2,cv.height*2,TRV_C),0,0,cv.width,cv.height);
   $('#tcv').onclick=e=>{if(view!='world')return;const r=e.target.getBoundingClientRect(),lon=x0+(e.clientX-r.left)/r.width*(x1-x0),lat=y1-(e.clientY-r.top)/r.height*(y1-y0),s=shapes.find(q=>TRV_C.includes(q.id)&&trvHit(q.rings,lon,lat));if(!s)return;const k=Object.keys(TRV_V).find(k=>(TRV_V[k].c||[]).includes(s.id));if(k)showTravel(k)};
 }
-const trvFig=(p,ad,back)=>`<figure><img src="${esc(trvUrl(p.path))}" alt="${esc(p.caption||trvName(p.place))}" loading="lazy" onclick="lbOpen(this.src,this.alt)"><figcaption>${esc(p.caption||'')}${ad?` <button class="xb r" style="padding:2px 6px" onclick="trvDel(${Number(p.id)},'${esc(p.path)}','${esc(p.place)}')">✕ 삭제</button>`:''}</figcaption></figure>`;
+const trvFig=(p,ad,back)=>`<figure><img src="${esc(trvUrl(p.path))}" alt="${esc(p.caption||trvName(p.place))}" loading="lazy" onclick="lbOpen(this.src,this.alt)"><figcaption>${esc(p.caption||'')}${ad?` <button class="xb" style="padding:2px 6px" onclick="capEdit(${Number(p.id)},'${esc(p.place)}')">✏ 설명</button> <button class="xb r" style="padding:2px 6px" onclick="trvDel(${Number(p.id)},'${esc(p.path)}','${esc(p.place)}')">✕ 삭제</button>`:''}</figcaption></figure>`;
 const trvUp=(place,k)=>DB.admin()?`<div class="qform" style="margin-top:10px"><b>📤 사진 올리기</b><input id="tCap" class="xin" maxlength="80" placeholder="사진 설명 (선택)" style="margin:6px 0"><input id="tFile" type="file" accept="image/*" multiple style="font-size:12px;width:100%"><div class="qbtn"><button class="xb" onclick="trvSend('${place}')">올리기</button></div><small id="tUpMsg" style="opacity:.8">긴 쪽 1600px로 줄이고, 촬영 위치 같은 파일 정보는 지운 뒤 올려요.</small></div>${adm(k)}`:adm(k);
 BACKS.tr=()=>trvPlace(TRV.place||'seoul');
 async function trvPlace(k){
@@ -2690,7 +2761,7 @@ const QUESTS=[
   {t:'🌱 첫 발걸음',d:'제주시에 도착하기',ok:()=>visited.has('town')},
   {t:'🧠 지식의 도시',d:'자격 검정원이나 멘사 연구소 들어가기',ok:()=>visited.has('agency')||visited.has('mensa')},
   {t:'💪 사라봉',d:'체육관과 맨몸 운동 기록실 둘러보기',ok:()=>visited.has('gym')&&visited.has('fit')},
-  {t:'🩸 나눔의 해변',d:'나눔 커뮤니티 센터 들어가기',ok:()=>visited.has('vc')},
+  {t:'🩸 나눔의 서귀포',d:'서귀포 나눔 커뮤니티 센터 들어가기',ok:()=>visited.has('vc')},
   {t:'🍊 귤밭 일손',d:'감귤 과수원에 가기',ok:()=>visited.has('orchard')},
   {t:'✈ 하늘 길',d:'공항 터미널과 활주로 둘러보기',ok:()=>visited.has('terminal')&&visited.has('airfield')},
   {t:'🎧 쉼표 하나',d:'공원 음악 서재 들어가기',ok:()=>visited.has('library')},
@@ -2755,7 +2826,7 @@ setInterval(qAlert,120000);
 
 /* ===== 마을 NPC 대사 ===== */
 const TALK={
- '마을 소년':[['어서 와! 여기가 BS World의 제주시이야.','북쪽엔 공원과 학술시티, 동쪽엔 사라봉, 서쪽엔 바당 올레, 남쪽엔 표선이 있어.'],['like station 동네사람들!! 새 손님 왔어요!!'],['어른들이 그러는데 숲에 이상한 나무가 있대.','나는 무서워서 못 가봤어. 진짜야.']],
+ '마을 소년':[['어서 와! 여기가 BS World의 제주시이야.','북쪽엔 공원과 학술시티, 동쪽엔 사라봉, 서쪽엔 탑동 거리, 남쪽엔 표선이 있어.'],['like station 동네사람들!! 새 손님 왔어요!!'],['어른들이 그러는데 숲에 이상한 나무가 있대.','나는 무서워서 못 가봤어. 진짜야.']],
  '창끼 (a.k.a 노진구)':[['전설의힘을 알고있나?','ㅋ'],['불새출격'],['hi 대돕 건방지게 대돕을안하노 ㅋ'],['대돕이새기야']],
  '꽃밭 이웃':[['꽃향기 맡고 가렴. 🌸','달리기 전엔 스트레칭 필수야!'],['어머, 오늘 럭키비키잖아? 꽃이 활짝 폈어.'],['제주 꽃은 바람을 이겨서 더 예쁜 거야.']],
  '등산객':[['자격증 공부는 마라톤이래. 페이스 조절이 전부지!'],['한라산 백록담 봤냐고요? 올라갔는데 구름만 봤습니다.','그것도 추억이죠, 뭐.'],['무릎이 먼저 포기하는 나이가 왔습니다.']],
@@ -2781,7 +2852,7 @@ const TALK={
  '마중 나온 삼춘':[['보성이 오는 날인가 해서 기다렴수다게.'],['게난 오늘이 아닌가?']],
  '음악 듣는 손님':[['이 서재에 오면 시간이 천천히 가는 것 같아요.'],['이 노래 뭐예요? 아, 벽에 적혀 있네요.']],
  '산책하는 사람':[['아무것도 안 해도 되는 시간이 제일 좋네요.'],['연못 앞 벤치 명당이에요. 제가 맡아 뒀어요.']],
- '올레꾼':[['돌담 따라 걷는 이 길이 바당 올레라마씸. 🌊','서쪽으로 가민 해변, 동쪽으로 가민 제주시이우다.'],['남쪽 샛길로 가민 서귀포가 나와마씸.'],['올레는 집으로 가는 좁은 길이란 뜻이우다.'],['무신거 헴수과? 그냥 걸어봅서.']],
+ '탑동 산책객':[['돌담 옆으로 바다 보멍 걷는 탑동 거리라마씸. 🌊','서쪽으로 가민 해변, 동쪽으로 가민 제주시이우다.'],['남쪽 샛길로 가민 서귀포가 나와마씸.'],['올레는 집으로 가는 좁은 길이란 뜻이우다.'],['무신거 헴수과? 그냥 걸어봅서.']],
  '사진 찍는 여행자':[['돌담이랑 귤나무가 같이 나오게 찍고 있어요. 📷'],['인생샷 건지기 전엔 못 갑니다.']],
  '기록실 트레이너':null,
  '철봉 매달린 회원':[['하나만 더… 하나만 더…'],['내려오는 법을 잊어버렸습니다.']],
@@ -2790,6 +2861,9 @@ const TALK={
 };
 const pickTalk=p=>{let last=-1;return()=>{let i=Math.random()*p.length|0;if(p.length>1&&i==last)i=(i+1)%p.length;last=i;return p[i]}};
 Object.values(M).forEach(z=>(z.p||[]).forEach(n=>{if(TALK[n.n])n.s=pickTalk(TALK[n.n])}));
+/* 김포-제주는 늘 붐비는 노선: 공항마다 여행객을 더 둠 */
+(()=>{const TALK2=[['제주 가는 비행기는 늘 만석이에요. ✈'],['김포-제주가 세계에서 제일 붐비는 노선이래요.'],['탑승구가 어디더라…'],['캐리어가 터질 것 같아요. 귤 때문에요. 🍊'],['비행기 시간 빠듯해요! 잠깐만요!'],['가족 여행 왔어요. 애들이 벌써 지쳤네요.'],['출장인데 당일치기예요. 🧳'],['커피 한 잔 사서 타려고요. ☕'],['한 시간 비행인데 줄이 더 길어요.'],['수하물 찾는 데서 또 만나겠네요.']],COL=['#f97316','#22c55e','#3b82f6','#ec4899','#a855f7','#14b8a6','#eab308','#64748b','#ef4444','#0ea5e9'],HA=['#222','#3f2a1c','#111827','#6b3e26','#d1d5db'];
+[['airport',9],['terminal',12],['gimpo',9],['gimpoT',12]].forEach(([id,cnt])=>{const z=M[id],R=z.m.map(r=>[...r]),H=R.length,c=[];R.forEach((r,y)=>{if(y>=H-1)return;r.forEach((t,x)=>{if('.f'.includes(t)&&!(z.d&&(z.d[x+','+y]||z.d[x+','+(y+1)]))&&!(z.p||[]).some(n=>n.x==x&&n.y==y)&&(x+y*2)%3==0)c.push([x,y])})});for(let i=0;i<cnt&&c.length;i++){const[x,y]=c.splice((i*7+3)%c.length,1)[0];z.p.push({x,y,c:COL[i%COL.length],h:HA[i%HA.length],w:1,cup:i%4==0,n:i%3?'여행객':'탑승객',s:TALK2[(i*3)%TALK2.length]})}})})();
 /* 동네마다 가게 사람 한 명씩. 근처 빈자리에 세움 */
 [['singil',11,7,'#b45309','순대국집 아주머니',['국물 한 그릇 하고 가세요. 환승하다 들르는 손님이 많아요.','1호선이랑 5호선이 여기서 만나니까 늘 북적여요.']],['daebang',5,7,'#dc2626','떡볶이 포차 사장',['매운맛 보통맛 다 돼요. 학생은 어묵 하나 더. 😄','오늘은 국물이 제일 잘됐어요.']],['jangseung',11,7,'#ca8a04','시장 과일가게 사장',['오늘 귤 들어왔어요! 제주 거라 달아요. 🍊','장 보러 나왔으면 한 바퀴 돌고 가요.']],['soongsil',11,7,'#7c3aed','학교 앞 카페 사장',['시험 기간엔 자리가 없어요. ☕','아메리카노 하나요? 샷은 공부량 보고 추가하세요.']],['sangdo',11,7,'#ea580c','붕어빵 아저씨',['팥이랑 슈크림, 뭐로 드릴까요? 🐟','추워지면 이 줄이 저기까지 가요.']],['heukseok',11,7,'#0891b2','대학가 서점 주인',['요즘은 전공책보다 소설이 더 나가요. 📚','한강 쪽으로 걸어 나가면 바람이 좋아요.']],['nodeul',4,11,'#16a34a','노들섬 매점 직원',['시원한 음료 있어요. 잔디밭에서 드세요.','해 질 때가 제일 바빠요. 🌇']],['yongsan',5,5,'#475569','전자상가 사장',['충전기부터 부품까지 웬만한 건 다 있어요. 🔌','고장 났어요? 일단 껐다 켜 봤어요?']],['yeouido',16,8,'#0ea5e9','편의점 직원',['점심시간엔 도시락이 금방 나가요. 🍱','야근하는 분들은 커피를 두 개씩 사 가세요.']],['gimpo',3,6,'#92400e','공항 커피 직원',['비행기 타기 전 커피 한 잔 어때요? ☕','제주 가시면 귤 많이 드세요. 🍊']]].forEach(([id,tx,ty,c,nm,lines])=>{const z=M[id];let best=null,bd=1e9;for(let y=0;y<z.m.length;y++){if(z.bus!=null&&Math.abs(y-z.bus)<1)continue;const row=[...z.m[y]];for(let x=0;x<row.length;x++){if(!'.F'.includes(row[x])||(z.d&&z.d[x+','+y])||(z.p||[]).some(n=>n.x==x&&n.y==y))continue;const dd=Math.abs(x-tx)+Math.abs(y-ty);if(dd<bd){bd=dd;best=[x,y]}}}if(best)z.p.push({x:best[0],y:best[1],c,h:'#222',stay:1,n:nm,s:pickTalk(lines.map(l=>[l]))})});
 Object.values(M).forEach(z=>(z.p||[]).forEach(n=>{const T=OWNER_TALK[n.n];if(T){const g0=n.s;n.s=()=>isOwner()?T:((FRIEND&&FRIEND_TALK[n.n]&&FRIEND_TALK[n.n](friendCall(),FRIEND))||(typeof g0=='function'?g0():g0))}}));
@@ -2801,27 +2875,56 @@ Object.values(M).forEach(z=>(z.p||[]).forEach(n=>{const T=OWNER_TALK[n.n];if(T){
  for(const[mp,names]of[['house',['보성 아버지','보성 어머니']],['gpHome',['보성 할아버지','해녀 할망 (보성 할머니)']],['gmHome',['보성 외할아버지','해녀 할망 (보성 외할머니)']]])M[mp].p.forEach(n=>{if(names.includes(n.n)){const w0=n.when;n.when=()=>!sleepHours()&&(!w0||w0())}})}
 {const ck=M.town.p.find(n=>n.n.startsWith('창끼'));if(ck){M.town.p.splice(M.town.p.indexOf(ck),1);const g0=ck.s;ck.s=()=>{if(!isOwner()&&FRIEND&&FRIEND.self&&FRIEND.short=='창환'){const L=FRIEND.self;return[L[Math.random()*L.length|0]]}if(!isOwner()&&FRIEND&&FRIEND.ckTalk){const L=FRIEND.ckTalk;return[L[Math.random()*L.length|0]]}return typeof g0=='function'?g0():g0};CK_MAPS.forEach(id=>{const z=M[id];let best=null,bd=1e9;for(let y=0;y<z.m.length;y++)for(let x=0;x<z.m[0].length;x++){if(!'.F'.includes(z.m[y][x])||(z.d&&z.d[x+','+y])||(z.p||[]).some(n=>n.x==x&&n.y==y))continue;const dd=Math.abs(x-9)+Math.abs(y-7);if(dd<bd){bd=dd;best=[x,y]}}if(best)z.p.push({...ck,x:best[0],y:best[1],when:()=>CK.at==id})})}}
 
+function showPool(){openM(`<h3>🏊 수영장 이용 안내</h3><div class="cd" style="margin-bottom:8px"><b>${esc(poolMsg())}</b></div><div class="xrow" style="padding:5px 8px;margin:3px 0"><span>수영 1회 (2시간)</span><b>2,000원</b></div><div class="xrow" style="padding:5px 8px;margin:3px 0"><span>할인 대상</span><b>1,000원</b></div><div class="xrow" style="padding:5px 8px;margin:3px 0"><span>평일</span><span>06:00~12:00, 14:00~21:00</span></div><div class="xrow" style="padding:5px 8px;margin:3px 0"><span>토·일·공휴일</span><span>06:00~12:00, 14:00~18:00</span></div><p style="font-size:12px;opacity:.8">매일 12~14시 물 교환과 청소. 매주 화요일, 1월 1일, 설·추석 연휴 휴관.</p><small style="opacity:.7">제주국민체육센터 이용안내 기준이에요. 가격과 시간은 바뀔 수 있으니 방문 전 확인해 주세요.</small>`)}
+/* ===== 바당 카페: 진짜 결제는 없고 고르고 앉아서 마시는 놀이 ===== */
+const CAFE_M=[['🥤','아이스 아메리카노','역시 아아. 정신이 번쩍 든다.'],['☕','따뜻한 라떼','고소하고 부드럽다. 마음이 풀린다.'],['🍊','한라봉 에이드','새콤달콤! 제주 맛이 난다.'],['🍵','제주 말차 라떼','쌉싸름한데 자꾸 손이 간다.'],['🥜','우도 땅콩 라떼','고소한 땅콩 향이 가득하다.'],['🍰','감귤 케이크','한 입 먹으니 기분이 좋아진다.']];
+const CAFE={drink:null,sip:0,last:0};
+function showCafe(){openM('<h3>☕ 바당 카페 메뉴</h3><p style="font-size:12px;opacity:.8">놀이용 메뉴라 돈은 들지 않아요. 고른 뒤 빈자리에 앉아 보세요.</p><div class="xcol">'+CAFE_M.map((m,i)=>`<button class="xb big" onclick="cafeBuy(${i})">${m[0]} ${esc(m[1])}</button>`).join('')+'</div>')}
+function cafeBuy(i){CAFE.drink=CAFE_M[i];CAFE.sip=0;closeM();sfx('w');toast(CAFE.drink[0]+' '+CAFE.drink[1]+' 나왔습니다! 빈자리에 앉아 보세요.')}
+function cafeSit(x,y){sitDown(x,y,'bench',CAFE.drink?CAFE.drink[0]+' 한 모금씩 마셔 볼까요?':'잠깐 쉬어 가요. 마실 건 카운터에서 주문할 수 있어요.');SIT.cafe=1;CAFE.last=performance.now()}
+function cafeFx(t){if(!SIT||!SIT.cafe)return;const X=SIT.x*TS,Y=SIT.y*TS;if(!CAFE.drink)return;if(t-CAFE.last>2600){CAFE.last=t;CAFE.sip++;if(CAFE.sip>=4){toast(CAFE.drink[2]+' 다 마셨어요. 🌊');CAFE.drink=null;CAFE.sip=0;return}banner(['한 모금…','후룩…','아, 좋다.'][CAFE.sip-1]||'')}g.font='16px sans-serif';const p=((t-CAFE.last)/2600);g.fillText(CAFE.drink[0],X+18,Y+14-(p<.3?p*14:0));g.globalAlpha=Math.max(0,.8-p);g.font='11px sans-serif';g.fillText('♨',X+20,Y-2-p*12);g.globalAlpha=1}
 /* ===== 오락실: 인형뽑기. 돈은 안 들고, 모은 인형은 이 브라우저에 저장됨 ===== */
 const CLAW_D=[['🍊','귤 인형',1],['🐶','강아지 인형',2],['🐱','고양이 인형',2],['🐰','토끼 인형',2],['🐻','곰 인형',2],['🐧','펭귄 인형',1],['🐙','문어 인형',1],['🐬','돌고래 인형',1],['🌟','황금 별 인형',.3]];
 const CL={on:false,raf:0,x:150,y:20,st:'idle',dir:0,dolls:[],grab:null,msg:'',t:0};
 function clawGot(){try{return JSON.parse(localStorage.getItem('bsw_claw')||'{}')||{}}catch(e){return{}}}
 function clawPick(){const tot=CLAW_D.reduce((a,d)=>a+d[2],0);let r=Math.random()*tot;for(const d of CLAW_D){r-=d[2];if(r<=0)return d}return CLAW_D[0]}
-function clawFill(){CL.dolls=[];for(let i=0;i<13;i++)CL.dolls.push({d:clawPick(),x:80+Math.random()*200,y:230+Math.random()*34})}
-function clawShelf(){const G=clawGot(),e=$('#clawS');if(!e)return;const n=Object.values(G).reduce((a,b)=>a+b,0);e.innerHTML=`<small>모은 인형 ${n}개 · 종류 ${CLAW_D.filter(d=>G[d[0]]).length}/${CLAW_D.length}</small><div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:3px">${CLAW_D.map(d=>`<span title="${G[d[0]]?d[1]:'???'}" style="font-size:18px;${G[d[0]]?'':'filter:grayscale(1) opacity(.25)'}">${d[0]}${G[d[0]]>1?`<small style="font-size:10px">×${G[d[0]]}</small>`:''}</span>`).join('')}</div>`}
+const CLAW_S={"🍊":["......gg....","....ooggoo..","...oOOOOOOo.","..oOwwOOOOOo","..oOwOOOOOOo","..oOkOOOOkOo","..oOOOOOOOOo","..oOOOkkOOOo","...oOOOOOOo.","....oooooo..","............","............"],"🐶":[".BB......BB.","BBBbbbbbbBBB","BBbbbbbbbbBB","BBbkbbbbkbBB",".bbbbbbbbbb.",".bbbcccccbb.",".bbbckkcbbb.","..bbcccbbb..","..bbbbbbbb..",".bcbbbbbbcb.",".bb.bbbb.bb.","............"],"🐱":[".G........G.",".GG......GG.",".GGGGGGGGGG.","GGGkGGGGkGGG","GwGGGGGGGGwG","GGGGGpGGGGGG",".GGkGkkGkGG.","..GGGGGGGG..",".GGGggggGGG.",".GGGGGGGGGG.",".GG.GGGG.GG.","............"],"🐰":["..wp....pw..","..wp....pw..","..wp....pw..","..wp....pw..",".wwwwwwwwww.",".wwkwwwwkww.",".wwpwwwwpww.",".wwwwkkwwww.","..wwwwwwww..",".wwwwwwwwww.",".ww.wwww.ww.","............"],"🐻":["BB........BB","BbBBBBBBBBbB",".BBBBBBBBBB.","BBBkBBBBkBBB","BBBBBBBBBBBB","BBBBccccBBBB",".BBcckkccBB.","..BBccccBB..",".BBBBBBBBBB.","BBBBccccBBBB","BB.BBBBBB.BB","............"],"🐧":["...nnnnnn...","..nnnnnnnn..",".nnwwnnwwnn.",".nwkwwwwkwn.",".nnwwOOwwnn.","nnnwwOOwwnnn","nnwwwwwwwwnn","nnwwwwwwwwnn",".nwwwwwwwwn.",".nnwwwwwwnn.","..OO....OO..","............"],"🐙":["...rrrrrr...","..rrrrrrrr..",".rrwwrrrrrr.",".rrkkrrkkrr.",".rrkkrrkkrr.",".rrrrrrrrrr.",".rrrrpprrrr.","..rrrrrrrr..",".rr.rr.rr.r.","rr.rr.rr.rr.","r..r..r..r..","............"],"🐬":["......dd....",".....ddd....","...dddddddd.","..dddddddddd",".ddkdddddddd",".ddddddddd..","dddwwddddd..",".wwwwddddd.d","...wwwddddd.","......dddddd","..........dd","............"],"🌟":[".....YY.....",".....YY.....","....YYYY....","YYYYYYYYYYYY",".YYwYYYYYYY.","..YYkYYkYY..","..YYYYYYYY..","...YYkkYY...","..YYYYYYYY..",".YYYY..YYYY.",".YY......YY.","............"]},CLAW_P={g:'#16a34a',o:'#c2410c',O:'#fb923c',w:'#f8fafc',k:'#1f2937',b:'#c08457',B:'#7c4a21',c:'#fde9c9',G:'#94a3b8',p:'#f9a8d4',n:'#1e293b',r:'#e11d48',d:'#38bdf8',Y:'#fbbf24'};
+function clawSpr(X,k,x,y,s){const S=CLAW_S[k];if(!S)return;for(let r=0;r<12;r++)for(let c=0;c<12;c++){const q=S[r][c];if(q!='.'){X.fillStyle=CLAW_P[q];X.fillRect(x+c*s|0,y+r*s|0,s,s)}}}
+const clawImg=k=>{const c=document.createElement('canvas');c.width=c.height=12;clawSpr(c.getContext('2d'),k,0,0,1);return c.toDataURL()};
+function clawFill(){CL.dolls=[];for(let i=0;i<18;i++)CL.dolls.push({d:clawPick(),x:96+(i%6)*38+Math.random()*12-6,y:266-(i/6|0)*20+Math.random()*6})}
+function clawShelf(){const G=clawGot(),e=$('#clawS');if(!e)return;const n=Object.values(G).reduce((a,b)=>a+b,0);e.innerHTML=`<small>모은 인형 ${n}개 · 종류 ${CLAW_D.filter(d=>G[d[0]]).length}/${CLAW_D.length}</small><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px">${CLAW_D.map(d=>`<span title="${G[d[0]]?d[1]:'???'}" style="display:inline-flex;align-items:end"><img src="${clawImg(d[0])}" alt="${G[d[0]]?d[1]:'모르는 인형'}" width="30" height="30" style="image-rendering:pixelated;${G[d[0]]?'':'filter:brightness(0) opacity(.2)'}">${G[d[0]]>1?`<small style="font-size:10px">×${G[d[0]]}</small>`:''}</span>`).join('')}</div>`}
 function clawKey(e){if(!CL.on)return;const k=e.key;if(k=='ArrowLeft'||k=='ArrowRight'){CL.dir=e.type=='keydown'?(k=='ArrowLeft'?-1:1):0;e.preventDefault();e.stopPropagation()}else if((k==' '||k=='Enter')&&e.type=='keydown'){clawDrop();e.preventDefault();e.stopPropagation()}}
 function clawDrop(){if(CL.st=='idle'){CL.st='down';CL.msg='';sfx('w')}}
 function clawOff(){if(!CL.on)return;CL.on=false;cancelAnimationFrame(CL.raf);removeEventListener('keydown',clawKey,true);removeEventListener('keyup',clawKey,true)}
-function clawStep(){if(!CL.on)return;const c=$('#clawC');if(!c){clawOff();return}const X=c.getContext('2d');
-  if(CL.st=='idle'){CL.x=Math.max(30,Math.min(280,CL.x+CL.dir*2.4))}
-  else if(CL.st=='down'){CL.y+=3;const fl=CL.dolls.filter(d=>Math.abs(d.x-CL.x)<20).reduce((a,d)=>Math.min(a,d.y-24),252);if(CL.y>=fl){let best=null,bd=99;CL.dolls.forEach(d=>{const q=Math.abs(d.x-CL.x);if(q<bd&&Math.abs(d.y-24-CL.y)<30){bd=q;best=d}});const luck=best?Math.max(.15,.85-bd*.03):0;if(best&&Math.random()<luck){CL.grab=best;CL.dolls=CL.dolls.filter(d=>d!==best);CL.msg='잡았다!'}else CL.msg='헛손질…';CL.st='up'}}
-  else if(CL.st=='up'){CL.y-=2.4;if(CL.grab&&CL.y>70&&Math.random()<.004){CL.dolls.push({d:CL.grab.d,x:CL.x,y:230+Math.random()*30});CL.grab=null;CL.msg='아앗, 떨어졌다!'}if(CL.y<=20){CL.y=20;CL.st='back'}}
-  else if(CL.st=='back'){CL.x-=3;if(CL.x<=40){CL.x=40;if(CL.grab){const d=CL.grab.d,G=clawGot();G[d[0]]=(G[d[0]]||0)+1;try{localStorage.setItem('bsw_claw',JSON.stringify(G))}catch(e){}CL.msg='🎉 '+d[1]+' 획득!';toast(CL.msg);CL.grab=null;clawShelf();if(CL.dolls.length<6)clawFill()}CL.st='idle'}}
-  X.fillStyle='#fdf2f8';X.fillRect(0,0,320,300);X.fillStyle='#fbcfe8';X.fillRect(0,0,320,14);X.fillStyle='#be185d';X.fillRect(0,272,320,28);X.fillStyle='#f9a8d4';X.fillRect(0,250,62,22);X.fillStyle='#111827';X.fillRect(10,256,44,16);X.fillStyle='#fff';X.font='bold 10px sans-serif';X.textAlign='center';X.fillText('출구',32,268);
-  X.font='24px sans-serif';[...CL.dolls].sort((a,b)=>a.y-b.y).forEach(d=>X.fillText(d.d[0],d.x,d.y));
-  X.strokeStyle='#6b7280';X.lineWidth=3;X.beginPath();X.moveTo(CL.x,14);X.lineTo(CL.x,CL.y);X.stroke();const op=CL.st=='down'?12:CL.grab?7:10;X.lineWidth=3;X.beginPath();X.moveTo(CL.x-op,CL.y+14);X.lineTo(CL.x-3,CL.y);X.lineTo(CL.x+3,CL.y);X.lineTo(CL.x+op,CL.y+14);X.stroke();if(CL.grab)X.fillText(CL.grab.d[0],CL.x,CL.y+28);
-  X.fillStyle='#fff';X.font='bold 13px sans-serif';X.fillText(CL.msg||(CL.st=='idle'?'◀ ▶ 로 옮기고 뽑기!':''),170,291);X.textAlign='start';
+function clawStep(){if(!CL.on)return;const c=$('#clawC');if(!c){clawOff();return}const X=c.getContext('2d'),t=performance.now();
+  if(CL.st=='idle'){CL.x=Math.max(40,Math.min(286,CL.x+CL.dir*2.4))}
+  else if(CL.st=='down'){CL.y+=2.6;const near=CL.dolls.filter(d=>Math.abs(d.x-CL.x)<26),fl=near.reduce((a,d)=>Math.min(a,d.y-60),228);if(CL.y>=fl){let best=null,bd=99;near.forEach(d=>{const q=Math.abs(d.x-CL.x)+Math.abs(d.y-60-CL.y)*.3;if(q<bd){bd=q;best=d}});const luck=best?Math.max(.2,.9-bd*.028):0;if(best&&Math.random()<luck){CL.grab=best;CL.dolls=CL.dolls.filter(d=>d!==best);CL.msg='잡았다!'}else CL.msg='헛손질…';CL.st='up';sfx('w')}}
+  else if(CL.st=='up'){CL.y-=2.2;if(CL.grab&&CL.y>70&&Math.random()<.005){CL.dolls.push({d:CL.grab.d,x:Math.max(96,CL.x),y:262+Math.random()*6});CL.grab=null;CL.msg='아앗, 떨어졌다!'}if(CL.y<=26){CL.y=26;CL.st='back'}}
+  else if(CL.st=='back'){CL.x-=2.6;if(CL.x<=40){CL.x=40;if(CL.grab){CL.fall={d:CL.grab.d,y:CL.y+22};CL.grab=null;CL.st='fall'}else CL.st='idle'}}
+  else if(CL.st=='fall'){CL.fall.y+=5;if(CL.fall.y>=232){const d=CL.fall.d,G=clawGot();G[d[0]]=(G[d[0]]||0)+1;try{localStorage.setItem('bsw_claw',JSON.stringify(G))}catch(e){}CL.msg=d[1]+' 획득!';toast('🧸 '+CL.msg);CL.fall=null;clawShelf();if(CL.dolls.length<8)clawFill();CL.st='idle'}}
+  const R=(col,x,y,w,h)=>{X.fillStyle=col;X.fillRect(x|0,y|0,w|0,h|0)};
+  /* 뒤판: 도트 무늬 */
+  R('#fbcfe8',0,0,160,150);for(let y=14;y<126;y+=4)for(let x=(y/4%2)*2;x<160;x+=4)R('#fdf2f8',x,y,1,1);
+  /* 위쪽 조명 */
+  R('#9d174d',0,0,160,10);for(let i=0;i<14;i++)R(((t/220|0)+i)%2?'#fde047':'#f59e0b',3+i*11.4,3,6,4);
+  /* 레일과 받침 */
+  R('#475569',4,11,152,3);R('#334155',CL.x/2-7,10,14,5);
+  /* 인형 더미 */
+  R('#a21caf',0,126,160,3);R('#db2777',0,129,160,4);
+  [...CL.dolls].sort((a,b)=>a.y-b.y).forEach(d=>clawSpr(X,d.d[0],d.x/2-12,d.y/2-24,2));
+  /* 출구 칸 */
+  R('#e2e8f080',0,92,38,40);R('#f8fafc',38,90,2,42);R('#111827',4,118,30,14);if(CL.fall)clawSpr(X,CL.fall.d[0],CL.x/2-12,CL.fall.y/2-12,2);
+  /* 집게 */
+  const cx=CL.x/2|0,cy=CL.y/2|0,op=CL.st=='down'?7:CL.grab?4:6;R('#64748b',cx-1,14,2,cy-14);R('#94a3b8',cx-4,cy-1,8,4);R('#475569',cx-4,cy+2,8,1);
+  for(let i=0;i<7;i++){const dx=Math.round(op*(i<4?i/3:1-(i-4)/5));R('#cbd5e1',cx-3-dx,cy+3+i,2,1);R('#cbd5e1',cx+1+dx,cy+3+i,2,1)}
+  if(CL.grab)clawSpr(X,CL.grab.d[0],cx-12,cy+4,2);
+  /* 유리 반사 */
+  X.fillStyle='rgba(255,255,255,.28)';for(let i=0;i<3;i++)X.fillRect(112+i*6,16+i*4,3,60-i*8);
+  /* 틀과 조작판 */
+  R('#be185d',0,0,3,150);R('#be185d',157,0,3,150);R('#831843',0,133,160,17);R('#fbbf24',4,136,24,11);X.fillStyle='#111827';X.font='bold 9px monospace';X.textAlign='center';X.fillText('출구',16,145);
+  X.fillStyle='#fff';X.font='bold 10px sans-serif';X.fillText(CL.msg||(CL.st=='idle'?'옮기고 뽑기!':'…'),94,145);X.textAlign='start';
   CL.raf=requestAnimationFrame(clawStep)}
-function showClaw(){openM(`<h3>🧸 인형뽑기</h3><canvas id="clawC" width="320" height="300" style="width:100%;max-width:320px;display:block;margin:0 auto;border-radius:8px;touch-action:none"></canvas><div class="xrow" style="margin:8px auto;max-width:320px;gap:6px;justify-content:center"><button class="xb" style="flex:1;touch-action:none;user-select:none" onpointerdown="CL.dir=-1" onpointerup="CL.dir=0" onpointerleave="CL.dir=0" onpointercancel="CL.dir=0">◀</button><button class="xb" style="flex:2" onclick="clawDrop()">뽑기</button><button class="xb" style="flex:1;touch-action:none;user-select:none" onpointerdown="CL.dir=1" onpointerup="CL.dir=0" onpointerleave="CL.dir=0" onpointercancel="CL.dir=0">▶</button></div><div id="clawS"></div><small style="opacity:.7">돈은 들지 않아요. 모은 인형은 이 브라우저에 저장돼요.</small>`);if(!CL.dolls.length)clawFill();CL.x=150;CL.y=20;CL.st='idle';CL.dir=0;CL.grab=null;CL.msg='';CL.on=true;addEventListener('keydown',clawKey,true);addEventListener('keyup',clawKey,true);clawShelf();clawStep()}
+function showClaw(){openM(`<h3>🧸 인형뽑기</h3><canvas id="clawC" width="160" height="150" style="width:100%;max-width:340px;display:block;margin:0 auto;border-radius:8px;touch-action:none;image-rendering:pixelated"></canvas><div class="xrow" style="margin:8px auto;max-width:320px;gap:6px;justify-content:center"><button class="xb" style="flex:1;touch-action:none;user-select:none" onpointerdown="CL.dir=-1" onpointerup="CL.dir=0" onpointerleave="CL.dir=0" onpointercancel="CL.dir=0">◀</button><button class="xb" style="flex:2" onclick="clawDrop()">뽑기</button><button class="xb" style="flex:1;touch-action:none;user-select:none" onpointerdown="CL.dir=1" onpointerup="CL.dir=0" onpointerleave="CL.dir=0" onpointercancel="CL.dir=0">▶</button></div><div id="clawS"></div><small style="opacity:.7">돈은 들지 않아요. 모은 인형은 이 브라우저에 저장돼요.</small>`);if(!CL.dolls.length)clawFill();CL.x=150;CL.y=20;CL.y=26;CL.st='idle';CL.dir=0;CL.grab=null;CL.fall=null;CL.msg='';CL.on=true;addEventListener('keydown',clawKey,true);addEventListener('keyup',clawKey,true);clawShelf();clawStep()}
 /* ===== 오락실: 테트리스 ===== */
 const TET={run:false,tm:null,b:null,p:null,nx:null,score:0,lines:0,lvl:1,over:false};
 const TW=10,TH=20,TC=15,TP=[[[1,1,1,1]],[[1,1],[1,1]],[[0,1,0],[1,1,1]],[[0,1,1],[1,1,0]],[[1,1,0],[0,1,1]],[[1,0,0],[1,1,1]],[[0,0,1],[1,1,1]]],TCOL=['#22d3ee','#fde047','#a855f7','#4ade80','#ef4444','#60a5fa','#fb923c'];
@@ -2954,15 +3057,19 @@ function showBrain(){
 function brainPick(i){const b=BR[i];document.querySelectorAll('.rg').forEach((e,k)=>e.classList.toggle('on',k==i));$('#bi').innerHTML=`<div class="cd">${b[3]}</div><button class="go" style="font-size:13px;padding:5px 12px" onclick="closeM();warp('${b[2]}',7,8,1)">이 장소로 이동</button>`}
 
 const visited = new Set();
-const REGION_NAMES = {gimpo:'김포공항',cinema:'쉼터 영화관',samgeori:'공원',oreumF:'오름 숲길',gotF:'서귀포',shoreF:'해안 숲길',gimpoT:'김포공항 터미널',gimpoI:'김포공항 국제선 터미널',singil:'신길',heukseok:'흑석·중앙대',jangseung:'장승배기',soongsil:'숭실대입구',sangdo:'상도',home:'보성의 아지트',nodeul:'노들',yongsan:'용산',yeouido:'여의도',daebang:'대방',shabu:'제주미소 샤브샤브',noryangjin:'노량진',gpHome:'할아버지댁',gmHome:'외할아버지댁',beach:'하얀 백사장',arcade:'쉼터 오락실',studio:'창작 마을',projects:'프로젝트 전시관',photo:'보성 사진관',airfield:'제주 공항 활주로',fit:'맨몸 운동 기록실',town:'제주시',route1:'표선',cert:'학술·자격 검정 시티',sports:'사라봉',orchard:'감귤 과수원',coast:'제주 바닷가',house:'보성의 집',gym:'체육관',agency:'국가 자격 검정원',mensa:'멘사 지능 연구소',vc:'나눔 & 기여 커뮤니티 센터',route2:'바당 올레',airport:'제주 공항',terminal:'제주 공항 터미널',rest:'쉼의 숲',library:'보성의 음악 서재'};
+const REGION_NAMES = {gimpo:'김포공항',woodang:'우당 도서관',swim:'수영장',haenyeo:'해녀의 집',cafe:'바당 카페',cinema:'쉼터 영화관',samgeori:'공원',oreumF:'오름 숲길',gotF:'서귀포',shoreF:'해안 숲길',gimpoT:'김포공항 터미널',gimpoI:'김포공항 국제선 터미널',singil:'신길',heukseok:'흑석·중앙대',jangseung:'장승배기',soongsil:'숭실대입구',sangdo:'상도',home:'보성의 아지트',nodeul:'노들',yongsan:'용산',yeouido:'여의도',daebang:'대방',shabu:'제주미소 샤브샤브',noryangjin:'노량진',gpHome:'할아버지댁',gmHome:'외할아버지댁',beach:'하얀 백사장',arcade:'쉼터 오락실',studio:'창작 마을',projects:'프로젝트 전시관',photo:'보성 사진관',airfield:'제주 공항 활주로',fit:'맨몸 운동 기록실',town:'제주시',route1:'표선',cert:'학술·자격 검정 시티',sports:'사라봉',orchard:'감귤 과수원',coast:'제주 바닷가',house:'보성의 집',gym:'체육관',agency:'국가 자격 검정원',mensa:'멘사 지능 연구소',vc:'나눔 & 기여 커뮤니티 센터',route2:'탑동 거리',airport:'제주 공항',terminal:'제주 공항 터미널',rest:'쉼의 숲',library:'보성의 음악 서재'};
 const REGION_DESC = {
  yongsan:'한강 북쪽의 용산입니다. 남쪽 다리는 노량진, 서쪽 길은 여의도로 이어져요.',
  yeouido:'한강과 샛강 사이의 섬입니다. 동쪽 다리는 용산, 남쪽 다리는 대방으로 이어져요.',
  daebang:'대방의 주택가입니다. 북쪽은 여의도, 서쪽은 신길, 동쪽은 노량진이에요.',
  samgeori:'음악 서재와 사진관이 있는 공원입니다. 위로 학술시티, 아래로 제주시, 오른쪽은 오름 숲길이에요.',
- oreumF:'쉼의 숲과 사라봉, 공원을 잇는 숲길입니다.',
- gotF:'백사장과 표선, 바당 올레를 잇는 서귀포입니다. 남쪽으로는 바다예요.',
- shoreF:'바다 옆 숲길입니다. 아래로 제주 공항, 오른쪽으로 창작 마을이에요.',
+ oreumF:'놀이터와 우당 도서관, 수영장이 있는 숲길입니다.',
+ woodang:'조용히 책을 읽을 수 있는 도서관입니다. 📚',
+ swim:'레인마다 사람들이 수영하는 실내 수영장입니다. 🏊',
+ gotF:'백사장과 표선, 탑동 거리를 잇는 서귀포입니다. 남쪽으로는 바다예요.',
+ shoreF:'바다 옆 숲길입니다. 오른쪽으로 가면 창작 마을이에요.',
+ haenyeo:'해녀분들이 점심과 저녁에 모여 쉬는 집입니다. 🌊',
+ cafe:'바다가 보이는 카페입니다. 주문하고 앉아서 쉬어 가세요. ☕',
  cinema:'주인장이 본 영화 별점을 찾아보고, 내 점수도 남기는 작은 영화관입니다.',
  singil:'1호선과 5호선이 만나는 신길입니다. 동쪽으로 가면 대방이에요.',
  gimpoI:'김포공항 국제선 터미널입니다. BS 에어 국제선은 취항 준비 중이에요.',
@@ -3069,6 +3176,7 @@ function drawPlane(x,y,s,dark){const f=(c,a,b,w,h)=>{g.fillStyle=dark?planeDark(
   f('#1d4ed8',1,1,6,8);f('#f8fafc',3,8,38,9);f('#f8fafc',41,10,4,6);f('#cbd5e1',3,15,40,2);f('#1e293b',41,10,3,3);
   for(let i=0;i<8;i++)f('#38bdf8',11+i*3.4,10,2,2);f('#2563eb',3,13,38,1);f('#1e3a8a',17,14,14,3);f('#1e3a8a',12,17,12,2);f('#64748b',22,19,6,3);
 }
+const rwStart=(x,y)=>cur!='airfield'&&x>0&&!'ry'.includes(([...(map.m[y]||'')][x-1])||'');
 function planeDark(c){const n=parseInt(c.slice(1),16),m=v=>Math.round(v*.38).toString(16).padStart(2,'0');return'#'+m(n>>16)+m(n>>8&255)+m(n&255)}
 function balloonSky(t){if(cur!='airfield')return;const x=((t/90)%(cv.width+80))-40,y=26+Math.sin(t/1400)*8;g.fillStyle='#ef4444';g.beginPath();g.ellipse(x,y,13,16,0,0,7);g.fill();g.fillStyle='#fde047';g.fillRect(x-13,y-3,26,4);g.fillStyle='#78350f';g.fillRect(x-4,y+22,8,6);g.fillStyle='#57534e';g.fillRect(x-5,y+14,1,8);g.fillRect(x+4,y+14,1,8)}
 function planeSky(t){
@@ -3344,6 +3452,7 @@ function draw(t){
   for(let y=y0;y<Math.min(MH(),y0+H+1);y++)for(let x=x0;x<Math.min(MW(),x0+W+1);x++)tile(g,map.m[y][x],x,y,t);
   const E=npcs.map(n=>{let nx=n.x,ny=n.y;
     if(n.mv){const p=Math.min(1,(t-n.mv.a)/RUN_MS);nx=n.mv.fx+(n.mv.tx-n.mv.fx)*p;ny=n.mv.fy+(n.mv.ty-n.mv.fy)*p}
+    if(n.swim){const[a,z,o]=n.swim,L=z-a,q=((t/1400+o)%(L*2)),rt=q<L;nx=rt?a+q:a+L*2-q;ny=n.y;return{y:ny+.5,f:()=>{const X=nx*TS,Y=ny*TS,fx=rt?1:-1,kick=(t/120|0)%2;g.fillStyle='#ffffffb0';g.fillRect(X+16-fx*22,Y+16,8,3);g.fillRect(X+16-fx*14-kick*2,Y+22,6,2);g.fillStyle=n.c;g.fillRect(X+8-fx*6,Y+14,18,8);g.fillStyle='#f2c9a0';g.fillRect(X+10+fx*10,Y+10,10,10);g.fillStyle=n.h;g.fillRect(X+10+fx*10,Y+8,10,5);g.fillStyle='#f2c9a0';g.fillRect(X+14+fx*(kick?16:6),Y+(kick?8:20),8,3)}}}
     return{y:ny,f:()=>{
       if(n.sl){const bx=n.sl[0],by=n.sl[1],zs=((t+by*90)/800|0);if(n.sl[3]){spr(g,bx+4,by,2,{d:0,l:false,c:n.c,h:n.h,p:n.p||n.h,gl:n.gl,lk:n.lk});g.fillStyle=n.sl[2];g.fillRect(bx+2,by+15,28,16);g.fillStyle='#ffffff40';g.fillRect(bx+2,by+15,28,3)}else{g.save();g.translate(bx+6,by+26);g.rotate(-Math.PI/2);spr(g,0,0,2,{d:0,l:false,c:n.c,h:n.h,p:n.p||n.h,gl:n.gl,lk:n.lk});g.restore();g.fillStyle=n.sl[2];g.fillRect(bx+22,by+2,38,24);g.fillStyle='#ffffff40';g.fillRect(bx+22,by+2,38,3)}g.fillStyle='#fff';g.font='bold 11px sans-serif';if(zs%2)g.fillText('z',bx+22,by-1);if(zs%3==1)g.fillText('Z',bx+30,by-8);return}
       if(n.ani){drawAni(nx,ny,n.ani,n.c,n.h,t,n.dir);return}
