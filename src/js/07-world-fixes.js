@@ -205,7 +205,7 @@ function drawChicks(t){const C=map.chicks;if(!C)return;C.forEach((q,i)=>{const a
  const free=(x,y)=>WALK.includes((TQ[y]||[])[x]);const P0=A.p.filter(q=>q.y<13&&free(q.x,q.y)||q.n=='수속 직원').map(q=>({...q}));P0.forEach((q,i)=>{if(q.n=='수속 직원'&&q.x==27){const iq=TM.p.find(o=>o.n=='국제선 수속 직원');Object.assign(q,{...iq,x:27,y:3})}});
  const biz=(o)=>TM.p.find(q=>q.n==o);const keep=[biz('출장 가는 직장인'),biz('마중 나온 삼춘')].filter(Boolean).map((q,i)=>({...q,x:[6,24][i],y:14}));
  Object.assign(TM,{wide:1,airT:1,land:[15,18],m:TQ.map(r=>r.join('')),sign,stall,d:{'15,20':['airport',10,7]},bb:{air:'CJU',line:'D',x:6,w:19,y:2},p:[...P0,...keep,{x:13,y:16,stay:1,c:'#1e3a8a',h:'#222',n:'공항 안내원',s:['수속 카운터는 위쪽, 편의점·카페·식당·기념품점은 이쪽이에요. ✈','국제선은 아직 취항 준비 중이에요.']},{x:26,y:16,c:'#a855f7',h:'#3f2a1c',w:1,n:'기념품 고르는 여행객',s:['귤 초콜릿은 몇 개를 사야 할까요? 🍊']},{x:10,y:16,c:'#0ea5e9',h:'#222',w:1,n:'커피 든 탑승객',s:['탑승 전에 한 잔 하려고요. ☕']}]});
- CAFE_M.terminal=CAFE_M.terminal||{t:'🍽 공항 식당',bite:['맛있다!'],it:[]};
+ TM.p.forEach(q=>{if(q.n=='안내 데스크 직원')q.s=['표는 오른쪽 키오스크에서도 받을 수 있어요. ✈','제주공항은 국내선과 국제선이 한 건물에 있어요. 국제선 카운터는 오른쪽 끝이에요.']});TM.sign['15,5']='국내선 수속 카운터';TM.sign['27,5']='국제선';CAFE_M.terminal=CAFE_M.terminal||{t:'🍽 공항 식당',bite:['맛있다!'],it:[]};
 })();
 (function seogwipoRoads(){const G=M.gotF,Q=G.m.map(r=>[...r]),W=40;
  Q.forEach((r,y)=>{while(r.length<W)r.push(y==5?'=':r[13]=='T'||r[13]=='s'||r[13]=='~'?r[13]:'.')});
@@ -321,4 +321,9 @@ function guideIntro(){if(guideOff()||modal)return;let seen='';try{seen=localStor
  const SAY2=['이번엔 꼭 붙어야 해요. 📝','사진 규격이 안 맞아서 다시 찍었어요.','실기 접수 마감이 오늘까지래요.','자격증 찾으러 왔어요. 드디어! 🎉','수수료가 생각보다 비싸네요.'];
  [...S2,...S3].forEach(([x,y,sit],i)=>{const t=[...D.m[y]][x];if(sit?t!='㉴':t!='f')return;D.p.push({x,y,sit,stay:sit?1:0,w:sit?0:1,fd:sit?1:undefined,c:C0[(i+3)%C0.length],h:H0[i%H0.length],lh:i%2,when:open('certOff'),n:'접수하러 온 사람',s:[SAY2[i%SAY2.length]]})});
  M.cityhall.d=M.cityhall.d||{};for(const k in M.cityhall.d)if(M.cityhall.d[k][0]=='certOff')M.cityhall.d[k]=['certOff',11,10];
+})();
+(function bs24(){const L=[['terminal'],['gimpoT'],['gimhaeT'],['incheonT'],['gimpoI'],['gimhaeI']];
+ L.forEach(([id])=>{const z=M[id];if(!z)return;const W=[...z.m[0]].length,H=z.m.length,T=(x,y)=>[...z.m[y]][x],busy=(x,y)=>(z.p||[]).some(q=>q.x==x&&q.y==y)||(z.d&&z.d[x+','+y]);let pos=null;
+  for(const [sx,dx] of [[W-2,-1],[1,1]]){for(let y=H-2;y>=2&&!pos;y--)for(let k=0;k<4&&!pos;k++){const x=sx+dx*k;if(T(x,y)=='f'&&!busy(x,y)&&!busy(x,y-1)&&T(x,y-1)!='w')pos=[x,y]}if(pos)break}
+  if(!pos)return console.warn('bs24',id);const[x,y]=pos;z.p.push({x,y,stay:1,c:'#7c3aed',h:'#1c1917',n:'BS 에어 24시 직원',s:['여기는 BS 에어 24시 전용 카운터예요. 🌙','BS World 안에서만 다니는 전용기라 밤에도 언제든 날아갈 수 있어요.'],ch:{'✈ 전용기 타기':()=>showFlight(1)}});z.sign={...(z.sign||{}),[x+','+(y-1)]:'BS 에어 24시'}});
 })();

@@ -16,9 +16,9 @@ function planeSky(t){
 }
 let FLY=null;
 const FLIGHTS=()=>{const r=mmRegion();if(r=='incheon')return[['terminal','제주공항','BS702']];return r=='seoul'?[['terminal','제주공항','BS607'],['gimhae','부산 김해공항','BS811']]:r=='busan'?[['terminal','제주공항','BS813'],['gimpo','서울 김포공항','BS812']]:[['gimpo','서울 김포공항','BS606'],['gimhae','부산 김해공항','BS814'],['incheon','인천국제공항','BS701']]},AIR_NOW=()=>({seoul:['GMP','김포공항'],busan:['PUS','김해공항'],incheon:['ICN','인천공항']}[mmRegion()]||['CJU','제주공항']);   // BS 에어 노선: 제주·김포·김해
-function showFlight(){if(!airOpen()&&!map.icn)return say('BS 에어',['🌙 운항 시간이 끝났어요. 국내선 비행기는 아침 6시부터 밤 11시 전까지 떠요.','실제 공항도 이 시간엔 비행을 제한해요.']);
-  openM('<h3>✈ BS 에어 출발 안내</h3><p style="font-size:12px;opacity:.8;margin-bottom:6px">제주, 서울 김포, 부산 김해, 인천을 오가는 노선이에요. 인천은 제주와만 이어져요.</p><b style="font-size:13px">🛫 국내선</b><div class="xcol" style="margin:4px 0 10px">'+
-    FLIGHTS().map(([id,n,c])=>`<button class="xb big" onclick="flyTo('${id}')">${c} · ${n} 행</button>`).join('')+'</div><b style="font-size:13px">🌏 국제선</b><p style="font-size:12px;opacity:.8;margin-top:4px">게임 속 국제선은 취항 준비 중이에요.</p><div class="qbtn"><button class="xb" onclick="FB.air=AIR_NOW()[0];showAirBoard()">📡 실제 '+AIR_NOW()[1]+' 운항 현황 보기</button></div>');
+function showFlight(f24){if(!f24&&!airOpen()&&!map.icn)return say('BS 에어',['🌙 운항 시간이 끝났어요. 국내선 비행기는 아침 6시부터 밤 11시 전까지 떠요.','실제 공항도 이 시간엔 비행을 제한해요.']);
+  openM('<h3>✈ BS 에어 '+(f24?'24시 전용기':'출발 안내')+'</h3>'+(f24?'<p style="font-size:12px;opacity:.8;margin-bottom:6px">BS World 안에서만 다니는 전용기라 밤에도 언제든 떠요.</p>':'')+'<p style="font-size:12px;opacity:.8;margin-bottom:6px">제주, 서울 김포, 부산 김해, 인천을 오가는 노선이에요. 인천은 제주와만 이어져요.</p><b style="font-size:13px">🛫 국내선</b><div class="xcol" style="margin:4px 0 10px">'+
+    FLIGHTS().map(([id,n,c])=>`<button class="xb big" onclick="flyTo('${id}'${f24?',1':''})">${c} · ${n} 행</button>`).join('')+'</div><b style="font-size:13px">🌏 국제선</b><p style="font-size:12px;opacity:.8;margin-top:4px">게임 속 국제선은 취항 준비 중이에요.</p><div class="qbtn"><button class="xb" onclick="FB.air=AIR_NOW()[0];showAirBoard()">📡 실제 '+AIR_NOW()[1]+' 운항 현황 보기</button></div>');
 }
 /* ===== 실제 운항 현황 (한국공항공사 공공데이터, Edge Function 'flights' 경유) ===== */
 const FB={air:'CJU',io:'O',line:'D',q:'',all:false,items:null,err:''},FB_AIR=[['CJU','제주'],['GMP','김포'],['PUS','김해'],['ICN','인천'],['TAE','대구'],['CJJ','청주']];
@@ -355,7 +355,7 @@ function drawTrain(t){
   g.fillStyle='#ffffff40';g.fillRect(40,h-16,w-80,4);g.fillStyle=FLY.col||'#bdb092';g.fillRect(40,h-16,(w-80)*Math.min(1,p),4);
   if(p>=1){const F=FLY;FLY=null;trainMusic(false);if(M[F.to]&&M[F.to].pf)PF.ev[F.to]=Date.now()-PF_IN-PF_STOP+6000;warp(F.to,F.x,F.y,F.d)}
 }
-function flyTo(id){if(airClosed())return;closeM();trainMusic(true,1);busy=true;const seoul=SEOUL_IDS.includes(id),bs=BUSAN_IDS.includes(id),ic=INCHEON_IDS.includes(id),n=ic?'인천국제공항':seoul?'서울 김포공항':bs?'부산 김해공항':'제주공항';
+function flyTo(id,f24){if(!f24&&airClosed())return;closeM();trainMusic(true,1);busy=true;const seoul=SEOUL_IDS.includes(id),bs=BUSAN_IDS.includes(id),ic=INCHEON_IDS.includes(id),n=ic?'인천국제공항':seoul?'서울 김포공항':bs?'부산 김해공항':'제주공항';
   const F={to:id,a:null,plan:{lines:['승객 여러분, 안녕하십니까. 기장입니다. 저희 BS 에어를 이용해 주셔서 감사합니다.','이 비행기는 '+n+'까지 갑니다. 오늘 하늘은 '+(WXL[WX.kind]?WXL[WX.kind][1]:'맑음')+(hr0=>hr0>=19||hr0<5?', 편안한 야간 비행 되십시오.':', 편안한 비행 되십시오.')(jejuNow().h),(ic?'곧 인천국제공항에':seoul?'곧 김포공항에':bs?'곧 김해공항에':'곧 제주공항에')+' 착륙합니다. 좌석 벨트를 매 주십시오.']}};FLY=F;sfx('w');captainTalk(F)}
 /* 기장 방송: 한 문장씩 빠르게 말하고, 다 끝나야 착륙 */
 function captainTalk(F){const L=F.plan.lines;let i=0;const next=()=>{if(FLY!==F)return;if(i>=L.length){F.doneAt=performance.now()+500;return}const tx=L[i++];F.plan.show=tx;let fin=false,tm=0;const go=()=>{if(fin)return;fin=true;clearTimeout(tm);next()};
