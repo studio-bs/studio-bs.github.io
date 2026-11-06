@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta name="bs-notes" content="처리된 쪽지 90일 자동 삭제|이어하기 코드|처음 온 사람 안내·목적지 표시|서귀포 매일올레시장 등 볼거리 추가">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>BS World</title>
+  <meta name="description" content="걷고, 말을 걸고, 건물에 들어가 보세요. 강보성이 만든 16비트 세계.">
+  <meta property="og:title" content="BS World">
+  <meta property="og:description" content="걷고, 말을 걸고, 건물에 들어가 보세요. 강보성이 만든 16비트 세계.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://studio-bs.github.io/">
+  <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAB8klEQVR4AbyWvUoDQRSF712R2GhrIWKpNmK3IoiIEhQtLCJaCYKlIpZa+gJWooVvEBEFC5WksvGnsVNLjY21gomg1z0bFoZhJzNLJgk57M79OefbJUUCUj5hqVYIS9ViWPp+GytXxafgWfeuFZRIigHGyzIQlqtXzFJkpgIz96tDPu7hybG3FJGFTPjGAH9UO2SiPArtELJ+pXaArCAsf69FN3OR2vqN3sY8sgMSXnZJrqyOUBa5eCI7IJZRp+FWDEXZARP3NvJOnrrRTFrPZQ/ZQdpyO2tGAJcncAG1+RgBXMx9zDgDPJ3uUha5wjkDuBpmnbMCJE+d1dh1zwqQNTjrvBFga2ePoMRwYHabVCX15Kr2cJ/U4QElZ/1qBNAHW3V2Bni93CdVOpDaw73eN52dAUwGzdaNAKfDiwSZAm6Or0mVaQ4ekKlvBDAt+K5bAfJfKwTpwRPreVKl97ED6XX9bAXQF3yfrQAXg88E/fSNUhZhB7IBWwFsBs32jQCgh5oNgAdk8jECmBZ81wMh+fBt6uqHbPwtf3Rd8D4n/Bi9AT6ilM/CyxD5VEoECfFRcD+TOxOh87SBVtaQiez4R/jXmduMwj4jtev7RR25DYTFAA+TXLmd7uoR4SUROhGRCpo+lHjAs+7NS1FW990Uv6P3DwAA///NICKxAAAABklEQVQDAGBnQgQF/qhWAAAAAElFTkSuQmCC">
+  <link rel="icon" type="image/png" sizes="192x192" href="data:image/png;base64,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">
+  <link rel="apple-touch-icon" href="data:image/png;base64,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">
+  <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
+  <style>/*@@CSS@@*/</style>
+</head>
+<body>
+<div id="app">
+
+<aside id="leftPanel" aria-label="캐릭터 정보">
+  <div class="panel-title">PLAYER PROFILE</div>
+  <div class="avatar-card">
+    <div class="avatar-mark" id="idMark">🧳</div>
+    <strong id="idName">GUEST</strong>
+    <small id="idSub">BS WORLD 여행자</small>
+    <small class="lv" id="lvText">Lv. 01</small>
+    <div id="idBtns" style="display:flex;gap:4px;justify-content:center;margin-top:8px"></div>
+  </div>
+  <div class="stat-line"><span>탐험 진행도</span><b id="progressText">0 / 8 지역</b></div>
+  <div class="meter"><span id="progressBar"></span></div>
+  <div class="stat-line"><span>걸음 수</span><b id="stepCount">0</b></div>
+  <div class="stat-line"><span>방문 지역</span><b id="visitedCount">0</b></div>
+  <div class="panel-title" style="margin-top:18px">QUICK ACCESS</div>
+  <div class="quick-grid">
+    <button onclick="showPortfolio()">👤 소개</button>
+    <button onclick="showOrder()">🍊 감귤농원</button>
+    <button onclick="showBrain()">🧠 역량 지도</button>
+    <button onclick="showWorld()">🌏 전체 지도</button>
+    <button onclick="showTravel()">🗺 여행 지도</button>
+    <button onclick="showQuestLog()">🎯 퀘스트</button>
+    <button onclick="showStamps()">🏅 도장판</button>
+  </div>
+  <p class="world-note" style="margin-top:14px">키보드 방향키 또는 WASD로 이동하고, Z 키로 주민과 대화하세요. 모바일에서는 화면 아래 패드를 이용할 수 있습니다.</p>
+</aside>
+
+<div id="bar"><b>BS World</b><small class="since">since 26.11.05 · <span id="appVer" onclick="showPatchLog()" title="패치 내역 보기" style="cursor:pointer;text-decoration:underline">v1.01.193</span></small><button id="updBell" hidden onclick="showPatch()" title="새 패치" style="background:#dc2626;color:#fff;border:0;border-radius:6px;padding:2px 8px;font-weight:bold;cursor:pointer"></button><button id="rtBtn" onclick="showRt()" title="지금 접속 중" style="background:#0f766e;color:#fff;border:0;border-radius:6px;padding:2px 8px;font-weight:bold;cursor:pointer" hidden>👥 1</button><button id="nBell" hidden onclick="noteAdmin()" title="새 쪽지와 약속"></button><button id="qBell" hidden onclick="showQA()" title="새 방명록"></button><div id="vc" hidden>TODAY <i id="vcT">-</i> · TOTAL <i id="vcA">-</i></div><span class="brk"></span><button onclick="toggleMap()">🗺 지도</button><button onclick="showWorld()" title="서울과 제주 전체 지도">🌏 전체</button><button onclick="showBrain()">🧠 뇌구조</button><div id="npm" title="지금 나오는 음악"><span id="npt"></span></div><button id="bg" onclick="togBgm()">🔊</button></div>
+
+<div id="scr">
+  <canvas id="c"></canvas>
+  <div id="fade"></div>
+  <div id="bn"></div>
+  <div id="wx"></div><div id="guideBar" hidden></div>
+  
+  <!-- 우측 하단 고정 미니맵 오버레이 -->
+  <div id="minimap-overlay">
+    <div class="minimap-title">🗺 <span id="mmTitle">제주 지도</span></div>
+    <div id="minimap-container" class="minimap-grid"></div>
+  </div>
+
+  <div id="dl"><div id="dn"></div><div id="dt"></div></div>
+  
+  <!-- 시작 화면 오버레이 -->
+  <div id="st">
+    <div class="cd">
+      <h1>BS World</h1>
+      <h2>16-BIT RETRO RPG WORLD</h2>
+      <p>걷고, 말을 걸고, 건물에 들어가 보세요.<br>강보성이 만든 작은 세계입니다.<br><small style="opacity:.65;letter-spacing:.04em">since 26.11.05</small></p>
+    </div>
+    <button class="go" onclick="startGame()">모험 시작하기 (START)</button>
+    <p>스페이스바(Space) 또는 엔터(Enter)로 시작<br>방향키/WASD · Z=행동 · X=취소</p>
+  </div>
+</div>
+
+<div id="mobPanel" hidden>
+  <div class="mtabs"><button data-t="map" onclick="mobTab('map')">🗺 지도</button><button data-t="me" onclick="mobTab('me')">👤 프로필</button><button data-t="log" onclick="mobTab('log')">🎯 모험</button></div>
+  <div id="mobBody"><div class="mt" data-t="map"></div><div class="mt" data-t="me"></div><div class="mt" data-t="log"></div></div>
+</div>
+<div id="ctl">
+  <div class="dp"><span></span><button data-d="1">▲</button><span></span><button data-d="2">◀</button><span></span><button data-d="3">▶</button><span></span><button data-d="0">▼</button><span></span></div>
+  <div class="ab">
+    <div><button style="background:#b91c1c" id="bB">B</button>CANCEL(X)</div>
+    <div><button style="background:#047857" id="bA">A</button>ACTION(Z)</div>
+  </div>
+</div>
+
+<aside id="rightPanel" aria-label="퀘스트 및 탐험 안내">
+  <div class="panel-title">ADVENTURE LOG</div>
+  <div id="questList"></div>
+  <div class="panel-title" style="margin-top:18px">WORLD GUIDE</div>
+  <p class="world-note" id="regionDesc">제주시은 모든 모험이 시작되는 곳입니다. 주민에게 말을 걸어 월드의 비밀을 알아보세요.</p>
+  <button class="side-action" style="width:100%;margin-top:10px" onclick="showPortfolio()">포트폴리오 전체 보기 ↗</button>
+</aside>
+<div id="toast" role="status" aria-live="polite"></div>
+
+</div>
+
+<div id="lb" onclick="if(event.target.tagName=='IMG')lbZoom();else lbClose()"><div class="fit"><img id="lbi" alt=""></div></div><button id="lbx" onclick="lbClose()" aria-label="닫기">✕</button>
+<div id="ytDock"></div>
+<div id="bgmBar" hidden><div id="bgmName"></div><div class="bb"><button id="bgmP" onclick="bgmToggle()" title="재생/일시정지 (M)">⏯</button><button onclick="bgmNext()" title="다음 곡 (N)">⏭</button><button onclick="bgmList()" title="목록">📃</button><button id="bgmMin" onclick="bgmMinTog()" title="작게/크게">⬇</button><button onclick="bgmOff()" title="끄기">✕</button></div></div>
+<div id="kc">👉</div>
+<div class="md" id="md" hidden>
+  <div class="mb"><button class="x" onclick="closeM()">✕</button><div id="mc"></div></div>
+</div>
+
+<script>/*@@JS@@*/</script>
+</body>
+</html>
