@@ -303,3 +303,22 @@ function guideIntro(){if(guideOff()||modal)return;let seen='';try{seen=localStor
  const A=T.p.find(o=>o.n=='안내 데스크 직원');if(A)A.s=['왼쪽은 국내선(제주), 오른쪽은 국제선 카운터예요. ✈','시내로 가시면 밖으로 나가 공항철도를 타세요. 🚆'];
  (M.route1.p||[]).forEach(o=>{if(o.n=='보성 할아버지'&&o.x==9&&o.y==8)o.x=8});
 })();
+(function uncleTalk(){const U=M.uncleHome,zz=['쿨쿨… 💤','(곤히 주무시고 계신다.)'];
+ U.p.forEach(n=>{if(n.n=='보성 큰외삼촌'||n.n=='보성 외숙모'){const w0=n.when;n.when=()=>w0()&&!sleepHours()}});
+ [['보성 큰외삼촌',2],['보성 외숙모',11]].forEach(([nm,x])=>{const o=U.p.find(n=>n.n==nm);if(o)U.p.push({x,y:3,sit:1,stay:1,c:o.c,h:o.h,lh:o.lh,when:sleepHours,n:nm+' (주무시는 중)',s:zz,sl:[x*32,3*32+2,'#65a30d',1]})});
+ const memo=U.p.find(n=>n.n=='거실 메모');if(memo){const w1=memo.when;memo.when=()=>w1()}
+ U.p.forEach(n=>{const T=OWNER_TALK[n.n];if(T&&!n.ownerWrap){n.ownerWrap=1;const g0=n.s;n.s=()=>isOwner()?T:((FRIEND&&FRIEND_TALK[n.n]&&FRIEND_TALK[n.n](friendCall(),FRIEND))||(typeof g0=='function'?g0():g0))}});
+})();
+(function govOffices(){const open=id=>()=>!shopClosed(id),C0=['#2563eb','#ea580c','#16a34a','#7c3aed','#0ea5e9','#be123c','#ca8a04','#475569','#db2777','#0f766e'],H0=['#222','#3f2a1c','#6b3e26','#111','#d1d5db'],SAY=['번호가 언제 불리려나…','서류 하나 빠뜨려서 다시 왔어요.','점심시간 전에 끝내야 하는데요.','등본 떼러 왔어요.','오늘 대기가 길어요.','전광판 번호를 봐야지.','신분증 챙겨 오길 잘했어요.','창구가 많아서 금방 될 것 같아요.'];
+ const crowd=(id,spots,cnt)=>{const z=M[id],T=(x,y)=>[...z.m[y]][x],used=new Set((z.p||[]).map(q=>q.x+','+q.y));let n=0;for(const [x,y,sit] of spots){if(n>=cnt)break;if(used.has(x+','+y))continue;const t=T(x,y);if(sit?t!='㉴':!WALK.includes(t))continue;used.add(x+','+y);z.p.push({x,y,sit:sit?1:0,stay:sit?1:0,w:sit?0:1,fd:sit?1:undefined,c:C0[n%C0.length],h:H0[n%H0.length],lh:n%3==1?1:0,when:open(id),n:'민원인',s:[SAY[n%SAY.length]]});n++}};
+ const seats=[];for(const y of [8,10])for(const x of [4,5,6,7,8,9,13,14,15,16,17,18])seats.push([x,y,1]);const stand=[[4,4],[6,4],[8,4],[10,4],[12,4],[14,4],[16,4],[18,4],[5,5],[11,5],[17,5],[3,6],[19,7],[11,9],[2,11],[20,11]].map(a=>[...a,0]);
+ ['cityhallIn','sgCity'].forEach(id=>{M[id].p.forEach(o=>{if(o.when&&String(o.when).includes("'cityhallIn'"))o.when=open(id)});crowd(id,seats.filter((_,i)=>i%2==0),9);crowd(id,stand,10)});
+ /* 자격증 사업단: 창구별로 나눈 민원실 */const W=23,row=c=>{const r=Array(W).fill(c);r[0]=r[W-1]='w';return r},Q=[Array(W).fill('w'),Array(W).fill('w')];Q[1][5]='㌻';Q[1][11]='㌼';Q[1][17]='㌻';Q.push(row('f'));{const r=row('f');for(let x=3;x<=19;x++)r[x]='k';Q.push(r)}Q.push(row('f'),row('f'));{const r=row('f');r[2]=r[20]='㋹';Q.push(r)}Q.push(row('f'));{const r=row('f');for(const x of [4,5,6,7,8,9,13,14,15,16,17,18])r[x]='㉴';Q.push(r)}Q.push(row('f'));{const r=row('f');[3,6,16,19].forEach(x=>r[x]='Z');Q.push(r)}{const r=Array(W).fill('w');r[11]='x';Q.push(r)}
+ const D=M.certOff;D.m=Q.map(r=>r.join(''));D.wide=1;D.land=[11,10];D.d={'11,11':['cityhall',3,8]};D.sign={'4,1':'필기시험 접수','11,1':'자격증 발급','18,1':'실기시험 접수','2,5':'번호표','5,9':'접수 컴퓨터'};
+ const st=(x,n,c,s)=>({x,y:2,stay:1,c,h:'#222',when:open('certOff'),n,s});
+ D.p=[st(4,'필기시험 접수 담당','#1e3a8a',['필기시험 원서 접수 도와드려요. 📝','사진은 최근 6개월 안에 찍은 걸로 준비해 주세요.']),st(7,'실기시험 접수 담당','#0f766e',['실기 접수는 필기 합격자만 할 수 있어요.']),st(10,'자격증 발급 담당','#7c2d12',['합격하셨어요? 자격증 발급은 여기서 해요. 🪪']),st(13,'경력·학력 서류 담당','#475569',['응시 자격 서류는 원본으로 가져와 주세요.']),st(16,'수수료 환급 담당','#1e3a8a',['접수 취소하면 기간에 따라 수수료를 돌려드려요.']),st(19,'일반 상담','#0f766e',['어떤 자격증 알아보세요? 편하게 물어보세요. 😊']),{x:11,y:9,c:'#94a3b8',h:'#222',stay:1,when:open('certOff'),n:'안내 직원',s:['번호표 뽑고 해당 창구 앞 의자에서 기다려 주세요. 🎫','컴퓨터에서 직접 접수할 수도 있어요.']}];
+ const S2=[[4,7,1],[6,7,1],[8,7,1],[14,7,1],[16,7,1],[18,7,1],[5,7,1],[15,7,1]],S3=[[4,3+1,0],[10,4,0],[16,4,0],[19,4,0],[7,5,0],[13,5,0],[9,8,0],[20,8,0]];
+ const SAY2=['이번엔 꼭 붙어야 해요. 📝','사진 규격이 안 맞아서 다시 찍었어요.','실기 접수 마감이 오늘까지래요.','자격증 찾으러 왔어요. 드디어! 🎉','수수료가 생각보다 비싸네요.'];
+ [...S2,...S3].forEach(([x,y,sit],i)=>{const t=[...D.m[y]][x];if(sit?t!='㉴':t!='f')return;D.p.push({x,y,sit,stay:sit?1:0,w:sit?0:1,fd:sit?1:undefined,c:C0[(i+3)%C0.length],h:H0[i%H0.length],lh:i%2,when:open('certOff'),n:'접수하러 온 사람',s:[SAY2[i%SAY2.length]]})});
+ M.cityhall.d=M.cityhall.d||{};for(const k in M.cityhall.d)if(M.cityhall.d[k][0]=='certOff')M.cityhall.d[k]=['certOff',11,10];
+})();
