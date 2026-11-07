@@ -741,7 +741,7 @@ async function noteAdmin(){
 }
 async function noteAns(id,st,ch){try{const e=$('#nrp'+id),r=await DB.rpc('note_answer',{p_id:id,p_status:st,p_chosen:ch,p_reply:e?e.value:''});if(!r.ok)return toast(NERR[r.err]||NERR.bad);toast('처리했어요.');noteAdmin();noteBell()}catch(e){toast(dbErr(e))}}
 async function noteDel(id){try{const r=await DB.rpc('note_delete',{p_id:id});if(!r.ok)return toast(NERR[r.err]||NERR.bad);noteAdmin();noteBell()}catch(e){toast(dbErr(e))}}
-async function noteBell(){const b=$('#nBell');if(!b)return;if(!DB.tok){b.hidden=true;return}try{const n=await DB.rpc('note_count');b.hidden=!n;b.textContent='📬 '+n}catch(e){b.hidden=true}}
+async function noteBell(){const b=$('#nBell');if(!b)return;if(!DB.tok){b.hidden=true;return}let n=0,g=0;try{n=await DB.rpc('note_count')||0}catch(e){}try{g=await DB.rpc('gp_pending_count')||0}catch(e){}b.hidden=!n&&!g;b.textContent=(n?'📬 '+n:'')+(n&&g?' · ':'')+(g?'🖼 '+g:'');b.onclick=g&&!n?()=>gpAll():()=>noteAdmin()}
 
 /* ===== 주인장의 롤 전적 (이스터 에그) ===== */
 const LOL_ME=['징크스','Citrus','Galaxy','감귤','밀감'];

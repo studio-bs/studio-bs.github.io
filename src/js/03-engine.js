@@ -503,6 +503,7 @@ function act(){
   else if(k=='ㅭ')say('화장실',['깔끔하게 쓰는 중. 🚽']);
   else if(k=='ㅮ')say('세면대',['주인장은 양치를 꼭 하고 잔다고 한다. 🪥']);
   else if(k==')')showFrame((x-1)/2);
+  else if(k=='㍸')gpShow((x-1)/2);
   else if(k=='ⓔ')showFrame(frameIdx(x,y));
   else if(k=='ⓜ')showTravel();
   else if(k=='*')caveChest();
