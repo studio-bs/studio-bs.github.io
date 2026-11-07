@@ -379,7 +379,7 @@ function act(){
   if(k=='㋪'||k=='㋮')return say('검은 하우스',['콘테나와 농기구를 넣어 두는 검은 하우스다.']);if(k=='㋫'||k=='㋬')return say('농막',['빨간 지붕 농막이다. 안에서 먹고 잘 수 있다. 🏠']);if(k=='㋰')return say('흰 차',['농막 앞에 세워 둔 흰 차다. 🚗']);if(k=='㋱')return say('파란 대문',['돌담 사이의 파란 대문이다.']);if(k=='㋲')return say('농기구',['가위, 톱, 삽 같은 농기구가 정리되어 있다. 🧰']);if(k=='㋵')return say('감귤 콘테나',['귤을 담는 파란 콘테나가 쌓여 있다. 🍊']);if(k=='㋴')return say('하우스 벽',['검은 차광막으로 덮인 벽이다.']);
   if(k=='ㆎ'&&!CAFE_M[cur]){sitDown(x,y,'bench','🪑 의자에 앉았어요.');return}
   if(k=='㎭')return showCard();
-  if(k=='㏗'&&map.pc&&map.pc[x+','+y]){const P1=map.pc[x+','+y];return say(P1[0],P1[2],{'🌐 사이트 열기':()=>window.open(P1[1],'_blank','noopener')})}
+  if(k=='㏗'&&map.pc&&map.pc[x+','+y]){const P1=map.pc[x+','+y];return say(P1[0],P1[2],P1[3]?Object.fromEntries(Object.entries(P1[3]).map(([a,u])=>[a,()=>window.open(u,'_blank','noopener')])):{'🌐 사이트 열기':()=>window.open(P1[1],'_blank','noopener')})}
   if(k=='㏎')return say('키위 덕',['덕 아래로 키위가 주렁주렁 달려 있다. 🥝','마을 게시판에 골드키위 판매 안내가 있다.'],{'📌 판매 안내 보기':()=>showKiwi()});
   if(k=='㏈')return showLift();
   if(map.icn&&(k=='㎻'||(k=='l'&&x<15)))return say('체크인',['국내선(제주)과 국제선 중 어디로 가세요? ✈'],{'✈ 국내선 · 제주 가기':()=>showFlight(),'🌏 국제선':()=>say('국제선',['BS 에어 국제선은 아직 취항 준비 중이에요. ✈'],{'🗺 여행 지도 보기':()=>showTravel()})});if(map.icn&&k=='l')return say('체크인',['BS 에어 국제선은 아직 취항 준비 중이에요. ✈','실제 비행기를 보고 싶으면 여행 지도를 열어 보세요.'],{'🗺 여행 지도 보기':()=>showTravel()});if(k=='㎻')return map.airT?showFlight():showKtxTicket();if(k=='㏅')return say('서울역 버스환승센터',['버스 타는 곳이에요. 심야버스는 길가에서 탈 수 있어요. 🚌']);if(k=='㎾')return say(map.airT?'줄 서는 곳':'주차장',map.airT?['수속 줄을 안내하는 줄이에요.']:[(map.m.join('').includes('r')&&/공항/.test(map.n)?'공항 주차장':map.n+' 주차장')+'이에요. 차가 빼곡하네요. 🚗']);if(k=='㎸'||(k=='ㅰ'&&map.ktxPf))return ktxBoard();if(k=='㎷')return ktxGate('K');if(k=='㎹')return showRailBoard();
@@ -504,7 +504,7 @@ function act(){
   else if(k=='ㅮ')say('세면대',['주인장은 양치를 꼭 하고 잔다고 한다. 🪥']);
   else if(k==')')showFrame((x-1)/2);
   else if(k=='㍸')gpShow((x-1)/2);
-  else if(k=='㍵')say('STUDIO BS 안내판',['🃏 STUDIO BS','다른 세계로 가 볼래? 보성이가 만든 다른 사이트들이 모여 있어.'],{'예, 가 볼래요':()=>{location.href='https://studio-bs.pages.dev/'},'아니오':()=>{}});
+  else if(k=='㍵')say('STUDIO BS 안내판',['🃏 STUDIO BS','다른 세계로 가 볼래? 보성이가 만든 다른 사이트들이 모여 있어.'],{'예, 가 볼래요':()=>{const w=window.open('https://studio-bs.pages.dev/','_blank');if(w){try{w.opener=null}catch(e){}}else toast('새 창이 막혔어요. 브라우저에서 팝업을 허용해 주세요.')},'아니오':()=>{}});
   else if(k=='ⓔ')showFrame(frameIdx(x,y));
   else if(k=='ⓜ')showTravel();
   else if(k=='*')caveChest();
