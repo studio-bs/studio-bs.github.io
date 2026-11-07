@@ -423,7 +423,7 @@ function act(){
   if(k=='㌴')return say('공항버스 정류장',['🚌 어디로 갈까요?'],{'여의도':()=>busGo('yeouido','공항버스'),'영등포':()=>busGo('yeongdeungpo','공항버스'),'노량진':()=>busGo('noryangjin','공항버스'),'용산':()=>busGo('yongsan','공항버스')});
   if(k=='㋍'&&/^swimLock/.test(cur))return poolChange();
   if(k=='㌻')return say('TV',['민원실 대기 TV에서 뉴스가 나온다. 📺']);if(k=='㌼')return say('번호 전광판',['지금 호출 번호가 빨갛게 떠 있다.']);
-  if(k=='㌾')return say('해변 상점',['흰 천막 아래에서 튜브와 간식을 판다. 🏖']);if(k=='㌿')return say('해변 조형물',['초승달처럼 휜 흰 조형물이다. 사진 찍기 좋다. 📷']);if(k=='㍀')return say('야자수',['바닷바람에 잎이 흔들린다. 🌴']);if(k=='㍺')return say('용두암',['용의 머리를 닮은 현무암 바위다. 🐉','파도가 칠 때마다 바위가 꿈틀거리는 것 같다.']);if(k=='㍼'||k=='㍻')return say('닭장',['외가 앞마당 닭장이다. 꼬꼬꼬… 🐔','닭들이 모이를 쪼고 있다.']);if(k=='㍃')return say('시청 앞 조형물',['시청 앞 공원의 커다란 조형물이다.']);if(k=='㌌'&&cur=='cityhall')return say('주차장',['민원 보러 온 차들로 가득하다. 🚗']);
+  if(k=='㌾')return say('해변 상점',['흰 천막 아래에서 튜브와 간식을 판다. 🏖']);if(k=='㌿')return say('해변 조형물',['초승달처럼 휜 흰 조형물이다. 사진 찍기 좋다. 📷']);if(k=='㍀')return say('야자수',['바닷바람에 잎이 흔들린다. 🌴']);if(cur=='uncleHome'&&k=='¶')return say('거실 메모',[jejuNow().h>=8&&jejuNow().h<19?'(낮에는 토산 키위 밭에 나가 계신가 보다.)':'(상 위에 키위 밭 일정이 적힌 메모가 있다. 🥝)']);if(k=='㍺')return say('용두암',['용의 머리를 닮은 현무암 바위다. 🐉','파도가 칠 때마다 바위가 꿈틀거리는 것 같다.']);if(k=='㍼'||k=='㍻')return say('닭장',['외가 앞마당 닭장이다. 꼬꼬꼬… 🐔','닭들이 모이를 쪼고 있다.']);if(k=='㍃')return say('시청 앞 조형물',['시청 앞 공원의 커다란 조형물이다.']);if(k=='㌌'&&cur=='cityhall')return say('주차장',['민원 보러 온 차들로 가득하다. 🚗']);
   if(k=='㌩')return say('재떨이',['환풍기가 돌아가는 흡연실이다. 🚬']);
   if(k=='㊃')return showMini();
   if(k=='㌎')return showMini((map.mach||{})[x+','+y]);

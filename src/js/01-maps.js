@@ -1063,3 +1063,5 @@ if(o.lh){c.fillStyle=col.H;[[0,4],[0,5],[0,6],[0,7],[0,8],[1,7],[1,8],[11,4],[11
 if(o.lk&&o.lk.skirt&&o.l!==false){c.fillStyle=o.lk.skirt;c.fillRect(x+2*s,y+12*s,8*s,2*s)}
 else if(o.l!==false){c.fillStyle=o.lk&&o.lk.leg||'#34495e';c.fillRect(x+3*s,y+12*s,2*s,o.w?s:2*s);c.fillRect(x+7*s,y+12*s,2*s,o.w?2*s:s)}}
 
+/* 같은 타일이 가로로 이어진 줄에서 몇 번째 칸인지 (간판 글씨용) */
+function runIx(x,y,k){let i=0;while(i<8&&at(x-i-1,y)==k)i++;return i}

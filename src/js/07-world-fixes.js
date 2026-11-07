@@ -307,7 +307,7 @@ function guideIntro(){if(guideOff()||modal)return;let seen='';try{seen=localStor
 (function uncleTalk(){const U=M.uncleHome,zz=['쿨쿨… 💤','(곤히 주무시고 계신다.)'];
  U.p.forEach(n=>{if(n.n=='보성 큰외삼촌'||n.n=='보성 외숙모'){const w0=n.when;n.when=()=>w0()&&!sleepHours()}});
  [['보성 큰외삼촌',2],['보성 외숙모',11]].forEach(([nm,x])=>{const o=U.p.find(n=>n.n==nm);if(o)U.p.push({x,y:3,sit:1,stay:1,c:o.c,h:o.h,lh:o.lh,when:sleepHours,n:nm+' (주무시는 중)',s:zz,sl:[x*32,3*32+2,'#65a30d',1]})});
- const memo=U.p.find(n=>n.n=='거실 메모');if(memo){const w1=memo.when;memo.when=()=>w1()}
+ U.p=U.p.filter(n=>n.n!='거실 메모');U.fac={...(U.fac||{}),'7,4':'memo'};
  U.p.forEach(n=>{const T=OWNER_TALK[n.n];if(T&&!n.ownerWrap){n.ownerWrap=1;const g0=n.s;n.s=()=>isOwner()?T:((FRIEND&&FRIEND_TALK[n.n]&&FRIEND_TALK[n.n](friendCall(),FRIEND))||(typeof g0=='function'?g0():g0))}});
 })();
 (function govOffices(){const open=id=>()=>!shopClosed(id),C0=['#2563eb','#ea580c','#16a34a','#7c3aed','#0ea5e9','#be123c','#ca8a04','#475569','#db2777','#0f766e'],H0=['#222','#3f2a1c','#6b3e26','#111','#d1d5db'],SAY=['번호가 언제 불리려나…','서류 하나 빠뜨려서 다시 왔어요.','점심시간 전에 끝내야 하는데요.','등본 떼러 왔어요.','오늘 대기가 길어요.','전광판 번호를 봐야지.','신분증 챙겨 오길 잘했어요.','창구가 많아서 금방 될 것 같아요.'];
