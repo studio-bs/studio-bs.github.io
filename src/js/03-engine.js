@@ -504,6 +504,7 @@ function act(){
   else if(k=='ㅮ')say('세면대',['주인장은 양치를 꼭 하고 잔다고 한다. 🪥']);
   else if(k==')')showFrame((x-1)/2);
   else if(k=='㍸')gpShow((x-1)/2);
+  else if(k=='㍵')say('STUDIO BS 안내판',['🃏 STUDIO BS','다른 세계로 가 볼래? 보성이가 만든 다른 사이트들이 모여 있어.'],{'예, 가 볼래요':()=>{location.href='https://studio-bs.pages.dev/'},'아니오':()=>{}});
   else if(k=='ⓔ')showFrame(frameIdx(x,y));
   else if(k=='ⓜ')showTravel();
   else if(k=='*')caveChest();

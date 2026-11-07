@@ -1,6 +1,8 @@
 # BS World 소스 폴더
 
-사이트에는 지금처럼 **index.html 한 파일**을 올려요. 이 폴더는 고치기 쉽게 나눠 둔 원본이에요.
+사이트에는 지금처럼 **index.html 한 파일**을 올려요. 이 압축 파일 안의 index.html이 그 파일이고, src 폴더는 고치기 쉽게 나눠 둔 원본이에요.
+
+**GitHub에 올릴 것:** index.html, src 폴더 (build.cjs, split.cjs, README.md는 처음 한 번만)
 나눈 파일을 그대로 올리면 순서 문제로 화면이 안 떠요.
 
 ## 파일 구성

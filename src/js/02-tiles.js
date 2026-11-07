@@ -399,6 +399,7 @@ case '㋊': { gr(); f('#ef4444',0,2,32,6); f('#f8fafc',0,5,32,3); f('#78350f',3,
     case '(': wl(); f('#1e3a8a',4,3,24,24); f('#fff',7,6,18,12); f('#3b82f6',9,8,6,2); f('#fbbf24',9,12,12,2); f('#fff',7,21,18,3); break;
     case 'ⓜ': { fl(); f('#3f2a1c',0,1,32,27); f('#17324f',0,3,32,22); f('#fb923c',x%2?6:12,8,x%2?12:9,8); f('#4b5563',x%2?20:3,13,7,8); f('#fbbf24',0,1,32,2); f('#5b3a22',4,28,4,4); f('#5b3a22',24,28,4,4); break}
     case '㍸': { wl(); const im=PHOTO_GP[(x-1)/2]; f('#3f2a1c',3,3,26,24); f('#e5e7eb',5,5,22,20); if(im&&im.complete&&im.naturalWidth)c.drawImage(im,X+6,Y+6,20,18); else {f('#cbd5e1',8,9,16,11);f('#94a3b8',12,13,8,5)} break}
+    case '㍵': { gr(); f('#0003',6,28,20,3); f('#78350f',14,18,4,12); f('#1c1917',2,2,28,18); f('#44403c',2,2,28,2); const im=PHOTO_SBS; if(im.complete&&im.naturalWidth)c.drawImage(im,X+7,Y+1,18,18); else {f('#2563eb',9,6,7,10);f('#f59e0b',12,5,7,10);f('#e11d48',15,6,7,10)} break}
     case ')': { wl(); const im=PHOTO_IMGS[(x-1)/2]; if(im){f('#3f2a1c',3,3,26,24); f('#e5e7eb',5,5,22,20); if(im.complete&&im.naturalWidth)c.drawImage(im,X+6,Y+6,20,18); else f('#9ca3af',8,9,16,11)} break}
     case 'ⓔ': { fl(); f('#92400e',6,14,3,18); f('#92400e',23,14,3,18); f('#78350f',14,20,4,12); const im=PHOTO_IMGS[frameIdx(x,y)]; f('#3f2a1c',3,1,26,22); f('#f8fafc',5,3,22,18); if(im&&im.complete&&im.naturalWidth)c.drawImage(im,X+5,Y+3,22,18); f('#b45309',2,22,28,3); break}
     case '[': gr(); f('#64748b',5,6,3,24); f('#64748b',24,6,3,24); f('#e5e7eb',5,6,22,3); f('#00000025',4,29,24,2); break;
