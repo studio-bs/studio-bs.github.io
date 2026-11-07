@@ -70,16 +70,17 @@ function etaOf(t,nm,L){const s=String(t.msg||'');if(t.sec>0){let a=t.sec;const r
   const dep=/출발/.test(s)?60:0,by=n=>({sec:Math.max(30,n*120-dep),real:0});if(t.left>0)return by(t.left);m=s.match(/\[(\d+)\]번째/);if(m)return by(+m[1]);if(/전역/.test(s))return by(1);
   m=s.match(/^(.+?)(역)? ?(진입|도착|출발)/);if(m&&(L==1||L==7)){const S=METRO[L].st,a=S.findIndex(k=>STN[k][0]==m[1]),b=S.findIndex(k=>STN[k][0]==nm);if(a>=0&&b>=0&&a!=b)return by(Math.abs(a-b))}return null}
 const etaTxt=e=>{if(!e)return'';const n=e.sec<45?0:Math.max(1,Math.round(e.sec/60));return n?(e.real?'':'약 ')+n+'분 후':'곧 도착'};
-function liveRow(t){const nm0=map&&map.stKey&&STN[map.stKey]?STN[map.stKey][0]:'';return `<div class="frow" style="grid-template-columns:42px 1fr auto"><b>${esc(t.dir||'')}</b><span>${esc(nm0&&termT(t,nm0)?'이 역 종착 열차':(t.to||''))}${t.exp?' <small style="display:inline">급행</small>':''}</span><span class="st k">${(()=>{const E0=map&&map.stKey&&nm0&&!termT(t,nm0)?etaTxt(etaOf(t,nm0,+Object.keys(METRO).find(l=>METRO[l].id==t.line))):'';const M0=/\d초? *후/.test(t.msg||'')&&E0?'':esc(t.msg||'');return (E0?'<b>'+E0+'</b>':'')+(E0&&M0?' · ':'')+M0})()}</span></div>`}
+function liveRow(t){const k0=stnKeyOf(),nm0=k0&&STN[k0]?STN[k0][0]:'';return `<div class="frow" style="grid-template-columns:42px 1fr auto"><b>${esc(t.dir||'')}</b><span>${esc(nm0&&termT(t,nm0)?'이 역 종착 열차':(t.to||''))}${t.exp?' <small style="display:inline">급행</small>':''}</span><span class="st k">${(()=>{const E0=map&&map.stKey&&nm0&&!termT(t,nm0)?etaTxt(etaOf(t,nm0,+Object.keys(METRO).find(l=>METRO[l].id==t.line))):'';const M0=/\d초? *후/.test(t.msg||'')&&E0?'':esc(t.msg||'');return (E0?'<b>'+E0+'</b>':'')+(E0&&M0?' · ':'')+M0})()}</span></div>`}
 function liveFail(e){return e&&e.message=='no_key'?'실시간 지하철 연결을 준비 중이에요.':'실시간 정보를 받지 못했어요. 잠시 후 다시 해 주세요.'}
 async function metroLive(L){
-  const el=$('#mtLive');if(!el)return;const k=map.stKey,nm=STN[k][0];el.textContent='불러오는 중…';
+  const el=$('#mtLive');if(!el)return;const k=stnKeyOf(),nm=STN[k][0];el.textContent='불러오는 중…';
   try{const items=await metroFetch(nm),e2=$('#mtLive');if(!e2)return;const lines=L?[L]:metroLines(k);
     e2.innerHTML=lines.map(l=>{const A=items.filter(t=>t.line==METRO[l].id),G=[['상행',A.filter(t=>t.dir=='상행'||t.dir=='내선')],['하행',A.filter(t=>t.dir=='하행'||t.dir=='외선')]];return `<b style="color:${METRO[l].col}">${METRO[l].n}</b>`+G.map(([n,R])=>`<div style="margin:4px 0 2px;font-weight:bold;opacity:.8">${n}</div>`+(R.length?R.slice(0,3).map(liveRow).join(''):'<p style="margin:2px 0 6px;opacity:.75">들어오는 열차 정보가 없어요.</p>')).join('')}).join('');
   }catch(e){const e2=$('#mtLive');if(e2)e2.textContent=liveFail(e)}
 }
 const liveBox=L=>`<div class="qform" style="margin-top:10px"><b>📡 실제 도착 정보</b> <button class="xb" style="padding:2px 8px;margin-left:24px" onclick="metroLive(${L||0})">새로고침</button><div id="mtLive" style="margin-top:5px;font-size:12px">불러오는 중…</div><small style="opacity:.7">게임 속 열차와는 별개인 실제 서울 지하철 정보예요.</small></div>`;
-function showStnBoard(){const k=map.stKey;openM(`<h3>🚉 ${esc(STN[k][0])}역 전광판</h3>`+liveBox(0));metroLive(0)}
+const stnKeyOf=()=>map&&(map.stKey||(/^off_/.test(cur)&&M[map.par]&&M[map.par].stKey))||null;
+function showStnBoard(){const k=stnKeyOf();openM(`<h3>🚉 ${esc(STN[k][0])}역 전광판</h3>`+liveBox(0));metroLive(0)}
 function showMetro(L){
   const M2=METRO[L],k=map.stKey,D=mDest(L,k,map.dir);if(!D.length){openM(`<h3>🚇 ${M2.n} ${esc(STN[k][0])}역 ${DIRN[map.dir]}</h3><p style="font-size:13px;margin:8px 0">🚧 이 방향 다음 역은 아직 게임에 없어요. 실제 도착 정보만 볼 수 있어요.</p>`+liveBox(L));metroLive(L);return}
   openM(`<h3>🚇 ${M2.n} ${esc(STN[k][0])}역 ${DIRN[map.dir]}</h3><p style="font-size:12px;opacity:.8">${esc(STN[D[D.length-1]][0])} 방면 열차예요. 갈 역을 고르세요.</p><div class="xcol">`+D.map(s=>`<button class="xb big" onclick="metroGo(${L},'${s}')">${esc(STN[s][0])}역 가기</button>`).join('')+'</div>'+liveBox(L));metroLive(L);
