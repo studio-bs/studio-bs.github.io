@@ -852,7 +852,7 @@ async function capSave(id,place,fr){const v=($('#capI').value||'').trim().slice(
 async function showPhotos(){
   openM('<h3>🖼 보성 사진관</h3><p style="font-size:12px;opacity:.8">불러오는 중…</p>');
   WALL=null;const up=await wallLoad();if(!modal)return;const ad=DB.admin();
-  const fig=up.map(p=>trvFig(p,ad,"showPhotos")).join('')+PHOTOS.map(p=>`<figure><img src="${esc(p.file)}" alt="${esc(p.title||'사진')}" loading="lazy" onclick="lbOpen(this.src,this.alt)" onerror="this.closest('figure').remove()"><figcaption>${esc(p.title||'')}${p.date?` <small>${esc(p.date)}</small>`:''}</figcaption></figure>`).join('');
+  const fr=Object.keys(FRM).sort((a,b)=>a-b).map(k=>FRM[k]).filter((r,i,a)=>a.findIndex(q=>q.id==r.id)==i&&!up.some(q=>q.id==r.id));const fig=fr.concat(up).map(p=>trvFig(p,ad,"showPhotos")).join('')+PHOTOS.map(p=>`<figure><img src="${esc(p.file)}" alt="${esc(p.title||'사진')}" loading="lazy" onclick="lbOpen(this.src,this.alt)" onerror="this.closest('figure').remove()"><figcaption>${esc(p.title||'')}${p.date?` <small>${esc(p.date)}</small>`:''}</figcaption></figure>`).join('');
   openM('<h3>🖼 보성 사진관</h3><div class="qbtn"><button class="xb" onclick="showTravel()">🗺 여행 지도</button></div>'+(fig?'<div class="pgrid">'+fig+'</div>':'<div class="cd">주인장이 걸 사진을 고르고 있어요. 📷</div>')+(up.length+PHOTOS.length>FRAME_MAX?`<p style="font-size:12px;opacity:.75">벽과 그림 자리에는 최신 ${FRAME_MAX}장만 걸려요. 나머지는 여기서 볼 수 있어요.</p>`:'')+trvUp('wall','ph'));
 }
 
