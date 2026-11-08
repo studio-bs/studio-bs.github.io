@@ -486,7 +486,7 @@ sign:{'1,3':'내 방','14,7':'안방'},d:{'7,9':['town',3,4],'14,7':['anbang',1,
 {x:2,y:1,inv:1,c:'#7dd3fc',h:'#1b1b26',n:'거울 속의 나',s:['안녕, 나는 강보성.','BS World에 오신 것을 환영해!'],ch:{'다음 모험':['이 세상을 계속 넓혀 가는 중이야. 제주에서 시작해서 이제 서울까지 왔지.','요즘은 노량진에서 지내. 근처 지나가면 아지트도 구경하고 가. 🏠','다음엔 어디까지 넓힐지 나도 아직 몰라. 그게 재밌는 거지. 😄']}},
 {x:2,y:7,c:'#475569',h:'#374151',sit:1,fd:1,n:'보성 아버지',when:()=>!dadFarm(),s:['어서 와요. 보성이 아버지입니다.','KT에서 은퇴하고 지금은 농사를 짓고 있어요. 편히 둘러봐요.']},
 {x:4,y:7,c:'#db2777',h:'#3f2a1c',lh:1,sit:1,fd:1,n:'보성 어머니',when:()=>!momFarm(),s:['어머, 손님이 왔네! 보성이 엄마예요.','간호사로 일하고 있어요. 밥은 먹었어요? 귤이라도 하나 먹고 가요. 🍊']},
-{x:11,y:8,c:'#f9a8d4',h:'#1b1b26',lh:1,n:'보성 여동생',s:['안녕하세요. 보성 오빠 동생입니다.','가운데 테이블에 방명록을 남겨 주세요. 😄']}]},
+{x:11,y:8,c:'#f9a8d4',h:'#1b1b26',lh:1,n:'보성 여동생',s:['안녕하세요. 보성 오빠 동생입니다.','집 앞 마당 방명록 게시판에 한 줄 남겨 주세요. 😄']}]},
 
 gym:{n:'체육관',par:'sports',wide:1,land:[16,15],bgm:'sports',m:['wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww','wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww','wfffffffffw㌈㌈ㆎㆎ㌈㌈㌈ㆎㆎ㌈㌈wfffffffffw','wf{{ff}}ffw㌈㌈㌈㌈㌈㌈㌈㌈㌈㌈㌈wf㉸㉸㉸f㉹㉹ffw','wfffffffffw㌈㌈㌈㌈㌈㌈㌈㌈㌈㌈㌈wfffffffffw','wf㌅㌅ff㌆f㌆fw㌃㌈㌈㌈㌈㌈㌈㌈㌈㌈㌃wf㉹㉹ff㉸㉸ffw','wfffffffffw㌈㌈㌈㌈㌈㌈㌈㌈㌈㌈㌈wfffffffffw','wfffffffffw㌈㌈㌈㌈㌈㌈㌈㌈㌈㌈㌈wfffffffffw','wf}}ff㌅㌅ffw㌈㌈㌈㌈㌈㌈㌈㌈㌈㌈㌈wf㉺㉺㉺f㉺㉺ffw','wfffffffffw㌈㌈㌈㌈㌈㌈㌈㌈㌈㌈㌈wfffffffffw','wwwwwfwwNwMwJww㋸㋸㋸wwJwMwNwwfwwwww','wfffffffffffff㌘fffffffffffffffffw','wfkkkkkfff㌇f㌇fffffffffffffffffffw','wfffffffffffffffffffffffffffffffw','wf㉵fffffffffffffffff㉴㉴㉴㉴ffffff㉵fw','wfffffff㉴㉴ffffffffffffffffffffffw','wfffffffffffffffffffffffffffffffw','wwwwwwwwwwwwwwwwxwwwwwwwwwwwwwwww'],sign:{'3,10':'맨몸 존','16,10':'농구 코트 08~22','14,11':'코트 예약','27,10':'머신 존','10,10':'명예의 벽','22,10':'명예의 벽','11,12':'운동 기록기','4,12':'안내'},d:{'16,17':['sports',10,3]},p:[
 {x:24,y:13,stay:1,c:'#16a34a',h:'#222',n:'메인 러닝 코치',s:['어서 와! 여기는 체육관.','마라톤 하프코스를 3번 완주한 러너의 기록실이지.'],ch:{'하프코스 3회':['2013 제2회 6.25 상기 및 정전 60주년 기념 국민대통합 마라톤 대회 하프 01:58:21.05','2016 제9회 아름다운제주국제마라톤대회 하프 2:27:11.23','2016 제21회 제주국제관광마라톤축제 하프 02:54:26.14'],'감귤마라톤 & 볼링':['2019 제주감귤국제마라톤 10km 01:22:38.32 🍊','2011 제30회 제주특별자치도볼링협회장기 전도볼링대회 대학부 남자 2인조전 3위 🎳']}},
@@ -1011,8 +1011,8 @@ const POOL={suit:null,pick:null};
 function playerLook(){if(POOL.suit&&/^swim/.test(cur))return POOL.suit=='m'?{c:'#1e3a8a',h:'#17151c',p:'#1e3a8a',lk:{hair:'short',leg:'#f2c9a0'}}:{c:'#be123c',h:'#17151c',p:'#be123c',lk:{hair:'bob',leg:'#f2c9a0'}};if(ckMe())return CK_LOOK;if(isOwner())return{c:S.end?'#fb923c':'#2b3140',h:'#17151c',p:'#17151c',lk:ME_LOOK};const L=G_LOOKS[GUEST.look]||G_LOOKS[0];return{c:S.end?'#fb923c':L.c,h:L.h,p:L.h,lk:L.lk}}
 function idRender(){
   const m=$('#idMark');if(!m)return;const ow=isOwner(),L=G_LOOKS[GUEST.look]||G_LOOKS[0];
-  if(ow){const ic=(document.querySelector('link[rel=icon][sizes="192x192"]')||{}).href;if(ic){m.innerHTML='<img src="'+ic+'" alt="BS World" style="width:84%;height:84%;object-fit:contain;image-rendering:pixelated;display:block;margin:auto">'}else m.textContent='🧑🏻‍💻'}else m.textContent=L.i;const fr=!ow&&typeof RT!='undefined'&&RT.fr;$('#idName').textContent=ow?'KANG BO-SUNG':(fr?'FRIEND':'GUEST')+(fr&&RT.name?' · '+RT.name:FRIEND?' · '+FRIEND.short:GUEST.name?' · '+GUEST.name:'');$('#idSub').textContent=ow?'BS WORLD 주인장':'BS WORLD '+L.n;
-  $('#idBtns').innerHTML=ow?'<button class="xb" style="padding:3px 8px;font-size:11px" onclick="DB.logout();toast(\'게스트로 돌아왔어요.\')">로그아웃</button>':'<button class="xb" style="padding:3px 8px;font-size:11px" onclick="guestEdit()">꾸미기</button>'+(fr?'<button class="xb" style="padding:3px 8px;font-size:11px" onclick="friendOut()">로그아웃</button>':'<button class="xb" style="padding:3px 8px;font-size:11px" onclick="showLogin(\'me\')">운영자</button>');
+  if(ow){const ic=(document.querySelector('link[rel=icon][sizes="192x192"]')||{}).href;if(ic){m.innerHTML='<img src="'+ic+'" alt="BS World" style="width:84%;height:84%;object-fit:contain;image-rendering:pixelated;display:block;margin:auto">'}else m.textContent='🧑🏻‍💻'}else m.textContent=L.i;{const A=typeof myAv=='function'?myAv():null;if(A&&!(ow&&!localStorage.getItem('bsw_av_owner'))){const cv=document.createElement('canvas');cv.width=48;cv.height=56;const x=cv.getContext('2d');x.imageSmoothingEnabled=false;spr(x,0,0,4,{d:0,...avLook(A)});cv.style.cssText='width:70%;height:auto;image-rendering:pixelated;display:block;margin:auto';m.innerHTML='';m.appendChild(cv)}}const fr=!ow&&typeof RT!='undefined'&&RT.fr;{const tc=TT_cur(),T=tc&&TT_info(tc),el=$('#idTitle')||(()=>{const e=document.createElement('div');e.id='idTitle';e.style.cssText='font-size:11px;color:#fde047;font-weight:bold;min-height:14px';$('#idName').before(e);return e})();el.textContent=T?T[1]+' '+T[2]:''}{const A0=typeof myAv=='function'?myAv():null,PS=G_LOOKS[A0&&A0.ps!=null?A0.ps:GUEST.look]||G_LOOKS[0];$('#idName').textContent=ow?'KANG BO-SUNG':(PS.i+' ')+((fr&&RT.name)||(FRIEND&&FRIEND.short)||GUEST.name||'손님');$('#idName').title=ow?'':PS.n}$('#idSub').textContent=ow?'MASTER':fr?'FRIEND':'GUEST';
+  $('#idBtns').innerHTML=ow?'<button class="xb" style="padding:3px 8px;font-size:11px" onclick="guestEdit()">꾸미기</button><button class="xb" style="padding:3px 8px;font-size:11px" onclick="showTitles()">🏅 칭호</button><button class="xb" style="padding:3px 8px;font-size:11px" onclick="DB.logout();toast(\'게스트로 돌아왔어요.\')">로그아웃</button>':'<button class="xb" style="padding:3px 8px;font-size:11px" onclick="guestEdit()">꾸미기</button><button class="xb" style="padding:3px 8px;font-size:11px" onclick="showTitles()">🏅 칭호</button>'+(fr?'<button class="xb" style="padding:3px 8px;font-size:11px" onclick="friendOut()">로그아웃</button>':'<button class="xb" style="padding:3px 8px;font-size:11px" onclick="showLogin(\'me\')">운영자</button>');
   if(typeof map!='undefined'&&map&&!busy&&!modal&&!dlg&&typeof buildNpcs=='function')buildNpcs();
 }
 function showProfilePic(){openM('<h3>🖼 내 프로필 사진</h3><div style="text-align:center"><canvas id="pfPic" width="240" height="240" style="width:240px;max-width:100%;border:6px solid #e0b840;border-radius:6px;image-rendering:pixelated"></canvas><p style="font-size:13px;margin-top:8px">강보성</p></div>');const x=$('#pfPic').getContext('2d');x.fillStyle='#38bdf8';x.fillRect(0,0,240,240);spr(x,24,24,16,{l:false,c:'#2b3140',h:'#17151c',p:'#17151c',lk:ME_LOOK})}
@@ -1048,21 +1048,25 @@ function sprLook(c,x,y,s,o,col,d){
   if(k.hair=='short'){P(H,[[3,-1,6,1],[2,0,8,1]]);if(front)P(SK,[[3,3,6,1],[4,2,3,1]]);P(H,[[2,3,1,2],[9,3,1,2]])}   // 짧게 세운 머리
   if(k.hair=='slick'){P(H,[[3,0,6,1],[2,1,8,2]]);if(front)P(SK,[[3,3,6,1],[4,2,5,1]]);if(k.hl)P(k.hl,[[4,1,4,1],[2,2,1,1],[9,2,1,1]])}   // 뒤로 넘긴 머리
   if(k.hair=='perm'){P(H,[[3,0,6,1],[1,1,10,2],[0,2,1,3],[11,2,1,3],[1,5,1,3],[10,5,1,3],[2,3,8,1]]);P('#ffffff22',[[3,1,1,1],[6,1,1,1],[9,2,1,1],[1,3,1,1]])}   // 둥근 파마
+  if(k.hair=='buzz'){P(SK+'88',[[3,0,6,1],[2,1,8,1],[1,2,10,1]])}
+  if(k.hair=='pony'){P(H,[[2,3,8,1]]);if(d!=2)P(H,[[10,3,2,2],[11,5,1,4]]);if(d==2||d==1)P(H,[[0,3,2,2],[0,5,1,4]]);P('#ef4444',[[d==2?1:10,4,1,1]])}
   if(k.hair=='bob'){P(H,[[0,3,2,6],[10,3,2,6],[2,8,1,1],[9,8,1,1]]);if(front)P(H,[[2,3,6,1],[2,4,3,1]])}     // 단발
   const T=9;
   if(k.cl=='suit'){if(front){P(k.sh||'#bfdbfe',[[5,T,2,3]]);P(k.tie||'#1d4ed8',[[5,T+1,2,2]]);P('#0002',[[4,T,1,3],[7,T,1,3]])}}
   if(k.cl=='puffer'){P('#ffffff30',[[1,T+1,10,1]]);if(front)P(k.sh||'#9ca3af',[[5,T,2,3]])}
   if(k.cl=='plaid'){P('#ffffff40',[[3,T,1,3],[8,T,1,3],[1,T+1,10,1]]);if(front)P('#0005',[[5,T,1,3]])}
+  if(k.cl=='stripe')P(k.st||'#ffffff80',[[2,T,8,1],[1,T+2,10,1]]);
+  if(k.cl=='hoodie'){P('#0003',[[2,T,8,1]]);if(front){P('#f8fafc',[[5,T+1,1,2],[6,T+1,1,2]]);P('#0002',[[3,T+2,6,1]])}}
   if(k.cl=='collar'&&front)P(k.sh||'#f8fafc',[[4,T,1,2],[7,T,1,2],[5,T,2,1]]);
   if(k.cl=='hanbok'){if(front){P(k.sh||'#fff',[[4,T,1,1],[7,T,1,1],[5,T+1,2,1]]);if(k.tie)P(k.tie,[[6,T+1,3,1],[7,T+2,1,1]])}if(o.l===false&&!k.sit)return}
 }
-function spr(c,x,y,s,o={}){const d=o.d||0,col={H:o.h||'#1b1b26',S:'#f2c9a0',E:'#111',P:o.p||'#8a94a8',M:'#b5655a',C:o.c||'#ece4d0'};
+function spr(c,x,y,s,o={}){const d=o.d||0,col={H:o.h||'#1b1b26',S:o.sk||'#f2c9a0',E:'#111',P:o.p||'#8a94a8',M:'#b5655a',C:o.c||'#ece4d0'};
 PG.forEach((r,j)=>[...r].forEach((k,i)=>{if(k=='.')return;if(d==1&&j>2&&j<9&&'SEM'.includes(k))k='H';if(d==2&&k=='E'&&i>5)k='S';if(d==3&&k=='E'&&i<6)k='S';c.fillStyle=col[k];c.fillRect(x+i*s,y+j*s,s,s)}));
 sprLook(c,x,y,s,o,col,d);
 if(o.gl&&d!=1){c.fillStyle=o.gl;const F=(l,r)=>{for(let i=l;i<=r;i++){c.fillRect(x+i*s,y+5*s,s,s/2);c.fillRect(x+i*s,y+7*s+s/2,s,s/2)}c.fillRect(x+l*s,y+5*s,s/2,3*s);c.fillRect(x+r*s+s/2,y+5*s,s/2,3*s)};if(d!=3)F(2,5);if(d!=2)F(6,9);if(!d)c.fillRect(x+5*s,y+5.5*s,2*s,s/2);}
 if(o.lh){c.fillStyle=col.H;[[0,4],[0,5],[0,6],[0,7],[0,8],[1,7],[1,8],[11,4],[11,5],[11,6],[11,7],[11,8],[10,7],[10,8]].forEach(([a,b])=>c.fillRect(x+a*s,y+b*s,s,s))}
 if(o.lk&&o.lk.skirt&&o.l!==false){c.fillStyle=o.lk.skirt;c.fillRect(x+2*s,y+12*s,8*s,2*s)}
-else if(o.l!==false){c.fillStyle=o.lk&&o.lk.leg||'#34495e';c.fillRect(x+3*s,y+12*s,2*s,o.w?s:2*s);c.fillRect(x+7*s,y+12*s,2*s,o.w?2*s:s)}}
+else if(o.l!==false){c.fillStyle=o.lk&&o.lk.leg||'#34495e';c.fillRect(x+3*s,y+12*s,2*s,o.w?s:2*s);c.fillRect(x+7*s,y+12*s,2*s,o.w?2*s:s);if(o.lk&&o.lk.shorts){c.fillStyle=col.S;if(!o.w)c.fillRect(x+3*s,y+13*s,2*s,s);if(o.w)c.fillRect(x+7*s,y+13*s,2*s,s)}}}
 
 /* 같은 타일이 가로로 이어진 줄에서 몇 번째 칸인지 (간판 글씨용) */
 function runIx(x,y,k){let i=0;while(i<8&&at(x-i-1,y)==k)i++;return i}
