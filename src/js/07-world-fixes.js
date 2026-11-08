@@ -383,3 +383,7 @@ window.sbsNew=u=>{const w=window.open(u,'_blank');if(w){try{w.opener=null}catch(
  A.land=[7,7];A.d={'7,8':['town',11,4]};A.sign={'7,1':'자격증·수상 기록','2,6':'쉼터','16,1':'기록실'};
  A.p=A0.map(n=>n.n=='전시 안내원'?{...n,x:12,y:2}:{...n,x:9,y:5});T.d['11,3']=['agency',7,7];if(M.projects)M.projects.d['7,9']=['agency',7,7];{const O=M.oreumF,OQ=O.m.map(r=>[...r]);if(OQ[4][6]=='.'){OQ[4][6]='㊽';O.m=OQ.map(r=>r.join(''));O.sign['6,4']='기록 키오스크'}}
 })();
+(function fillShortRooms(){
+ /* 화면(10줄)보다 낮은 방은 아래쪽에 바깥 풍경이 비쳐 보여서 바닥을 한 줄 더함 */const A=M.agency;if(A.m.length==9){A.m.splice(8,0,'w'+'f'.repeat(13)+'w'+'ffff'+'w');A.d={'7,9':['town',11,4]}}
+ const P2=M.photo2;if(P2&&P2.m.length==9){const w=[...P2.m[0]].length;P2.m.splice(8,0,'w'+'f'.repeat(w-2)+'w')}
+})();
