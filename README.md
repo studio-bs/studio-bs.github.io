@@ -2,12 +2,13 @@
 
 사이트에는 지금처럼 **index.html 한 파일**을 올려요. 이 압축 파일 안의 index.html이 그 파일이고, src 폴더는 고치기 쉽게 나눠 둔 원본이에요.
 
-**GitHub에 올릴 것:** index.html, src 폴더 (build.cjs, split.cjs, README.md는 처음 한 번만)
+**GitHub에 올릴 것:** index.html, news.json, src 폴더 (build.cjs, split.cjs, README.md는 처음 한 번만)
 나눈 파일을 그대로 올리면 순서 문제로 화면이 안 떠요.
 
 ## 파일 구성
 | 파일 | 내용 |
 |---|---|
+| news.json | STUDIO BS 허브가 읽어 가는 최근 소식 한 줄 (index.html 옆, 사이트 맨 위) |
 | src/page.html | HTML 뼈대 |
 | src/style.css | 화면 스타일 |
 | src/js/01-maps.js | 구역 지도와 NPC |
