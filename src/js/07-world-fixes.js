@@ -361,3 +361,17 @@ const PHOTO_SBS=new Image();PHOTO_SBS.src='data:image/png;base64,iVBORw0KGgoAAAA
  const W=17,row=()=>{const r=Array(W).fill('f');r[0]=r[W-1]='w';return r},S=[Array(W).fill('w'),Array(W).fill('w')];[4,8,12].forEach(x=>S[1][x]='(');for(let y=2;y<8;y++)S.push(row());[4,8,12].forEach(x=>S[4][x]='㏗');S[6][14]='㍵';S[2][1]='㉵';S[2][15]='㉵';S[7][1]='㉵';[2,3].forEach(x=>S[6][x]='㉴');const bot=Array(W).fill('w');bot[8]='x';S.push(bot);
  M.studiobs={n:'STUDIO BS',par:'town',wide:1,bgm:'indoor',land:[8,7],m:S.map(r=>r.join('')),d:{'8,8':['town',11,8]},sign:{'8,1':'PERSONAL WEB WORKS','4,3':'BS World','8,3':'감귤농원','12,3':'혹시나? 역시나!','14,5':'STUDIO BS'},pc:{'4,4':pcs['12,5'],'8,4':pcs['15,5'],'12,4':pcs['18,5']},p:[{...(cur0||{}),x:8,y:2,stay:1,c:'#1c1917',h:'#333',n:'STUDIO BS 안내원',s:['어서 오세요, STUDIO BS예요. 🃏','보성이 직접 만든 사이트들을 모아 둔 곳이에요. 컴퓨터를 눌러 구경해 보세요.','오른쪽 안내판으로 STUDIO BS 홈페이지에 갈 수도 있어요.'],w:0,ch:undefined},{x:6,y:6,c:'#0ea5e9',h:'#222',w:1,n:'구경하는 손님',s:['이걸 혼자 다 만들었대요. 😮']}]};
 })();
+(function studioRoom(){
+ /* STUDIO BS: 허브 메인 화면처럼 크림색 방 + 로고 벽 + 프로젝트 카드 4장 */const S=M.studiobs,pcs=S.pc,old=S.p[0];
+ const W=19,row=(c='f')=>{const r=Array(W).fill(c);r[0]=r[W-1]='w';return r},G=[Array(W).fill('w'),Array(W).fill('w')];for(let x=5;x<14;x++){G[0][x]='㍷';G[1][x]='㍷'}
+ for(let y=2;y<9;y++)G.push(row());[2,6,10,14].forEach(x0=>{for(let y=3;y<6;y++)for(let x=x0;x<x0+3;x++)G[y][x]='㋿'});[3,7,11].forEach(x=>G[7][x]='㏗');G[7][15]='㍹';G[2][1]='㉵';G[2][17]='㉵';G[8][1]='㉵';G[8][17]='㍵';G[8][2]='㉴';G[8][3]='㉴';
+ const bot=Array(W).fill('w');bot[9]='x';G.push(bot);
+ const pc={'3,7':pcs['4,4'],'7,7':pcs['8,4'],'11,7':pcs['12,4']};[[2,'3,7'],[6,'7,7'],[10,'11,7']].forEach(([x0,k])=>{for(let y=3;y<6;y++)for(let x=x0;x<x0+3;x++)pc[x+','+y]=pc[k]});
+ Object.assign(S,{m:G.map(r=>r.join('')),land:[9,8],d:{'9,9':['town',11,8]},rt:{f:'#f7f5f0',l:'#ece7dd',w:'#efebe3',w2:'#e7e2d8'},pc,sign:{'17,7':'STUDIO BS'},
+  p:[{...old,x:9,y:2,stay:1,s:['어서 오세요, STUDIO BS예요. 🃏','오늘은 어떤 카드를 뽑을래요? 카드나 컴퓨터를 눌러 보세요.','오른쪽 아래 안내판으로 STUDIO BS 홈페이지에 갈 수도 있어요.']},{x:13,y:6,c:'#0ea5e9',h:'#222',w:1,n:'구경하는 손님',s:['카드마다 다른 사이트래요. 😮']}]});
+ const T=M.town;T.d['11,7']=['studiobs',9,8];
+ /* 자격 센터: 작게 줄이고 책상·의자 */const A=M.agency,A0=A.p;
+ A.m=['wwwwwwwwwwwwwww','wwCwAwCwAwLwCww','wfffffffffffffw','wf㉶㉶ff㉶㉶ff㉶㉶f㉵w','wfㆎㆎffㆎㆎffㆎㆎffw','wfffffffffffffw','w㉴㉴fffffff㈅fffw','w㉵fffffffffff㉵w','wwwwwwwxwwwwwww'];
+ A.land=[7,7];A.d={'7,8':['town',11,4]};A.sign={'7,1':'자격증·수상 기록','2,6':'쉼터'};A.wide=0;
+ A.p=A0.map(n=>n.n=='전시 안내원'?{...n,x:12,y:2}:{...n,x:9,y:5});T.d['11,3']=['agency',7,7];if(M.projects)M.projects.d['7,9']=['agency',7,7];
+})();
