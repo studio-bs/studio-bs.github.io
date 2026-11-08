@@ -440,7 +440,7 @@ function act(){
   if(modal&&TET.run)return tetRot();
   if(modal&&lbOn())return lbZoom();
   if(modal)return kcAct();
-  if(SIT){if(SIT.k=='ex'){SIT.n++;SIT.up=performance.now();sfx('s');banner(EX_N[SIT.ex]+' '+SIT.n+'회');return}if(SIT.k=='bar'){SIT.n++;SIT.up=performance.now();sfx('s');banner('💪 턱걸이 '+SIT.n+'회');return}return sitUp()}
+  if(SIT){if(SIT.k=='ex'){SIT.n++;SIT.up=performance.now();sfx('s');banner(EX_N[SIT.ex]+' '+SIT.n+'회');return}if(SIT.k=='bar'){SIT.n++;SIT.up=performance.now();sfx('s');banner('💪 턱걸이 '+SIT.n+'회');return}if(SIT.rec)return showRecords();return sitUp()}
   if(busy)return;
   if(dlg)return advance();
   const[dx,dy]=DV[dir],x=px+dx,y=py+dy,n=npcs.find(o=>o.x==x&&o.y==y);
@@ -457,7 +457,7 @@ function act(){
   const k=at(x,y);
   if(k=='㌟'||k=='㌠')return say('흰 트럭',['귤 콘테나를 실어 나르는 흰 트럭이다. 🚚']);if(k=='㌡'||k=='㌢')return say('경운기',[k=='㌡'?'경운기 앞부분이다. 시동 걸면 소리가 크다.':'경운기 뒤에 달아 짐을 싣는 칸이다.']);if(k=='㌣')return say('꽃밭',['어머니가 심은 꽃들이다. 🌸']);if(k=='㌤')return say('쪽파',['쪽파가 파릇파릇 올라와 있다.']);if(k=='㌥')return say('깻잎',['깻잎 향이 은은하다. 🌿']);if(k=='㌧')return say('감귤나무',['나무 아래 땅을 덮어 둔 타이벡 재배 밭이다. 🍊']);
   if(k=='㋪'||k=='㋮')return say('검은 하우스',['콘테나와 농기구를 넣어 두는 검은 하우스다.']);if(k=='㋫'||k=='㋬')return say('농막',['빨간 지붕 농막이다. 안에서 먹고 잘 수 있다. 🏠']);if(k=='㋰')return say('흰 차',['농막 앞에 세워 둔 흰 차다. 🚗']);if(k=='㋱')return say('파란 대문',['돌담 사이의 파란 대문이다.']);if(k=='㋲')return say('농기구',['가위, 톱, 삽 같은 농기구가 정리되어 있다. 🧰']);if(k=='㋵')return say('감귤 콘테나',['귤을 담는 파란 콘테나가 쌓여 있다. 🍊']);if(k=='㋴')return say('하우스 벽',['검은 차광막으로 덮인 벽이다.']);
-  if(k=='ㆎ'&&!CAFE_M[cur]){if(cur=='agency'&&at(x,y-1)=='㉶')return libPick(x,y,'study',1);sitDown(x,y,'bench','🪑 의자에 앉았어요.');return}
+  if(k=='ㆎ'&&!CAFE_M[cur]){if(cur=='agency'&&at(x,y-1)=='㉶')return libPick(x,y,'study',1);if(at(x,y-1)=='㊾'){sitDown(x,y,'bench','🖥 기록 단말기를 켰어요. (A: 다시 열기 · B: 일어나기)');if(SIT){SIT.rec=1;dir=1}setTimeout(()=>{if(SIT&&SIT.rec&&!modal)showRecords()},350);return}sitDown(x,y,'bench','🪑 의자에 앉았어요.');return}
   if(k=='㎭')return showCard();
   if((k=='㏗'||k=='㋿')&&map.pc&&map.pc[x+','+y]){const P1=map.pc[x+','+y];return say(P1[0],P1[2],P1[3]?Object.fromEntries(Object.entries(P1[3]).map(([a,u])=>[a,()=>window.open(u,'_blank','noopener')])):{'🌐 사이트 열기':()=>window.open(P1[1],'_blank','noopener')})}
   if(k=='㏎')return say('키위 덕',['덕 아래로 키위가 주렁주렁 달려 있다. 🥝','마을 게시판에 골드키위 판매 안내가 있다.'],{'📌 판매 안내 보기':()=>showKiwi()});
