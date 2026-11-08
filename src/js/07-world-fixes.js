@@ -254,7 +254,7 @@ function drawChicks(t){const C=map.chicks;if(!C)return;C.forEach((q,i)=>{const a
  /* 서 있는 자리 오류 */const mv=(id,n,x,y)=>{(M[id].p||[]).filter(o=>o.n==n).forEach(o=>{o.x=x;o.y=y})};mv('udo','도항선 직원',4,13);mv('uncleHome','보성 큰외삼촌',4,4);mv('uncleHome','보성 외숙모',10,4);mv('gotF','서귀포 주민',21,4);mv('bowl','송',9,10);
 })();
 /* 이어하기 코드: 다른 기기에서 같은 진행 상황 */
-const SYNC_SKIP=/admin|tok$|bsw_ipc|bsw_visit|sync_code|bsw_guide/;
+const SYNC_SKIP=/admin|tok$|bsw_ipc|bsw_visit|sync_code|bsw_guide|osave_at/;
 function syncGather(){const o={};try{saveGame();for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(/^bsw_/.test(k)&&!SYNC_SKIP.test(k))o[k]=localStorage.getItem(k)}}catch(e){}return o}
 function syncCode(){try{return localStorage.getItem('bsw_sync_code')||''}catch(e){return''}}
 function syncNew(){const A='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',a=new Uint8Array(12);crypto.getRandomValues(a);return[...a].map(b=>A[b%A.length]).join('')}
@@ -265,7 +265,14 @@ function syncMsg(t){const m=$('#syM');if(m)m.textContent=t;else toast(t)}
 async function syncMake(){const c=syncNew();syncMsg('만드는 중…');try{if(await syncPut(c)){localStorage.setItem('bsw_sync_code',c);showSync()}else syncMsg('만들지 못했어요. 잠시 뒤 다시 해 주세요.')}catch(e){syncMsg('아직 서버 설정이 안 끝났거나 연결되지 않았어요.')}}
 async function syncNow(){syncMsg('저장 중…');try{syncMsg(await syncPut(syncCode())?'☁ 저장했어요.':'저장하지 못했어요.')}catch(e){syncMsg('연결되지 않았어요.')}}
 async function syncLoad(){const c=($('#syI').value||'').toUpperCase().replace(/[^A-Z2-9]/g,'');if(c.length!=12)return syncMsg('코드 12자리를 확인해 주세요.');syncMsg('불러오는 중…');try{const r=await DB.rpc('save_get',{p_code:c});if(!r||!r.ok)return syncMsg('코드를 찾지 못했어요.');for(const k in r.data)if(/^bsw_/.test(k)&&!SYNC_SKIP.test(k)&&typeof r.data[k]=='string')localStorage.setItem(k,r.data[k]);localStorage.setItem('bsw_sync_code',c);location.reload()}catch(e){syncMsg('연결되지 않았어요.')}}
-let SYNC_AT=0;function syncAuto(){const c=syncCode(),n=Date.now();if(!c||n-SYNC_AT<60000)return;SYNC_AT=n;syncPut(c).catch(()=>{})}
+/* 주인장: 로그인하면 진행 상황을 서버에 자동 저장, 다른 기기에서 로그인하면 불러옴 */
+const oAt=()=>{try{return +localStorage.getItem('bsw_osave_at')||0}catch(e){return 0}};
+async function ownerSync(pull){if(!isOwner())return;try{const r=await DB.rpc('owner_save_get');if(!r||!r.ok)return;const D0=r.data,sAt=D0&&+D0.__at||0;
+ if(D0&&sAt>oAt()){if(!pull)return;for(const k in D0)if(/^bsw_/.test(k)&&!SYNC_SKIP.test(k)&&typeof D0[k]=='string')localStorage.setItem(k,D0[k]);localStorage.setItem('bsw_osave_at',String(sAt));try{sessionStorage.setItem('bsw_opulled','1')}catch(e){}location.reload();return}
+ const d=syncGather(),n=Date.now();d.__at=n;const w=await DB.rpc('owner_save_put',{p_data:d});if(w&&w.ok)localStorage.setItem('bsw_osave_at',String(n))}catch(e){}}
+setTimeout(()=>{try{if(sessionStorage.getItem('bsw_opulled')){sessionStorage.removeItem('bsw_opulled');toast('☁ 다른 기기에서 하던 진행 상황을 불러왔어요.')}}catch(e){}if(isOwner())ownerSync(1)},1500);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&isOwner()&&!modal&&!dlg&&!busy)ownerSync(1)});
+let SYNC_AT=0;function syncAuto(){const n=Date.now();if(n-SYNC_AT<60000)return;SYNC_AT=n;if(isOwner()){ownerSync(0);return}const c=syncCode();if(!c)return;syncPut(c).catch(()=>{})}
 setInterval(syncAuto,60000);document.addEventListener('visibilitychange',()=>{if(document.hidden){SYNC_AT=0;syncAuto()}});
 /* 처음 온 사람 안내 */
 const COURSE=[['house','보성의 집','town','삼화지구의 집 문으로 들어가 보세요.'],['agency','자격·프로젝트 센터','town','삼화지구에 있는 센터예요. 보성이 만든 것들을 볼 수 있어요.'],['orchard','감귤 과수원','orchard','삼화지구에서 아래로 내려가면 나와요.'],['library','음악 서재','samgeori','공원에 있어요. 노래를 들을 수 있어요.'],['terminal','제주공항 터미널','airport','여기서 서울, 부산으로 날아갈 수 있어요.'],['seongsan','성산일출봉','seongsan','제주 동쪽 끝이에요. 정상에도 올라가 보세요.']];
@@ -372,7 +379,7 @@ window.sbsNew=u=>{const w=window.open(u,'_blank');if(w){try{w.opener=null}catch(
   p:[{...old,x:9,y:2,stay:1,n:'STUDIO BS 총괄',s:['어서 오세요, STUDIO BS예요. 🃏','오늘은 어떤 카드를 뽑을래요? 카드나 컴퓨터를 눌러도 되고, 저한테 말해도 돼요.'],ch:{'🃏 STUDIO BS 홈페이지':()=>sbsHub(),'🍊 보성이네 감귤농원':()=>sbsOpen(pcs['8,4']),'🎱 혹시나? 역시나!':()=>sbsOpen(pcs['12,4']),'🎮 BS World 소개':()=>sbsOpen(pcs['4,4'])}},{x:12,y:9,c:'#0ea5e9',h:'#222',w:1,n:'구경하는 손님',s:['카드마다 다른 사이트래요. 😮']}]});
  const T=M.town;T.d['11,7']=['studiobs',9,11];
  /* 자격 센터: 작게 줄이고 책상·의자 */const A=M.agency,A0=A.p;
- A.m=['wwwwwwwwwwwwwww','wwCwAwCwAwLwCww','wfffffffffffffw','wf㉶㉶ff㉶㉶ff㉶㉶f㉵w','wfㆎㆎffㆎㆎffㆎㆎffw','wfffffffffffffw','w㉴㉴fffffff㈅fffw','w㉵fffffffffff㉵w','wwwwwwwxwwwwwww'];
- A.land=[7,7];A.d={'7,8':['town',11,4]};A.sign={'7,1':'자격증·수상 기록','2,6':'쉼터'};A.wide=0;
- A.p=A0.map(n=>n.n=='전시 안내원'?{...n,x:12,y:2}:{...n,x:9,y:5});T.d['11,3']=['agency',7,7];if(M.projects)M.projects.d['7,9']=['agency',7,7];
+ A.m=['wwwwwwwwwwwwwwwwwwww','wwCwAwCwAwLwCwwwwwww','wfffffffffffffw㊿㊿㊿㊿w','wf㉶㉶ff㉶㉶ff㉶㉶f㉵wffffw','wfㆎㆎffㆎㆎffㆎㆎffwf㊾ffw','wfffffffffffffffㆎffw','w㉴㉴fffffff㈅fffwfff㉵w','w㉵fffffffffff㉵wffffw','wwwwwwwxwwwwwwwwwwww'];A.wide=1;
+ A.land=[7,7];A.d={'7,8':['town',11,4]};A.sign={'7,1':'자격증·수상 기록','2,6':'쉼터','16,1':'기록실'};
+ A.p=A0.map(n=>n.n=='전시 안내원'?{...n,x:12,y:2}:{...n,x:9,y:5});T.d['11,3']=['agency',7,7];if(M.projects)M.projects.d['7,9']=['agency',7,7];{const O=M.oreumF,OQ=O.m.map(r=>[...r]);if(OQ[4][6]=='.'){OQ[4][6]='㊽';O.m=OQ.map(r=>r.join(''));O.sign['6,4']='기록 키오스크'}}
 })();

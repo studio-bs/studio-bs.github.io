@@ -19,10 +19,11 @@ const DB={
     if(!await DB.rpc('is_admin')){DB.logout();throw new Error('운영자 권한이 없는 계정이에요')}
     visitMarkAdmin();
     try{sessionStorage.setItem('bsw_tok',DB.tok)}catch(e){}
-    idRender();talkLoad();
+    idRender();talkLoad();setTimeout(()=>ownerSync(1),300);
   },
   logout(){DB.tok=null;try{sessionStorage.removeItem('bsw_tok')}catch(e){}idRender();talkLoad()},
   async regList(){const o={};(await DB.req('exam_reg?select=*')).forEach(r=>o[r.key]=r);return o},
+  regPriv(key,b){return DB.req('exam_reg?key=eq.'+encodeURIComponent(key),{method:'PATCH',body:JSON.stringify({private:!!b}),h:{Prefer:'return=minimal'}})},
   regSet(key,exam,part,date){
     const rec={key,exam,part,exam_date:date,receipt:'BS-'+String(Date.now()).slice(-6),created_at:new Date().toISOString()};
     return DB.req('exam_reg?on_conflict=key',{method:'POST',body:JSON.stringify(rec),h:{Prefer:'resolution=merge-duplicates,return=minimal'}});
@@ -113,9 +114,11 @@ async function exCancel(id,p){
   if(!DB.admin())return toast('운영자만 취소할 수 있어요.');
   try{await DB.regDel(id+':'+p);REG=await DB.regList();toast('접수가 취소되었습니다.');exExam(id)}catch(err){toast(dbErr(err))}
 }
+const privBtn=(on,fn)=>`<button class="xb" style="padding:1px 7px;font-size:11px;white-space:nowrap;${on?'background:#7f1d1d;color:#fff':'background:#fff;color:#1e3a8a'}" onclick="${fn}" title="누르면 바뀌어요">${on?'🔒 나만 보기':'🌐 공개'}</button>`;
+async function regPriv(key,b,back){if(!DB.admin())return toast('운영자만 바꿀 수 있어요.');try{await DB.regPriv(key,b);REG=await DB.regList();REC.reg=REG;toast(b?'🔒 나만 보기로 바꿨어요.':'🌐 공개로 바꿨어요.');if(back=='rec')recDraw();else exHist()}catch(e){toast(dbErr(e))}}
 function exHist(){
   const ks=Object.values(REG).sort((a,b)=>String(a.exam_date).localeCompare(String(b.exam_date)));
-  openM('<h3>📋 접수내역</h3>'+adm('ex')+(ks.length?ks.map(r=>`<div class="cd"><b>${esc(r.exam)}${r.part&&r.part!='응시'?' · '+esc(r.part):''}</b><small>시험일 ${fmtD(r.exam_date)} · 접수번호 ${esc(r.receipt)}<br>접수일시 ${fmtT(r.created_at)}</small></div>`).join(''):'<div class="cd">접수 내역이 없습니다.</div>')+exBack('exHome()','처음으로')+exNote);
+  const own=DB.admin();openM('<h3>📋 접수내역</h3>'+adm('ex')+(own?'<p style="font-size:11px;opacity:.75">🔒 나만 보기로 둔 접수는 손님에게 안 보여요. 버튼을 눌러 하나씩 바꿀 수 있어요.</p>':'')+(ks.length?ks.map(r=>`<div class="cd">${own?`<div style="float:right">${privBtn(r.private,`regPriv('${esc(r.key)}',${!r.private})`)}</div>`:''}<b>${r.private?'🔒 ':''}${esc(r.exam)}${r.part&&r.part!='응시'?' · '+esc(r.part):''}</b><small>시험일 ${fmtD(r.exam_date)} · 접수번호 ${esc(r.receipt)}<br>접수일시 ${fmtT(r.created_at)}</small></div>`).join(''):'<div class="cd">접수 내역이 없습니다.</div>')+exBack('exHome()','처음으로')+exNote);
 }
 
 /* ===== Q&A (집 가운데 테이블) ===== */
