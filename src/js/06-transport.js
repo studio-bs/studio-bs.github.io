@@ -420,7 +420,7 @@ function draw(t){
   seaStep(t);
   drawSport(t);
   drawDeco(t);
-  const E=npcs.map(n=>{let nx=n.x,ny=n.y;
+  const E=npcs.map(n=>{let nx=n.x,ny=n.y;if(n.inv)return{y:ny,f:()=>{}};
     if(n.mv){const p=Math.min(1,(t-n.mv.a)/RUN_MS);nx=n.mv.fx+(n.mv.tx-n.mv.fx)*p;ny=n.mv.fy+(n.mv.ty-n.mv.fy)*p}
     if(n.swim&&n.wade){const[a,z,o]=n.swim,L=z-a,q=((t/3600+o)%(L*2)),rt=q<L;nx=rt?a+q:a+L*2-q;ny=n.y;return{y:ny+.5,f:()=>{const X=nx*TS,Y=ny*TS,k=(t/260|0)%2;g.fillStyle=n.c;g.fillRect(X+8,Y+10,16,12);g.fillStyle='#f2c9a0';g.fillRect(X+10,Y,12,11);g.fillStyle=n.h;g.fillRect(X+10,Y-2,12,5);g.fillStyle='#ffffff90';g.fillRect(X+2+k*2,Y+22,28,2)}}}
     if(n.swim){const[a,z,o]=n.swim,L=z-a,q=((t/1400+o)%(L*2)),rt=q<L;nx=rt?a+q:a+L*2-q;ny=n.y;return{y:ny+.5,f:()=>{const X=nx*TS,Y=ny*TS,fx=rt?1:-1,kick=(t/120|0)%2;g.fillStyle='#ffffffb0';g.fillRect(X+16-fx*22,Y+16,8,3);g.fillRect(X+16-fx*14-kick*2,Y+22,6,2);g.fillStyle=n.c;g.fillRect(X+8-fx*6,Y+14,18,8);g.fillStyle='#f2c9a0';g.fillRect(X+10+fx*10,Y+10,10,10);g.fillStyle=n.h;g.fillRect(X+10+fx*10,Y+8,10,5);g.fillStyle='#f2c9a0';g.fillRect(X+14+fx*(kick?16:6),Y+(kick?8:20),8,3)}}}
