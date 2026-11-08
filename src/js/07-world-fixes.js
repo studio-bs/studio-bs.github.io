@@ -363,13 +363,13 @@ const PHOTO_SBS=new Image();PHOTO_SBS.src='data:image/png;base64,iVBORw0KGgoAAAA
 })();
 window.sbsNew=u=>{const w=window.open(u,'_blank');if(w){try{w.opener=null}catch(e){}}else toast('새 창이 막혔어요. 브라우저에서 팝업을 허용해 주세요.')};window.sbsHub=()=>say('STUDIO BS 총괄',['다른 세계로 가 볼래요? 보성이가 만든 사이트들이 모여 있는 STUDIO BS 홈페이지예요.'],{'예, 가 볼래요':()=>sbsNew('https://studio-bs.pages.dev/'),'아니오':()=>{}});window.sbsOpen=P=>{if(!P)return;say(P[0],P[2],P[3]?Object.fromEntries(Object.entries(P[3]).map(([a,u])=>[a,()=>sbsNew(u)])):{'🌐 사이트 열기':()=>sbsNew(P[1])})};
 (function studioRoom(){
- /* STUDIO BS: 허브 메인 화면처럼 크림색 방 + 로고 벽 + 프로젝트 카드 4장 */const S=M.studiobs,pcs=S.pc,old=S.p[0];
+ /* STUDIO BS: 허브 메인 화면처럼 크림색 방 + 로고 벽 + 프로젝트 카드 4장 */const S=M.studiobs,pcs={...M.studiobs.pc},old=S.p[0];if(pcs['4,4']){const BW=[...pcs['4,4']];BW[3]={};pcs['4,4']=BW}
  const W=19,row=(c='f')=>{const r=Array(W).fill(c);r[0]=r[W-1]='w';return r},G=[Array(W).fill('w'),Array(W).fill('w')];for(let x=5;x<14;x++){G[0][x]='㍷';G[1][x]='㍷'}
  for(let y=2;y<12;y++)G.push(row());[2,6,10,14].forEach(x0=>{for(let y=4;y<7;y++)for(let x=x0;x<x0+3;x++)G[y][x]='㋿'});[3,7,11].forEach(x=>G[8][x]='㏗');G[8][15]='㍹';[[1,2],[17,2],[1,11],[17,11]].forEach(([x,y])=>G[y][x]='㉵');[[2,'ㆎ'],[3,'ㆍ'],[4,'ㆎ'],[14,'ㆎ'],[15,'ㆍ'],[16,'ㆎ']].forEach(([x,c])=>G[10][x]=c);[2,3,4,14,15,16].forEach(x=>G[11][x]='㉴');[7,8,10,11].forEach(x=>G[11][x]='ㆎ');
  const bot=Array(W).fill('w');bot[9]='x';G.push(bot);
  const pc={'3,8':pcs['4,4'],'7,8':pcs['8,4'],'11,8':pcs['12,4']};[[2,'3,8'],[6,'7,8'],[10,'11,8']].forEach(([x0,k])=>{for(let y=4;y<7;y++)for(let x=x0;x<x0+3;x++)pc[x+','+y]=pc[k]});
  Object.assign(S,{m:G.map(r=>r.join('')),land:[9,11],d:{'9,12':['town',11,8]},rt:{f:'#f7f5f0',l:'#ece7dd',w:'#efebe3',w2:'#e7e2d8'},pc,sign:{},
-  p:[{...old,x:9,y:2,stay:1,n:'STUDIO BS 총괄',s:['어서 오세요, STUDIO BS예요. 🃏','오늘은 어떤 카드를 뽑을래요? 카드나 컴퓨터를 눌러도 되고, 저한테 말해도 돼요.'],ch:{'🃏 STUDIO BS 홈페이지':()=>sbsHub(),'🍊 보성이네 감귤농원':()=>sbsOpen(pcs['8,4']),'🎱 혹시나? 역시나!':()=>sbsOpen(pcs['12,4']),'🌐 BS World 소개':()=>sbsOpen(pcs['4,4'])}},{x:12,y:9,c:'#0ea5e9',h:'#222',w:1,n:'구경하는 손님',s:['카드마다 다른 사이트래요. 😮']}]});
+  p:[{...old,x:9,y:2,stay:1,n:'STUDIO BS 총괄',s:['어서 오세요, STUDIO BS예요. 🃏','오늘은 어떤 카드를 뽑을래요? 카드나 컴퓨터를 눌러도 되고, 저한테 말해도 돼요.'],ch:{'🃏 STUDIO BS 홈페이지':()=>sbsHub(),'🍊 보성이네 감귤농원':()=>sbsOpen(pcs['8,4']),'🎱 혹시나? 역시나!':()=>sbsOpen(pcs['12,4']),'🎮 BS World 소개':()=>sbsOpen(pcs['4,4'])}},{x:12,y:9,c:'#0ea5e9',h:'#222',w:1,n:'구경하는 손님',s:['카드마다 다른 사이트래요. 😮']}]});
  const T=M.town;T.d['11,7']=['studiobs',9,11];
  /* 자격 센터: 작게 줄이고 책상·의자 */const A=M.agency,A0=A.p;
  A.m=['wwwwwwwwwwwwwww','wwCwAwCwAwLwCww','wfffffffffffffw','wf㉶㉶ff㉶㉶ff㉶㉶f㉵w','wfㆎㆎffㆎㆎffㆎㆎffw','wfffffffffffffw','w㉴㉴fffffff㈅fffw','w㉵fffffffffff㉵w','wwwwwwwxwwwwwww'];

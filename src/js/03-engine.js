@@ -387,7 +387,7 @@ function act(){
   if(k=='㎯'&&cur=='seoul'&&x>=19)return say('문화역서울284',['옛 서울역 건물이에요. 지금은 전시와 공연이 열리는 문화 공간이에요. 🏛']);
   if(k=='㎰')return showCafe('ysV');if(k=='㎱')return showCafe('ysC');if(k=='㎴')return showCafe(map.food||'ysS');
   if(k=='㎲')return showLocker();
-  if(k=='㎳')return say(map.airT?'공항 사무실':'역 사무실',['직원들이 일하는 사무실이에요. 아래쪽 문으로 들어갈 수 있어요. 🚪']);
+  if(k=='㎳')return say(Object.values(map.sign||{}).find(v=>/사무실/.test(v))||(map.airT?'공항 사무실':'역 사무실'),['직원들이 일하는 사무실이에요. 아래쪽 문으로 들어갈 수 있어요. 🚪']);
   if(k=='㋧')return say('해녀의 집 안내판',['혼저옵서! 해녀들이 바당에서 직접 잡은 해산물을 파는 집이우다. 🌊']);if(k=='㋥')return say('테왁과 망사리',['물질할 때 쓰는 주황색 테왁과 그물이다.','숨비소리 끝에 잡은 것들을 여기 담는다.']);if(k=='㋦')return say('상자',['해산물을 담는 빨간 상자와 파란 상자다.']);if(k=='㋣'||k=='㋨'||k=='㋢')return say('현무암 벽',['구멍이 숭숭 난 제주 현무암이다.']);if(k=='㋩'){sitDown(px,py,'bench','불턱 앞에서 몸을 녹여요. 🔥');SIT.lib='fire';return}
   if(k=='㋠')return showSpot((map.spots&&map.spots[x+','+y])||cur);if(k=='㋡')return say('운동기구',['정상에 있는 야외 운동기구다. 💪','사람들이 몸을 풀고 있다.']);
   if(k=='㋘')return say('오름',['풀이 곱게 자란 오름이다. 올라가는 길이 나 있다. ⛰']);
@@ -402,7 +402,7 @@ function act(){
   if(cur=='gym'&&k=='㉸'){exStart(x,y,'run');return}
   if(cur=='gym'&&k=='㉹'){exStart(x,y,'bench');return}
   if(k=='㉼'&&cur=='swim')return say('탈의실 문',[POOL.pick?'받은 수영복에 맞는 탈의실로 들어가세요.':'먼저 안내 데스크에서 수영복을 받아 주세요.']);
-  if(FURN_T[k]&&!/^(cinema|cineH)/.test(cur)||(FURN_T[k]&&!'㉰㉱'.includes(k))){const A=FURN_T[k];return say(A[0],A[1])}
+  if(FURN_T[k]&&!/^(cinema|cineH)/.test(cur)||(FURN_T[k]&&!'㉰㉱'.includes(k))){const A=FURN_T[k];if(k=='㉶'){if(/^off_/.test(cur))return say('업무 책상',['서류와 결재판이 쌓여 있다. 📂']);if(cur=='atelier')return say('작업 책상',['스케치북과 물감이 펼쳐져 있다. 🎨']);if(cur=='agency')return say('공부 책상',['자격증 문제집과 형광펜이 놓여 있다. ✏'])}return say(A[0],A[1])}
   if(map.panel&&map.panel[x+','+y]){const A=map.panel[x+','+y];return say(A[0],A[1])}
   if(k=='㌉')return showCine();
   if(k=='㉽')return say('상영 전광판',['상영작과 시간은 키오스크에서 볼 수 있어요.']);
@@ -464,7 +464,7 @@ function act(){
   else if(k=='ŋ')say('개집',isNight()&&!WET()?['쿨쿨… 💤','개가 웅크리고 잠들어 있다.']:WET()?['개집 안에서 두 눈만 반짝인다.','비가 그칠 때까지 나올 생각이 없나 보다.']:['개집이 비어 있다.','주인은 밖에서 신나게 뛰어다니는 중이다.']);
   else if(k=='¶')say('밥상',elderHome()?['따뜻한 귤차와 귤이 놓여 있다. 🍊']:['귤 옆에 쪽지가 있다.','"산책 나감. 귤 먹엉 가라."']);
   else if(k=='§')say('이불',['폭신한 이불이 잘 개어져 있다.']);
-  else if(k=='†')say('창문',isNight()?['창밖으로 별이 보인다.']:['창밖으로 귤나무가 보인다.']);
+  else if(k=='†')say('창문',isNight()?['창밖으로 별이 보인다.']:cur=='gmHome'?['창밖으로 닭장이랑 꽃밭이 보인다. 🐔🌼']:cur=='uncleHome'?['창밖으로 옆집 외할아버지댁 마당이 보인다.']:['창밖으로 귤나무가 보인다.']);
   else if(k=='ψ')showKakao();
   else if(k=='X'&&cur=='vc')showRed();
   else if(k=='Ω')say('농구 골대',['그물이 살짝 흔들린다. 🏀','누가 방금까지 슛 연습을 한 모양이다.']);
