@@ -28,12 +28,12 @@ setInterval(()=>{
     if(!n.w||Math.random()<(n.pet?.05:.5))return;
     const d=Math.random()*4|0,nx=n.x+DV[d][0],ny=n.y+DV[d][1];
     n.dir=d;
-    if(Math.abs(nx-n.hx)<3&&Math.abs(ny-n.hy)<3&&free(nx,ny)&&!nearKey(nx,ny)){n.x=nx;n.y=ny}
+    if(Math.abs(nx-n.hx)<3&&Math.abs(ny-n.hy)<3&&free(nx,ny)&&!nearKey(nx,ny)&&!npcs.some(o=>o!==n&&!o.w&&!o.sit&&!o.ani&&!o.pet&&Math.abs(o.x-nx)<=1&&Math.abs(o.y-ny)<=1)){n.x=nx;n.y=ny}
   });
 },1100);
 
 function startGame(){
-  acUnlock();idRender();if(!isOwner()&&QS.get('nog')!='1'){$('#st').style.display='none';return guestEdit(true)}startReal()}
+  acUnlock();idRender();const back=(typeof ACC!='undefined'&&ACC.me)||(typeof myAv=='function'&&myAv())||(typeof RT!='undefined'&&RT.fr);if(!isOwner()&&!back&&QS.get('nog')!='1'&&!(typeof LGS!='undefined'&&LGS.start)){$('#st').style.display='none';return guestEdit(true)}if(!isOwner()&&!back&&typeof LGS!='undefined'&&LGS.start){$('#st').style.display='none';GS.pending=true;return}startReal()}
 function startReal(){
   friendBoot();idRender();setTimeout(accessHit,1500);setTimeout(rtStart,2000);
   if(DB.tok)DB.rpc('is_admin').then(v=>{if(!v)DB.logout()}).catch(e=>{if(e&&e.status)DB.logout()});   // 만료되거나 잘못된 로그인 정리

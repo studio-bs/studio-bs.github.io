@@ -68,6 +68,7 @@ function buildNpcs(){
   if(rain&&map.o&&map.umb&&!isNight())map.umb.forEach(([x,y,c],i)=>npcs.push({x,y,hx:x,hy:y,dir:0,c:'#6b7280',h:'#222',w:1,um:c,n:'우산 쓴 주민',s:UMB[i%UMB.length]}));
   metroCrowd();
   declog();
+  npcFence();
 }
 /* 지하철 이용객: 출퇴근 > 낮 > 저녁 늦게 > 새벽 순으로 많음 */
 const RIDER_C=['#334155','#1e40af','#7c3aed','#b91c1c','#0f766e','#a16207','#475569','#be185d','#111827','#0369a1'],RIDER_H=['#222','#3f2a1c','#111','#5b4636','#9ca3af'],RIDER_T=[['열차가 곧 들어온대요.'],['오늘 사람 정말 많네요.'],['환승하러 가는 길이에요.'],['이어폰 끼고 가면 금방이에요. 🎧'],['퇴근하면 뭐 먹지…'],['한 칸만 더 가면 돼요.']];
@@ -146,7 +147,7 @@ const pbSc=(P,pose)=>P.scene=='mix'?PB_SC[1+(pose+(P.mix||0))%8][0]:P.scene;
 function showBooth(kind){pbStop();const F=kind=='four',BG=F?['#fbcfe8','#bfdbfe','#bbf7d0','#fde68a','#1f2937']:['#ffffff','#bfdbfe','#d1d5db'];PB={kind,bg:BG[0],fr:F?'#111827':'#fff',shots:[],st:null,v:null,tm:0,to:0,busy:false};
  openM(`<h3>${F?'📸 즉석사진 기계':'🪪 증명사진 기계'}</h3><div class="cd" style="font-size:12px">${F?'4번 연속으로 찍어 한 장으로 뽑아 줘요.':'배경을 고르고 찍으면 네 장짜리로 뽑아 줘요.'} 찍은 사진은 이 기기에만 남아요.</div><div style="text-align:center"><canvas id="pbC" width="${F?400:300}" height="${F?300:400}" style="max-width:100%;max-height:44vh;border-radius:8px;background:#111"></canvas></div><div class="qbtn" style="justify-content:center;margin:6px 0">${BG.map(c=>`<button class="xb" style="background:${c};width:34px;height:26px;border:1px solid #6b7280" aria-label="배경색" onclick="PB.bg='${c}';PB.scene='';pbPrev()"></button>`).join('')}</div>${F?`<div class="qbtn" style="justify-content:center;flex-wrap:wrap;margin:6px 0">${PB_SC.slice(1).map(([k,n])=>`<button class="xb" onclick="PB.scene='${k}';PB.mix=Math.random()*8|0;pbPrev()">${n}</button>`).join('')}</div>`:''}<div class="qbtn" style="justify-content:center"><button class="xb" id="pbCam" onclick="pbCam()">📷 내 카메라 쓰기</button>${TOUCH_DEV?'<label class="xb" style="display:inline-block;cursor:pointer">📱 휴대폰 카메라 앱으로 찍기<input id="pbFile" type="file" accept="image/*" capture="user" hidden onchange="pbFileUse(this)"></label>':''}<button class="xb big" id="pbGo" onclick="pbShoot()">찍기</button></div><div id="pbOut" style="text-align:center;margin-top:8px"></div>`);pbPrev();PB.tm=setInterval(pbPrev,120)}
 function pbFace(c,w,h,pose){const P=PB,SC=P.kind=='four'&&P.scene?pbSc(P,Math.max(0,pose)):'';c.fillStyle=P.bg;c.fillRect(0,0,w,h);if(SC)pbScene(c,w,h,SC,true);const VS=P.v&&P.v.videoWidth?P.v:P.img;if(VS){const vw=VS.videoWidth||VS.naturalWidth,vh=VS.videoHeight||VS.naturalHeight,sc=Math.max(w/vw,h/vh),dw=vw*sc,dh=vh*sc;c.save();if(VS===P.v){c.translate(w,0);c.scale(-1,1)}c.drawImage(VS,(w-dw)/2,(h-dh)/2,dw,dh);c.restore();if(SC)pbScene(c,w,h,SC,false);return}
- c.save();c.imageSmoothingEnabled=false;const s=Math.floor(Math.min(w,h)*(P.kind=='id'?.05:.035));c.translate(Math.round(w/2-6*s),Math.round(P.kind=='id'?h*.2:h*.18+(pose%2)*s));spr(c,0,0,s,{d:0,l:false,...playerLook()});c.restore();if(P.kind=='four'&&pose>=0){c.font=Math.round(h*.16)+'px sans-serif';c.textAlign='center';c.fillText(['✌️','😄','💖','🍊'][pose%4],w*.82,h*.28)}}
+ const BD=P.kind!='id'?coBuddy(2):null;c.save();c.imageSmoothingEnabled=false;const s=Math.floor(Math.min(w,h)*(P.kind=='id'?.05:BD?.03:.035));if(BD){const ty=Math.round(h*.22+(pose%2)*s);c.save();c.translate(Math.round(w/2-12.5*s),ty);spr(c,0,0,s,{d:0,l:false,...playerLook()});c.restore();c.translate(Math.round(w/2+.5*s),ty-((pose+1)%2)*s);spr(c,0,0,s,{d:0,l:false,...BD.look});c.restore();c.font='bold '+Math.round(h*.045)+'px sans-serif';c.fillStyle='#0f172a';c.textAlign='center';c.fillText('🤝 '+BD.name+' 님과 함께',w/2,h*.94);c.textAlign='start'}else{c.translate(Math.round(w/2-6*s),Math.round(P.kind=='id'?h*.2:h*.18+(pose%2)*s));spr(c,0,0,s,{d:0,l:false,...playerLook()});c.restore()}if(P.kind=='four'&&pose>=0){c.font=Math.round(h*.16)+'px sans-serif';c.textAlign='center';c.fillText(['✌️','😄','💖','🍊'][pose%4],w*.82,h*.28)}}
 function pbPrev(){const C=$('#pbC');if(!PB||!C||PB.busy&&PB.flash==null)return;const c=C.getContext('2d');pbFace(c,C.width,C.height,PB.shots.length);if(PB.cd){c.fillStyle='#0006';c.fillRect(0,0,C.width,C.height);c.fillStyle='#fff';c.font='bold 90px sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillText(PB.cd,C.width/2,C.height/2);c.textBaseline='alphabetic'}if(PB.flash){c.fillStyle='#fff';c.fillRect(0,0,C.width,C.height)}}
 const TOUCH_DEV=matchMedia('(pointer:coarse)').matches,IN_APP=/KAKAOTALK|Instagram|FBAN|FBAV|NAVER\(inapp|Line\/|everytimeApp|DaumApps/i.test(navigator.userAgent);
 async function pbCam(){if(!PB)return;if(IN_APP)toast('앱 안의 브라우저는 카메라가 막혀 있을 수 있어요. 안 되면 사파리나 크롬으로 열거나 아래 카메라 앱 버튼을 써 주세요.');if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)return pbCamFail('이 브라우저에서 카메라를 열 수 없어요.');try{let st;try{st=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:640},height:{ideal:480}},audio:false})}catch(e1){if(e1&&e1.name=='NotAllowedError')throw e1;st=await navigator.mediaDevices.getUserMedia({video:true,audio:false})}if(!PB){st.getTracks().forEach(t=>t.stop());return}const v=document.createElement('video');v.muted=true;v.autoplay=true;v.playsInline=true;v.setAttribute('playsinline','');v.setAttribute('muted','');v.setAttribute('webkit-playsinline','');v.style.cssText='position:fixed;left:0;bottom:0;width:160px;height:120px;opacity:.02;pointer-events:none;z-index:1';document.body.appendChild(v);v.srcObject=st;PB.st=st;PB.v=v;try{await v.play()}catch(e){}const P=PB,t0=Date.now();const wait=()=>{if(PB!==P)return;if(v.videoWidth&&v.readyState>=2){$('#pbCam').disabled=true;pbPrev();return}try{v.play().catch(()=>{})}catch(e){}if(Date.now()-t0>8000){pbCamFail('카메라 화면을 받지 못했어요. 아래 카메라 앱 버튼으로 찍어 보세요.');return}setTimeout(wait,200)};wait()}catch(e){pbCamFail(e&&e.name=='NotAllowedError'?'카메라 권한이 거부됐어요.':'이 브라우저에서 카메라를 열 수 없어요.')}}
@@ -340,6 +341,7 @@ function furn(t,f,fl,wl,x,y){const n=performance.now();switch(t){
 }}
 /* 가구 말 걸기 */
 const FURN_T={'㉰':['매점',['고소한 냄새가 난다. 🍿']],'㉱':['매표소',['오늘 볼 영화를 고르는 곳이다.']],'㉼':['상영관 문',['조용히 들어가자.']],'㉳':['헌혈 의자',['반쯤 누운 채 헌혈하는 의자다. 🩸','주인장은 여기 167번 앉았다.']],'㉵':['화분',['잎이 반질반질하다. 🌿']],'㉶':['책상',['시험지와 연필이 놓여 있다. ✏']],'㉷':['칠판',['빽빽하게 필기가 되어 있다.']],'㉸':['러닝머신',['벨트가 돌아간다. 🏃']],'㉹':['벤치프레스',['봉이 꽤 무거워 보인다. 🏋']],'㉺':['매트',['스트레칭하기 좋은 매트다.']],'㉻':['전시 화면',['작업물 소개가 돌아가고 있다. 🖥']],'㉮':['헌혈 간식대',['초코파이와 음료가 놓여 있다.','헌혈 끝나고 먹는 초코파이는 왜 이렇게 맛있을까. 🍫']],'㉯':['구급함',['응급 물품이 정리되어 있다.']],'㈀':['장롱',['이불과 겨울옷이 차곡차곡 들어 있다.']],'㈁':['화장대',['거울이 깨끗하다. 🪞']],'㈂':['TV장',['리모컨이 가지런히 놓여 있다. 📺']],'㈃':['밥상',['귤 한 바구니와 반찬이 차려져 있다. 🍊']],'㈄':['신발장',['신발이 나란히 들어 있다. 👟']],'㈅':['안내판',['층별 안내와 이용 규칙이 적혀 있다.']],'㈆':['열람석',['스탠드 불빛 아래 조용히 공부하는 자리다. 📖']],'㈇':['컴퓨터 책상',['작은 모니터가 켜져 있다. 💻']],'㈈':['퍼즐 탁자',['색깔 블록이 맞춰지다 말았다. 🧩']],'㈉':['촬영 조명',['찰칵! 눈이 부시다. 📸']]};
+const MM_Q=[];let MM_T=0;function mmLater(id,b){MM_Q.push([id,b]);if(MM_T)return;const ric=window.requestIdleCallback||(f=>setTimeout(()=>f({timeRemaining:()=>8}),60));const run=dl=>{let n=0;while(MM_Q.length&&(n++<2||dl.timeRemaining()>4)){const[i,el]=MM_Q.shift();el.style.backgroundImage='url('+(mmThumb[i]||(mmThumb[i]=mmShape(i)))+')'}if(MM_Q.length)ric(run);else MM_T=0};MM_T=1;ric(run)}
 function buildMiniMap(){
   const box=$('#minimap-container');if(!box)return;
   box.innerHTML='';mmEls={};mmNow=mmRegion();mmLast=null;
@@ -347,7 +349,7 @@ function buildMiniMap(){
   (mmNow=='seoul'?MM_SEOUL:mmNow=='busan'?MM_BUSAN:mmNow=='incheon'?MM_INCHEON:MM_NODES).forEach(([id,label,full])=>{
     const b=document.createElement('button');
     b.type='button';b.className='minimap-node '+id;b.title=full;
-    b.style.backgroundImage='url('+mmShape(id)+')';
+    if(mmThumb[id])b.style.backgroundImage='url('+mmThumb[id]+')';else mmLater(id,b);
     b.innerHTML='<span class="lb">'+label+'</span>';
     b.addEventListener('click',()=>{if(busy||modal)return;if(!mmOpen(id))return mmLockMsg();mmPin=false;mmFlash=false;syncMiniMap();fastGo(id)});
     box.appendChild(b);mmEls[id]=b;
@@ -462,7 +464,7 @@ function act(){
   if(k=='ㆎ'&&!CAFE_M[cur]){if(cur=='agency'&&at(x,y-1)=='㉶')return libPick(x,y,'study',1);if(at(x,y-1)=='㊾'){sitDown(x,y,'bench','🖥 기록 단말기를 켰어요. (A: 다시 열기 · B: 일어나기)');if(SIT){SIT.rec=1;dir=1}setTimeout(()=>{if(SIT&&SIT.rec&&!modal)showRecords()},350);return}sitDown(x,y,'bench','🪑 의자에 앉았어요.');return}
   if(k=='㎭')return showCard();
   if((k=='㏗'||k=='㋿')&&map.pc&&map.pc[x+','+y]){const P1=map.pc[x+','+y];return say(P1[0],P1[2],P1[3]?Object.fromEntries(Object.entries(P1[3]).map(([a,u])=>[a,()=>window.open(u,'_blank','noopener')])):{'🌐 사이트 열기':()=>window.open(P1[1],'_blank','noopener')})}
-  if(k=='㏎')return say('키위 덕',['덕 아래로 키위가 주렁주렁 달려 있다. 🥝','마을 게시판에 골드키위 판매 안내가 있다.'],{'📌 판매 안내 보기':()=>showKiwi()});
+  if(k=='㏎'&&hvAct('kiwi',x,y))return;if(k=='㏎')return say('키위 덕',['덕 아래로 키위가 주렁주렁 달려 있다. 🥝','마을 게시판에 골드키위 판매 안내가 있다.'],{'📌 판매 안내 보기':()=>showKiwi()});
   if(k=='㏈')return showLift();
   if(map.icn&&(k=='㎻'||(k=='l'&&x<15)))return say('체크인',['국내선(제주)과 국제선 중 어디로 가세요? ✈'],{'✈ 국내선 · 제주 가기':()=>showFlight(),'🌏 국제선':()=>say('국제선',['BS 에어 국제선은 아직 취항 준비 중이에요. ✈'],{'🗺 여행 지도 보기':()=>showTravel()})});if(map.icn&&k=='l')return say('체크인',['BS 에어 국제선은 아직 취항 준비 중이에요. ✈','실제 비행기를 보고 싶으면 여행 지도를 열어 보세요.'],{'🗺 여행 지도 보기':()=>showTravel()});if(k=='㎻')return map.airT?showFlight():showKtxTicket();if(k=='㏅')return say('서울역 버스환승센터',['버스 타는 곳이에요. 심야버스는 길가에서 탈 수 있어요. 🚌']);if(k=='㎾')return say(map.airT?'줄 서는 곳':'주차장',map.airT?['수속 줄을 안내하는 줄이에요.']:[(map.m.join('').includes('r')&&/공항/.test(map.n)?'공항 주차장':map.n+' 주차장')+'이에요. 차가 빼곡하네요. 🚗']);if(k=='㎸'||(k=='ㅰ'&&map.ktxPf))return ktxBoard();if(k=='㎷')return ktxGate('K');if(k=='㎹')return showRailBoard();
   if(k=='㎺')return ktxGate('M');if(k=='㎶')return say('시계탑',['약속 장소로 많이 쓰이는 광장의 시계탑이에요. 🕰']);if(k=='㎼')return say('분수',['시원하게 물이 솟는다. ⛲']);
@@ -488,6 +490,16 @@ function act(){
   if(map.panel&&map.panel[x+','+y]){const A=map.panel[x+','+y];return say(A[0],A[1])}
   if(k=='㌉')return showCine();
   if(k=='㉽')return say('상영 전광판',['상영작과 시간은 키오스크에서 볼 수 있어요.']);
+  if(k=='㊹')return hvCrate(x,y);
+  if(k=='㊸')return trackSign();
+  if(k=='㊷'){VS.pick=null;return vsMenu()}
+  if(k=='㊵')return showHall();
+  if(k=='㊱'){VS.pick=null;return vsMenu()}
+  if(k=='㊲'||k=='㊰')return say('리그 부스',[VS.on?'⚔ 지금 '+rtLabel(VS.peer)+' 님과 대결 중이에요! 🔥':'🎙 옛날 스타리그처럼 부스에 한 명씩 들어가 겨루는 곳이에요.','유리 부스(PC)를 보고 A를 누르면 같은 곳 사람에게 대전을 신청할 수 있어요.']);
+  if(k=='㊯')return say('관람석',['응원하러 온 관람석이다. 📣','경기가 시작되면 여기서 지켜보면 돼요.']);
+  if(k=='㎯'&&cur=='seongsan'&&y<=10)return showCraterView();
+  if(k=='㊴')return showQA();
+  if(k=='㊺'){const v=[0,1,2,3].indexOf(Math.floor(x/2)%4);return [()=>say('📋 운영 시간 안내',['열람실 08:00~23:00 · 매주 금요일 휴무','문헌·디지털정보자료실: 월~목 09:00~22:00, 토·일 09:00~18:00','어린이자료실 09:00~18:00 (금요일 휴무)','대체공휴일과 12월 31일에는 자료실이 쉬어요.']),()=>say('🗺 층별 안내',['1층: 안내·대출, 종합자료실, 중앙 정원, 쉼터, 구내식당','2층: 일반열람실, 자료 열람 공간, 제주 모형','계단은 가운데 "2층 열람실" 표지판 쪽에 있어요.']),()=>say('📋 이용 안내',['열람실에서는 휴대폰을 무음으로 해 주세요.','자리를 오래 비우면 다른 분께 양보해 주세요.','도서관 앞 키오스크에서 공부·독서 시간을 잴 수 있어요.']),()=>say('🍚 구내식당 안내',['구내식당은 1층 왼쪽 아래 문으로 들어가요.','오늘의 메뉴는 식당 안 메뉴판에서 볼 수 있어요.'])][v]()}
   if(k=='㉲'){cineLoad();const L=CINE.now.concat(CINE.up).filter(m=>m.poster&&/^\/[A-Za-z0-9._-]+$/.test(m.poster));if(!L.length)return say('포스터',['포스터를 불러오고 있어요. 잠시 후 다시 봐 주세요.']);const m=L[(x*3)%L.length];return lbOpen('https://image.tmdb.org/t/p/w780'+m.poster,m.title||'포스터')}
   if(k=='㌖'){toast('💧 시원한 물을 마셨어요.');return}
   if(k=='㌗'){toast('🧼 손과 얼굴을 씻었어요. 개운하다!');return}
@@ -625,7 +637,7 @@ function act(){
   else if(k=='N'&&CTS[cur])showCerts(cur);
   else if(map.sh&&'MJNU^BEI'.includes(k))say('전시대',map.sh);
   else if('CLA'.includes(k))showCerts(cur);
-  else if(k=='O')showQA();
+  else if(k=='O')say('테이블',['가족이 둘러앉는 식탁이다. 귤 한 바구니가 놓여 있다. 🍊','방명록은 집 앞 마당의 📜 방명록 게시판으로 옮겼어요.']);
   else if(k=='q'){const mm=(map.memo||{})[x+','+y];if(mm)say('메모',mm.l)}
   else if('gh'.includes(k))sitDown(x,y,'bench','🍃 정자에 앉아 바람을 맞는다.');
   else if('ac'.includes(k))say('정자',['시원한 그늘이 드는 정자다. 아래쪽 마루에 앉을 수 있다.']);
@@ -634,14 +646,14 @@ function act(){
   else if(k==']')sitDown(x,y,'swing','그네를 탄다. 슝~');
   else if(k=='|')sitDown(x,y,'seesaw','시소를 탄다. 혼자서도 어떻게든 된다.');
   else if(k=='['){sitDown(x,y,'bar','철봉에 매달렸다. A(Z)를 누를 때마다 턱걸이! B(X)로 내려오기');}
-  else if(k=='m'||k=='o')citrusAsk();
+  else if(k=='m'||k=='o'){if(!hvAct('gyul',x,y))citrusAsk()}
 }
 
 function cancel(){if(PCG){PCG.a=Math.min(PCG.a,PCG.l-PCG.dur+3100);return}if(SIT&&!modal&&!dlg)return sitUp();if(lbOn())lbClose();else if(modal)closeM();else if(dlg)endDlg()}
 
 function openM(h){held=null;tetStop();sunoStop();$('#mc').innerHTML=h;$('#md').hidden=false;modal=true;document.body.classList.add('modal-on');$('.mb').scrollTop=0;kcSel(null);if(KC.on)kcMove(1);dockPos()}
 function closeM(){if(GS.pending){GS.pending=false;closeMraw();startReal();return}closeMraw()}
-function closeMraw(){tjOff();lckOff();pbStop();clawOff();tvOff();BUS.menu=false;tetFlush();tetStop();sunoStop();$('#md').hidden=true;modal=false;document.body.classList.remove('modal-on');kcSel(null);dockPos();bgmUi()}
+function closeMraw(){if(typeof agStop=='function')agStop();tjOff();lckOff();pbStop();clawOff();tvOff();BUS.menu=false;tetFlush();tetStop();sunoStop();$('#md').hidden=true;modal=false;document.body.classList.remove('modal-on');kcSel(null);dockPos();bgmUi()}
 /* 창 안 커서: 방향키·패드로 고르고 Z·Enter·A로 누름 */
 const KC={on:false,el:null};
 const kcItems=()=>[...$('#mc').querySelectorAll('a[href],button:not(:disabled),summary,input,textarea,select,audio,[onclick]')].filter(e=>e.getClientRects().length&&!e.hidden);
