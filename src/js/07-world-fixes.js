@@ -379,8 +379,8 @@ window.sbsNew=u=>{const w=window.open(u,'_blank');if(w){try{w.opener=null}catch(
   p:[{...old,x:9,y:2,stay:1,n:'STUDIO BS 총괄',s:['어서 오세요, STUDIO BS예요. 🃏','오늘은 어떤 카드를 뽑을래요? 카드나 컴퓨터를 눌러도 되고, 저한테 말해도 돼요.'],ch:{'🃏 STUDIO BS 홈페이지':()=>sbsHub(),'🍊 보성이네 감귤농원':()=>sbsOpen(pcs['8,4']),'🎱 혹시나? 역시나!':()=>sbsOpen(pcs['12,4']),'🎮 BS World 소개':()=>sbsOpen(pcs['4,4'])}},{x:12,y:9,c:'#0ea5e9',h:'#222',w:1,n:'구경하는 손님',s:['카드마다 다른 사이트래요. 😮']}]});
  const T=M.town;T.d['11,7']=['studiobs',9,11];
  /* 자격 센터: 작게 줄이고 책상·의자 */const A=M.agency,A0=A.p;
- A.m=['wwwwwwwwwwwwwwwwwwww','wwCwAwCwAwLwCwwwwwww','wfffffffffffffw㊿㊿㊿㊿w','wf㉶㉶ff㉶㉶ff㉶㉶f㉵wffffw','wfㆎㆎffㆎㆎffㆎㆎffwf㊾ffw','wfffffffffffffffㆎffw','w㉴㉴fffffff㈅fffwfff㉵w','w㉵fffffffffff㉵wffffw','wwwwwwwxwwwwwwwwwwww'];A.wide=1;
- A.land=[7,7];A.d={'7,8':['town',11,4]};A.sign={'7,1':'자격증·수상 기록','2,6':'쉼터','16,1':'기록실'};
+ A.m=['wwwwwwwwwwwwwwwwwwww','wwCwAwCwAwLwCwwwwwww','wfffffffffffffw㊿㊿㊿㊿w','wf㉶㉶ff㉶㉶ff㉶㉶f㉵wffffw','wfㆎㆎffㆎㆎffㆎㆎffwf㊾f㊾w','wfffffffffffffffㆎfㆎw','w㉴㉴fffffff㈅fffwfff㉵w','w㉵fffffffffff㉵wffffw','wwwwwwwxwwwwwwwwwwww'];A.wide=1;
+ A.land=[7,7];A.d={'7,8':['town',11,4]};A.sign={'7,1':'자격증·수상 기록','2,6':'쉼터','16,1':'기록실','18,1':'💪 근손실 방지단 키오스크'};
  A.p=A0.map(n=>n.n=='전시 안내원'?{...n,x:12,y:2}:{...n,x:9,y:5});T.d['11,3']=['agency',7,7];if(M.projects)M.projects.d['7,9']=['agency',7,7];{const O=M.oreumF,OQ=O.m.map(r=>[...r]);if(OQ[4][6]=='.'){OQ[4][6]='㊽';O.m=OQ.map(r=>r.join(''));O.sign['6,4']='기록 키오스크'}}
 })();
 (function hallaGateFix(){
@@ -875,3 +875,62 @@ async function myNotes(){NOTE_FROM='qa';const L=notesGet().slice().reverse();
  const NA=window.noteAns;window.noteAns=async function(id,st,ch){const e=$('#nrp'+id);if(st=='declined'&&e&&!e.value.trim()){toast('거절 사유를 적어 주세요. 신청한 사람에게 보여요.');e.focus();e.style.outline='2px solid #ef4444';return}return NA(id,st,ch)};
  const NC=window.noteCheckForm;window.noteCheckForm=function(){NC();qaBackFix()};
 })();
+/* ===== 근손실 방지단 키오스크(기록실): 근력·유산소 기록 → 근손실 방지단 fit_sessions(본인 행만). 체성분 표는 다루지 않음. 로그인은 탭을 닫으면 풀림 ===== */
+var FK={s:null,tab:'st',sets:[],busy:false,uid:'',dupKey:'',dupAt:0};
+try{FK.s=JSON.parse(sessionStorage.getItem('bsw_fit')||'null')}catch(e){}
+const FK_EX={'가슴':['벤치프레스','인클라인 벤치프레스','덤벨 프레스','체스트 플라이','딥스','팔굽혀펴기'],'등':['데드리프트','랫풀다운','바벨 로우','덤벨 로우','시티드 로우','턱걸이'],'하체':['스쿼트','레그프레스','런지','레그 익스텐션','레그 컬','카프 레이즈'],'어깨':['오버헤드 프레스','덤벨 숄더 프레스','사이드 레터럴 레이즈','리어 델트 플라이'],'팔':['바벨 컬','덤벨 컬','해머 컬','트라이셉스 푸시다운','라잉 트라이셉스 익스텐션'],'코어':['크런치','레그 레이즈','행잉 레그 레이즈','윗몸일으키기','플랭크']};
+const FK_M=Object.keys(FK_EX),FK_C=['러닝','사이클','걷기','수영','기타'];
+/* 닉네임 → 로그인 이메일. 근손실 방지단과 똑같은 규칙이어야 해요: NFC·앞뒤 공백 제거·공백 하나로·영문 소문자, UTF-8 31바이트(한글 10자)까지 */
+function fitNick(n){return String(n||'').normalize('NFC').trim().replace(/\s+/g,' ').toLowerCase()}
+function fitHex(n){return [...new TextEncoder().encode(n)].map(b=>b.toString(16).padStart(2,'0')).join('')}
+function fitEmail(n){return 'u'+fitHex(n)+'@fit-bs.app'}
+function fitUid(){try{return crypto.randomUUID()}catch(e){const b=crypto.getRandomValues(new Uint8Array(16));b[6]=b[6]&15|64;b[8]=b[8]&63|128;const h=[...b].map(x=>x.toString(16).padStart(2,'0')).join('');return h.slice(0,8)+'-'+h.slice(8,12)+'-'+h.slice(12,16)+'-'+h.slice(16,20)+'-'+h.slice(20)}}
+async function fitAuth(body,grant){const r=await fetch(DBCFG.url+'/auth/v1/token?grant_type='+grant,{method:'POST',headers:{apikey:DBCFG.key,'Content-Type':'application/json'},body:JSON.stringify(body)});const j=await r.json().catch(()=>({}));return r.ok&&j.access_token?j:null}
+function fitKeep(j,nick){FK.s={at:j.access_token,rt:j.refresh_token,exp:Date.now()+((j.expires_in||3600)-60)*1000,nick};try{sessionStorage.setItem('bsw_fit',JSON.stringify(FK.s))}catch(e){}}
+function fitDrop(){FK.s=null;try{sessionStorage.removeItem('bsw_fit')}catch(e){}}
+async function fitTok(){if(!FK.s)return null;if(Date.now()<FK.s.exp)return FK.s.at;const j=await fitAuth({refresh_token:FK.s.rt},'refresh_token').catch(()=>null);if(!j){fitDrop();return null}fitKeep(j,FK.s.nick);return FK.s.at}
+async function fitReq(path,o={}){const t=await fitTok();if(!t){const e=new Error('login');e.login=1;throw e}
+ const r=await fetch(DBCFG.url+'/rest/v1/'+path,{method:o.method||'GET',headers:Object.assign({apikey:DBCFG.key,Authorization:'Bearer '+t,'Content-Type':'application/json'},o.h||{}),body:o.body});
+ if(r.status==401){fitDrop();const e=new Error('login');e.login=1;throw e}
+ if(!r.ok){const j=await r.json().catch(()=>({}));const e=new Error(j.message||('HTTP '+r.status));e.code=j.code;e.status=r.status;throw e}
+ return r.status==204||r.status==201&&(o.h||{}).Prefer=='return=minimal'?null:r.json()}
+async function fitLogin(){const raw=($('#fkN').value||''),pw=$('#fkP').value||'',n=fitNick(raw);if(!n||!pw)return toast('닉네임과 비밀번호를 넣어 주세요.');if(fitHex(n).length>62)return toast('닉네임이 너무 길어요. (한글 10자·영문 31자까지)');
+ const b=$('#fkGo');if(b)b.disabled=true;let j=null;
+ try{for(const em of [...new Set([fitEmail(n),fitEmail(raw.trim()),fitEmail(raw)])]){j=await fitAuth({email:em,password:pw},'password');if(j)break}}catch(e){if(b)b.disabled=false;return toast('서버에 연결하지 못했어요.')}
+ if(b)b.disabled=false;if(!j)return toast('닉네임이나 비밀번호가 맞지 않아요.');fitKeep(j,raw.trim());toast('💪 '+raw.trim()+' 님, 로그인했어요.');showFitK('st')}
+async function fitOut(){const t=FK.s&&FK.s.at;fitDrop();try{if(t)await fetch(DBCFG.url+'/auth/v1/logout',{method:'POST',headers:{apikey:DBCFG.key,Authorization:'Bearer '+t}})}catch(e){}toast('근손실 방지단에서 로그아웃했어요.');showFitK()}
+function fkToday(){return new Date(Date.now()+9*36e5).toISOString().slice(0,10)}
+function fkKd(go){return 'onkeydown="event.stopPropagation()'+(go?';if(event.key==\'Enter\')'+go:'')+'"'}
+function fkSetRow(s,i){const opts=FK_M.map(m=>'<optgroup label="'+m+'">'+FK_EX[m].map(x=>'<option'+(s.ex==x&&s.m==m?' selected':'')+'>'+x+'</option>').join('')+'</optgroup>').join('')+'<option value="__"'+(s.custom?' selected':'')+'>✏ 직접 입력</option>';
+ return '<div class="fkrow"><b>'+(i+1)+'</b><select class="xin" onchange="fkEx('+i+',this.value)" '+fkKd()+'>'+opts+'</select>'+(s.custom?'<input class="xin" maxlength="30" placeholder="종목 이름" value="'+esc(s.ex)+'" oninput="FK.sets['+i+'].ex=this.value" '+fkKd()+'><select class="xin fkm" onchange="FK.sets['+i+'].m=this.value" '+fkKd()+'>'+FK_M.map(m=>'<option'+(s.m==m?' selected':'')+'>'+m+'</option>').join('')+'</select>':'')+
+  '<input class="xin" type="number" inputmode="decimal" min="0" max="1000" step="0.5" value="'+s.w+'" oninput="FK.sets['+i+'].w=this.value" '+fkKd()+'><span>kg</span><input class="xin" type="number" inputmode="numeric" min="1" max="1000" value="'+s.r+'" oninput="FK.sets['+i+'].r=this.value" '+fkKd()+'><span>회</span><button class="xb r" onclick="FK.sets.splice('+i+',1);fkDraw()">✕</button></div>'}
+function fkEx(i,v){const s=FK.sets[i];if(v=='__'){s.custom=1;s.ex=''}else{s.custom=0;s.ex=v;s.m=FK_M.find(m=>FK_EX[m].includes(v))}fkDraw()}
+function fkAdd(n){const L=FK.sets[FK.sets.length-1]||{ex:'스쿼트',m:'하체',w:20,r:10};n=Math.max(1,Math.min(20,n|0||1));if(FK.sets.length+n>60)return toast('한 번에 60세트까지 넣을 수 있어요.');for(let k=0;k<n;k++)FK.sets.push({...L});fkDraw()}
+function fkDraw(){const e=$('#fkSets');if(e)e.innerHTML=FK.sets.length?FK.sets.map(fkSetRow).join(''):'<small style="opacity:.7">아래 <b>+ 세트</b>로 세트를 넣어 주세요.</small>'}
+function fkFrame(body){const s=FK.s,T=(k,t)=>'<button class="xb'+(FK.tab==k?' howgo':'')+'" style="padding:4px 10px;font-size:12px" onclick="showFitK(\''+k+'\')">'+t+'</button>';
+ openM('<h3>💪 근손실 방지단 키오스크</h3>'+(s?'<div class="xrow" style="margin:2px 0 8px"><span>👤 <b>'+esc(s.nick)+'</b> <small style="opacity:.7">근손실 방지단 계정</small></span><button class="xb" style="padding:2px 8px" onclick="fitOut()">로그아웃</button></div><div class="qbtn" style="margin:0 0 8px">'+T('st','🏋 근력')+T('ca','🏃 유산소')+T('ls','📋 내 최근 기록')+'</div>':'')+body)}
+function showFitK(tab){if(tab)FK.tab=tab;
+ if(!FK.s)return fkFrame('<div class="qform"><p style="font-size:12px;margin:0 0 6px;opacity:.85">근손실 방지단 계정으로 로그인하면, 여기서 남긴 운동 기록이 근손실 방지단 <b>기록</b> 탭에 그대로 올라가요.</p><input id="fkN" class="xin" maxlength="31" placeholder="닉네임" autocomplete="username" '+fkKd("$('#fkP').focus()")+'><input id="fkP" class="xin" type="password" maxlength="72" placeholder="비밀번호" autocomplete="current-password" style="margin-top:6px" '+fkKd('fitLogin()')+'><div class="qbtn"><button class="xb howgo" id="fkGo" onclick="fitLogin()">로그인</button></div><small style="opacity:.7">가입은 근손실 방지단 사이트에서 해요. 이 탭을 닫으면 자동으로 로그아웃돼요. 체성분 기록은 여기서 보거나 바꿀 수 없어요.</small></div>'),setTimeout(()=>{const f=$('#fkN');if(f&&!TOUCH_DEV)f.focus()},80);
+ const day='<div class="avo" style="flex-wrap:nowrap;gap:6px"><input id="fkD" class="xin" type="date" value="'+fkToday()+'" style="flex:1;margin:0" '+fkKd()+'><input id="fkT" class="xin" type="number" inputmode="numeric" min="1" max="1440" placeholder="시간(분)" style="width:96px;margin:0" '+fkKd()+'></div>';
+ if(FK.tab=='st'){if(!FK.sets.length)FK.sets=[{ex:'스쿼트',m:'하체',w:20,r:10}];
+  fkFrame('<div class="qform">'+day+'<div id="fkSets" style="margin-top:8px"></div><div class="avo" style="flex-wrap:nowrap;gap:6px;margin-top:6px"><button class="xb" onclick="fkAdd(1)">+ 세트</button><input id="fkN2" class="xin" type="number" min="1" max="20" value="3" style="width:64px;margin:0" '+fkKd()+'><button class="xb" onclick="fkAdd(+$(\'#fkN2\').value)">같은 무게로 더하기</button></div><input id="fkTi" class="xin" maxlength="40" placeholder="제목 (비우면 자동: 예) 스쿼트 외 2종목)" style="margin-top:8px" '+fkKd()+'><input id="fkMe" class="xin" maxlength="200" placeholder="메모 (선택)" style="margin-top:6px" '+fkKd()+'><div class="qbtn"><button class="xb howgo" id="fkSave" onclick="fitSave(\'strength\')">💾 근손실 방지단에 저장</button></div><small style="opacity:.7">세트마다 한 줄이에요. 맨몸 운동은 0kg으로 적어요.</small></div>');fkDraw();return}
+ if(FK.tab=='ca')return fkFrame('<div class="qform">'+day+'<div class="avo" style="flex-wrap:nowrap;gap:6px;margin-top:8px"><select id="fkC" class="xin" style="flex:1;margin:0" '+fkKd()+'>'+FK_C.map(c=>'<option>'+c+'</option>').join('')+'</select><input id="fkDi" class="xin" type="number" inputmode="decimal" min="0.01" max="500" step="0.01" placeholder="거리(km)" style="width:110px;margin:0" '+fkKd()+'></div><div class="avo" style="flex-wrap:nowrap;gap:6px;margin-top:6px"><input id="fkHr" class="xin" type="number" inputmode="numeric" min="30" max="250" placeholder="평균 심박 (선택)" style="flex:1;margin:0" '+fkKd()+'><select id="fkR" class="xin" style="width:130px;margin:0" '+fkKd()+'><option value="">힘든 정도 (선택)</option>'+[1,2,3,4,5,6,7,8,9,10].map(n=>'<option value="'+n+'">RPE '+n+'</option>').join('')+'</select></div><input id="fkTi" class="xin" maxlength="40" placeholder="제목 (비우면 자동: 예) 러닝 5.2km)" style="margin-top:8px" '+fkKd()+'><input id="fkMe" class="xin" maxlength="200" placeholder="메모 (선택)" style="margin-top:6px" '+fkKd()+'><div class="qbtn"><button class="xb howgo" id="fkSave" onclick="fitSave(\'cardio\')">💾 근손실 방지단에 저장</button></div><small style="opacity:.7">시간(분)과 거리는 꼭 넣어 주세요.</small></div>');
+ fkFrame('<div class="cd">불러오는 중…</div>');fitList()}
+async function fitList(){let L;try{L=await fitReq('fit_sessions?select=date,kind,title,duration,data&order=date.desc&limit=10')}catch(e){if(e.login)return showFitK();const c=$('#mc .cd');if(c)c.textContent='불러오지 못했어요. ('+e.message+')';return}
+ if(FK.tab!='ls'||!$('#mc'))return;const c=$('#mc .cd');if(!c)return;
+ c.outerHTML=L&&L.length?L.map(r=>{const d=r.data||{},x=r.kind=='strength'?((d.sets||[]).length+'세트'):((d.dist!=null?d.dist+'km':'')+(d.hr?' · '+d.hr+'bpm':''));return '<div class="xrow" style="margin:3px 0"><span>'+esc(r.date)+' '+(r.kind=='strength'?'🏋':'🏃')+' '+esc(r.title||'')+'</span><b>'+esc(x)+(r.duration?' · '+r.duration+'분':'')+'</b></div>'}).join('')+'<small style="opacity:.7">최근 10개만 보여요. 고치거나 지우는 건 근손실 방지단 사이트에서 해요.</small>':'<div class="cd">아직 기록이 없어요.</div>'}
+async function fitSave(kind){if(FK.busy)return;const date=$('#fkD').value,dm=$('#fkT').value.trim(),dur=dm===''?null:parseInt(dm,10),memo=($('#fkMe').value||'').trim()||null;let title=($('#fkTi').value||'').trim(),data;
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(date)||date<'2000-01-01'||date>fkToday())return toast('날짜를 확인해 주세요. (오늘까지)');
+ if(dur!=null&&!(dur>=1&&dur<=1440))return toast('시간은 1~1440분으로 넣어 주세요.');
+ if(kind=='strength'){const S=[];for(const s of FK.sets){const ex=String(s.ex||'').trim(),w=+s.w,r=parseInt(s.r,10);if(!ex)return toast('종목 이름을 넣어 주세요.');if(!FK_M.includes(s.m))return toast('부위를 골라 주세요.');if(!(w>=0&&w<=1000))return toast('무게는 0~1000kg으로 넣어 주세요.');if(!(r>=1&&r<=1000))return toast('횟수는 1~1000회로 넣어 주세요.');S.push({ex:ex.slice(0,30),m:s.m,w:Math.round(w*10)/10,r})}
+  if(!S.length)return toast('세트를 하나 이상 넣어 주세요.');const ex=[...new Set(S.map(s=>s.ex))];title=title||(ex.length>1?ex[0]+' 외 '+(ex.length-1)+'종목':ex[0]);data={sets:S}}
+ else{const c=$('#fkC').value,di=parseFloat($('#fkDi').value),hr=$('#fkHr').value.trim(),rpe=$('#fkR').value;if(!FK_C.includes(c))return;if(dur==null)return toast('시간(분)을 넣어 주세요.');if(!(di>0&&di<=500))return toast('거리(km)를 넣어 주세요.');
+  data={cType:c,dist:Math.round(di*100)/100};if(hr){const h=parseInt(hr,10);if(!(h>=30&&h<=250))return toast('심박은 30~250으로 넣어 주세요.');data.hr=h}if(rpe)data.rpe=+rpe;title=title||c+' '+data.dist+'km'}
+ const row={date,kind,title:title.slice(0,40),duration:dur,memo,data},key=JSON.stringify(row);
+ const b=$('#fkSave');FK.busy=true;if(b)b.disabled=true;
+ try{if(FK.dupKey!==key||Date.now()-FK.dupAt>8000){const q='fit_sessions?select=id&date=eq.'+date+'&kind=eq.'+kind+'&title=eq.'+encodeURIComponent(row.title)+'&limit=1';const ex=await fitReq(q);if(ex&&ex.length){FK.dupKey=key;FK.dupAt=Date.now();FK.busy=false;if(b)b.disabled=false;return toast('같은 날 같은 제목의 기록이 이미 있어요. 그래도 저장하려면 8초 안에 한 번 더 눌러 주세요.')}}
+  if(!FK.pend||FK.pend.key!==key)FK.pend={key,id:fitUid()};row.id=FK.pend.id;
+  try{await fitReq('fit_sessions',{method:'POST',body:JSON.stringify(row),h:{Prefer:'return=minimal'}})}catch(e){if(!(e.status==409||e.code=='23505'))throw e}
+  FK.pend=null;FK.dupKey='';if(kind=='strength')FK.sets=[];toast('✅ 근손실 방지단에 저장했어요! 💪');try{ach('fitk',1)}catch(e){}showFitK('ls')}
+ catch(e){if(e.login){toast('로그인이 풀렸어요. 다시 로그인해 주세요.');return showFitK()}toast(e.code=='23502'?'운동 시간(분)을 넣어 주세요.':e.code=='23514'?'저장할 수 없는 값이 있어요. 숫자와 길이를 확인해 주세요.':'저장하지 못했어요. ('+e.message+')')}
+ finally{FK.busy=false;const bb=$('#fkSave');if(bb)bb.disabled=false}}
