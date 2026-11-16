@@ -461,7 +461,9 @@ function act(){
   const k=at(x,y);
   if(k=='㌟'||k=='㌠')return say('흰 트럭',['귤 콘테나를 실어 나르는 흰 트럭이다. 🚚']);if(k=='㌡'||k=='㌢')return say('경운기',[k=='㌡'?'경운기 앞부분이다. 시동 걸면 소리가 크다.':'경운기 뒤에 달아 짐을 싣는 칸이다.']);if(k=='㌣')return say('꽃밭',['어머니가 심은 꽃들이다. 🌸']);if(k=='㌤')return say('쪽파',['쪽파가 파릇파릇 올라와 있다.']);if(k=='㌥')return say('깻잎',['깻잎 향이 은은하다. 🌿']);if(k=='㌧')return say('감귤나무',['나무 아래 땅을 덮어 둔 타이벡 재배 밭이다. 🍊']);
   if(k=='㋪'||k=='㋮')return say('검은 하우스',['콘테나와 농기구를 넣어 두는 검은 하우스다.']);if(k=='㋫'||k=='㋬')return say('농막',['빨간 지붕 농막이다. 안에서 먹고 잘 수 있다. 🏠']);if(k=='㋰')return say('흰 차',['농막 앞에 세워 둔 흰 차다. 🚗']);if(k=='㋱')return say('파란 대문',['돌담 사이의 파란 대문이다.']);if(k=='㋲')return say('농기구',['가위, 톱, 삽 같은 농기구가 정리되어 있다. 🧰']);if(k=='㋵')return say('감귤 콘테나',['귤을 담는 파란 콘테나가 쌓여 있다. 🍊']);if(k=='㋴')return say('하우스 벽',['검은 차광막으로 덮인 벽이다.']);
-  if(k=='ㆎ'&&!CAFE_M[cur]){if(cur=='agency'&&at(x,y-1)=='㉶')return libPick(x,y,'study',1);if(at(x,y-1)=='㊾'){const fk=cur=='agency'&&x==18||cur=='gym';sitDown(x,y,'bench',fk?'💪 근손실 방지단 키오스크를 켰어요. (A: 다시 열기 · B: 일어나기)':'🖥 기록 단말기를 켰어요. (A: 다시 열기 · B: 일어나기)');if(SIT){SIT.rec=1;dir=1}setTimeout(()=>{if(SIT&&SIT.rec&&!modal)fk?showFitK():showRecords()},350);return}sitDown(x,y,'bench','🪑 의자에 앉았어요.');return}
+  if(k=='ㆎ'&&!CAFE_M[cur]){if(cur=='agency'&&at(x,y-1)=='㉶')return libPick(x,y,'study',1);if(cur=='jihye'&&at(x,y-1)=='Ⓕ'){const me=jhSelf();sitDown(x,y,'bench',me?'💻 맥북을 열었어요. (A: 다시 열기 · B: 일어나기)':'🪑 의자에 앉았어요.');if(SIT&&me){SIT.rec=1;dir=1}setTimeout(()=>{if(me&&SIT&&SIT.rec&&!modal)jhMac()},350);return}
+    if(cur=='jihye'&&'ⓣⓤ'.includes(at(x,y-1))){sitDown(x,y,'bench','🖥 컴퓨터를 켰어요. (A: 다시 열기 · B: 일어나기)');if(SIT){SIT.rec=1;dir=1}setTimeout(()=>{if(SIT&&SIT.rec&&!modal)jhPc(x)},350);return}
+    if(at(x,y-1)=='㊾'){const fk=cur=='agency'&&x==18||cur=='gym';sitDown(x,y,'bench',fk?'💪 근손실 방지단 키오스크를 켰어요. (A: 다시 열기 · B: 일어나기)':'🖥 기록 단말기를 켰어요. (A: 다시 열기 · B: 일어나기)');if(SIT){SIT.rec=1;dir=1}setTimeout(()=>{if(SIT&&SIT.rec&&!modal)fk?showFitK():showRecords()},350);return}sitDown(x,y,'bench','🪑 의자에 앉았어요.');return}
   if(k=='㎭')return showCard();
   if((k=='㏗'||k=='㋿')&&map.pc&&map.pc[x+','+y]){const P1=map.pc[x+','+y];return say(P1[0],P1[2],P1[3]?Object.fromEntries(Object.entries(P1[3]).map(([a,u])=>[a,()=>window.open(u,'_blank','noopener')])):{'🌐 사이트 열기':()=>window.open(P1[1],'_blank','noopener')})}
   if(k=='㏎'&&hvAct('kiwi',x,y))return;if(k=='㏎')return say('키위 덕',['덕 아래로 키위가 주렁주렁 달려 있다. 🥝','마을 게시판에 골드키위 판매 안내가 있다.'],{'📌 판매 안내 보기':()=>showKiwi()});
@@ -493,6 +495,7 @@ function act(){
   if(k=='㊹')return hvCrate(x,y);
   if(k=='㊸')return trackSign();
   if(k=='㊷'){VS.pick=null;return vsMenu()}
+  if(cur=='jihye'){if(k=='Ⓕ')return jhSelf()?jhMac():say('애니메이터 박의 맥북',['작업 중인 맥북이다. 화면에 그리다 만 그림이 보인다. 🎨','함부로 만지면 안 될 것 같다.']);if('ⓠⓢⓥⓩⓣⓤ'.includes(k))return jhPc(x);if(k=='ⓛ')return jhArt(JH_SLOTS[x+','+y]);if(k=='ⓝ'||k=='Ⓐ')return jhContact();if(k=='ⓞ'||k=='Ⓔ')return jhBook()}
   if(k=='㊵')return showHall();
   if(k=='㊱'){VS.pick=null;return vsMenu()}
   if(k=='㊲'||k=='㊰')return say('리그 부스',[VS.on?'⚔ 지금 '+rtLabel(VS.peer)+' 님과 대결 중이에요! 🔥':'🎙 옛날 스타리그처럼 부스에 한 명씩 들어가 겨루는 곳이에요.','유리 부스(PC)를 보고 A를 누르면 같은 곳 사람에게 대전을 신청할 수 있어요.']);
