@@ -322,7 +322,7 @@ function jhCode(){try{return localStorage.getItem('bsw_fr')||''}catch(e){return 
 function jhCan(){return isOwner()||jhSelf()}
 /* 박지혜 본인(친구 코드)만: 작업실 이름·전화번호 공개 설정, 맥북 사용 */function jhSelf(){return typeof RT!='undefined'&&RT.fr=='jh'}
 async function jhLoad(force){if(JH.loading||(JH.arts&&!force))return;JH.loading=true;try{const[L,I]=await Promise.all([DB.rpc('jh_art_list',{}),DB.rpc('jh_info',{}).catch(()=>null)]);const o={};(L||[]).forEach(a=>o[a.slot]=a);JH.arts=o;if(I){JH.info=I;if(I.name)jhName(I.name)}}catch(e){JH.arts=JH.arts||{}}JH.loading=false}
-function jhName(n){if(!n)return;M.jihye.n=n;if(M.tosan&&M.tosan.sign)M.tosan.sign['23,1']=n;try{if(typeof cur!='undefined'&&cur=='tosan'&&typeof drawStatic=='function')drawStatic()}catch(e){}}
+function jhName(n){if(!n)return;M.jihye.n=n;if(M.tosan&&M.tosan.sign)M.tosan.sign['23,2']=n;try{if(typeof cur!='undefined'&&cur=='tosan'&&typeof drawStatic=='function')drawStatic()}catch(e){}}
 async function jhNameSave(){const v=($('#jhNm').value||'').trim();if(!v||v.length>16)return toast('이름은 1~16자로 정해 주세요.');try{const r=await DB.rpc('jh_name_set',{p_code:jhCode(),p_name:v});if(!r||!r.ok)return toast(jhErr(r));jhName(r.name);toast('🏷 작업실 이름을 \''+r.name+'\'(으)로 바꿨어요.')}catch(e){toast(dbErr(e))}}
 const JH_ERR={perm:'권한이 없어요. 지혜 친구 코드로 접속해 주세요.',slot:'액자 번호가 맞지 않아요.',len:'글자가 너무 길어요.',img:'그림을 먼저 올려 주세요.',contact:'연락처나 링크, 아이디는 남길 수 없어요.',rate:'방명록이 잠시 붐벼요. 조금 뒤에 써 주세요.',name:"'보성'은 쓸 수 없는 이름이에요."};
 function jhErr(r){return JH_ERR[r&&r.err]||'처리하지 못했어요.'}
@@ -387,7 +387,7 @@ async function jhPostImg(id,btn){try{const r=await DB.rpc('jh_post_img',{p_id:id
  T.d['15,4']=['gmHome',7,8];T.d['18,4']=['uncleHome',7,8];T.sign['15,2']='외할아버지댁';T.sign['18,2']='외삼촌네';M.gmHome.d['7,9']=['tosan',15,5];M.uncleHome.d['7,9']=['tosan',18,5];M.gmHome.par=M.uncleHome.par='tosan';
  /* 집 앞 닭장과 꽃나무 밭 */[[14,6],[15,6],[14,7],[15,7]].forEach(([x,y])=>set(x,y,'㍼'));set(16,6,'㍻');[[17,6,'F'],[18,6,'T'],[17,7,'T'],[18,7,'F'],[16,7,'F']].forEach(([x,y,c])=>set(x,y,c));T.chicks=[[14,6,.45],[15,6,.4],[14,7,.42],[15,7,.45],[14.5,6.5,.6]];
  /* 스튜디오 박(공터 자리): 가게처럼 간판 띠 + 유리창 + 문 */for(let x=22;x<=24;x++){set(x,3,'ⓙ');set(x,2,'Ⓖ')}[22,24].forEach(x=>set(x,4,'ⓨ'));set(23,4,'D');set(21,4,'Ⓘ');set(25,4,'Ⓙ');set(20,2,'T');set(26,2,'F');set(27,1,'F');set(25,7,'b');
- T.imgs=[{x:22,y:3,w:3,h:1,src:JH_IMG.ext,bg:'ⓧ'}];T.d['23,4']=['jihye',7,10];T.sign['23,1']='스튜디오 박';delete T.sign['26,3'];
+ T.imgs=[{x:22,y:3,w:3,h:1,src:JH_IMG.ext,bg:'ⓧ'}];T.d['23,4']=['jihye',7,10];T.sign['23,2']='스튜디오 박';T.signC=t=>t==M.jihye.n?['#831843','#db2777','#fff']:null;delete T.sign['26,3'];
  T.m=Q.map(r=>r.join(''));
  (T.p||[]).forEach(o=>{if(o.n=='키위 따는 일꾼'){o.x=9;o.y=6}else if(o.n=='보성 외할아버지'&&o.x==22&&o.y==5){o.x=16;o.y=5}else if(o.n=='보성 큰외삼촌'&&o.x==18&&o.y==5){o.x=19;o.y=5}});
  /* 표선에서는 외가를 뺀다 */const P=M.route1;delete P.d['3,3'];delete P.d['6,3'];delete P.sign['3,3'];delete P.sign['6,2'];P.chicks=null;
@@ -889,26 +889,37 @@ function showXp(){const I=xpInfo(),L=xpLv(I.xp,I.T);openM('<h3>⭐ 경험치</h3
 var SBS_CARDS=[
  {k:'citrus',t:'보성이네 감귤농원',tag:'JEJU · SEOGWIPO',r:'농장 직송'},
  {k:'world',t:'BS World',tag:'WEB RPG',r:'SINCE 26.11.05'},
+ {k:'commonder',t:'COMMONDER',tag:'TASTE MATCH',r:'SINCE 26.11.09',adult:1},
  {k:'lotto',t:'혹시나? 역시나!',tag:'LOTTO · PENSION',r:'목 · 토 추첨'},
- {k:'commonder',t:'COMMONDER',tag:'TASTE · LOCATION',r:'SINCE 26.11.09',adult:1},
- {k:'kitchen',t:'D-DAY KITCHEN',tag:'STOCK · D-DAY',r:'재고 · 식단'},
- {k:'idea',t:'???',tag:'NEXT IDEA',r:'아이디어 단계'}];
-(function studioRoom2(){const S=M.studiobs;if(!S)return;const old=S.pc||{},P0=old['3,8'],P1=old['7,8'],P2=old['11,8'];
- const hub=()=>sbsNew('https://studio-bs.pages.dev/');
+ {k:'kitchen',t:'D-DAY KITCHEN',tag:'MEAL PLAN',r:'재고 · 식단'},
+ {k:'roster',t:'CARD ROSTER',tag:'CARD LINEUP',r:'카드 · 실적'},
+ {k:'tempest',t:'TEMPEST',tag:'INDICATORS',r:'경제 · 공포지수'},
+ {k:'muscle',t:'근손실 방지단',tag:'WORKOUT',r:'운동 · 체성분'},
+ {k:'seat',t:'SEAT LOG',tag:'SEAT MAP',r:'독서실 · 기록'}];
+/* 허브 연락 키오스크: 왼쪽 Gmail, 오른쪽 카카오톡 오픈채팅 */
+var SBS_MAIL='',SBS_KAKAO='https://open.kakao.com/o/sYJawzVi';
+function sbsMail(){if(!SBS_MAIL)return say('Gmail 키오스크',['📧 메일 주소를 준비 중이에요. 잠시 후 다시 와 주세요!']);say('Gmail 키오스크',['📧 STUDIO BS에 메일 보내기',SBS_MAIL],{'✉ 메일 쓰기':()=>{location.href='mailto:'+SBS_MAIL},'닫기':()=>{}})}
+function sbsKakao(){say('카카오톡 키오스크',['💬 STUDIO BS 카카오톡 오픈채팅','궁금한 점이나 제안이 있으면 편하게 말 걸어 주세요.'],{'💬 오픈채팅 열기':()=>sbsNew(SBS_KAKAO),'닫기':()=>{}})}
+(function studioRoom3(){const S=M.studiobs;if(!S)return;const old=S.pc||{},P0=old['3,8'],P1=old['7,8'],P2=old['11,8'],H='https://studio-bs.pages.dev/',HV={'🃏 STUDIO BS에서 보기':H};
  const PCX={citrus:P1,world:P0,lotto:P2,
-  commonder:['COMMONDER','https://studio-bs.pages.dev/',['🃏 COMMONDER · 19+','작품과 음악, 책으로 취향을 나누고 마음 맞는 사람을 만나는 곳이에요.','성인만 들어갈 수 있어요. STUDIO BS 홈페이지의 카드에서 들어가 주세요.'],{'🃏 STUDIO BS에서 보기':'https://studio-bs.pages.dev/'}],
-  kitchen:['D-DAY KITCHEN','https://studio-bs.pages.dev/',['🧊 D-DAY KITCHEN','냉장고 속 재료의 유통기한(D-DAY)을 챙기고, 남은 재료로 식단을 짜 주는 사이트예요.','STUDIO BS 홈페이지의 카드에서 들어갈 수 있어요.'],{'🃏 STUDIO BS에서 보기':'https://studio-bs.pages.dev/'}]};
- const W=27,row=(c='f')=>{const r=Array(W).fill(c);r[0]=r[W-1]='w';return r},G=[Array(W).fill('w'),Array(W).fill('w')];for(let x=9;x<18;x++){G[0][x]='㍷';G[1][x]='㍷'}
- for(let y=2;y<12;y++)G.push(row());const X0=[2,6,10,14,18,22];X0.forEach(x0=>{for(let y=4;y<7;y++)for(let x=x0;x<x0+3;x++)G[y][x]='㋿'});
- const pc={};SBS_CARDS.forEach((C,i)=>{const x0=X0[i],P=PCX[C.k];if(P){G[8][x0+1]='㏗';pc[(x0+1)+',8']=P;for(let y=4;y<7;y++)for(let x=x0;x<x0+3;x++)pc[x+','+y]=P}else G[8][x0+1]='㍹'});
- [[1,2],[25,2],[1,11],[25,11]].forEach(([x,y])=>G[y][x]='㉵');[[2,'ㆎ'],[3,'ㆍ'],[4,'ㆎ'],[22,'ㆎ'],[23,'ㆍ'],[24,'ㆎ']].forEach(([x,c])=>G[10][x]=c);[2,3,4,22,23,24].forEach(x=>G[11][x]='㉴');[8,9,11,15,17,18].forEach(x=>G[11][x]='ㆎ');[[6,10],[20,10]].forEach(([x,y])=>G[y][x]='ㆍ');
- const bot=Array(W).fill('w');bot[13]='x';G.push(bot);
+  commonder:['COMMONDER','https://common-der.pages.dev/',['🃏 COMMONDER · 19+','작품과 음악, 책으로 취향을 나누고 마음 맞는 사람을 만나는 곳이에요.','성인만 이용할 수 있어요.'],{'💜 취향 만나러 가기':'https://common-der.pages.dev/'}],
+  kitchen:['D-DAY KITCHEN','https://d-day-kitchen.pages.dev/',['🧊 D-DAY KITCHEN','재료의 소비기한을 챙기고, 남은 재료로 식단을 추천해 줘요.'],{'🧊 냉장고 열기':'https://d-day-kitchen.pages.dev/'}],
+  roster:['CARD ROSTER','https://card-roster.pages.dev/',['💳 CARD ROSTER','보유 카드의 실적과 혜택을 한눈에 보는 나만의 카드 운영 매니저예요.'],{'💳 카드 꺼내기':'https://card-roster.pages.dev/'}],
+  tempest:['TEMPEST','https://tempest-bs.pages.dev/',['📈 TEMPEST','경제지표와 공포지수로 오늘의 시장 날씨를 한눈에 보는 대시보드예요.'],{'🌦 시장 날씨 보기':'https://tempest-bs.pages.dev/'}],
+  muscle:['근손실 방지단','https://fit-bs.pages.dev/',['🏋 근손실 방지단','근력·러닝 기록과 체성분 변화를 한눈에. 오늘도 근손실, 막았나요?','BS World 계정으로 그대로 로그인할 수 있어요.'],{'🏋 근손실 막으러 가기':'https://fit-bs.pages.dev/'}],
+  seat:['SEAT LOG','https://seat-log.pages.dev/',['🪑 SEAT LOG','독서실 입장·외출·퇴장을 초 단위로 기록하고 이용권 만료·연장까지 챙겨요.'],{'🪑 자리에 앉으러 가기':'https://seat-log.pages.dev/'}]};
+ const W=19,row=(c='f')=>{const r=Array(W).fill(c);r[0]=r[W-1]='w';return r},G=[Array(W).fill('w'),Array(W).fill('w')];for(let x=5;x<14;x++){G[0][x]='㍷';G[1][x]='㍷'}
+ for(let y=2;y<20;y++)G.push(row());const X0=[2,8,14],cards={},pc={};
+ SBS_CARDS.forEach((C,i)=>{const x0=X0[i%3],y0=3+Math.floor(i/3)*5,P=PCX[C.k];cards[x0+','+y0]=i;for(let y=y0;y<y0+3;y++)for(let x=x0;x<x0+3;x++){G[y][x]='㋿';if(P)pc[x+','+y]=P}if(P){G[y0+3][x0+1]='㏗';pc[(x0+1)+','+(y0+3)]=P}else G[y0+3][x0+1]='㍹'});
+ [[1,2],[17,2],[1,19],[17,19]].forEach(([x,y])=>G[y][x]='㉵');G[18][6]='Ⓞ';G[18][12]='Ⓟ';[3,4,14,15].forEach(x=>G[19][x]='ㆎ');
+ const bot=Array(W).fill('w');bot[9]='x';G.push(bot);
  const lead=(S.p||[]).find(n=>n.n=='STUDIO BS 총괄')||{},guest=(S.p||[]).find(n=>n.n=='구경하는 손님')||{};
- Object.assign(S,{m:G.map(r=>r.join('')),land:[13,11],d:{'13,12':['town',11,8]},pc,sign:{},
-  p:[{...lead,x:13,y:2,stay:1,n:'STUDIO BS 총괄',s:['어서 오세요, STUDIO BS예요. 🃏','보성이 직접 만든 사이트 카드가 6장 있어요. 카드나 아래 컴퓨터를 눌러 보세요.','오늘은 어떤 카드를 뽑을래요?'],ch:{'🃏 STUDIO BS 홈페이지':()=>sbsHub(),'🍊 보성이네 감귤농원':()=>sbsOpen(P1),'🎱 혹시나? 역시나!':()=>sbsOpen(P2),'💜 COMMONDER':()=>sbsOpen(PCX.commonder),'🧊 D-DAY KITCHEN':()=>sbsOpen(PCX.kitchen),'🎮 BS World 소개':()=>sbsOpen(P0)}},
-   {...guest,x:16,y:9,c:'#0ea5e9',h:'#222',w:1,n:'구경하는 손님',s:['카드마다 다른 사이트래요. 😮','D-DAY KITCHEN은 냉장고 정리할 때 딱이겠네요!']},
-   {x:6,y:9,c:'#a855f7',h:'#3f2a1c',w:1,n:'카드 수집가',s:['마지막 카드는 아직 아이디어 단계래요. 🤫','다음엔 어떤 사이트가 나올까요?']}]});
- M.town.d['11,7']=['studiobs',13,11]})();
+ Object.assign(S,{m:G.map(r=>r.join('')),land:[9,19],d:{'9,20':['town',11,8]},pc,cards,sign:{'6,17':'Gmail','12,17':'카카오톡'},
+  p:[{...lead,x:9,y:2,stay:1,n:'STUDIO BS 총괄',s:['어서 오세요, STUDIO BS예요. 🃏','보성이가 직접 만든 사이트 카드가 9장 있어요. 카드나 아래 컴퓨터를 눌러 보세요.','입구 쪽 키오스크로 메일이나 카카오톡 문의도 할 수 있어요.'],ch:{'🃏 STUDIO BS 홈페이지':()=>sbsHub(),'🍊 보성이네 감귤농원':()=>sbsOpen(P1),'🎱 혹시나? 역시나!':()=>sbsOpen(P2),'💳 CARD ROSTER':()=>sbsOpen(PCX.roster),'🏋 근손실 방지단':()=>sbsOpen(PCX.muscle),'🎮 BS World 소개':()=>sbsOpen(P0)}},
+   {...guest,x:6,y:12,c:'#0ea5e9',h:'#222',w:1,n:'구경하는 손님',s:['카드가 9장이나 돼요. 😮','근손실 방지단은 BS World 계정으로 그대로 로그인된대요!']},
+   {x:12,y:7,c:'#a855f7',h:'#3f2a1c',w:1,n:'카드 수집가',s:['CARD ROSTER는 카드 실적을 한눈에 보여 준대요. 💳','SEAT LOG로 공부 시간을 초 단위로 잰대요.']}]});
+ M.town.d['11,7']=['studiobs',9,19]})();
+
 /* ===== 계정(친구·지인): 아이디/비밀번호로 가입·로그인 → 다른 브라우저·기기에서 진행 이어가기. 서버 45번 SQL ===== */
 var ACC={me:null,busy:false,last:''};
 try{ACC.me=JSON.parse(localStorage.getItem('bsw_acct')||'null')}catch(e){}
@@ -991,7 +1002,7 @@ function fkEx(i,v){const s=FK.sets[i];if(v=='__'){s.custom=1;s.ex=''}else{s.cust
 function fkAdd(n){const L=FK.sets[FK.sets.length-1]||{ex:'스쿼트',m:'하체',w:20,r:10};n=Math.max(1,Math.min(20,n|0||1));if(FK.sets.length+n>60)return toast('한 번에 60세트까지 넣을 수 있어요.');for(let k=0;k<n;k++)FK.sets.push({...L});fkDraw()}
 function fkDraw(){const e=$('#fkSets');if(e)e.innerHTML=FK.sets.length?FK.sets.map(fkSetRow).join(''):'<small style="opacity:.7">아래 <b>+ 세트</b>로 세트를 넣어 주세요.</small>'}
 function fkFrame(body){const s=fitWho(),T=(k,t)=>'<button class="xb'+(FK.tab==k?' howgo':'')+'" style="padding:4px 10px;font-size:12px" onclick="showFitK(\''+k+'\')">'+t+'</button>';
- openM('<h3>💪 근손실 방지단 키오스크</h3>'+(s?'<div class="xrow" style="margin:2px 0 8px"><span>👤 <b>'+esc(s.name)+'</b> <small style="opacity:.7">@'+esc(s.id)+(s.bs?' · BS World 계정으로 기록돼요':'')+'</small></span>'+(s.bs?'':'<button class="xb" style="padding:2px 8px" onclick="fitOut()">로그아웃</button>')+'</div><div class="qbtn" style="margin:0 0 8px">'+T('st','🏋 근력')+T('ca','🏃 유산소')+T('ls','📋 내 최근 기록')+'</div>':'')+body)}
+ openM('<h3>💪 근손실 방지단 키오스크 <button class="xb" style="padding:2px 8px;font-size:11px;float:right;margin-right:34px" onclick="sbsNew(\'https://fit-bs.pages.dev/\')">🌐 사이트</button></h3>'+(s?'<div class="xrow" style="margin:2px 0 8px"><span>👤 <b>'+esc(s.name)+'</b> <small style="opacity:.7">@'+esc(s.id)+(s.bs?' · BS World 계정으로 기록돼요':'')+'</small></span>'+(s.bs?'':'<button class="xb" style="padding:2px 8px" onclick="fitOut()">로그아웃</button>')+'</div><div class="qbtn" style="margin:0 0 8px">'+T('st','🏋 근력')+T('ca','🏃 유산소')+T('ls','📋 내 최근 기록')+'</div>':'')+body)}
 function showFitK(tab){if(tab)FK.tab=tab;
  if(!fitWho())return fkFrame('<div class="qform"><p style="font-size:12px;margin:0 0 6px;opacity:.85">BS World 계정(= 근손실 방지단 계정)으로 로그인하면, 여기서 남긴 운동 기록이 근손실 방지단 <b>기록</b> 탭에 그대로 올라가요.</p><input id="fkN" class="xin" maxlength="16" placeholder="아이디" autocomplete="username" autocapitalize="off" '+fkKd("$('#fkP').focus()")+'><input id="fkP" class="xin" type="password" maxlength="72" placeholder="비밀번호" autocomplete="current-password" style="margin-top:6px" '+fkKd('fitLogin()')+'><div class="qbtn"><button class="xb howgo" id="fkGo" onclick="fitLogin()">로그인</button></div><div class="qbtn" style="margin-top:4px"><button class="xb" onclick="loginHub(\'up\')">✨ 계정 만들기</button></div><small style="opacity:.7">BS World나 근손실 방지단에서 만든 계정 모두 돼요. 키오스크 로그인은 이 탭을 닫으면 자동으로 풀려요. 체성분 기록은 여기서 보거나 바꿀 수 없어요.</small></div>'),setTimeout(()=>{const f=$('#fkN');if(f&&!TOUCH_DEV)f.focus()},80);
  const day='<div class="avo" style="flex-wrap:nowrap;gap:6px"><input id="fkD" class="xin" type="date" value="'+fkToday()+'" style="flex:1;margin:0" '+fkKd()+'><input id="fkT" class="xin" type="number" inputmode="numeric" min="1" max="1440" placeholder="시간(분)" style="width:96px;margin:0" '+fkKd()+'></div>';
