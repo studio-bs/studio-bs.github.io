@@ -897,7 +897,7 @@ var SBS_CARDS=[
  {k:'muscle',t:'근손실 방지단',tag:'WORKOUT',r:'운동 · 체성분'},
  {k:'seat',t:'SEAT LOG',tag:'SEAT MAP',r:'독서실 · 기록'}];
 /* 허브 연락 키오스크: 왼쪽 Gmail, 오른쪽 카카오톡 오픈채팅 */
-var SBS_MAIL='',SBS_KAKAO='https://open.kakao.com/o/sYJawzVi';
+var SBS_MAIL=['b0s0n9.k','gmail.com'].join('@'),SBS_KAKAO='https://open.kakao.com/o/sYJawzVi';
 function sbsMail(){if(!SBS_MAIL)return say('Gmail 키오스크',['📧 메일 주소를 준비 중이에요. 잠시 후 다시 와 주세요!']);say('Gmail 키오스크',['📧 STUDIO BS에 메일 보내기',SBS_MAIL],{'✉ 메일 쓰기':()=>{location.href='mailto:'+SBS_MAIL},'닫기':()=>{}})}
 function sbsKakao(){say('카카오톡 키오스크',['💬 STUDIO BS 카카오톡 오픈채팅','궁금한 점이나 제안이 있으면 편하게 말 걸어 주세요.'],{'💬 오픈채팅 열기':()=>sbsNew(SBS_KAKAO),'닫기':()=>{}})}
 (function studioRoom3(){const S=M.studiobs;if(!S)return;const old=S.pc||{},P0=old['3,8'],P1=old['7,8'],P2=old['11,8'],H='https://studio-bs.pages.dev/',HV={'🃏 STUDIO BS에서 보기':H};
