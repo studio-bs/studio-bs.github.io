@@ -495,7 +495,7 @@ function act(){
   if(k=='㊹')return hvCrate(x,y);
   if(k=='㊸')return trackSign();
   if(k=='㊷'){VS.pick=null;return vsMenu()}
-  if(cur=='jihye'){if(k=='Ⓕ')return jhSelf()?jhMac():say('애니메이터 박의 맥북',['작업 중인 맥북이다. 화면에 그리다 만 그림이 보인다. 🎨','함부로 만지면 안 될 것 같다.']);if('ⓠⓢⓥⓩⓣⓤ'.includes(k))return jhPc(x);if(k=='ⓛ')return jhArt(JH_SLOTS[x+','+y]);if(k=='ⓝ'||k=='Ⓐ')return jhContact();if(k=='ⓞ'||k=='Ⓔ')return jhBook()}
+  if(cur=='jihye'){if(k=='Ⓝ')return jhNotes();if(k=='Ⓕ')return jhSelf()?jhMac():say('애니메이터 박의 맥북',['작업 중인 맥북이다. 화면에 그리다 만 그림이 보인다. 🎨','함부로 만지면 안 될 것 같다.']);if('ⓠⓢⓥⓩⓣⓤ'.includes(k))return jhPc(x);if(k=='ⓛ')return jhArt(JH_SLOTS[x+','+y]);if(k=='ⓝ'||k=='Ⓐ')return jhContact();if(k=='ⓞ'||k=='Ⓔ')return jhBook()}
   if(k=='㊵')return showHall();
   if(k=='㊱'){VS.pick=null;return vsMenu()}
   if(k=='㊲'||k=='㊰')return say('리그 부스',[VS.on?'⚔ 지금 '+rtLabel(VS.peer)+' 님과 대결 중이에요! 🔥':'🎙 옛날 스타리그처럼 부스에 한 명씩 들어가 겨루는 곳이에요.','유리 부스(PC)를 보고 A를 누르면 같은 곳 사람에게 대전을 신청할 수 있어요.']);
