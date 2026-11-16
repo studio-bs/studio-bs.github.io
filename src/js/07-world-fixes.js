@@ -322,7 +322,7 @@ function jhCode(){try{return localStorage.getItem('bsw_fr')||''}catch(e){return 
 function jhCan(){return isOwner()||jhSelf()}
 /* 박지혜 본인(친구 코드)만: 작업실 이름·전화번호 공개 설정, 맥북 사용 */function jhSelf(){return typeof RT!='undefined'&&RT.fr=='jh'}
 async function jhLoad(force){if(JH.loading||(JH.arts&&!force))return;JH.loading=true;try{const[L,I]=await Promise.all([DB.rpc('jh_art_list',{}),DB.rpc('jh_info',{}).catch(()=>null)]);const o={};(L||[]).forEach(a=>o[a.slot]=a);JH.arts=o;if(I){JH.info=I;if(I.name)jhName(I.name)}}catch(e){JH.arts=JH.arts||{}}JH.loading=false}
-function jhName(n){if(!n)return;M.jihye.n=n;if(M.tosan&&M.tosan.sign)M.tosan.sign['23,2']=n;try{if(typeof cur!='undefined'&&cur=='tosan'&&typeof drawStatic=='function')drawStatic()}catch(e){}}
+function jhName(n){if(!n)return;M.jihye.n=n;if(M.tosan&&M.tosan.sign)M.tosan.sign['23,1']=n;try{if(typeof cur!='undefined'&&cur=='tosan'&&typeof drawStatic=='function')drawStatic()}catch(e){}}
 async function jhNameSave(){const v=($('#jhNm').value||'').trim();if(!v||v.length>16)return toast('이름은 1~16자로 정해 주세요.');try{const r=await DB.rpc('jh_name_set',{p_code:jhCode(),p_name:v});if(!r||!r.ok)return toast(jhErr(r));jhName(r.name);toast('🏷 작업실 이름을 \''+r.name+'\'(으)로 바꿨어요.')}catch(e){toast(dbErr(e))}}
 const JH_ERR={perm:'권한이 없어요. 지혜 친구 코드로 접속해 주세요.',slot:'액자 번호가 맞지 않아요.',len:'글자가 너무 길어요.',img:'그림을 먼저 올려 주세요.',contact:'연락처나 링크, 아이디는 남길 수 없어요.',rate:'방명록이 잠시 붐벼요. 조금 뒤에 써 주세요.',name:"'보성'은 쓸 수 없는 이름이에요."};
 function jhErr(r){return JH_ERR[r&&r.err]||'처리하지 못했어요.'}
@@ -364,8 +364,8 @@ async function jhBookDel(id){if(!confirm('이 방명록을 지울까요?'))retur
  /* 외할아버지댁 + 붙어 있는 외삼촌네 (키위 하우스를 한 동 줄인 자리로) */[14,15,16].forEach(x=>set(x,3,'Ю'));set(14,4,'H');set(15,4,'D');set(16,4,'H');set(17,3,'G');set(18,3,'G');set(17,4,'H');set(18,4,'D');set(13,2,'T');set(19,2,'F');
  T.d['15,4']=['gmHome',7,8];T.d['18,4']=['uncleHome',7,8];T.sign['15,2']='외할아버지댁';T.sign['18,2']='외삼촌네';M.gmHome.d['7,9']=['tosan',15,5];M.uncleHome.d['7,9']=['tosan',18,5];M.gmHome.par=M.uncleHome.par='tosan';
  /* 집 앞 닭장과 꽃나무 밭 */[[14,6],[15,6],[14,7],[15,7]].forEach(([x,y])=>set(x,y,'㍼'));set(16,6,'㍻');[[17,6,'F'],[18,6,'T'],[17,7,'T'],[18,7,'F'],[16,7,'F']].forEach(([x,y,c])=>set(x,y,c));T.chicks=[[14,6,.45],[15,6,.4],[14,7,.42],[15,7,.45],[14.5,6.5,.6]];
- /* 스튜디오 박(공터 자리): 가게처럼 간판 띠 + 유리창 + 문 */set(21,3,'ⓧ');set(25,3,'ⓧ');for(let x=22;x<=24;x++)set(x,3,'ⓙ');[21,22,24,25].forEach(x=>set(x,4,'ⓨ'));set(23,4,'D');set(20,2,'T');set(26,2,'F');set(27,1,'F');set(25,7,'b');
- T.imgs=[{x:22,y:3,w:3,h:1,src:JH_IMG.ext,bg:'ⓧ'}];T.d['23,4']=['jihye',7,10];T.sign['23,2']='스튜디오 박';delete T.sign['26,3'];
+ /* 스튜디오 박(공터 자리): 가게처럼 간판 띠 + 유리창 + 문 */for(let x=22;x<=24;x++){set(x,3,'ⓙ');set(x,2,'Ⓖ')}[22,24].forEach(x=>set(x,4,'ⓨ'));set(23,4,'D');set(21,4,'Ⓘ');set(25,4,'Ⓙ');set(20,2,'T');set(26,2,'F');set(27,1,'F');set(25,7,'b');
+ T.imgs=[{x:22,y:3,w:3,h:1,src:JH_IMG.ext,bg:'ⓧ'}];T.d['23,4']=['jihye',7,10];T.sign['23,1']='스튜디오 박';delete T.sign['26,3'];
  T.m=Q.map(r=>r.join(''));
  (T.p||[]).forEach(o=>{if(o.n=='키위 따는 일꾼'){o.x=9;o.y=6}else if(o.n=='보성 외할아버지'&&o.x==22&&o.y==5){o.x=16;o.y=5}else if(o.n=='보성 큰외삼촌'&&o.x==18&&o.y==5){o.x=19;o.y=5}});
  /* 표선에서는 외가를 뺀다 */const P=M.route1;delete P.d['3,3'];delete P.d['6,3'];delete P.sign['3,3'];delete P.sign['6,2'];P.chicks=null;
@@ -995,3 +995,11 @@ async function fitSave(kind){if(FK.busy)return;const date=$('#fkD').value,dm=$('
   FK.pend=null;FK.dupKey='';if(kind=='strength')FK.sets=[];toast('✅ 근손실 방지단에 저장했어요! 💪');try{ach('fitk',1)}catch(e){}showFitK('ls')}
  catch(e){if(e.login){toast('로그인이 풀렸어요. 다시 로그인해 주세요.');return showFitK()}toast(e.fk?e.message:'저장하지 못했어요. ('+e.message+')')}
  finally{FK.busy=false;const bb=$('#fkSave');if(bb)bb.disabled=false}}
+/* 지혜(친구 코드)가 오면: 밤에도 외할아버지댁·외삼촌네에 들어갈 수 있고, 외가 어른들이 지혜 맞춤 대사 */
+(function jhFamily(){const L={'보성 외할아버지':['어~ 지혜 왔니? 🙂','그림 공부는 잘 되고? 밥은 꼭 챙겨 먹어라.','할아버지가 지혜 그림 동네방네 자랑하고 다닌다.'],
+  '보성 외할머니':['아이고, 우리 지혜 왔구나! 🥰','배고프지? 할머니가 금방 밥 차려 주마.','프랑스 다녀온 얘기 좀 해 봐라. 빵은 맛있더냐? 🥖'],
+  '보성 큰외삼촌':['어~ 지혜 왔어? 🥝','키위 철인데 몇 개 싸 갈래?','작업실 잘 꾸며 놨더라. 삼촌도 구경 갔다 왔다.'],
+  '보성 외숙모':['지혜 왔구나! 어서 와. 😊','하우스 일 끝나면 같이 밥 먹자.','동생들은 잘 지내지?']};
+ ['tosan','gmHome','uncleHome'].forEach(id=>{const m=M[id];if(!m||!m.p)return;m.p.forEach(n=>{if(!L[n.n])return;const s0=n.s;n.s=function(){return jhSelf()?L[n.n]:(typeof s0=='function'?s0.call(this):s0)}})});
+ const OPEN=['gmHome','uncleHome'],jd=(x,y)=>{const d=map&&map.d&&map.d[x+','+y];return !!(d&&OPEN.includes(d[0])&&jhSelf())};
+ const HL=homeLock;homeLock=(x,y)=>jd(x,y)?false:HL(x,y);const LL=lateLock;lateLock=(x,y)=>jd(x,y)?false:LL(x,y)})();
